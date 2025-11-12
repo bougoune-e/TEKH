@@ -1,71 +1,34 @@
 import PhoneCard from "./PhoneCard";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import imageOne from "@/assets/image-1.png";
 
 const DealsSection = () => {
-  const deals = [
-    {
-      brand: "iPhone",
-      model: "13 Pro Max",
-      condition: "Très bon état",
-      price: 450000,
-      originalPrice: 550000,
-      rating: 4.8,
-    },
-    {
-      brand: "Samsung",
-      model: "Galaxy S23",
-      condition: "Bon état",
-      price: 380000,
-      originalPrice: 480000,
-      rating: 4.6,
-    },
-    {
-      brand: "iPhone",
-      model: "12",
-      condition: "État correct",
-      price: 280000,
-      originalPrice: 350000,
-      rating: 4.4,
-    },
-    {
-      brand: "Xiaomi",
-      model: "Redmi Note 12 Pro",
-      condition: "Très bon état",
-      price: 180000,
-      originalPrice: 230000,
-      rating: 4.5,
-    },
-  ];
-
-  const newPhones = [
-    {
-      brand: "iPhone",
-      model: "15 Pro",
-      condition: "Neuf",
-      price: 850000,
-      rating: 5.0,
-    },
-    {
-      brand: "Samsung",
-      model: "Galaxy S24",
-      condition: "Neuf",
-      price: 720000,
-      rating: 5.0,
-    },
-  ];
+  const deals: any[] = [];
+  const newPhones: any[] = [];
 
   return (
-    <section id="deals" className="py-16 md:py-24">
-      <div className="container mx-auto px-4">
+    <section id="deals" className="py-16 md:py-24 relative">
+      {/* Effet de fond subtil */}
+      <div className="absolute inset-0 bg-gradient-subtle opacity-50"></div>
+      
+      <div className="container mx-auto px-4 relative z-10">
         <div className="text-center space-y-4 mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold">
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
             Nos meilleurs{" "}
             <span className="bg-gradient-accent bg-clip-text text-transparent">deals</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Découvrez notre sélection de smartphones reconditionnés et neufs à prix imbattables
           </p>
+          <div className="mt-6 flex justify-center">
+            <img
+              src={imageOne}
+              alt="Sélection de smartphones"
+              className="rounded-2xl border border-border/50 shadow-card-hover w-full max-w-xl h-auto"
+              loading="lazy"
+            />
+          </div>
         </div>
 
         <Tabs defaultValue="refurbished" className="w-full">
@@ -75,19 +38,31 @@ const DealsSection = () => {
           </TabsList>
 
           <TabsContent value="refurbished">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {deals.map((deal, index) => (
-                <PhoneCard key={index} {...deal} />
-              ))}
-            </div>
+            {deals.length === 0 ? (
+              <div className="text-center text-muted-foreground py-12 border border-dashed border-border/50 rounded-xl bg-card/40">
+                Aucune offre disponible pour le moment.
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {deals.map((deal, index) => (
+                  <PhoneCard key={index} {...deal} />
+                ))}
+              </div>
+            )}
           </TabsContent>
 
           <TabsContent value="new">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {newPhones.map((phone, index) => (
-                <PhoneCard key={index} {...phone} />
-              ))}
-            </div>
+            {newPhones.length === 0 ? (
+              <div className="text-center text-muted-foreground py-12 border border-dashed border-border/50 rounded-xl bg-card/40">
+                Aucun téléphone neuf disponible pour le moment.
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {newPhones.map((phone, index) => (
+                  <PhoneCard key={index} {...phone} />
+                ))}
+              </div>
+            )}
           </TabsContent>
         </Tabs>
 

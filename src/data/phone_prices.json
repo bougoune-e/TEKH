@@ -1,0 +1,11 @@
+{
+  "models": [
+    { "name": "iPhone 12", "conditions": { "like_new": [220000, 280000], "good": [180000, 230000], "average": [130000, 170000], "damaged": [80000, 120000] } },
+    { "name": "iPhone 14 Pro Max", "conditions": { "like_new": [600000, 720000], "good": [520000, 600000], "average": [420000, 520000], "damaged": [300000, 400000] } },
+    { "name": "Galaxy S23", "conditions": { "like_new": [550000, 650000], "good": [450000, 550000], "average": [320000, 420000], "damaged": [200000, 300000] } },
+    { "name": "Galaxy S22", "conditions": { "like_new": [380000, 460000], "good": [300000, 380000], "average": [220000, 300000], "damaged": [140000, 200000] } },
+    { "name": "Galaxy A54", "conditions": { "like_new": [180000, 240000], "good": [150000, 200000], "average": [110000, 150000], "damaged": [70000, 110000] } },
+    { "name": "Redmi Note 13 Pro", "conditions": { "like_new": [220000, 280000], "good": [180000, 220000], "average": [140000, 180000], "damaged": [90000, 130000] } },
+    { "name": "Poco X6", "conditions": { "like_new": [180000, 230000], "good": [150000, 190000], "average": [110000, 150000], "damaged": [80000, 110000] } }
+  ]
+}
