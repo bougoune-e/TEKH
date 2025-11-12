@@ -1,71 +1,58 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Smartphone, TrendingUp } from "lucide-react";
-import heroImage from "@/assets/hero-image.jpg";
+import { ArrowRight } from "lucide-react";
+import heroImage from "@/assets/image.png";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
+  const scrollToSimulator = () => {
+    document.getElementById("simulator")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
   return (
-    <section className="pt-24 pb-16 md:pt-32 md:pb-24 bg-gradient-subtle">
-      <div className="container mx-auto px-4">
+    <section className="pt-24 pb-16 md:pt-32 md:pb-24 bg-gradient-subtle relative overflow-hidden">
+      {/* Effet de fond animé */}
+      <div className="absolute inset-0 bg-gradient-glow opacity-30 animate-pulse-glow"></div>
+      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
+      
+      <div className="container mx-auto px-4 relative z-10">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
-            <div className="inline-block">
-              <span className="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium">
-                🔥 Nouveau service au Togo
-              </span>
-            </div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-              Transformez votre téléphone{" "}
-              <span className="bg-gradient-hero bg-clip-text text-transparent">
-                endommagé
-              </span>{" "}
-              en argent
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight">
+              Change ton téléphone, pas ton budget
             </h1>
             
-            <p className="text-lg text-muted-foreground">
+            <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">
               Échangez votre smartphone cassé contre un modèle reconditionné ou neuf. 
               Estimation instantanée, transaction sécurisée, et récupération à domicile.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button variant="hero" size="xl" className="group">
+              <Button onClick={scrollToSimulator} variant="hero" size="xl" className="group shadow-glow hover:shadow-glow-accent">
                 Estimer mon téléphone
-                <ArrowRight className="group-hover:translate-x-1 transition-smooth" />
+                <ArrowRight className="group-hover:translate-x-1 transition-spring" />
               </Button>
-              <Button variant="outline" size="xl">
+              <Button onClick={() => navigate('/deals')} variant="outline" size="xl" className="border-border/50 hover:border-primary/50">
                 Voir les deals
               </Button>
             </div>
-
-            <div className="flex gap-8 pt-4">
-              <div className="flex items-center gap-2">
-                <div className="bg-primary/10 p-2 rounded-lg">
-                  <Smartphone className="h-5 w-5 text-primary" />
-                </div>
-                <div>
-                  <div className="font-bold text-lg">500+</div>
-                  <div className="text-sm text-muted-foreground">Téléphones échangés</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="bg-accent/10 p-2 rounded-lg">
-                  <TrendingUp className="h-5 w-5 text-accent" />
-                </div>
-                <div>
-                  <div className="font-bold text-lg">98%</div>
-                  <div className="text-sm text-muted-foreground">Clients satisfaits</div>
-                </div>
-              </div>
-            </div>
           </div>
 
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-hero opacity-20 blur-3xl rounded-full"></div>
-            <img
-              src={heroImage}
-              alt="Échange de téléphones"
-              className="relative rounded-2xl shadow-card-hover w-full h-auto"
-            />
+          <div className="relative perspective-1000 group">
+            {/* Effet de glow derrière l'image */}
+            <div className="absolute inset-0 bg-gradient-hero opacity-30 blur-3xl rounded-full animate-pulse-glow"></div>
+            <div className="absolute -inset-4 bg-gradient-accent opacity-20 blur-2xl rounded-full"></div>
+            
+            {/* Image avec effet 3D */}
+            <div className="relative transform-3d group-hover:scale-[1.02] transition-spring">
+              <img
+                src={heroImage}
+                alt="Échange de téléphones"
+                className="relative rounded-2xl shadow-card-hover w-full max-w-md md:max-w-lg h-auto mx-auto border border-border/50 group-hover:shadow-glow transition-shadow duration-300"
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
       </div>
