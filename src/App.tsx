@@ -16,6 +16,7 @@ import Stats from "@/admin/pages/Stats";
 import Settings from "@/admin/pages/Settings";
 import PageLoader from "@/components/PageLoader";
 import { DealsProvider } from "@/context/DealsContext";
+import InstallPrompt from "@/components/InstallPrompt";
 
 const Index = lazy(() => import("./pages/Index"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -36,6 +37,7 @@ const App = () => (
       <BrowserRouter>
         <DealsProvider>
           <Suspense fallback={<PageLoader />}>
+            <InstallPrompt />
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/login" element={<Login />} />
