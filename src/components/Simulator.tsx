@@ -1,244 +1,295 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { Calculator } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
-import { getToken } from "@/lib/auth";
-import { useNavigate } from "react-router-dom";
-import { useDeals } from "@/context/DealsContext";
-import type { DealPost } from "@/data/mockDeals";
-import { estimateValue, type SimpleCondition, type StorageSize, type BatteryHealth } from "@/data/phoneValueData";
-import { simulateValue, cacheSimulation, getCachedSimulation } from "@/lib/supabaseApi";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
+import { ArrowRight, Zap } from "lucide-react";
+import CountUp from "react-countup";
+import { cn } from "@/lib/utils";
+import { calculerEstimation } from "@/lib/pricing";
+import { getProduits } from "@/services/api";
+
+type CSVItem = {
+  marque: string;
+  nom: string;
+  prix_base: string; // CSV numbers are often strings initially
+};
 
 const Simulator = () => {
+  const [allProducts, setAllProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const [brand, setBrand] = useState<string>("");
   const [model, setModel] = useState<string>("");
-  const [condition, setCondition] = useState<SimpleCondition | "">("");
-  const [storage, setStorage] = useState<StorageSize | undefined>(undefined);
-  const [battery, setBattery] = useState<BatteryHealth | undefined>(undefined);
-  const [estimate, setEstimate] = useState<number | null>(null);
-  const [customOpen, setCustomOpen] = useState(false);
-  const [customPrice, setCustomPrice] = useState<string>("");
-  const { addDeal, setLastSimulation } = useDeals();
+  const [storage, setStorage] = useState<number | null>(null);
 
-  const calculateEstimate = async () => {
-    if (!model || !condition) return;
-    const mapBattery = (b?: BatteryHealth) => (b === 'low' ? 70 : b === 'medium' ? 85 : b === 'good' ? 100 : 90);
-    const mapCpu = (c: SimpleCondition) => (c === 'like_new' ? 300 : c === 'good' ? 250 : c === 'average' ? 180 : 120);
-    const specs = {
-      battery: mapBattery(battery),
-      storage: typeof storage === 'number' ? storage : 128,
-      cpu_score: mapCpu(condition as SimpleCondition),
-      model,
-      condition,
-    } as any;
+  const [basePrice, setBasePrice] = useState<number | null>(null);
 
-    const cached = getCachedSimulation(specs);
-    if (cached) {
-      setEstimate(cached);
-      setLastSimulation({ model, condition: condition as SimpleCondition, storage, battery, estimated: cached });
-      navigate('/deals-found');
-      return;
-    }
+  // États d'évaluation
+  const [screenState, setScreenState] = useState<"intact" | "cracked" | "">("");
+  const [batteryState, setBatteryState] = useState<"good" | "low" | "replace" | "">("");
+  const [aestheticState, setAestheticState] = useState<"very_good" | "visible" | "damaged" | "">("");
 
-    try {
-      const rpcVal = await simulateValue({ battery: specs.battery, storage: specs.storage, cpu_score: specs.cpu_score });
-      const val = typeof rpcVal === 'number' ? rpcVal : estimateValue(model, condition as SimpleCondition, storage, battery);
-      setEstimate(val);
-      cacheSimulation(specs, val);
-      setLastSimulation({ model, condition: condition as SimpleCondition, storage, battery, estimated: val });
-      navigate('/deals-found');
-    } catch (e: any) {
-      const fallback = estimateValue(model, condition as SimpleCondition, storage, battery);
-      setEstimate(fallback);
-      toast({ title: "Erreur de simulation", description: e?.message || "Impossible d'estimer pour le moment.", variant: "destructive" as any });
-    }
-  };
-
-  const navigate = useNavigate();
-
-  const handleContinue = () => {
-    const token = getToken();
-    if (!token) {
-      toast({ title: "Authentification requise", description: "Créez un compte ou connectez-vous pour continuer." });
-      setTimeout(() => navigate('/login'), 800);
-      return;
-    }
-    // Si estimation faite, on passe le contexte au Deals
-    if (estimate && model && condition) {
-      setLastSimulation({ model, condition: condition as SimpleCondition, storage, battery, estimated: estimate });
-    }
-    navigate('/deals');
-  };
-
-  const handlePublishSimulated = () => {
-    const token = getToken();
-    if (!token) {
-      toast({ title: "Authentification requise", description: "Connectez-vous pour publier ce deal." });
-      setTimeout(() => navigate('/login'), 800);
-      return;
-    }
-    if (!model || !condition || !estimate) {
-      toast({ title: "Informations incomplètes", description: "Calculez d'abord une estimation." });
-      return;
-    }
-    const newDeal: DealPost = {
-      id: crypto.randomUUID(),
-      title: `Échange ${model}`,
-      brand: model.includes("iPhone") ? "Apple" : model.includes("Galaxy") || model.includes("A") ? "Samsung" : "Autre",
-      model,
-      condition: condition === 'good' ? 'Bon' : condition === 'average' ? 'Correct' : condition === 'damaged' ? 'Endommagé' : 'Très bon',
-      description: "Deal créé depuis le simulateur",
-      price: 0,
-      images: [],
+  // Chargement initial de TOUTES les données depuis le serveur local
+  useEffect(() => {
+    const loadData = async () => {
+      setLoading(true);
+      try {
+        const data = await getProduits();
+        setAllProducts(data || []);
+      } catch (err) {
+        console.error("Erreur chargement simulateur:", err);
+        setAllProducts([]);
+      } finally {
+        setLoading(false);
+      }
     };
-    addDeal(newDeal);
-    toast({ title: "Deal ajouté", description: "Votre simulation a été publiée dans les deals." });
-    navigate('/deals');
-  };
+    loadData();
+  }, []);
 
-  const goToDealsWithContext = (overridePrice?: number) => {
-    if (!model || !condition || !estimate) {
-      toast({ title: "Informations incomplètes", description: "Sélectionnez un modèle et un état, puis calculez." });
+  // Dérivations locales des listes
+  const brands = useMemo(() => {
+    const set = new Set(allProducts.map((p) => p.marque || p.Marques).filter(Boolean));
+    return Array.from(set).sort();
+  }, [allProducts]);
+
+  const models = useMemo(() => {
+    if (!brand) return [];
+    const filtered = allProducts.filter((p) => (p.marque || p.Marques) === brand);
+    const set = new Set(filtered.map((p) => p.modele_exact || p["Modèle Exact"]).filter(Boolean));
+    return Array.from(set).sort();
+  }, [brand, allProducts]);
+
+  const storages = useMemo(() => {
+    if (!brand || !model) return [];
+    const filtered = allProducts.filter(
+      (p) =>
+        (p.marque || p.Marques) === brand &&
+        (p.modele_exact || p["Modèle Exact"]) === model
+    );
+    const set = new Set(filtered.map((p) => Number(p.stockage_gb || p["Stockages (GB)"])).filter(n => !isNaN(n)));
+    return Array.from(set).sort((a, b) => a - b);
+  }, [brand, model, allProducts]);
+
+  // Prix de base local
+  useEffect(() => {
+    if (!brand || !model || !storage) {
+      setBasePrice(null);
       return;
     }
-    setLastSimulation({ model, condition: condition as SimpleCondition, storage, battery, estimated: estimate, customPrice: overridePrice });
-    navigate('/deals');
+    const match = allProducts.find(
+      (p) =>
+        (p.marque || p.Marques) === brand &&
+        (p.modele_exact || p["Modèle Exact"]) === model &&
+        Number(p.stockage_gb || p["Stockages (GB)"]) === storage
+    );
+    if (match) {
+      const price = Number(match.prix_neuf_fcfa || match["Prix neuf en FCFA"] || match["Prix neuf en FCFA (prix de référence)"]);
+      setBasePrice(!isNaN(price) ? price : null);
+    } else {
+      setBasePrice(null);
+    }
+  }, [brand, model, storage, allProducts]);
+
+  const estimate = useMemo(() => {
+    if (!basePrice) return null;
+    const diagnostics = {
+      ecran_casse: !!screenState && screenState !== "intact",
+      batterie_faible: batteryState === "low" || batteryState === "replace",
+      face_id_hs: false,
+      camera_hs: false,
+      etat_moyen: aestheticState === "visible" || aestheticState === "damaged",
+    } as const;
+    return calculerEstimation(basePrice, diagnostics);
+  }, [basePrice, screenState, batteryState, aestheticState]);
+
+  const getPriceColor = () => {
+    if (!estimate) return "text-gray-500";
+    const best = screenState === "intact" && (batteryState === "" || batteryState === "good") && aestheticState === "very_good";
+    if (best) return "text-[#00FF41]"; // Electric Green
+    if (screenState === "intact") return "text-[#00C2FF]"; // Electric Blue
+    return "text-orange-500"; // Warning for degraded
   };
+
+  const selectStyles = "bg-[#111] border-[#333] text-white focus:border-[#E60023] focus:ring-1 focus:ring-[#E60023] h-12 rounded-xl transition-all hover:bg-[#1a1a1a]";
 
   return (
-    <section id="simulator" className="py-16 md:py-24">
-      <div className="container mx-auto px-4">
-        <div className="max-w-2xl mx-auto">
-          <Card className="shadow-card-hover bg-gradient-card border-border/50 relative overflow-hidden">
-            {/* Effet de glow */}
-            <div className="absolute inset-0 bg-gradient-glow opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
-            
-            <CardHeader className="text-center space-y-3 relative z-10">
-              <div className="flex justify-center mb-4">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-hero opacity-30 blur-xl rounded-2xl"></div>
-                  <div className="relative bg-gradient-hero p-4 rounded-2xl shadow-glow">
-                    <Calculator className="h-8 w-8 text-primary-foreground" />
-                  </div>
-                </div>
-              </div>
-              <CardTitle className="text-3xl font-bold tracking-tight">
-                Estimez votre téléphone
-              </CardTitle>
-              <CardDescription className="text-base text-muted-foreground">
-                Obtenez une estimation instantanée de la valeur de votre smartphone
-              </CardDescription>
-            </CardHeader>
-            
-            <CardContent className="space-y-6 relative z-10">
-              <div className="space-y-2">
-                <Label htmlFor="model" className="text-foreground font-semibold">Modèle</Label>
-                <Input id="model" value={model} onChange={(e) => setModel(e.target.value)} placeholder="Ex: Samsung S10, iPhone 12…" />
-              </div>
+    <section className="py-12 bg-black min-h-screen text-white flex flex-col items-center justify-center relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_0%,rgba(255,0,43,0.15),transparent_50%)] pointer-events-none" />
 
-              <div className="space-y-2">
-                <Label htmlFor="condition" className="text-foreground font-semibold">État du téléphone</Label>
-                <Select value={condition} onValueChange={(v) => setCondition(v as SimpleCondition)}>
-                  <SelectTrigger id="condition" className="border-border/50 focus:border-primary">
-                    <SelectValue placeholder="Sélectionnez l'état" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="like_new">Comme neuf</SelectItem>
-                    <SelectItem value="good">Bon</SelectItem>
-                    <SelectItem value="average">Correct</SelectItem>
-                    <SelectItem value="damaged">Endommagé</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-foreground font-semibold">Stockage (optionnel)</Label>
-                  <Select value={(storage !== undefined ? String(storage) : undefined) as any} onValueChange={(v) => setStorage(Number(v) as StorageSize)}>
-                    <SelectTrigger className="border-border/50 focus:border-primary">
-                      <SelectValue placeholder="Choisir" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="64">64 Go</SelectItem>
-                      <SelectItem value="128">128 Go</SelectItem>
-                      <SelectItem value="256">256 Go</SelectItem>
-                      <SelectItem value="512">512 Go</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-foreground font-semibold">Batterie (optionnel)</Label>
-                  <Select value={battery as any} onValueChange={(v) => setBattery(v as BatteryHealth)}>
-                    <SelectTrigger className="border-border/50 focus:border-primary">
-                      <SelectValue placeholder="Choisir" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="low">Faible</SelectItem>
-                      <SelectItem value="medium">Moyenne</SelectItem>
-                      <SelectItem value="good">Bonne</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              <Button
-                variant="hero"
-                size="lg"
-                className="w-full shadow-glow hover:shadow-glow-accent font-semibold"
-                onClick={calculateEstimate}
-                disabled={!model || !condition}
-              >
-                Calculer l'estimation
-              </Button>
-
-              {estimate && (
-                <div className="mt-6 p-6 bg-gradient-hero rounded-xl text-center space-y-3 border border-primary/20 shadow-glow">
-                  <div className="text-sm font-medium text-primary-foreground/90 uppercase tracking-wide">
-                    Estimation de votre téléphone
-                  </div>
-                  <div className="text-4xl font-bold text-primary-foreground">
-                    {new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'XOF' }).format(estimate)}
-                  </div>
-                  <div className="text-sm text-primary-foreground/80">
-                    Cette estimation est indicative et peut varier selon l'inspection finale
-                  </div>
-                  <div className="flex flex-col sm:flex-row gap-3 justify-center mt-4">
-                    <Dialog open={customOpen} onOpenChange={setCustomOpen}>
-                      <DialogTrigger asChild>
-                        <Button variant="outline" size="lg" className="bg-card/80 hover:bg-card border-border/50 hover:border-primary/50">
-                          Pas satisfait ? Proposer mon prix
-                        </Button>
-                      </DialogTrigger>
-                      <DialogContent className="max-w-md">
-                        <DialogHeader>
-                          <DialogTitle>Proposer votre propre prix</DialogTitle>
-                        </DialogHeader>
-                        <div className="space-y-3">
-                          <Label>Montant souhaité (FCFA)</Label>
-                          <Input type="number" value={customPrice} onChange={(e) => setCustomPrice(e.target.value)} placeholder={estimate.toString()} />
-                          <div className="flex justify-end gap-2">
-                            <Button variant="outline" onClick={() => setCustomOpen(false)}>Annuler</Button>
-                            <Button onClick={() => { setCustomOpen(false); goToDealsWithContext(customPrice ? Number(customPrice) : estimate); }}>Confirmer</Button>
-                          </div>
-                        </div>
-                      </DialogContent>
-                    </Dialog>
-                    <Button onClick={() => goToDealsWithContext()} size="lg" className="shadow-glow">
-                      Voir les deals compatibles
-                    </Button>
-                  </div>
-                </div>
-              )}
-            </CardContent>
-          </Card>
+      <div className="container mx-auto px-4 max-w-lg z-10">
+        <div className="mb-8 text-center space-y-2">
+          <h1 className="text-4xl font-extrabold tracking-tight">Simulateur <span className="text-[#FF002B]">Vivid</span></h1>
+          <p className="text-gray-400">Estimez la valeur de votre appareil en temps réel.</p>
         </div>
+
+        <Card className="border-none bg-[#121212] shadow-2xl overflow-hidden rounded-[20px]">
+          <CardHeader className="border-b border-white/5 pb-6">
+            <CardTitle className="flex items-center gap-2 text-xl text-white">
+              <Zap className="h-5 w-5 text-[#FF002B]" fill="currentColor" />
+              Sélecteur Rapide
+            </CardTitle>
+          </CardHeader>
+
+          <CardContent className="space-y-6 pt-6">
+            {loading ? (
+              <div className="py-20 text-center space-y-4">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF002B] mx-auto"></div>
+                <p className="text-gray-400">Chargement des données...</p>
+              </div>
+            ) : (
+              <>
+                {/* Brand Select */}
+                <div className="space-y-2">
+                  <Label className="text-gray-400 text-xs uppercase tracking-wider font-semibold">Marque</Label>
+                  <Select onValueChange={(v) => { setBrand(v); setModel(""); setStorage(null); setBasePrice(null); }} value={(brand || undefined) as any}>
+                    <SelectTrigger className={selectStyles}>
+                      <SelectValue placeholder="Choisir une marque" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-[#111] border-[#333] text-white">
+                      {brands.map(b => <SelectItem key={b} value={b} className="focus:bg-[#FF002B] focus:text-white">{b}</SelectItem>)}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Model Select */}
+                <div className="space-y-2">
+                  <Label className="text-gray-400 text-xs uppercase tracking-wider font-semibold">Modèle</Label>
+                  <Select onValueChange={setModel} value={(model || undefined) as any} disabled={!brand}>
+                    <SelectTrigger className={cn(selectStyles, "disabled:opacity-50 disabled:cursor-not-allowed")}>
+                      <SelectValue placeholder="Choisir un modèle" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-[#111] border-[#333] text-white">
+                      {models.map(m => <SelectItem key={m} value={m} className="focus:bg-[#FF002B] focus:text-white">{m}</SelectItem>)}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Storage Select */}
+                <div className="space-y-2">
+                  <Label className="text-gray-400 text-xs uppercase tracking-wider font-semibold">Stockage</Label>
+                  <Select onValueChange={(v) => setStorage(Number(v))} value={(storage ? String(storage) : undefined) as any} disabled={!brand || !model}>
+                    <SelectTrigger className={cn(selectStyles, "disabled:opacity-50 disabled:cursor-not-allowed")}>
+                      <SelectValue placeholder="Choisir un stockage" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-[#111] border-[#333] text-white">
+                      {storages.map((s) => (
+                        <SelectItem key={s} value={String(s)} className="focus:bg-[#FF002B] focus:text-white">{s} Go</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Condition Select */}
+                <div className="space-y-4 pt-2">
+                  <Label className="text-gray-400 text-xs uppercase tracking-wider font-semibold block mb-2">État de l'appareil</Label>
+                  <div className="space-y-3">
+                    <div className="grid grid-cols-2 gap-2">
+                      <button
+                        onClick={() => setScreenState("intact")}
+                        className={cn(
+                          "py-3 rounded-xl border font-medium text-sm transition-all duration-200",
+                          screenState === "intact"
+                            ? "bg-[#FF002B] border-[#FF002B] text-white shadow-[0_0_15px_rgba(255,0,43,0.4)] transform scale-105"
+                            : "bg-[#1A1A1A] border-transparent text-gray-400 hover:bg-[#252525]"
+                        )}
+                      >
+                        Écran intact
+                      </button>
+                      <button
+                        onClick={() => setScreenState("cracked")}
+                        className={cn(
+                          "py-3 rounded-xl border font-medium text-sm transition-all duration-200",
+                          screenState === "cracked"
+                            ? "bg-[#FF002B] border-[#FF002B] text-white shadow-[0_0_15px_rgba(255,0,43,0.4)] transform scale-105"
+                            : "bg-[#1A1A1A] border-transparent text-gray-400 hover:bg-[#252525]"
+                        )}
+                      >
+                        Écran fissuré
+                      </button>
+                    </div>
+
+                    <div className="grid grid-cols-3 gap-2">
+                      {([
+                        { key: "good", label: "Batterie OK" },
+                        { key: "low", label: "Batterie faible" },
+                        { key: "replace", label: "À remplacer" },
+                      ] as const).map((o) => (
+                        <button
+                          key={o.key}
+                          onClick={() => setBatteryState(o.key)}
+                          className={cn(
+                            "py-3 rounded-xl border font-medium text-sm transition-all duration-200",
+                            batteryState === o.key
+                              ? "bg-[#FF002B] border-[#FF002B] text-white shadow-[0_0_15px_rgba(255,0,43,0.4)] transform scale-105"
+                              : "bg-[#1A1A1A] border-transparent text-gray-400 hover:bg-[#252525]"
+                          )}
+                        >
+                          {o.label}
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="grid grid-cols-3 gap-2">
+                      {([
+                        { key: "very_good", label: "Coque TB" },
+                        { key: "visible", label: "Rayures" },
+                        { key: "damaged", label: "Abîmée" },
+                      ] as const).map((o) => (
+                        <button
+                          key={o.key}
+                          onClick={() => setAestheticState(o.key)}
+                          className={cn(
+                            "py-3 rounded-xl border font-medium text-sm transition-all duration-200",
+                            aestheticState === o.key
+                              ? "bg-[#FF002B] border-[#FF002B] text-white shadow-[0_0_15px_rgba(255,0,43,0.4)] transform scale-105"
+                              : "bg-[#1A1A1A] border-transparent text-gray-400 hover:bg-[#252525]"
+                          )}
+                        >
+                          {o.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Price Display */}
+                <div className="mt-8 pt-8 border-t border-white/10 text-center">
+                  <div className="text-gray-500 text-sm mb-1 uppercase tracking-widest font-bold">Estimation</div>
+                  <div className={cn("text-6xl font-black tracking-tighter drop-shadow-lg", getPriceColor())}>
+                    {estimate ? (
+                      <span className="flex items-center justify-center gap-1">
+                        <CountUp end={estimate} duration={0.8} separator=" " />
+                        <span className="text-2xl opacity-50 font-medium">FCFA</span>
+                      </span>
+                    ) : (
+                      <span className="text-gray-700 text-4xl">---</span>
+                    )}
+                  </div>
+                </div>
+
+                <Button
+                  className="w-full button-vivid h-auto py-4 text-lg mt-4 group"
+                  onClick={() => {
+                    if (estimate) {
+                      localStorage.setItem("tekh_estimate", estimate.toString());
+                      window.location.href = "/dealboxes";
+                    }
+                  }}
+                  disabled={!estimate}
+                >
+                  Voir les offres d'échange (Swap)
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </>
+            )}
+
+          </CardContent>
+        </Card>
       </div>
     </section>
   );
-};
+}
 
 export default Simulator;

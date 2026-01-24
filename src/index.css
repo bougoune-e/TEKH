@@ -1,6 +1,136 @@
 @tailwind base;
+
+/* ---- Masonry Layout Utilities ------------------------------------------ */
+.masonry {
+  column-count: 1;
+  column-gap: 1rem;
+  /* 16px */
+}
+
+@media (min-width: 640px) {
+
+  /* sm */
+  .masonry {
+    column-count: 2;
+  }
+}
+
+@media (min-width: 1024px) {
+
+  /* lg */
+  .masonry {
+    column-count: 3;
+  }
+}
+
+.masonry-gap {
+  column-gap: 1rem;
+}
+
+.masonry .masonry-item {
+  break-inside: avoid;
+  margin-bottom: 1rem;
+}
+
+/* Mobile scaling overrides: reduce default rem base on small devices */
+@media (max-width: 480px) {
+  html {
+    font-size: 15px;
+  }
+
+  .container {
+    padding-left: 0.875rem;
+    padding-right: 0.875rem;
+  }
+}
+
+@media (max-width: 380px) {
+  html {
+    font-size: 14px;
+  }
+
+  .container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+
+/* Ensure dark mode uses deep dark gray (not pure black) */
+[data-theme="dark"] body,
+.dark body {
+  background-color: #121212 !important;
+}
+
 @tailwind components;
 @tailwind utilities;
+
+/* ---------- THEME-FIX (COLLER EN BAS DE index.css OU theme-fix.css) ---------- */
+
+/* 1) Si tu utilises data-theme */
+:root[data-theme="light"],
+html[data-theme="light"],
+body[data-theme="light"],
+.light,
+.theme-light {
+  --color-background: #f3f4f6;
+  --color-surface: #ffffff;
+  --color-border: #d0d5dd;
+  --color-text-primary: #1f2937;
+  --color-text-secondary: #4b5563;
+  --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-card-hover: 0 8px 18px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* 2) Force les couleurs des éléments liés aux cards (priorité élevée) */
+:root[data-theme="light"] .card,
+html[data-theme="light"] .card,
+body[data-theme="light"] .card,
+.light .card,
+.theme-light .card {
+  background-color: var(--color-surface) !important;
+  border: 1px solid var(--color-border) !important;
+  color: var(--color-text-primary) !important;
+  box-shadow: var(--shadow-card) !important;
+  border-radius: var(--radius, 0.875rem) !important;
+  transition: box-shadow .18s ease, transform .18s ease !important;
+}
+
+/* Hover */
+:root[data-theme="light"] .card:hover,
+.light .card:hover,
+.theme-light .card:hover {
+  box-shadow: var(--shadow-card-hover) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* 3) Si des utilitaires tailwind comme `bg-white` existent sur .card,
+   forcer la taille minimale pour éviter cards "invisibles" (height 100%) */
+:root[data-theme="light"] .card .card-inner,
+.light .card .card-inner {
+  min-height: 220px !important;
+}
+
+/* 4) Si certains textes sont en gris clair (ex: text-gray-200), override */
+:root[data-theme="light"] .card,
+.light .card {
+  --tw-text-opacity: 1 !important;
+  color: var(--color-text-primary) !important;
+}
+
+/* 5) S'assurer que le fond de la page est le gris douce demandé */
+:root[data-theme="light"] body,
+html[data-theme="light"] body,
+.light body {
+  background-color: var(--color-background) !important;
+}
+
+/* 6) Fallback ultra-agressif (à retirer après validation) */
+body.theme-debug :where(.card) {
+  background: #fff !important;
+  border: 1px solid #d0d5dd !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08) !important;
+  color: #1f2937 !important;
+}
 
 /**
  * 🎨 Design System - ReDeal Togo
@@ -10,94 +140,202 @@
 
 @layer base {
   :root {
-    /* 🌑 Background Colors - Noir profond avec teinte bleutée */
-    --background: 220 30% 8%;
-    --foreground: 210 40% 98%;
+    /* Palette 1 - Mode Clair */
+    --color-primary: #1e40af;
+    /* Bleu Navy */
+    --color-accent: #f97316;
+    /* Orange vif */
+    --color-background: #f8fafc;
+    /* Gris très clair */
+    --color-surface: #ffffff;
+    /* Blanc */
+    /* Textes (WCAG) */
+    --color-text-primary: #2C3E50;
+    /* Principal */
+    --color-text-secondary: #4A4A4A;
+    /* Secondaire */
+    --color-text-muted: #6E6E6E;
+    /* Faible mais lisible */
+    --color-border: #e2e8f0;
+    /* Gris clair */
+    --color-error: #dc2626;
+    --color-success: #16a34a;
+    /* Brand accent and component surfaces */
+    --brand-electric: #00C2FF;
+    /* Electric Blue for '+' */
+    --search-bg: #ffffff;
+    /* Search background (light) */
+    --brand-text: var(--color-text-primary);
+    --search-surface: var(--search-bg);
+  }
 
-    /* 📦 Card Colors - Cartes avec effet glassmorphism */
-    --card: 220 30% 11%;
-    --card-foreground: 210 40% 98%;
+  /* ---- Contrast fixes (appended) --------------------------------------- */
+  /* Light theme: stronger contrast so cards pop on background */
+  :root[data-theme="light"] {
+    --color-background: #f3f4f6;
+    /* light gray background so white cards stand out */
+    --color-surface: #ffffff;
+    /* pure white cards */
+    --color-border: #d0d5dd;
+    /* clearer borders */
 
-    /* 🎯 Popover Colors */
-    --popover: 220 30% 11%;
-    --popover-foreground: 210 40% 98%;
+    --color-text-primary: #1f2937;
+    --color-text-secondary: #4b5563;
+    --color-text-muted: #6b7280;
 
-    /* 🔵 Primary Colors - Bleu électrique/cyan vibrant */
-    --primary: 195 100% 50%;
-    --primary-foreground: 220 30% 8%;
-    --primary-glow: 195 100% 60%;
+    --shadow-card:
+      0 2px 10px rgba(0, 0, 0, 0.06),
+      0 1px 3px rgba(0, 0, 0, 0.04);
+    --shadow-card-hover:
+      0 8px 18px rgba(0, 0, 0, 0.08),
+      0 4px 8px rgba(0, 0, 0, 0.05);
+  }
 
-    /* ⚫ Secondary Colors - Gris sombre avec teinte bleutée */
-    --secondary: 220 25% 16%;
-    --secondary-foreground: 210 40% 98%;
+  /* Dark theme: keep relief/visibility */
+  [data-theme="dark"] {
+    --shadow-card:
+      0 2px 8px rgba(0, 0, 0, 0.35),
+      0 1px 3px rgba(0, 0, 0, 0.25);
+    --shadow-card-hover:
+      0 8px 18px rgba(0, 0, 0, 0.40),
+      0 4px 10px rgba(0, 0, 0, 0.35);
+  }
 
-    /* 🔇 Muted Colors - Tons désaturés pour le texte secondaire */
-    --muted: 220 20% 18%;
-    --muted-foreground: 215 20% 65%;
+  [data-theme="dark"] {
+    /* Palette 1 - Mode Sombre */
+    --color-primary: #60a5fa;
+    /* Bleu plus clair */
+    --color-accent: #fdba74;
+    /* Orange doux */
+    --color-background: #0f172a;
+    /* Bleu nuit foncé */
+    --color-surface: #1e293b;
+    /* Gris bleuté foncé */
+    --color-text-primary: #f1f5f9;
+    /* Blanc cassé */
+    --color-text-secondary: #cbd5e1;
+    /* Gris clair */
+    --color-border: #334155;
+    /* Gris bleuté moyen */
+    --color-error: #f87171;
+    --color-success: #4ade80;
+    /* Brand + search overrides */
+    --brand-text: #E0E0E0;
+    --search-surface: #252525;
+  }
 
-    /* 💜 Accent Colors - Violet/magenta vibrant */
-    --accent: 270 85% 55%;
-    --accent-foreground: 210 40% 98%;
-    --accent-glow: 270 85% 65%;
+  :root[data-theme="light"] {
+    /* Mode Clair explicite (prioritaire quand data-theme="light") */
+    --color-background: #ffffff;
+    /* Blanc pur */
+    --color-surface: #f8fafc;
+    /* Gris très léger pour cartes */
 
-    /* ❌ Destructive Colors - Rouge pour les actions destructives */
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
+    --color-text-primary: #2C3E50;
+    /* demandé */
+    --color-text-secondary: #4A4A4A;
+    /* demandé */
+    --color-text-muted: #6E6E6E;
+    /* demandé */
 
-    /* ✅ Success Colors - Vert émeraude pour les confirmations */
-    --success: 142 76% 45%;
-    --success-foreground: 210 40% 98%;
+    --color-primary: #1e40af;
+    /* Bleu Navy */
+    --color-primary-light: #3b82f6;
+    /* Hover clair */
+    --color-accent: #dc2626;
+    /* Rouge vif pour urgences/deals */
+    --color-accent-orange: #ea580c;
+    /* Orange plus foncé */
 
-    /* ⚠️ Warning Colors - Orange vif pour les avertissements */
+    --color-border: #d1d5db;
+    /* Gris visible */
+
+    /* Boutons (tokens) */
+    --btn-primary-bg: #1e40af;
+    --btn-primary-text: #ffffff;
+    --btn-accent-bg: #dc2626;
+    --btn-accent-text: #ffffff;
+    --btn-secondary-bg: #f3f4f6;
+    --btn-secondary-text: #374151;
+  }
+
+  :root {
+    /* Map Tailwind tokens to brief */
+    --background: 0 0% 97%;
+    /* #F7F7F7 */
+    --foreground: 210 29% 25%;
+    /* ~#2C3E50 */
+
+    --card: 0 0% 100%;
+    /* #FFFFFF */
+    --card-foreground: 210 29% 25%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
+
+    --primary: 226 69% 40%;
+    /* #1e40af */
+    --primary-hover: 225 72% 47%;
+    /* #1d4ed8 */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 40% 98%;
+    /* light neutral */
+    --secondary-foreground: 210 29% 25%;
+
+    --muted: 0 0% 90%;
+    /* fond léger */
+    --muted-foreground: 0 0% 43%;
+    /* ~#6E6E6E */
+
+    --accent: 22 98% 56%;
+    /* ~#f97316 */
+    --accent-foreground: 215 28% 17%;
+    /* dark text on orange */
+
+    --destructive: 0 72% 51%;
+    /* #DC2626 */
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 72% 45%;
+    /* #22C55E */
+    --success-foreground: 0 0% 100%;
+
     --warning: 38 92% 50%;
-    --warning-foreground: 220 30% 8%;
+    /* #F59E0B */
+    --warning-foreground: 0 0% 4%;
 
-    /* 🔲 Border & Input Colors */
-    --border: 220 25% 20%;
-    --input: 220 25% 20%;
-    --ring: 195 100% 50%;
+    --border: 214 32% 91%;
+    /* #e2e8f0 */
+    --input: 214 32% 91%;
+    --ring: 225 72% 47%;
 
     /* 📐 Border Radius */
     --radius: 0.875rem;
 
-    /* 🎨 Gradients - Gradients professionnels et vibrants */
-    --gradient-hero: linear-gradient(135deg, 
-      hsl(195 100% 50%) 0%, 
-      hsl(210 100% 55%) 50%,
-      hsl(270 85% 55%) 100%);
-    --gradient-accent: linear-gradient(135deg, 
-      hsl(270 85% 55%) 0%, 
-      hsl(280 85% 60%) 100%);
-    --gradient-subtle: linear-gradient(180deg, 
-      hsl(220 30% 8%) 0%, 
-      hsl(220 30% 11%) 100%);
-    --gradient-card: linear-gradient(145deg, 
-      hsl(220 30% 11%) 0%, 
-      hsl(220 30% 13%) 100%);
-    --gradient-glow: radial-gradient(
-      circle at 50% 50%,
-      hsl(195 100% 60% / 0.3) 0%,
-      hsl(270 85% 55% / 0.2) 50%,
-      transparent 100%);
+    /* Very subtle gradients for light */
+    --gradient-hero: linear-gradient(180deg,
+        hsl(var(--background)) 0%,
+        hsl(220 16% 94%) 100%);
+    --gradient-accent: linear-gradient(180deg,
+        hsl(var(--background)) 0%,
+        hsl(220 16% 94%) 100%);
+    --gradient-subtle: linear-gradient(180deg,
+        hsl(var(--background)) 0%,
+        hsl(220 16% 94%) 100%);
+    --gradient-card: linear-gradient(180deg,
+        hsl(0 0% 100%) 0%,
+        hsl(0 0% 100%) 100%);
+    --gradient-glow: radial-gradient(circle at 50% 50%, transparent 0%, transparent 100%);
 
-    /* 🌟 Shadows - Ombres professionnelles avec effets de lumière */
-    --shadow-card: 
-      0 4px 6px -1px hsl(0 0% 0% / 0.4),
-      0 2px 4px -1px hsl(0 0% 0% / 0.3),
-      inset 0 1px 0 0 hsl(0 0% 100% / 0.05);
-    --shadow-card-hover: 
-      0 20px 25px -5px hsl(195 100% 50% / 0.25),
-      0 10px 10px -5px hsl(195 100% 50% / 0.15),
-      0 0 30px hsl(195 100% 60% / 0.2);
-    --shadow-glow: 
-      0 0 20px hsl(195 100% 60% / 0.4),
-      0 0 40px hsl(195 100% 50% / 0.3),
-      0 0 60px hsl(195 100% 50% / 0.2);
-    --shadow-glow-accent: 
-      0 0 20px hsl(270 85% 65% / 0.4),
-      0 0 40px hsl(270 85% 55% / 0.3);
-    --shadow-inner: 
-      inset 0 2px 4px 0 hsl(0 0% 0% / 0.3);
+    /* Subtle shadows for light */
+    /* Card shadow per brief */
+    --shadow-card: 0 2px 6px rgba(0, 0, 0, 0.1);
+    --shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.12);
+    --shadow-glow: 0 0 24px rgba(29, 78, 216, 0.18), 0 0 48px rgba(29, 78, 216, 0.08);
+    --shadow-glow-accent: 0 0 24px rgba(249, 115, 22, 0.18), 0 0 48px rgba(249, 115, 22, 0.08);
+    --shadow-inner:
+      inset 0 2px 4px 0 hsl(0 0% 0% / 0.06);
 
     /* ⚡ Transitions - Animations fluides et professionnelles */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -105,89 +343,100 @@
     --transition-spring: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 
     /* 📱 Sidebar Colors */
-    --sidebar-background: 220 30% 8%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 195 100% 50%;
-    --sidebar-primary-foreground: 220 30% 8%;
-    --sidebar-accent: 220 25% 16%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 220 25% 20%;
-    --sidebar-ring: 195 100% 50%;
+    --sidebar-background: 220 17% 97%;
+    --sidebar-foreground: 217 33% 12%;
+    --sidebar-primary: 221 83% 53%;
+    --sidebar-primary-foreground: 217 33% 12%;
+    --sidebar-accent: 220 14% 96%;
+    --sidebar-accent-foreground: 217 33% 12%;
+    --sidebar-border: 220 14% 85%;
+    --sidebar-ring: 221 83% 53%;
   }
 
-  .dark {
-    /* Mode sombre - Légèrement plus sombre et contrasté */
-    --background: 220 35% 6%;
-    --foreground: 210 40% 98%;
+  .dark,
+  [data-theme="dark"] {
+    /* "High-Contrast Vivid" Palette */
+    --background: 0 0% 0%;
+    /* #000000 (Noir Pur) */
+    --foreground: 0 0% 100%;
+    /* #FFFFFF (Blanc Pur) */
 
-    --card: 220 30% 9%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 7%;
+    /* #121212 (Gris très foncé) */
+    --card-foreground: 0 0% 100%;
+    /* #FFFFFF */
 
-    --popover: 220 30% 9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 7%;
+    /* #121212 */
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 195 100% 55%;
-    --primary-foreground: 220 35% 6%;
-    --primary-glow: 195 100% 65%;
+    /* Bouton Primaire: Rouge Néon #FF002B */
+    --primary: 350 100% 50%;
+    /* #FF002B */
+    --primary-hover: 350 100% 60%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 25% 14%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 0 0% 10%;
+    /* #1A1A1A (Niveau 1) */
+    --secondary-foreground: 0 0% 69%;
+    /* #B0B0B0 (Gris clair lumineux) */
 
-    --muted: 220 20% 16%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 63%;
+    /* #A0A0A0 */
 
-    --accent: 270 85% 60%;
-    --accent-foreground: 210 40% 98%;
-    --accent-glow: 270 85% 70%;
+    --accent: 350 100% 50%;
+    /* Vivid Accent matches Primary */
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84% 65%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 0 0% 100%;
 
-    --success: 142 76% 50%;
-    --success-foreground: 220 35% 6%;
+    --border: 0 0% 20%;
+    /* Contrast border */
+    --input: 0 0% 20%;
+    --ring: 350 100% 50%;
 
-    --warning: 38 92% 55%;
-    --warning-foreground: 220 35% 6%;
+    /* Vivid Specs */
+    --radius: 20px;
+    /* Rounded Pinterest Style */
 
-    --border: 220 25% 18%;
-    --input: 220 25% 18%;
-    --ring: 195 100% 55%;
+    /* "Vivid" Specific Variables */
+    --bg-dark: #000000;
+    --surface-dark: #121212;
+    --primary-vivid: #FF002B;
+    --text-main: #FFFFFF;
+    --text-muted: #B0B0B0;
 
-    --gradient-hero: linear-gradient(135deg, 
-      hsl(195 100% 55%) 0%, 
-      hsl(210 100% 60%) 50%,
-      hsl(270 85% 60%) 100%);
-    --gradient-accent: linear-gradient(135deg, 
-      hsl(270 85% 60%) 0%, 
-      hsl(280 85% 65%) 100%);
-    --gradient-subtle: linear-gradient(180deg, 
-      hsl(220 35% 6%) 0%, 
-      hsl(220 30% 9%) 100%);
-    --gradient-card: linear-gradient(145deg, 
-      hsl(220 30% 9%) 0%, 
-      hsl(220 30% 11%) 100%);
-    
-    --shadow-card: 
-      0 4px 6px -1px hsl(0 0% 0% / 0.5),
-      0 2px 4px -1px hsl(0 0% 0% / 0.4),
-      inset 0 1px 0 0 hsl(0 0% 100% / 0.05);
-    --shadow-card-hover: 
-      0 20px 25px -5px hsl(195 100% 55% / 0.3),
-      0 10px 10px -5px hsl(195 100% 55% / 0.2),
-      0 0 35px hsl(195 100% 65% / 0.25);
-    --shadow-glow: 
-      0 0 25px hsl(195 100% 65% / 0.5),
-      0 0 50px hsl(195 100% 55% / 0.4),
-      0 0 75px hsl(195 100% 55% / 0.3);
+    /* Remove shadows in dark mode (flat vivid style) or keep subtle */
+    --shadow-card: none;
+    --shadow-card-hover: 0 0 0 1px var(--primary-vivid);
+    /* Glow effect on hover instead of shadow */
+  }
 
-    --sidebar-background: 220 35% 6%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 195 100% 55%;
-    --sidebar-primary-foreground: 220 35% 6%;
-    --sidebar-accent: 220 25% 14%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 220 25% 18%;
-    --sidebar-ring: 195 100% 55%;
+  /* Custom Vivid Button Class */
+  .button-vivid {
+    background-color: #FF002B;
+    color: white;
+    font-weight: 800;
+    padding: 12px 24px;
+    border-radius: 9999px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(255, 0, 43, 0.3);
+  }
+
+  .button-vivid:hover {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+    box-shadow: 0 6px 20px rgba(255, 0, 43, 0.5);
+  }
+
+  /* Counter Animation Class */
+  .price-counter {
+    font-variant-numeric: tabular-nums;
+    transition: color 0.3s ease;
   }
 }
 
@@ -198,6 +447,7 @@
 
   body {
     @apply bg-background text-foreground;
+    font-family: Inter, Roboto, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
     /* Améliore le rendu des polices */
     -webkit-font-smoothing: antialiased;
@@ -221,6 +471,7 @@
 }
 
 @layer utilities {
+
   /* 🎨 Effets glassmorphism */
   .glass {
     background: rgba(255, 255, 255, 0.05);
@@ -247,19 +498,25 @@
 
   /* 🌊 Animations personnalisées */
   @keyframes float {
-    0%, 100% {
+
+    0%,
+    100% {
       transform: translateY(0px);
     }
+
     50% {
       transform: translateY(-10px);
     }
   }
 
   @keyframes pulse-glow {
-    0%, 100% {
+
+    0%,
+    100% {
       opacity: 1;
       box-shadow: 0 0 20px hsl(195 100% 60% / 0.4);
     }
+
     50% {
       opacity: 0.8;
       box-shadow: 0 0 40px hsl(195 100% 60% / 0.6);
@@ -270,6 +527,7 @@
     0% {
       background-position: -1000px 0;
     }
+
     100% {
       background-position: 1000px 0;
     }
@@ -285,13 +543,28 @@
 
   .animate-shimmer {
     animation: shimmer 2s linear infinite;
-    background: linear-gradient(
-      to right,
-      transparent 0%,
-      rgba(255, 255, 255, 0.1) 50%,
-      transparent 100%
-    );
+    background: linear-gradient(to right,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 100%);
     background-size: 1000px 100%;
+  }
+
+  /* ✨ Badge entrance animation */
+  @keyframes badge-in {
+    0% {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-badge-in {
+    animation: badge-in 0.4s ease-out both;
   }
 
   /* 📐 Effets de perspective */
@@ -307,4 +580,289 @@
   .focus-ring {
     @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
   }
+
+  .section-invert {
+    background-color: hsl(var(--section-bg, var(--card)));
+    color: hsl(var(--section-fg, var(--foreground)));
+  }
+
+  .pill {
+    @apply inline-flex items-center rounded-full px-3 py-1.5 border border-border bg-secondary text-foreground/80 hover:text-primary hover:border-primary/50 transition-colors;
+  }
+
+  .btn-primary {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    transition: background-color .2s ease-in-out, color .2s ease-in-out;
+  }
+
+  .btn-primary:hover {
+    background-color: hsl(var(--primary-hover));
+  }
+
+  .btn-outline {
+    @apply border border-border bg-card text-foreground;
+    transition: border-color .2s ease-in-out, color .2s ease-in-out;
+  }
+
+  .btn-outline:hover {
+    border-color: hsl(var(--primary));
+    color: hsl(var(--primary));
+  }
+}
+
+@layer utilities {
+
+  /* Token-based components (Palette 1) */
+  .btn-accent {
+    background-color: var(--color-accent);
+    color: #1e293b;
+    /* text-dark for contrast on orange in both themes */
+    border: none;
+    border-radius: var(--radius);
+    padding: 0.75rem 1rem;
+    /* 12px 16px */
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .btn-accent:hover {
+    opacity: 0.9;
+  }
+
+  .btn-accent:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .btn-primary-tokens {
+    background-color: var(--color-primary);
+    color: #ffffff;
+    border: none;
+    border-radius: var(--radius);
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .btn-primary-tokens:hover {
+    opacity: 0.95;
+  }
+
+  .btn-primary-tokens:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .btn-outline-tokens {
+    background-color: transparent;
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+    border-radius: var(--radius);
+    padding: 0.625rem 1rem;
+    /* 10px 16px */
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .btn-outline-tokens:hover {
+    background-color: color-mix(in oklab, var(--color-primary) 12%, transparent);
+  }
+
+  .btn-outline-tokens:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-primary);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-card);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+
+  .card:hover {
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-2px);
+  }
+
+  .input {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-primary);
+    border-radius: calc(var(--radius) - 2px);
+  }
+
+  .navbar {
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text-primary);
+  }
+}
+
+/* ==============================
+   MODE SOMBRE - CONTRASTE AMÉLIORÉ (sans blanc pur)
+   ============================== */
+
+/* Texte principal - Blanc pur */
+[data-theme="dark"],
+.dark {
+  color: #E0E0E0 !important;
+  /* off-white for readability */
+}
+
+/* Cartes - Fond plus clair et texte blanc */
+[data-theme="dark"] .card,
+.dark .card {
+  background-color: #1A1A1A !important;
+  border: 1px solid #3b3b3b !important;
+  color: #E0E0E0 !important;
+}
+
+/* Tous les textes dans les cartes en blanc */
+[data-theme="dark"] .card *,
+.dark .card * {
+  color: #E0E0E0 !important;
+}
+
+/* Badge "Neuf" - Très visible */
+[data-theme="dark"] .bg-emerald-500\/10,
+.dark .bg-emerald-500\/10 {
+  background-color: #10b981 !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  border: none !important;
+  padding: 0.25rem 0.75rem !important;
+}
+
+/* Icône du badge Neuf */
+[data-theme="dark"] .bg-emerald-500\/10 svg,
+.dark .bg-emerald-500\/10 svg {
+  color: #ffffff !important;
+}
+
+/* Texte émeraude - Plus clair */
+[data-theme="dark"] .text-emerald-600,
+.dark .text-emerald-600 {
+  color: #34d399 !important;
+  font-weight: 700 !important;
+}
+
+/* Bordures émeraude */
+[data-theme="dark"] .border-emerald-500\/20,
+.dark .border-emerald-500\/20 {
+  border: 2px solid #10b981 !important;
+}
+
+/* Texte secondaire - Gris clair */
+[data-theme="dark"] .text-muted-foreground,
+.dark .text-muted-foreground {
+  color: #d1d5db !important;
+}
+
+/* Fond des cartes */
+[data-theme="dark"] .bg-card,
+.dark .bg-card {
+  background-color: #1a1d24 !important;
+}
+
+/* Bordures */
+[data-theme="dark"] .border-border,
+.dark .border-border {
+  border-color: #4a5568 !important;
+}
+
+/* Boutons */
+[data-theme="dark"] .btn,
+.dark .btn {
+  background-color: #3b82f6 !important;
+  color: white !important;
+  border: none !important;
+}
+
+/* Titres */
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+.dark h1,
+.dark h2,
+.dark h3 {
+  color: #ffffff !important;
+}
+
+/* Cartes de la section deals */
+[data-theme="dark"] .deals-grid .card,
+.dark .deals-grid .card {
+  background-color: #1e293b !important;
+  border: 1px solid #4a5568 !important;
+}
+
+/* Texte dans les cartes de deals */
+[data-theme="dark"] .deals-grid .card *,
+.dark .deals-grid .card * {
+  color: #ffffff !important;
+}
+
+/* Prix dans les cartes */
+[data-theme="dark"] .text-2xl,
+.dark .text-2xl {
+  color: #F2F2F2 !important;
+  font-weight: 700 !important;
+}
+
+/* Dark mode: dim images slightly to avoid glare */
+[data-theme="dark"] img:not(.no-dim),
+.dark img:not(.no-dim) {
+  filter: brightness(0.9) contrast(1.05);
+}
+
+/* Texte barré (prix original) */
+[data-theme="dark"] .line-through,
+.dark .line-through {
+  color: #a0aec0 !important;
+}
+
+/* Styles spécifiques pour PhoneCard */
+[data-theme="dark"] .phone-card,
+.dark .phone-card {
+  background: #1e293b !important;
+  border: 1px solid #4a5568 !important;
+}
+
+[data-theme="dark"] .phone-card *,
+.dark .phone-card * {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .phone-card .bg-gradient-subtle,
+.dark .phone-card .bg-gradient-subtle {
+  background: #2d3748 !important;
+}
+
+[data-theme="dark"] .phone-card .text-muted-foreground,
+.dark .phone-card .text-muted-foreground {
+  color: #cbd5e0 !important;
+}
+
+[data-theme="dark"] .phone-card .bg-gradient-accent,
+.dark .phone-card .bg-gradient-accent {
+  background: #3b82f6 !important;
+  color: white !important;
+}
+
+[data-theme="dark"] .phone-card .text-primary,
+.dark .phone-card .text-primary {
+  color: #60a5fa !important;
+}
+
+[data-theme="dark"] .phone-card .border-border,
+.dark .phone-card .border-border {
+  border-color: #4a5568 !important;
+}
+
+[data-theme="dark"] .phone-card .bg-card,
+.dark .phone-card .bg-card {
+  background-color: #1e293b !important;
 }

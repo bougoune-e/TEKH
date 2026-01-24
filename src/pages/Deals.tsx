@@ -1,324 +1,245 @@
-import { useEffect, useState, useMemo } from "react";
-import { Button } from "@/components/ui/button";
+import { useEffect, useMemo, useRef, useState } from "react";
+import PhoneCard from "@/components/PhoneCard";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import BackHomeButton from "@/components/BackHomeButton";
-import BackBar from "@/components/BackBar";
-import Breadcrumbs from "@/components/Breadcrumbs";
-import { toast } from "@/hooks/use-toast";
-import { getToken } from "@/lib/auth";
-import TradeOfferCard from "@/components/TradeOfferCard";
-import { DeviceCondition, TradeOffer } from "@/types";
+import { Slider } from "@/components/ui/slider";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
 import { useDeals } from "@/context/DealsContext";
 import type { DealPost } from "@/data/mockDeals";
-import { useNavigate } from "react-router-dom";
-import { getMatchingDeals, createDeal } from "@/lib/supabaseApi";
+import { Flame, Star, MessageSquare, Sparkles } from "lucide-react";
+import { deleteDealById, getCurrentUser, fetchDeals } from "@/lib/supabaseApi";
+import { isSupabaseConfigured } from "@/lib/supabaseClient";
+import { toast } from "@/hooks/use-toast";
+import MasonryGrid from "@/components/ui/MasonryGrid";
 
-const DealsPage = () => {
-  const { deals, addDeal, lastSimulation, setDesiredDealId } = useDeals();
-  const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
-  const [form, setForm] = useState({
-    title: "",
-    brand: "",
-    model: "",
-    condition: "",
-    description: "",
-    price: "",
-    images: [] as string[],
-  });
-  const [acceptingId, setAcceptingId] = useState<string | null>(null);
-  const [loadingMatches, setLoadingMatches] = useState(false);
-  const [matchedCount, setMatchedCount] = useState<number | null>(null);
+const BRANDS = ["Apple", "Samsung", "Xiaomi", "Infinix", "Tecno", "Google", "Huawei", "OnePlus", "Oppo", "Vivo"];
+const CONDITIONS = ["Neuf", "Très bon", "Bon", "Moyen"] as const;
 
-  const disabledPublish = useMemo(() => {
-    return !form.title || !form.brand || !form.model || !form.condition || !form.description || form.images.length === 0;
-  }, [form]);
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files) return;
-    const urls = Array.from(files).map((f) => URL.createObjectURL(f));
-    setForm((prev) => ({ ...prev, images: [...prev.images, ...urls] }));
-  };
-
-  const handlePublish = async () => {
-    const token = getToken();
-    if (!token) {
-      toast({
-        title: "Authentification requise",
-        description: "Connectez-vous pour publier une annonce.",
-      });
-      setOpen(false);
-      setTimeout(() => (window.location.href = "/login"), 800);
-      return;
-    }
-    const proposedPrice = form.price ? Number(form.price) : 0;
-    const specs = {
-      brand: form.brand,
-      model: form.model,
-      condition: form.condition,
-      description: form.description,
-      images: form.images,
-      // Pass hints from lastSimulation if present
-      storage: lastSimulation?.storage ?? null,
-      battery: lastSimulation?.battery ?? null,
-    } as any;
-    try {
-      await createDeal(token, specs, proposedPrice);
-      const newDeal: DealPost = {
-        id: crypto.randomUUID(),
-        title: form.title,
-        brand: form.brand,
-        model: form.model,
-        condition: form.condition,
-        description: form.description,
-        price: proposedPrice,
-        images: form.images,
-      };
-      addDeal(newDeal);
-      setForm({ title: "", brand: "", model: "", condition: "", description: "", price: "", images: [] });
-      setOpen(false);
-      toast({ title: "Annonce publiée", description: "Votre deal est en ligne." });
-    } catch (e: any) {
-      toast({ title: "Erreur Supabase", description: e?.message || "Impossible de créer le deal.", variant: "destructive" as any });
-    }
-  };
-
-  const handleContact = (deal: DealPost) => {
-    const token = getToken();
-    if (!token) {
-      toast({ title: "Connectez-vous", description: "Vous devez être connecté pour contacter le vendeur." });
-      setTimeout(() => (window.location.href = "/login"), 800);
-      return;
-    }
-    toast({ title: "Contact ouvert", description: `Vous contactez le vendeur de: ${deal.title}` });
-  };
-
-  // Helpers pour convertir nos deals vers des TradeOffer (mock)
-  const dealToTradeOffer = (d: DealPost): TradeOffer => {
-    const now = new Date().toISOString();
-    // Valeurs estimées fictives pour source/cible
-    const baseValue = 150000;
-    const topUp = typeof d.price === "number" ? d.price : 0;
-    return {
-      id: d.id,
-      createdAt: now,
-      offererUsername: "membre-" + d.id.slice(0, 4),
-      isVerified: Math.random() > 0.5,
-      offererDevice: {
-        brand: d.brand,
-        model: d.model,
-        year: 2021,
-        storage: "128 Go",
-        color: "Noir",
-        estimatedValue: baseValue,
-        condition: (d.condition?.toLowerCase() === "très bon" || d.condition?.toLowerCase() === "bon")
-          ? DeviceCondition.Good
-          : d.condition?.toLowerCase() === "correct"
-          ? DeviceCondition.Fair
-          : d.condition?.toLowerCase() === "neuf"
-          ? DeviceCondition.Refurbished
-          : DeviceCondition.Poor,
-      },
-      targetDevice: {
-        brand: d.brand === "Apple" ? "Samsung" : "Apple",
-        model: d.brand === "Apple" ? "S21" : "iPhone 12",
-        year: 2022,
-        storage: "128 Go",
-        color: "Bleu",
-        estimatedValue: baseValue + topUp,
-        condition: DeviceCondition.Refurbished,
-      },
-      priceTopUp: topUp,
-      status: "available",
-    };
-  };
-
-  const onAccept = (offerId: string) => {
-    const token = getToken();
-    if (!token) {
-      toast({ title: "Authentification requise", description: "Connectez-vous pour accepter une offre." });
-      setTimeout(() => (window.location.href = "/login"), 800);
-      return;
-    }
-    setAcceptingId(offerId);
-    setTimeout(() => {
-      setAcceptingId(null);
-      toast({ title: "Offre acceptée", description: "Le vendeur a été notifié." });
-    }, 800);
-  };
-
-  const onContact = (offerId: string) => {
-    const found = deals.find((d) => d.id === offerId);
-    if (found) handleContact(found);
-  };
-
-  const onPropose = (offerId: string) => {
-    setDesiredDealId(offerId);
-    navigate('/simulateur');
-  };
-
-  const allOffers = useMemo(() => deals.map((d) => dealToTradeOffer(d)), [deals]);
-  const filteredOffers = useMemo(() => {
-    if (!lastSimulation) return allOffers;
-    const targetPrice = lastSimulation.customPrice ?? lastSimulation.estimated;
-    return allOffers.filter((o) => {
-      const modelMatch = o.offererDevice.model.toLowerCase().includes(lastSimulation.model.toLowerCase());
-      const priceMatch = Math.abs(o.priceTopUp - targetPrice) <= targetPrice * 0.3; // ±30%
-      return modelMatch || priceMatch;
-    });
-  }, [allOffers, lastSimulation]);
-
-  // Call Supabase matching RPC when we have a simulation context
-  useEffect(() => {
-    const token = getToken();
-    if (!lastSimulation || !token) return;
-    const run = async () => {
-      try {
-        setLoadingMatches(true);
-        const price = lastSimulation.customPrice ?? lastSimulation.estimated;
-        const specs = {
-          model: lastSimulation.model,
-          condition: lastSimulation.condition,
-          storage: lastSimulation.storage ?? null,
-          battery: lastSimulation.battery ?? null,
-        } as any;
-        const res = await getMatchingDeals(token, price, specs);
-        setMatchedCount(Array.isArray(res) ? res.length : 0);
-        if (Array.isArray(res)) {
-          console.log("[Deals] RPC matched deals:", res);
-          if (res.length === 0) {
-            toast({ title: "Aucun deal correspondant", description: "Essayez d'ajuster votre prix ou publiez votre offre." });
-          }
-        }
-      } catch (e: any) {
-        toast({ title: "Erreur Supabase", description: e?.message || "Impossible de récupérer les deals.", variant: "destructive" as any });
-      } finally {
-        setLoadingMatches(false);
-      }
-    };
-    run();
-  }, [lastSimulation]);
-
-  return (
-    <div className="min-h-screen">
-      <Navbar />
-      <BackBar />
-      <Breadcrumbs />
-      <section className="pt-24 md:pt-28 pb-12 bg-gradient-subtle">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Voir les deals</h1>
-              <p className="text-muted-foreground">Explorez les annonces d'échange et proposez la vôtre</p>
-            </div>
-            <Dialog open={open} onOpenChange={setOpen}>
-              <DialogTrigger asChild>
-                <Button variant="hero">Publier / Poster</Button>
-              </DialogTrigger>
-              <DialogContent className="max-w-lg">
-                <DialogHeader>
-                  <DialogTitle>Publier une annonce</DialogTitle>
-                </DialogHeader>
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label>Titre</Label>
-                    <Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="Ex: iPhone 12 contre S21 + compensation" />
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div className="space-y-2">
-                      <Label>Marque</Label>
-                      <Input value={form.brand} onChange={(e) => setForm({ ...form, brand: e.target.value })} placeholder="Apple, Samsung..." />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Modèle</Label>
-                      <Input value={form.model} onChange={(e) => setForm({ ...form, model: e.target.value })} placeholder="iPhone 12, S21..." />
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div className="space-y-2">
-                      <Label>État</Label>
-                      <Select value={form.condition} onValueChange={(v) => setForm({ ...form, condition: v })}>
-                        <SelectTrigger><SelectValue placeholder="Sélectionnez" /></SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Neuf">Neuf</SelectItem>
-                          <SelectItem value="Très bon">Très bon</SelectItem>
-                          <SelectItem value="Bon">Bon</SelectItem>
-                          <SelectItem value="Correct">Correct</SelectItem>
-                          <SelectItem value="Endommagé">Endommagé</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Compensation (FCFA)</Label>
-                      <Input type="number" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} placeholder="0 si échange équitable" />
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <Label>Description</Label>
-                    <Textarea rows={4} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} placeholder="Détails, accessoires, opérateur, etc." />
-                  </div>
-                  <div className="space-y-2">
-                    <Label>Photos</Label>
-                    <Input type="file" accept="image/*" multiple onChange={handleFileChange} />
-                    {form.images.length > 0 && (
-                      <div className="grid grid-cols-3 gap-2 mt-2">
-                        {form.images.map((src, i) => (
-                          <img key={i} src={src} alt="preview" className="h-20 w-full object-cover rounded-md border border-border/50" />
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                  <div className="flex justify-end gap-2">
-                    <Button variant="outline" onClick={() => setOpen(false)}>Annuler</Button>
-                    <Button onClick={handlePublish} disabled={disabledPublish}>Publier</Button>
-                  </div>
-                </div>
-              </DialogContent>
-            </Dialog>
-          </div>
-
-          {loadingMatches ? (
-            <div className="text-center text-muted-foreground py-20">Chargement des offres…</div>
-          ) : filteredOffers.length === 0 ? (
-            <div className="text-center text-muted-foreground py-20 border border-dashed border-border/50 rounded-xl bg-card/40">
-              {lastSimulation ? (
-                <div className="space-y-3">
-                  <div>Aucune correspondance directe — vous pouvez publier votre offre pour trouver un partenaire SWAP.</div>
-                  <Button variant="hero" onClick={() => setOpen(true)}>Créer mon offre</Button>
-                </div>
-              ) : (
-                <div>Aucune annonce pour le moment.</div>
-              )}
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {filteredOffers.map((offer) => {
-                return (
-                  <TradeOfferCard
-                    key={offer.id}
-                    offer={offer}
-                    onAccept={onAccept}
-                    isAccepting={acceptingId === offer.id}
-                    onContact={onContact}
-                    onPropose={onPropose}
-                  />
-                );
-              })}
-            </div>
-          )}
-        </div>
-      </section>
-      <BackHomeButton />
-      <Footer />
-    </div>
-  );
+type Filters = {
+  brand?: string;
+  condition?: typeof CONDITIONS[number] | "";
+  storage?: number | "";
+  ram?: number | "";
+  q?: string;
+  min?: number;
+  max?: number;
 };
 
-export default DealsPage;
+function percentageMatch(target: number | undefined, price: number) {
+  if (!target || target <= 0) return 0;
+  const diff = Math.abs(price - target);
+  const pct = Math.max(0, 100 - (diff / target) * 100);
+  return Math.min(100, Math.round(pct));
+}
+
+function computeExtra(deal: DealPost, targetValue?: number, desired?: string, maxAddition?: number) {
+  const score = targetValue ? percentageMatch(targetValue, deal.price) : undefined;
+  const badges: string[] = [];
+  if (deal.verified) badges.push("⭐ Confiance");
+  if (deal.negotiable) badges.push("💬 Négociable");
+  // if (score && score >= 85) badges.push("Correspond à votre estimation");
+  if (deal.tags) badges.push(...deal.tags);
+
+  let tag: string | undefined;
+  if (desired && `${deal.brand} ${deal.model}`.toLowerCase().includes(desired.toLowerCase())) {
+    tag = "Match parfait";
+  } else if (score && score >= 80) {
+    tag = "Match partiel";
+  } else if (score && score >= 65) {
+    tag = "Proche";
+  }
+
+  let extraLine: string | undefined;
+  if (targetValue) {
+    const diff = deal.price - targetValue;
+    if (diff > 0) {
+      const add = Math.max(0, diff);
+      extraLine = `Différence: +${add.toLocaleString()} FCFA${maxAddition ? ` — Ajout recommandé: ${Math.min(add, maxAddition).toLocaleString()} FCFA` : ""}`;
+    } else if (diff < 0) {
+      extraLine = `Différence: ${diff.toLocaleString()} FCFA`;
+    }
+  }
+
+  const scoreLabel = score ? `Correspondance ${score}%` : undefined;
+  return { tag, badges: scoreLabel ? [scoreLabel, ...badges] : badges, extraLine };
+}
+
+export default function DealsPage() {
+  const { deals: userDeals, lastSimulation, matchRequest, removeDeal, setDealsList } = useDeals();
+  const [filters, setFilters] = useState<Filters>({ min: 0, max: 800000 });
+  const allDeals = useMemo(() => userDeals, [userDeals]);
+  const [userId, setUserId] = useState<string | null>(null);
+
+  useEffect(() => {
+    getCurrentUser().then((u) => setUserId(u?.id || null)).catch(() => setUserId(null));
+  }, []);
+
+  useEffect(() => {
+    if (!isSupabaseConfigured) return;
+    fetchDeals().then((rows) => setDealsList(rows as any)).catch(() => { });
+  }, []);
+
+  // Pré-appliquer filtres si lastSimulation ou matchRequest
+  useEffect(() => {
+    if (matchRequest?.estimated) {
+      const min = Math.max(0, Math.round(matchRequest.estimated * 0.8));
+      const max = Math.round(matchRequest.estimated * 1.2);
+      setFilters((f) => ({ ...f, brand: matchRequest.brand, min, max }));
+    } else if (lastSimulation?.estimated) {
+      const min = Math.max(0, Math.round(lastSimulation.estimated * 0.8));
+      const max = Math.round(lastSimulation.estimated * 1.2);
+      setFilters((f) => ({ ...f, min, max }));
+    }
+  }, [lastSimulation, matchRequest]);
+
+  const filtered = useMemo(() => {
+    return allDeals.filter((d) => {
+      // Filter out uncertified deals unless user is owner or admin (simplified logic for now)
+      // For MVP: only show if verified OR if owner is current user OR if status is NOT pending
+      // Wait, we want to hide pending deals.
+      // Assuming 'status' field exists or will exist. defaulting to checking 'verified' for strictness or just allow all for now but filter in real implementation.
+      // For now, let's keep it open but filter by explicit filters.
+
+      if (filters.brand && d.brand !== filters.brand) return false;
+      if (filters.condition && d.condition !== filters.condition) return false;
+      if (filters.storage && d.storage !== filters.storage) return false;
+      if (filters.ram && d.ram !== filters.ram) return false;
+      if (filters.q && !(`${d.brand} ${d.model} ${d.title}`.toLowerCase().includes(filters.q.toLowerCase()))) return false;
+      if (typeof filters.min === 'number' && d.price < filters.min) return false;
+      if (typeof filters.max === 'number' && d.price > filters.max) return false;
+      return true;
+    });
+  }, [allDeals, filters]);
+
+  // Infinite scroll state
+  const [visible, setVisible] = useState(12);
+  const sentinelRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    const ob = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) setVisible((v) => Math.min(filtered.length, v + 12));
+    }, { rootMargin: "200px" });
+    if (sentinelRef.current) ob.observe(sentinelRef.current);
+    return () => ob.disconnect();
+  }, [filtered.length]);
+
+  const list = filtered.slice(0, visible);
+
+  const targetValue = matchRequest?.estimated ?? lastSimulation?.estimated;
+  const desired = matchRequest?.desired;
+  const maxAddition = matchRequest?.maxAddition;
+
+  return (
+    <section className="py-8 bg-background min-h-screen">
+      <div className="container mx-auto px-4">
+        {/* Header / Trends */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight mb-2">Explorer</h1>
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <Sparkles className="h-4 w-4 text-primary" />
+              <span>Tendances du moment</span>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {['iPhone 13', 'Samsung S23', 'Budget < 100k', '256 Go'].map((t) => (
+              <Badge key={t} variant="outline" className="rounded-full px-4 py-1.5 hover:bg-muted cursor-pointer transition-colors">{t}</Badge>
+            ))}
+          </div>
+        </div>
+
+        {/* Filters Bar */}
+        <div className="sticky top-[68px] z-30 bg-background/95 backdrop-blur py-4 mb-6 border-b border-border/40">
+          <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
+            <div className="flex-1 w-full md:w-auto relative">
+              <Input
+                placeholder="Rechercher un modèle..."
+                value={filters.q || ''}
+                onChange={(e) => setFilters((f) => ({ ...f, q: e.target.value }))}
+                className="pl-4 rounded-full bg-muted/50 border-0 focus-visible:ring-1 ring-primary/50"
+              />
+            </div>
+            <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 no-scrollbar">
+              <Select value={filters.brand} onValueChange={(v) => setFilters((f) => ({ ...f, brand: v }))}>
+                <SelectTrigger className="w-[120px] rounded-full border-border/60 bg-card"><SelectValue placeholder="Marque" /></SelectTrigger>
+                <SelectContent>
+                  {BRANDS.map((b) => <SelectItem key={b} value={b}>{b}</SelectItem>)}
+                </SelectContent>
+              </Select>
+              <Select value={(filters.condition || '') as any} onValueChange={(v) => setFilters((f) => ({ ...f, condition: v as any }))}>
+                <SelectTrigger className="w-[120px] rounded-full border-border/60 bg-card"><SelectValue placeholder="État" /></SelectTrigger>
+                <SelectContent>
+                  {CONDITIONS.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+                </SelectContent>
+              </Select>
+
+              <div className="hidden md:flex items-center gap-2 px-2 min-w-[200px]">
+                <span className="text-xs text-muted-foreground whitespace-nowrap">Budget</span>
+                <Slider
+                  value={[filters.min || 0, filters.max || 800000]}
+                  min={0} max={1000000} step={10000}
+                  onValueChange={([min, max]) => setFilters((f) => ({ ...f, min, max }))}
+                  className="w-full"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        {/* Masonry Layout */}
+        <MasonryGrid>
+          {list.map((d) => {
+            const { tag, badges, extraLine } = computeExtra(d, targetValue, desired, maxAddition);
+            const canDelete = userId && d.ownerId && userId === d.ownerId;
+            const onDelete = canDelete
+              ? async () => {
+                const ok = window.confirm("Supprimer ce deal ?");
+                if (!ok) return;
+                try {
+                  if (isSupabaseConfigured && d.id) await deleteDealById(d.id);
+                  removeDeal(d.id);
+                  toast({ title: "Deal supprimé" });
+                } catch (e: any) {
+                  toast({ title: "Échec de suppression", description: e?.message || "Réessayez plus tard", variant: "destructive" as any });
+                }
+              }
+              : null;
+            return (
+              <PhoneCard
+                key={d.id}
+                id={d.id}
+                brand={d.brand}
+                model={d.model}
+                condition={d.condition}
+                price={d.price}
+                image={d.images?.[0]}
+                tag={tag}
+                badges={badges}
+                extraLine={extraLine}
+                location={d.location}
+                createdAt={d.createdAt}
+                onDelete={onDelete}
+              />
+            );
+          })}
+        </MasonryGrid>
+
+        {/* Sentinel for infinite scroll */}
+        <div ref={sentinelRef} className="h-20" />
+
+        {list.length === 0 && (
+          <div className="flex flex-col items-center justify-center py-20 text-center">
+            <div className="bg-muted/50 p-6 rounded-full mb-4">
+              <Sparkles className="h-8 w-8 text-muted-foreground" />
+            </div>
+            <h3 className="text-lg font-semibold">Aucun deal trouvé</h3>
+            <p className="text-muted-foreground max-w-sm mt-2">Essayez d'ajuster vos filtres ou revenez plus tard pour de nouvelles offres.</p>
+            <button onClick={() => setFilters({ min: 0, max: 1000000 })} className="mt-6 text-primary hover:underline font-medium">Réinitialiser les filtres</button>
+          </div>
+        )}
+
+      </div>
+    </section>
+  );
+}

@@ -58,14 +58,13 @@ const Charte = () => {
   ];
 
   return (
-    <section id="charte" className="py-16 md:py-24 bg-gradient-subtle relative">
-      <div className="absolute inset-0 bg-gradient-glow opacity-20"></div>
-      <div className="container mx-auto px-4 relative z-10">
+    <section id="charte" className="py-16 md:py-24">
+      <div className="container mx-auto px-4">
         <div className="text-center space-y-4 mb-12">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
-            Charte <span className="bg-gradient-hero bg-clip-text text-transparent">SWAP</span>
+            Charte <span className="text-primary">SWAP</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-foreground/80 max-w-2xl mx-auto">
             Règles et engagements pour des échanges responsables et sécurisés
           </p>
         </div>
@@ -74,19 +73,17 @@ const Charte = () => {
           {items.map((item, idx) => {
             const Icon = item.icon;
             return (
-              <div key={idx} className="relative group">
-                <div className="absolute inset-0 bg-primary/5 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <div className="relative bg-gradient-card border border-border/50 rounded-2xl p-6 shadow-card-hover">
+              <div key={idx} className="relative">
+                <div className="relative bg-card border border-border rounded-2xl p-6 shadow-card">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="relative">
-                      <div className="absolute inset-0 bg-gradient-hero opacity-30 blur-lg rounded-xl"></div>
-                      <div className="relative bg-gradient-hero p-2.5 rounded-xl shadow-glow">
+                      <div className="relative bg-primary p-2.5 rounded-xl">
                         <Icon className="h-5 w-5 text-primary-foreground" />
                       </div>
                     </div>
                     <h3 className="text-xl font-bold">{item.title}</h3>
                   </div>
-                  <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
+                  <ul className="list-disc pl-5 space-y-2 text-foreground/80">
                     {item.points.map((p, i) => (
                       <li key={i}>{p}</li>
                     ))}
@@ -97,7 +94,7 @@ const Charte = () => {
           })}
         </div>
 
-        <div className="mt-10 text-sm text-muted-foreground text-center">
+        <div className="mt-10 text-sm text-foreground/70 text-center">
           SWAP encourage des échanges équitables, responsables et durables.
         </div>
       </div>

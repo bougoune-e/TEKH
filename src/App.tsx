@@ -16,7 +16,9 @@ import Stats from "@/admin/pages/Stats";
 import Settings from "@/admin/pages/Settings";
 import PageLoader from "@/components/PageLoader";
 import { DealsProvider } from "@/context/DealsContext";
-import InstallPrompt from "@/components/InstallPrompt";
+import { AuthProvider } from "@/context/AuthContext";
+import { ThemeProvider } from "@/theme/ThemeProvider";
+import Layout from "@/components/Layout";
 
 const Index = lazy(() => import("./pages/Index"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -26,50 +28,93 @@ const DealsFound = lazy(() => import("@/pages/DealsFound"));
 const SimulatorPage = lazy(() => import("@/pages/SimulatorPage"));
 const HowItWorksPage = lazy(() => import("@/pages/HowItWorksPage"));
 const ChartePage = lazy(() => import("@/pages/ChartePage"));
+const PublishPage = lazy(() => import("@/pages/PublishPage"));
+const SearchPage = lazy(() => import("@/pages/SearchPage"));
+const DealDetails = lazy(() => import("@/pages/DealDetails"));
+const MyPosts = lazy(() => import("@/pages/MyPosts"));
+const Profile = lazy(() => import("@/pages/Profile"));
+const EstimatorPage = lazy(() => import("@/pages/EstimatorPage"));
+const APropos = lazy(() => import("@/pages/APropos"));
+const AideEtFaq = lazy(() => import("@/pages/AideEtFaq"));
+const Contact = lazy(() => import("@/pages/Contact"));
+const Blog = lazy(() => import("@/pages/Blog"));
+const MentionsLegales = lazy(() => import("@/pages/MentionsLegales"));
+const CGV = lazy(() => import("@/pages/CGV"));
+const PolitiqueConfidentialite = lazy(() => import("@/pages/PolitiqueConfidentialite"));
+const Apk = lazy(() => import("@/pages/Apk"));
+
+const DiagnosePage = lazy(() => import("@/pages/Diagnose"));
+const AdminPage = lazy(() => import("@/pages/AdminPage"));
+const DealboxCatalog = lazy(() => import("@/pages/DealboxCatalog"));
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <DealsProvider>
-          <Suspense fallback={<PageLoader />}>
-            <InstallPrompt />
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/deals" element={<DealsPage />} />
-              <Route path="/simulateur" element={<SimulatorPage />} />
-              <Route path="/deals-found" element={<DealsFound />} />
-              <Route path="/comment-ca-marche" element={<HowItWorksPage />} />
-              <Route path="/charte" element={<ChartePage />} />
-          <Route
-            path="/admin"
-            element={
-              <ProtectedRoute>
-                <AdminLayout />
-              </ProtectedRoute>
-            }
-          >
-            <Route index element={<Dashboard />} />
-            <Route path="users" element={<Users />} />
-            <Route path="annonces" element={<Annonces />} />
-            <Route path="deals" element={<Deals />} />
-            <Route path="dealbox" element={<DealBox />} />
-            <Route path="categories" element={<Categories />} />
-            <Route path="stats" element={<Stats />} />
-            <Route path="settings" element={<Settings />} />
-          </Route>
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-        </DealsProvider>
-      </BrowserRouter>
-    </TooltipProvider>
+    <ThemeProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <AuthProvider>
+            <DealsProvider>
+              <Suspense fallback={<PageLoader />}>
+                <Routes>
+                  {/* Routes principales avec Layout */}
+                  <Route element={<Layout />}>
+                    <Route index element={<Index />} />
+                    <Route path="/deals" element={<DealsPage />} />
+                    <Route path="/deal/:id" element={<DealDetails />} />
+                    <Route path="/diagnose" element={<DiagnosePage />} />
+                    <Route path="/simulateur" element={<SimulatorPage />} />
+                    <Route path="/estimer" element={<EstimatorPage />} />
+                    <Route path="/deals-found" element={<DealsFound />} />
+                    <Route path="/charte" element={<ChartePage />} />
+                    <Route path="/charte-du-swap" element={<ChartePage />} />
+                    <Route path="/post" element={<PublishPage />} />
+                    <Route path="/mes-publications" element={<MyPosts />} />
+                    <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+                    <Route path="/search" element={<SearchPage />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/a-propos" element={<APropos />} />
+                    <Route path="/aide-et-faq" element={<AideEtFaq />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/blog" element={<Blog />} />
+                    <Route path="/mentions-legales" element={<MentionsLegales />} />
+                    <Route path="/cgv" element={<CGV />} />
+                    <Route path="/politique-confidentialite" element={<PolitiqueConfidentialite />} />
+                    <Route path="/apk" element={<Apk />} />
+                    <Route path="/dealboxes" element={<DealboxCatalog />} />
+                  </Route>
+
+                  {/* Route Admin Exclusive */}
+                  <Route path="/admin-tekh-control" element={<AdminPage />} />
+
+                  {/* Routes d'administration */}
+                  <Route path="/admin" element={
+                    <ProtectedRoute>
+                      <AdminLayout />
+                    </ProtectedRoute>
+                  }>
+                    <Route index element={<Dashboard />} />
+                    <Route path="users" element={<Users />} />
+                    <Route path="annonces" element={<Annonces />} />
+                    <Route path="deals" element={<Deals />} />
+                    <Route path="dealbox" element={<DealBox />} />
+                    <Route path="categories" element={<Categories />} />
+                    <Route path="stats" element={<Stats />} />
+                    <Route path="settings" element={<Settings />} />
+                  </Route>
+
+                  {/* Route 404 - Doit être la dernière */}
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Suspense>
+            </DealsProvider>
+          </AuthProvider>
+        </BrowserRouter>
+      </TooltipProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 

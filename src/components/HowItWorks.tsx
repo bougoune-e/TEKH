@@ -1,4 +1,8 @@
 import { Smartphone, Search, ArrowRightLeft, CheckCircle } from "lucide-react";
+import offerImg from "../../assets/illustrations/deals/offer.png";
+import fcfaImg from "../../assets/illustrations/deals/fcfa.jpg";
+import swapImg from "../../assets/illustrations/deals/swap.jpeg";
+import badgeImg from "../../assets/illustrations/deals/badge.svg";
 
 const HowItWorks = () => {
   const steps = [
@@ -25,17 +29,13 @@ const HowItWorks = () => {
   ];
 
   return (
-    <section id="how-it-works" className="py-16 md:py-24 bg-gradient-subtle relative">
-      {/* Effet de fond */}
-      <div className="absolute inset-0 bg-gradient-glow opacity-20"></div>
-      
-      <div className="container mx-auto px-4 relative z-10">
+    <section id="how-it-works" className="py-16 md:py-24">
+      <div className="container mx-auto px-4">
         <div className="text-center space-y-4 mb-12">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
-            Comment ça{" "}
-            <span className="bg-gradient-hero bg-clip-text text-transparent">marche ?</span>
+            Comment ça <span className="text-primary">marche ?</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-foreground max-w-2xl mx-auto">
             Un processus simple et transparent en 4 étapes
           </p>
         </div>
@@ -44,32 +44,34 @@ const HowItWorks = () => {
           {steps.map((step, index) => {
             const Icon = step.icon;
             return (
-              <div key={index} className="relative group">
+              <div key={index} className="relative">
                 <div className="flex flex-col items-center text-center space-y-4">
                   <div className="relative">
-                    {/* Effet de glow animé */}
-                    <div className="absolute inset-0 bg-primary/30 blur-xl rounded-full group-hover:bg-primary/40 transition-all duration-300"></div>
-                    <div className="absolute inset-0 bg-accent/20 blur-lg rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="relative bg-gradient-card p-5 rounded-2xl shadow-card border border-border/50 group-hover:border-primary/50 group-hover:shadow-glow transition-all duration-300">
-                      <Icon className="h-8 w-8 text-primary group-hover:scale-110 transition-transform duration-300" />
+                    <div className="relative bg-card p-5 rounded-2xl shadow-card border border-border">
+                      <Icon className="h-8 w-8 text-primary" />
                     </div>
                   </div>
                   
                   <div className="space-y-2">
-                    <div className="text-sm font-semibold bg-gradient-hero bg-clip-text text-transparent">
-                      Étape {index + 1}
-                    </div>
+                    <div className="text-sm font-semibold text-foreground">Étape {index + 1}</div>
                     <h3 className="text-xl font-bold text-foreground">{step.title}</h3>
-                    <p className="text-muted-foreground leading-relaxed">{step.description}</p>
+                    <p className="text-foreground leading-relaxed">{step.description}</p>
                   </div>
                 </div>
-
-                {index < steps.length - 1 && (
-                  <div className="hidden lg:block absolute top-12 left-full w-full h-1 bg-gradient-to-r from-primary via-accent to-transparent -translate-x-1/2 opacity-30 group-hover:opacity-60 transition-opacity"></div>
-                )}
               </div>
             );
           })}
+        </div>
+
+        {/* Séquence deals: miniatures (offer → fcfa → swap → badge) */}
+        <div className="hidden md:flex items-center justify-center gap-8 mt-12">
+          <img src={offerImg} alt="Offres de deals" className="h-32 w-auto rounded-2xl border border-border/50 shadow-card" />
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground"><path d="M9 18l6-6-6-6"/></svg>
+          <img src={fcfaImg} alt="CFA" className="h-28 w-auto rounded-2xl border border-border/50 shadow-card" />
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground"><path d="M9 18l6-6-6-6"/></svg>
+          <img src={swapImg} alt="Échange direct" className="h-32 w-auto rounded-2xl border border-border/50 shadow-card" />
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground"><path d="M9 18l6-6-6-6"/></svg>
+          <img src={badgeImg} alt="Échange réussi" className="h-28 w-auto rounded-2xl border border-border/50 shadow-card" />
         </div>
       </div>
     </section>
