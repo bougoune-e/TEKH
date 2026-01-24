@@ -1,28 +1,28 @@
-import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import DealsSection from "@/components/DealsSection";
 import HowItWorks from "@/components/HowItWorks";
-import Charte from "@/components/Charte";
-import Simulator from "@/components/Simulator";
-import Footer from "@/components/Footer";
-import BrandsStrip from "@/components/BrandsStrip";
-import AccueilGallery from "@/components/AccueilGallery";
+import AboutSection from "@/components/AboutSection";
+import BrandsCarousel from "@/components/BrandsCarousel";
+import AllBrands from "@/components/AllBrands";
 import TrustSection from "@/components/TrustSection";
+import RepairSection from "@/components/RepairSection";
+import MessagingSection from "@/components/MessagingSection";
+import ExchangeCriteria from "@/components/ExchangeCriteria";
 
 const Index = () => {
   return (
-    <div className="min-h-screen">
-      <Navbar />
+    <>
       <Hero />
-      <BrandsStrip />
-      <AccueilGallery />
-      <TrustSection />
       <DealsSection />
+      <ExchangeCriteria />
+      <BrandsCarousel />
+      <AllBrands />
+      <TrustSection />
+      <MessagingSection />
+      <RepairSection />
       <HowItWorks />
-      <Charte />
-      <Simulator />
-      <Footer />
-    </div>
+      <AboutSection />
+    </>
   );
 };
 

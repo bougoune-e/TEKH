@@ -1,38 +1,35 @@
-import trust1 from "@/assets/20251112_1136_Jeunes Africains Connectés_simple_compose_01k9vxh5dyfd5s2gh9vb3sxph7.png";
-import trust2 from "@/assets/20251112_1136_Jeunes Africains Connectés_simple_compose_01k9vxh5dzfb18btx0w82v93d0.png";
+const brandModules = import.meta.glob<{ default: string }>("../../assets/icons/brands/*.svg", { eager: true, import: "default" });
+const partnerLogos = Object.values(brandModules).slice(0, 8) as unknown as string[];
+
+const testimonials = [
+  { name: "Aïcha", text: "Échange rapide et sécurisé. Mon nouveau téléphone est impeccable !", role: "Vendeuse & acheteuse" },
+  { name: "Moussa", text: "Bon support et messagerie claire. L'estimation m'a bien aidé.", role: "Acheteur" },
+  { name: "Patrick", text: "Reconditionnement sérieux, batterie comme neuve.", role: "Client reconditionné" },
+];
 
 const TrustSection = () => {
   return (
-    <section className="py-16 md:py-20 bg-gradient-subtle relative">
-      <div className="absolute inset-0 bg-gradient-glow opacity-20"></div>
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center space-y-3 mb-10">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
-            Satisfaction & <span className="bg-gradient-hero bg-clip-text text-transparent">Confiance</span>
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Des échanges sécurisés, transparents et responsables.
-          </p>
+    <section className="py-16 md:py-24 border-t border-border">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl font-bold mb-8 text-center">Ils nous font confiance</h2>
+
+        {/* Testimonials */}
+        <div className="grid md:grid-cols-3 gap-4 mb-10">
+          {testimonials.map((t) => (
+            <figure key={t.name} className="bg-card border border-border rounded-2xl p-5 shadow-card">
+              <blockquote className="text-foreground mb-3">“{t.text}”</blockquote>
+              <figcaption className="text-sm text-muted-foreground">
+                <span className="font-semibold text-foreground">{t.name}</span> — {t.role}
+              </figcaption>
+            </figure>
+          ))}
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="relative group">
-            <div className="absolute inset-0 bg-primary/20 blur-2xl rounded-2xl opacity-40"></div>
-            <img
-              src={trust1}
-              alt="Satisfaction des utilisateurs"
-              className="relative rounded-2xl border border-border/50 shadow-card-hover w-full max-w-md md:max-w-lg h-auto mx-auto object-cover"
-              loading="lazy"
-            />
-          </div>
-          <div className="relative group">
-            <div className="absolute inset-0 bg-accent/20 blur-2xl rounded-2xl opacity-40"></div>
-            <img
-              src={trust2}
-              alt="Confiance de la communauté"
-              className="relative rounded-2xl border border-border/50 shadow-card-hover w-full max-w-md md:max-w-lg h-auto mx-auto object-cover"
-              loading="lazy"
-            />
-          </div>
+
+        {/* Partner logos */}
+        <div className="flex flex-wrap items-center justify-center gap-6 opacity-80">
+          {partnerLogos.map((url, i) => (
+            <img key={i} src={url} alt="Partenaire" className="h-8 w-auto" />)
+          )}
         </div>
       </div>
     </section>

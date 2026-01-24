@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { supabase } from "@/lib/supabaseApi";
+import { isSupabaseConfigured } from "@/lib/supabaseClient";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -15,14 +16,14 @@ export default function Login() {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSignup = async () => {
+  const loginWithGoogle = async () => {
     setError("");
-    const { error } = await supabase.auth.signUp({ email, password });
-    if (error) {
-      alert(error.message);
+    if (!isSupabaseConfigured) {
+      setError("Connexion Google indisponible: configuration Supabase manquante.");
       return;
     }
-    alert("Compte créé ! Vérifie ton email ou reconnecte-toi.");
+    const { error } = await supabase.auth.signInWithOAuth({ provider: "google", options: { redirectTo: `${window.location.origin}/deals` } as any });
+    if (error) setError(error.message);
   };
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -49,7 +50,7 @@ export default function Login() {
 
   return (
     <section className="min-h-screen grid place-items-center p-6 bg-gradient-subtle">
-      <Card className="w-full max-w-md shadow-card bg-card/90 border-border/50">
+      <Card className="w-full max-w-md shadow-card bg-card border border-border">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-2xl">
             <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-hero text-primary-foreground"><LogIn className="h-5 w-5" /></span>
@@ -58,6 +59,13 @@ export default function Login() {
           <CardDescription>Connectez-vous pour publier ou accepter des deals.</CardDescription>
         </CardHeader>
         <CardContent>
+          {isSupabaseConfigured && (
+            <div className="space-y-3 mb-4">
+              <Button type="button" onClick={loginWithGoogle} className="w-full justify-center gap-3 bg-[#DB4437] hover:bg-[#C53D32] text-white">
+                Continuer avec Google
+              </Button>
+            </div>
+          )}
           <form onSubmit={handleLogin} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Adresse e-mail</Label>
@@ -68,7 +76,7 @@ export default function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="text-foreground placeholder:text-muted-foreground/70 border-border/70 focus-visible:ring-0 focus-visible:border-primary"
+                className="text-foreground placeholder:text-foreground border-border/70 focus-visible:ring-0 focus-visible:border-primary"
               />
             </div>
             <div className="space-y-2">
@@ -81,7 +89,7 @@ export default function Login() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="pr-10 text-foreground placeholder:text-muted-foreground/70 border-border/70 focus-visible:ring-0 focus-visible:border-primary"
+                  className="pr-10 text-foreground placeholder:text-foreground border-border/70 focus-visible:ring-0 focus-visible:border-primary"
                 />
                 <button
                   type="button"
@@ -102,9 +110,6 @@ export default function Login() {
 
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? "Connexion..." : "Se connecter"}
-            </Button>
-            <Button type="button" variant="outline" className="w-full" onClick={handleSignup} disabled={loading}>
-              S’inscrire
             </Button>
           </form>
         </CardContent>
