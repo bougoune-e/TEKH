@@ -8,6 +8,7 @@ import CountUp from "react-countup";
 import { cn } from "@/lib/utils";
 import { calculerEstimation } from "@/lib/pricing";
 import { getProduits } from "@/services/api";
+import mascotVideo from "@/assets/illustrations/simulator/gifrobot.mp4";
 
 type CSVItem = {
   marque: string;
@@ -106,7 +107,7 @@ const Simulator = () => {
   const getPriceColor = () => {
     if (!estimate) return "text-gray-500";
     const best = screenState === "intact" && (batteryState === "" || batteryState === "good") && aestheticState === "very_good";
-    if (best) return "text-[#00FF41]"; // Electric Green
+    if (best) return "text-primary"; // Vivid Green
     if (screenState === "intact") return "text-[#00C2FF]"; // Electric Blue
     return "text-orange-500"; // Warning for degraded
   };
@@ -116,18 +117,23 @@ const Simulator = () => {
   return (
     <section className="py-12 bg-black min-h-screen text-white flex flex-col items-center justify-center relative overflow-hidden">
       {/* Background decoration */}
-      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_0%,rgba(255,0,43,0.15),transparent_50%)] pointer-events-none" />
+      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_0%,rgba(0,255,65,0.15),transparent_50%)] pointer-events-none" />
 
       <div className="container mx-auto px-4 max-w-lg z-10">
-        <div className="mb-8 text-center space-y-2">
-          <h1 className="text-4xl font-extrabold tracking-tight">Simulateur <span className="text-[#FF002B]">Vivid</span></h1>
-          <p className="text-gray-400">Estimez la valeur de votre appareil en temps réel.</p>
+        <div className="mb-8 text-center space-y-4 flex flex-col items-center">
+          <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-primary/20 bg-zinc-900 animate-levitate">
+            <video src={mascotVideo} autoPlay loop muted playsInline className="w-full h-full object-cover scale-150" />
+          </div>
+          <div className="space-y-1">
+            <h1 className="text-4xl font-black tracking-tighter">TEKH <span className="text-primary italic">Simulateur</span></h1>
+            <p className="text-gray-400 text-sm font-medium">Certification instantanée & Valeur réelle.</p>
+          </div>
         </div>
 
         <Card className="border-none bg-[#121212] shadow-2xl overflow-hidden rounded-[20px]">
           <CardHeader className="border-b border-white/5 pb-6">
             <CardTitle className="flex items-center gap-2 text-xl text-white">
-              <Zap className="h-5 w-5 text-[#FF002B]" fill="currentColor" />
+              <Zap className="h-5 w-5 text-primary" fill="currentColor" />
               Sélecteur Rapide
             </CardTitle>
           </CardHeader>
@@ -135,8 +141,8 @@ const Simulator = () => {
           <CardContent className="space-y-6 pt-6">
             {loading ? (
               <div className="py-20 text-center space-y-4">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF002B] mx-auto"></div>
-                <p className="text-gray-400">Chargement des données...</p>
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+                <p className="text-gray-400">Calcul des indices de rachat...</p>
               </div>
             ) : (
               <>
@@ -148,7 +154,7 @@ const Simulator = () => {
                       <SelectValue placeholder="Choisir une marque" />
                     </SelectTrigger>
                     <SelectContent className="bg-[#111] border-[#333] text-white">
-                      {brands.map(b => <SelectItem key={b} value={b} className="focus:bg-[#FF002B] focus:text-white">{b}</SelectItem>)}
+                      {brands.map(b => <SelectItem key={b} value={b} className="focus:bg-primary focus:text-white">{b}</SelectItem>)}
                     </SelectContent>
                   </Select>
                 </div>
@@ -161,7 +167,7 @@ const Simulator = () => {
                       <SelectValue placeholder="Choisir un modèle" />
                     </SelectTrigger>
                     <SelectContent className="bg-[#111] border-[#333] text-white">
-                      {models.map(m => <SelectItem key={m} value={m} className="focus:bg-[#FF002B] focus:text-white">{m}</SelectItem>)}
+                      {models.map(m => <SelectItem key={m} value={m} className="focus:bg-primary focus:text-white">{m}</SelectItem>)}
                     </SelectContent>
                   </Select>
                 </div>
@@ -175,7 +181,7 @@ const Simulator = () => {
                     </SelectTrigger>
                     <SelectContent className="bg-[#111] border-[#333] text-white">
                       {storages.map((s) => (
-                        <SelectItem key={s} value={String(s)} className="focus:bg-[#FF002B] focus:text-white">{s} Go</SelectItem>
+                        <SelectItem key={s} value={String(s)} className="focus:bg-primary focus:text-white">{s} Go</SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
@@ -191,7 +197,7 @@ const Simulator = () => {
                         className={cn(
                           "py-3 rounded-xl border font-medium text-sm transition-all duration-200",
                           screenState === "intact"
-                            ? "bg-[#FF002B] border-[#FF002B] text-white shadow-[0_0_15px_rgba(255,0,43,0.4)] transform scale-105"
+                            ? "bg-primary border-primary text-white shadow-[0_0_15px_rgba(255,0,43,0.4)] transform scale-105"
                             : "bg-[#1A1A1A] border-transparent text-gray-400 hover:bg-[#252525]"
                         )}
                       >
@@ -202,7 +208,7 @@ const Simulator = () => {
                         className={cn(
                           "py-3 rounded-xl border font-medium text-sm transition-all duration-200",
                           screenState === "cracked"
-                            ? "bg-[#FF002B] border-[#FF002B] text-white shadow-[0_0_15px_rgba(255,0,43,0.4)] transform scale-105"
+                            ? "bg-primary border-primary text-white shadow-[0_0_15px_rgba(255,0,43,0.4)] transform scale-105"
                             : "bg-[#1A1A1A] border-transparent text-gray-400 hover:bg-[#252525]"
                         )}
                       >
@@ -222,7 +228,7 @@ const Simulator = () => {
                           className={cn(
                             "py-3 rounded-xl border font-medium text-sm transition-all duration-200",
                             batteryState === o.key
-                              ? "bg-[#FF002B] border-[#FF002B] text-white shadow-[0_0_15px_rgba(255,0,43,0.4)] transform scale-105"
+                              ? "bg-primary border-primary text-white shadow-[0_0_15px_rgba(255,0,43,0.4)] transform scale-105"
                               : "bg-[#1A1A1A] border-transparent text-gray-400 hover:bg-[#252525]"
                           )}
                         >
@@ -270,7 +276,7 @@ const Simulator = () => {
                 </div>
 
                 <Button
-                  className="w-full button-vivid h-auto py-4 text-lg mt-4 group"
+                  className="w-full bg-primary text-primary-foreground rounded-full h-14 text-lg mt-4 group font-black shadow-lg hover:scale-[1.02] transition-transform"
                   onClick={() => {
                     if (estimate) {
                       localStorage.setItem("tekh_estimate", estimate.toString());
@@ -279,7 +285,7 @@ const Simulator = () => {
                   }}
                   disabled={!estimate}
                 >
-                  Voir les offres d'échange (Swap)
+                  Découvrir mon Match Swap
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </>

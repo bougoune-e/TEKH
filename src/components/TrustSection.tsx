@@ -1,4 +1,4 @@
-const brandModules = import.meta.glob<{ default: string }>("../../assets/icons/brands/*.svg", { eager: true, import: "default" });
+const brandModules = import.meta.glob<{ default: string }>("@/assets/icons/brands/*.svg", { eager: true, import: "default" });
 const partnerLogos = Object.values(brandModules).slice(0, 8) as unknown as string[];
 
 const testimonials = [

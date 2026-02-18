@@ -1,14 +1,14 @@
-import logo from "../../assets/logos/robot.png";
+import logo from "@/assets/logos/robott.jpeg";
 
 const Apk = () => {
   return (
     <main className="pt-24 pb-12">
       <div className="container mx-auto px-4">
         <div className="rounded-2xl bg-emerald-900 text-emerald-50 p-6 md:p-10 mb-8 flex items-center gap-4">
-          <img src={logo} alt="Tekh" className="h-8 w-8 md:h-10 md:w-10 brightness-0 invert" />
+          <img src={logo} alt="TΞKΗ+" className="h-8 w-8 md:h-10 md:w-10 brightness-0 invert" />
           <div>
             <h1 className="text-2xl md:text-3xl font-bold">Télécharger l'APK</h1>
-            <p className="text-emerald-100/90 text-sm md:text-base">Installateur Android officiel de Tekh.</p>
+            <p className="text-emerald-100/90 text-sm md:text-base">Installateur Android officiel de TΞKΗ+.</p>
           </div>
         </div>
 

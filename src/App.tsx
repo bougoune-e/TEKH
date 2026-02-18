@@ -19,6 +19,7 @@ import { DealsProvider } from "@/context/DealsContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { ThemeProvider } from "@/theme/ThemeProvider";
 import Layout from "@/components/Layout";
+import ScrollRestorer from "@/components/ScrollToTop";
 
 const Index = lazy(() => import("./pages/Index"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -28,6 +29,7 @@ const DealsFound = lazy(() => import("@/pages/DealsFound"));
 const SimulatorPage = lazy(() => import("@/pages/SimulatorPage"));
 const HowItWorksPage = lazy(() => import("@/pages/HowItWorksPage"));
 const ChartePage = lazy(() => import("@/pages/ChartePage"));
+const CharteQualitePage = lazy(() => import("@/pages/CharteQualitePage"));
 const PublishPage = lazy(() => import("@/pages/PublishPage"));
 const SearchPage = lazy(() => import("@/pages/SearchPage"));
 const DealDetails = lazy(() => import("@/pages/DealDetails"));
@@ -35,13 +37,15 @@ const MyPosts = lazy(() => import("@/pages/MyPosts"));
 const Profile = lazy(() => import("@/pages/Profile"));
 const EstimatorPage = lazy(() => import("@/pages/EstimatorPage"));
 const APropos = lazy(() => import("@/pages/APropos"));
-const AideEtFaq = lazy(() => import("@/pages/AideEtFaq"));
+const AideEtFaq = lazy(() => import("@/pages/legal/FAQ"));
 const Contact = lazy(() => import("@/pages/Contact"));
 const Blog = lazy(() => import("@/pages/Blog"));
-const MentionsLegales = lazy(() => import("@/pages/MentionsLegales"));
-const CGV = lazy(() => import("@/pages/CGV"));
-const PolitiqueConfidentialite = lazy(() => import("@/pages/PolitiqueConfidentialite"));
+const MentionsLegales = lazy(() => import("@/pages/legal/MentionsLegales"));
+const CGV = lazy(() => import("@/pages/legal/CGV"));
+const CGU = lazy(() => import("@/pages/legal/CGU"));
+const PolitiqueConfidentialite = lazy(() => import("@/pages/legal/Privacy"));
 const Apk = lazy(() => import("@/pages/Apk"));
+const SettingsPage = lazy(() => import("@/pages/Settings"));
 
 const DiagnosePage = lazy(() => import("@/pages/Diagnose"));
 const AdminPage = lazy(() => import("@/pages/AdminPage"));
@@ -56,6 +60,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <ScrollRestorer />
           <AuthProvider>
             <DealsProvider>
               <Suspense fallback={<PageLoader />}>
@@ -66,12 +71,13 @@ const App = () => (
                     <Route path="/deals" element={<DealsPage />} />
                     <Route path="/deal/:id" element={<DealDetails />} />
                     <Route path="/diagnose" element={<DiagnosePage />} />
-                    <Route path="/simulateur" element={<SimulatorPage />} />
+                    <Route path="/simulateur" element={<EstimatorPage />} />
                     <Route path="/estimer" element={<EstimatorPage />} />
                     <Route path="/deals-found" element={<DealsFound />} />
                     <Route path="/charte" element={<ChartePage />} />
                     <Route path="/charte-du-swap" element={<ChartePage />} />
-                    <Route path="/post" element={<PublishPage />} />
+                    <Route path="/charte-qualite" element={<CharteQualitePage />} />
+                    <Route path="/post" element={<EstimatorPage />} />
                     <Route path="/mes-publications" element={<MyPosts />} />
                     <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
                     <Route path="/search" element={<SearchPage />} />
@@ -82,9 +88,13 @@ const App = () => (
                     <Route path="/blog" element={<Blog />} />
                     <Route path="/mentions-legales" element={<MentionsLegales />} />
                     <Route path="/cgv" element={<CGV />} />
+                    <Route path="/cgu" element={<CGU />} />
                     <Route path="/politique-confidentialite" element={<PolitiqueConfidentialite />} />
                     <Route path="/apk" element={<Apk />} />
                     <Route path="/dealboxes" element={<DealboxCatalog />} />
+                    <Route path="/communities" element={<Index />} />
+                    <Route path="/messages" element={<Index />} />
+                    <Route path="/settings" element={<SettingsPage />} />
                   </Route>
 
                   {/* Route Admin Exclusive */}

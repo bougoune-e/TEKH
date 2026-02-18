@@ -1,4 +1,4 @@
-import repairImg from "../../assets/illustrations/homepage/repair_image_phone.jpeg";
+import repairImg from "@/assets/illustrations/homepage/repair_image_phone.jpeg";
 import { Wrench, Battery, Cpu, ShieldCheck, ScanLine, Sparkles } from "lucide-react";
 
 const features = [

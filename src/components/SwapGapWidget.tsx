@@ -64,25 +64,43 @@ export default function SwapGapWidget({ dealPrice, dealId }: { dealPrice: number
                 </div>
 
                 {gapData && (
-                    <div className={`rounded-xl p-4 border ${gapData.isPositive ? 'bg-orange-50 border-orange-100 dark:bg-orange-950/20 dark:border-orange-900/50' : 'bg-emerald-50 border-emerald-100 dark:bg-emerald-950/20 dark:border-emerald-900/50'}`}>
-                        <div className="flex justify-between items-center mb-1">
-                            <span className="text-sm font-medium opacity-80">{gapData.isPositive ? 'Reste à payer' : 'Nous vous devons'}</span>
-                            <span className={`text-xl font-bold ${gapData.isPositive ? 'text-orange-600 dark:text-orange-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
-                                {gapData.formatted}
-                            </span>
+                    <div className="space-y-4">
+                        <div className="flex flex-col items-center justify-center p-4 bg-muted/30 rounded-[28px] border-2 border-dashed border-border/60">
+                            <div className="flex items-center gap-3 text-sm font-black tracking-tighter uppercase opacity-60">
+                                <span>Apport</span>
+                                <span>+</span>
+                                <span>Reste à payer</span>
+                            </div>
+                            <div className="flex items-center gap-4 mt-2">
+                                <span className="text-xl font-bold text-foreground">{(userValue || 0).toLocaleString()} <span className="text-[10px]">F</span></span>
+                                <span className="text-primary font-black">+</span>
+                                <span className="text-2xl font-black text-primary">{(gapData.gap > 0 ? gapData.gap : 0).toLocaleString()} <span className="text-[10px]">FCFA</span></span>
+                            </div>
+                            <div className="mt-2 text-[10px] font-bold text-muted-foreground uppercase tracking-widest px-3 py-1 bg-white dark:bg-zinc-900 rounded-full border border-border shadow-sm">
+                                = Valeur de cette Dealbox
+                            </div>
                         </div>
-                        <div className="h-1.5 w-full bg-black/5 dark:bg-white/5 rounded-full overflow-hidden mt-2">
-                            <div
-                                className={`h-full ${gapData.isPositive ? 'bg-orange-500' : 'bg-emerald-500'}`}
-                                style={{ width: `${Math.min(100, (Math.abs(gapData.gap) / dealPrice) * 100)}%` }}
-                            />
+
+                        <div className={`rounded-[32px] p-6 border-2 shadow-xl ${gapData.isPositive ? 'bg-zinc-900 border-primary/40 text-white' : 'bg-emerald-600 border-emerald-400 text-white'}`}>
+                            <div className="flex justify-between items-center mb-1">
+                                <span className="text-xs font-black uppercase tracking-widest opacity-80">{gapData.isPositive ? 'Votre Budget Gap' : 'Crédit TΞKΗ+'}</span>
+                                <span className="text-2xl font-black italic">
+                                    {gapData.formatted}
+                                </span>
+                            </div>
+                            <div className="h-1.5 w-full bg-black/5 dark:bg-white/5 rounded-full overflow-hidden mt-2">
+                                <div
+                                    className={`h-full ${gapData.isPositive ? 'bg-orange-500' : 'bg-emerald-500'}`}
+                                    style={{ width: `${Math.min(100, (Math.abs(gapData.gap) / dealPrice) * 100)}%` }}
+                                />
+                            </div>
+                            <p className="text-[10px] text-muted-foreground mt-2 text-center">
+                                Estimation indicative hors frais de service éventuels.
+                            </p>
+                            <Button className="w-full mt-4 font-black rounded-full h-12 uppercase tracking-tighter bg-primary text-primary-foreground hover:scale-105 transition-transform" variant="default">
+                                Demander un Swap Certifié
+                            </Button>
                         </div>
-                        <p className="text-[10px] text-muted-foreground mt-2 text-center">
-                            Estimation indicative hors frais de service éventuels.
-                        </p>
-                        <Button className="w-full mt-3 font-semibold" variant={gapData.isPositive ? 'default' : 'secondary'}>
-                            Proposer ce Swap
-                        </Button>
                     </div>
                 )}
             </CardContent>

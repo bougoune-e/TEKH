@@ -1,5 +1,6 @@
 import { Mail, Facebook, Instagram } from "lucide-react";
 import { Link } from "react-router-dom";
+import logo from "@/assets/logos/robott.jpeg";
 
 const TikTokIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor" {...props}>
@@ -17,19 +18,19 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gradient-card border-t border-border/50 relative">
-      {/* Effet de fond subtil */}
-      <div className="absolute inset-0 bg-gradient-subtle opacity-50"></div>
+    <footer className="bg-background border-t border-border/50 relative overflow-hidden">
+      {/* Overlay très léger pour la texture */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/5 dark:to-white/[0.02] pointer-events-none"></div>
 
       <div className="container mx-auto px-4 py-12 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <img src="/assets/logos/robot.png" alt="Tekh" className="h-8 w-8 rounded-md ring-1 ring-border" />
-              <span className="text-lg font-bold tracking-tight">Tekh</span>
+              <img src={logo} alt="TΞKΗ+" className="h-8 w-8 rounded-md ring-1 ring-border" />
+              <span className="text-lg font-bold tracking-tight">TΞKΗ+</span>
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              Tekh : L'échange intelligent d'appareils électroniques. Passez à la vitesse supérieure, en toute simplicité.
+              TΞKΗ+ : L'échange intelligent d'appareils électroniques. Passez à la vitesse supérieure, en toute simplicité.
             </p>
           </div>
 
@@ -38,8 +39,6 @@ const Footer = () => {
             <nav>
               <ul className="space-y-2.5 text-sm">
                 <li><Link to="/a-propos" className="text-muted-foreground hover:text-primary transition-smooth font-medium inline-block">À Propos de Nous</Link></li>
-                <li><Link to="/charte-du-swap" className="text-muted-foreground hover:text-primary transition-smooth font-medium inline-block">Notre Charte Qualité</Link></li>
-                <li><Link to="/aide-et-faq" className="text-muted-foreground hover:text-primary transition-smooth font-medium inline-block">FAQ & Aide</Link></li>
                 <li><Link to="/contact" className="text-muted-foreground hover:text-primary transition-smooth font-medium inline-block">Contact</Link></li>
                 <li><Link to="/blog" className="text-muted-foreground hover:text-primary transition-smooth font-medium inline-block">Blog/Actualités</Link></li>
                 <li><Link to="/apk" className="text-muted-foreground hover:text-primary transition-smooth font-medium inline-block">Télécharger l'APK</Link></li>
@@ -48,12 +47,15 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="font-bold mb-4 text-foreground">Informations légales</h3>
-            <ul className="space-y-2.5 text-sm">
-              <li><Link to="/mentions-legales" className="text-muted-foreground hover:text-primary transition-smooth font-medium inline-block">Mentions Légales</Link></li>
-              <li><Link to="/cgv" className="text-muted-foreground hover:text-primary transition-smooth font-medium inline-block">Conditions Générales de Vente (CGV)</Link></li>
-              <li><Link to="/politique-confidentialite" className="text-muted-foreground hover:text-primary transition-smooth font-medium inline-block">Politique de Confidentialité</Link></li>
-              <li><Link to="/charte-du-swap" className="text-muted-foreground hover:text-primary transition-smooth font-medium inline-block">Charte du SWAP</Link></li>
+            <h3 className="font-black mb-6 text-black dark:text-white uppercase tracking-widest text-sm">Informations légales</h3>
+            <ul className="space-y-3 text-sm">
+              <li><Link to="/charte-qualite" className="text-slate-500 hover:text-primary transition-smooth font-bold">Charte Qualité</Link></li>
+              <li><Link to="/charte-du-swap" className="text-slate-500 hover:text-primary transition-smooth font-bold">Charte du SWAP</Link></li>
+              <li><Link to="/cgu" className="text-slate-500 hover:text-primary transition-smooth font-bold">Conditions d'Utilisation (CGU)</Link></li>
+              <li><Link to="/cgv" className="text-slate-500 hover:text-primary transition-smooth font-bold">Conditions de Vente (CGV)</Link></li>
+              <li><Link to="/politique-confidentialite" className="text-slate-500 hover:text-primary transition-smooth font-bold">Confidentialité</Link></li>
+              <li><Link to="/aide-et-faq" className="text-slate-500 hover:text-primary transition-smooth font-bold">FAQ & Aide</Link></li>
+              <li><Link to="/mentions-legales" className="text-slate-500 hover:text-primary transition-smooth font-bold">Mentions Légales</Link></li>
             </ul>
           </div>
 
@@ -80,7 +82,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-border/50 mt-8 pt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; {currentYear} Tekh. Tous droits réservés.</p>
+          <p>&copy; {currentYear} TΞKΗ+. Tous droits réservés.</p>
         </div>
       </div>
     </footer>

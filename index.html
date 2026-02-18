@@ -1,40 +1,51 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tekh — L'échange intelligent d'appareils électroniques</title>
-    <meta name="description" content="Échangez votre smartphone en toute simplicité : estimation rapide, transaction sécurisée, et logistique fluide." />
-    <meta name="author" content="Tekh" />
-    <meta name="keywords" content="échange téléphone, smartphone reconditionné, téléphone cassé, reprise téléphone, Togo, Lomé" />
-    <meta name="theme-color" content="#FFFFFF" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
-    <meta property="og:title" content="Tekh — L'échange intelligent d'appareils électroniques" />
-    <meta property="og:description" content="Échangez votre smartphone en toute simplicité : estimation rapide et transaction sécurisée." />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="/assets/logos/robot.png" />
-    <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:alt" content="Logo Tekh" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>TΞKΗ+ — L'échange intelligent d'appareils électroniques</title>
+  <meta name="description"
+    content="Échangez votre smartphone en toute simplicité : estimation rapide, transaction sécurisée, et logistique fluide." />
+  <meta name="author" content="Tekh" />
+  <meta name="keywords"
+    content="échange téléphone, smartphone reconditionné, téléphone cassé, reprise téléphone, Togo, Lomé" />
+  <meta name="theme-color" content="#FFFFFF" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="/assets/logos/robot.png" />
+  <meta property="og:title" content="TΞKΗ+ — L'échange intelligent d'appareils électroniques" />
+  <meta property="og:description"
+    content="Échangez votre smartphone en toute simplicité : estimation rapide et transaction sécurisée." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/src/assets/logos/robott.jpeg" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:alt" content="Logo Tekh" />
 
-    <link rel="icon" href="/assets/logos/robot.png" type="image/png" />
-    <link rel="apple-touch-icon" href="/assets/logos/robot.png" />
-    <link rel="manifest" href="/manifest.webmanifest" />
-  </head>
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="/src/assets/logos/robott.jpeg" />
 
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js').catch(() => {});
-        });
-      }
-    </script>
-  </body>
+  <link rel="icon" href="/src/assets/logos/robott.jpeg" type="image/jpeg" />
+  <link rel="apple-touch-icon" href="/src/assets/logos/robott.jpeg" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+  <script>
+    // Unregister any existing service workers that might be causing cache conflicts
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function (registrations) {
+        for (let registration of registrations) {
+          registration.unregister();
+          console.log('Service Worker unregistered');
+        }
+      }).catch(function (err) {
+        console.log('Service Worker unregistration failed: ', err);
+      });
+    }
+  </script>
+</body>
+
 </html>

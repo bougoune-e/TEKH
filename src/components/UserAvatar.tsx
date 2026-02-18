@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/lib/supabaseApi";
+import { cn } from "@/lib/utils";
 
 type Size = "sm" | "md" | "lg" | "xl";
 
@@ -74,43 +75,38 @@ export default function UserAvatar({ user, src, path, size = "md", className = "
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [src, path, metaUrl]);
 
-  const wrapperCls = `${sizeToClass[size]} rounded-full aspect-square overflow-hidden border border-gray-200/30 shadow-sm relative ${className}`;
+  const wrapperCls = cn(
+    sizeToClass[size],
+    "rounded-2xl aspect-square overflow-hidden border-2 border-black/10 dark:border-white/10 shadow-lg relative bg-white/50 dark:bg-white/5 backdrop-blur-sm transition-all duration-500",
+    className
+  );
 
   if (loading) {
-    return <div className={`${wrapperCls} animate-pulse bg-muted`} />;
+    return <div className={cn(wrapperCls, "animate-pulse bg-muted-foreground/10")} />;
   }
 
   if (!imgSrc || errored) {
     return (
-      <div className={`${wrapperCls} grid place-items-center bg-gray-200 dark:bg-gray-800`}>
-        <img
-          src="/default-avatar.png"
-          alt={altText}
-          className="h-full w-full object-cover"
-          onError={(e) => {
-            const el = e.currentTarget as HTMLImageElement;
-            el.style.display = "none";
-          }}
-          loading="lazy"
-          decoding="async"
-        />
-        <svg viewBox="0 0 64 64" className="absolute h-1/2 w-1/2 text-white/90" aria-hidden="true">
-          <circle cx="32" cy="24" r="12" fill="currentColor" />
-          <path d="M8,56c0-11,10-18,24-18s24,7,24,18" fill="currentColor" />
+      <div className={cn(wrapperCls, "grid place-items-center bg-zinc-100 dark:bg-zinc-900 group")}>
+        <svg viewBox="0 0 16 16" className="absolute h-1/2 w-1/2 text-black/20 dark:text-white/20 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M8 7C9.65685 7 11 5.65685 11 4C11 2.34315 9.65685 1 8 1C6.34315 1 5 2.34315 5 4C5 5.65685 6.34315 7 8 7Z" />
+          <path d="M14 12C14 10.3431 12.6569 9 11 9H5C3.34315 9 2 10.3431 2 12V15H14V12Z" />
         </svg>
       </div>
     );
   }
 
   return (
-    <img
-      src={imgSrc}
-      alt={altText}
-      className={`${wrapperCls} object-cover`}
-      loading="lazy"
-      decoding="async"
-      referrerPolicy="no-referrer"
-      onError={() => setErrored(true)}
-    />
+    <div className="relative inline-block group">
+      <img
+        src={imgSrc}
+        alt={altText}
+        className={cn(wrapperCls, "object-cover group-hover:rotate-3 group-hover:scale-105 transition-all duration-500")}
+        loading="lazy"
+        decoding="async"
+        referrerPolicy="no-referrer"
+        onError={() => setErrored(true)}
+      />
+    </div>
   );
 }

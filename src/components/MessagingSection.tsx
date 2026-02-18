@@ -32,10 +32,30 @@ const MessagingSection = () => {
             </div>
           </div>
 
-          <div className="relative rounded-2xl border border-border shadow-card p-8 text-center">
-            <MessageSquare className="h-10 w-10 mx-auto text-primary mb-3" />
-            <div className="font-semibold mb-1">Conversations SWAP</div>
-            <div className="text-sm text-muted-foreground">Flux simple, pièces jointes, et alertes intégrées.</div>
+          <div className="relative group">
+            <div className="absolute -inset-1 bg-gradient-to-r from-primary to-green-400 rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+            <div className="relative rounded-2xl border-2 border-black dark:border-white shadow-2xl p-8 text-center bg-white dark:bg-zinc-900 group-hover:-translate-y-1 transition-all duration-300">
+              <div className="h-20 w-20 bg-green-500 rounded-2xl mx-auto flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(34,197,94,0.3)] group-hover:scale-110 transition-transform duration-500">
+                <MessageSquare className="h-10 w-10 text-white" />
+              </div>
+              <h3 className="text-2xl font-black mb-2 text-black dark:text-white">Messagerie WhatsApp</h3>
+              <p className="text-sm text-muted-foreground mb-8">
+                Échanges directs, sécurisés et rapides via notre canal officiel certifié.
+                Négociez et finalisez vos deals en toute simplicité.
+              </p>
+              <a
+                href="https://wa.me/yournumber"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center w-full py-4 px-6 rounded-xl bg-black dark:bg-white text-white dark:text-black font-black hover:scale-[1.02] active:scale-95 transition-all shadow-xl"
+              >
+                Ouvrir mon WhatsApp
+              </a>
+              <div className="mt-4 flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-widest text-green-600">
+                <span className="h-2 w-2 rounded-full bg-green-600 animate-pulse" />
+                Opérationnel 24/7
+              </div>
+            </div>
           </div>
         </div>
       </div>

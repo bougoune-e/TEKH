@@ -1,4 +1,4 @@
-const modules = import.meta.glob<{ default: string }>("../../assets/icons/brands/*.svg", { eager: true, import: "default" });
+const modules = import.meta.glob<{ default: string }>("@/assets/icons/brands/*.svg", { eager: true, import: "default" });
 
 const entries = Object.entries(modules).map(([path, url]) => {
   const name = path.split("/").pop()?.replace(".svg", "") || "";
