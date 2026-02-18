@@ -1,5 +1,16 @@
 @tailwind base;
 
+@layer base {
+  * {
+    @apply border-border;
+    font-weight: 700 !important;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
 /* ---- Masonry Layout Utilities ------------------------------------------ */
 .masonry {
   column-count: 1;
@@ -55,10 +66,14 @@
   }
 }
 
-/* Ensure dark mode uses deep dark gray (not pure black) */
 [data-theme="dark"] body,
 .dark body {
-  background-color: #121212 !important;
+  background-color: #000000 !important;
+}
+
+[data-theme="light"] body,
+.light body {
+  background-color: #ffffff !important;
 }
 
 @tailwind components;
@@ -141,10 +156,10 @@ body.theme-debug :where(.card) {
 @layer base {
   :root {
     /* Palette 1 - Mode Clair */
-    --color-primary: #1e40af;
-    /* Bleu Navy */
-    --color-accent: #f97316;
-    /* Orange vif */
+    --color-primary: #00FF41;
+    /* Vert Néon */
+    --color-accent: #00FF41;
+    /* Vert Néon */
     --color-background: #f8fafc;
     /* Gris très clair */
     --color-surface: #ffffff;
@@ -203,10 +218,10 @@ body.theme-debug :where(.card) {
 
   [data-theme="dark"] {
     /* Palette 1 - Mode Sombre */
-    --color-primary: #60a5fa;
-    /* Bleu plus clair */
-    --color-accent: #fdba74;
-    /* Orange doux */
+    --color-primary: #00FF41;
+    /* Vert Néon */
+    --color-accent: #00FF41;
+    /* Vert Néon */
     --color-background: #0f172a;
     /* Bleu nuit foncé */
     --color-surface: #1e293b;
@@ -238,25 +253,13 @@ body.theme-debug :where(.card) {
     --color-text-muted: #6E6E6E;
     /* demandé */
 
-    --color-primary: #1e40af;
-    /* Bleu Navy */
-    --color-primary-light: #3b82f6;
-    /* Hover clair */
-    --color-accent: #dc2626;
-    /* Rouge vif pour urgences/deals */
-    --color-accent-orange: #ea580c;
-    /* Orange plus foncé */
-
-    --color-border: #d1d5db;
-    /* Gris visible */
-
-    /* Boutons (tokens) */
-    --btn-primary-bg: #1e40af;
-    --btn-primary-text: #ffffff;
-    --btn-accent-bg: #dc2626;
-    --btn-accent-text: #ffffff;
-    --btn-secondary-bg: #f3f4f6;
-    --btn-secondary-text: #374151;
+    --color-primary: #000000;
+    --color-accent: #000000;
+    --color-background: #ffffff;
+    --color-surface: #f8fafc;
+    --color-border: #e2e8f0;
+    --color-text-primary: #000000;
+    --color-text-secondary: #64748b;
   }
 
   :root {
@@ -273,25 +276,21 @@ body.theme-debug :where(.card) {
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 0%;
 
-    --primary: 226 69% 40%;
-    /* #1e40af */
-    --primary-hover: 225 72% 47%;
-    /* #1d4ed8 */
+    --primary: 0 0% 0%;
+    /* #000000 (Pure Black) */
+    --primary-hover: 0 0% 15%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 98%;
-    /* light neutral */
-    --secondary-foreground: 210 29% 25%;
+    --secondary: 161 86% 16%;
+    /* #064E3B */
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 0 0% 90%;
-    /* fond léger */
-    --muted-foreground: 0 0% 43%;
-    /* ~#6E6E6E */
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 22 98% 56%;
-    /* ~#f97316 */
-    --accent-foreground: 215 28% 17%;
-    /* dark text on orange */
+    --accent: 0 0% 0%;
+    /* #000000 (Pure Black) */
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 72% 51%;
     /* #DC2626 */
@@ -333,7 +332,7 @@ body.theme-debug :where(.card) {
     --shadow-card: 0 2px 6px rgba(0, 0, 0, 0.1);
     --shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.12);
     --shadow-glow: 0 0 24px rgba(29, 78, 216, 0.18), 0 0 48px rgba(29, 78, 216, 0.08);
-    --shadow-glow-accent: 0 0 24px rgba(249, 115, 22, 0.18), 0 0 48px rgba(249, 115, 22, 0.08);
+    --shadow-glow-accent: 0 0 24px rgba(6, 78, 59, 0.18), 0 0 48px rgba(6, 78, 59, 0.08);
     --shadow-inner:
       inset 0 2px 4px 0 hsl(0 0% 0% / 0.06);
 
@@ -345,7 +344,7 @@ body.theme-debug :where(.card) {
     /* 📱 Sidebar Colors */
     --sidebar-background: 220 17% 97%;
     --sidebar-foreground: 217 33% 12%;
-    --sidebar-primary: 221 83% 53%;
+    --sidebar-primary: 222 47% 11%;
     --sidebar-primary-foreground: 217 33% 12%;
     --sidebar-accent: 220 14% 96%;
     --sidebar-accent-foreground: 217 33% 12%;
@@ -370,24 +369,24 @@ body.theme-debug :where(.card) {
     /* #121212 */
     --popover-foreground: 0 0% 100%;
 
-    /* Bouton Primaire: Rouge Néon #FF002B */
-    --primary: 350 100% 50%;
-    /* #FF002B */
-    --primary-hover: 350 100% 60%;
-    --primary-foreground: 0 0% 100%;
+    /* Bouton Primaire: Green Néon #00FF41 */
+    --primary: 135 100% 50%;
+    /* #00FF41 */
+    --primary-hover: 135 100% 60%;
+    --primary-foreground: 135 100% 5%;
 
-    --secondary: 0 0% 10%;
+    --secondary: 0 0% 15%;
     /* #1A1A1A (Niveau 1) */
-    --secondary-foreground: 0 0% 69%;
-    /* #B0B0B0 (Gris clair lumineux) */
+    --secondary-foreground: 135 100% 50%;
+    /* Green highlight */
 
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 63%;
     /* #A0A0A0 */
 
-    --accent: 350 100% 50%;
+    --accent: 135 100% 50%;
     /* Vivid Accent matches Primary */
-    --accent-foreground: 0 0% 100%;
+    --accent-foreground: 0 0% 0%;
 
     --destructive: 0 100% 50%;
     --destructive-foreground: 0 0% 100%;
@@ -395,7 +394,7 @@ body.theme-debug :where(.card) {
     --border: 0 0% 20%;
     /* Contrast border */
     --input: 0 0% 20%;
-    --ring: 350 100% 50%;
+    --ring: 145 100% 50%;
 
     /* Vivid Specs */
     --radius: 20px;
@@ -404,7 +403,7 @@ body.theme-debug :where(.card) {
     /* "Vivid" Specific Variables */
     --bg-dark: #000000;
     --surface-dark: #121212;
-    --primary-vivid: #FF002B;
+    --primary-vivid: #00FF41;
     --text-main: #FFFFFF;
     --text-muted: #B0B0B0;
 
@@ -412,25 +411,31 @@ body.theme-debug :where(.card) {
     --shadow-card: none;
     --shadow-card-hover: 0 0 0 1px var(--primary-vivid);
     /* Glow effect on hover instead of shadow */
+
+    /* Gradients for Dark Mode */
+    --gradient-hero: linear-gradient(180deg, hsl(var(--background)) 0%, #050505 100%);
+    --gradient-accent: linear-gradient(180deg, hsl(var(--background)) 0%, #050505 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--background)) 0%, #050505 100%);
+    --gradient-card: linear-gradient(180deg, #0a0a0a 0%, #000000 100%);
   }
 
   /* Custom Vivid Button Class */
   .button-vivid {
-    background-color: #FF002B;
-    color: white;
+    background-color: #00A84D;
+    color: #ffffff;
     font-weight: 800;
     padding: 12px 24px;
     border-radius: 9999px;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    box-shadow: 0 4px 15px rgba(255, 0, 43, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 168, 77, 0.3);
   }
 
   .button-vivid:hover {
     transform: scale(1.05);
-    filter: brightness(1.2);
-    box-shadow: 0 6px 20px rgba(255, 0, 43, 0.5);
+    filter: brightness(1.1);
+    box-shadow: 0 6px 20px rgba(0, 168, 77, 0.5);
   }
 
   /* Counter Animation Class */
@@ -455,9 +460,12 @@ body.theme-debug :where(.card) {
     text-rendering: optimizeLegibility;
   }
 
-  /* Smooth scrolling */
+  /* Smooth scrolling uniquement pour les ancres, pas pour la navigation */
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
+    /* touch-action: manipulation évite le zoom double-tap iOS en mode PWA */
+    touch-action: manipulation;
+    -webkit-text-size-adjust: 100%;
   }
 
   /* Sélection de texte personnalisée */
@@ -531,6 +539,22 @@ body.theme-debug :where(.card) {
     100% {
       background-position: 1000px 0;
     }
+  }
+
+  @keyframes levitate {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-15px);
+    }
+  }
+
+  .animate-levitate {
+    animation: levitate 4s ease-in-out infinite;
   }
 
   .animate-float {
@@ -730,7 +754,7 @@ body.theme-debug :where(.card) {
 /* Badge "Neuf" - Très visible */
 [data-theme="dark"] .bg-emerald-500\/10,
 .dark .bg-emerald-500\/10 {
-  background-color: #10b981 !important;
+  background-color: #00A84D !important;
   color: #ffffff !important;
   font-weight: 700 !important;
   border: none !important;
@@ -746,14 +770,14 @@ body.theme-debug :where(.card) {
 /* Texte émeraude - Plus clair */
 [data-theme="dark"] .text-emerald-600,
 .dark .text-emerald-600 {
-  color: #34d399 !important;
+  color: #00A84D !important;
   font-weight: 700 !important;
 }
 
 /* Bordures émeraude */
 [data-theme="dark"] .border-emerald-500\/20,
 .dark .border-emerald-500\/20 {
-  border: 2px solid #10b981 !important;
+  border: 2px solid #00A84D !important;
 }
 
 /* Texte secondaire - Gris clair */
@@ -777,7 +801,7 @@ body.theme-debug :where(.card) {
 /* Boutons */
 [data-theme="dark"] .btn,
 .dark .btn {
-  background-color: #3b82f6 !important;
+  background-color: #00A84D !important;
   color: white !important;
   border: none !important;
 }
@@ -848,13 +872,13 @@ body.theme-debug :where(.card) {
 
 [data-theme="dark"] .phone-card .bg-gradient-accent,
 .dark .phone-card .bg-gradient-accent {
-  background: #3b82f6 !important;
+  background: #00A84D !important;
   color: white !important;
 }
 
 [data-theme="dark"] .phone-card .text-primary,
 .dark .phone-card .text-primary {
-  color: #60a5fa !important;
+  color: #00A84D !important;
 }
 
 [data-theme="dark"] .phone-card .border-border,
@@ -865,4 +889,31 @@ body.theme-debug :where(.card) {
 [data-theme="dark"] .phone-card .bg-card,
 .dark .phone-card .bg-card {
   background-color: #1e293b !important;
+}
+
+/* ---- Navigation Icons Custom Styling (Matching Reference Image) ---- */
+.nav-icon {
+  width: 28px;
+  height: 28px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-icon-solid {
+  fill: currentColor;
+  stroke: none;
+}
+
+.notification-dot {
+  background-color: #ff0000;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  position: absolute;
+  top: -2px;
+  right: -2px;
 }

@@ -1,55 +1,71 @@
-import { Link, useLocation } from "react-router-dom";
-import { Home, Repeat, Calculator, User, Search } from "lucide-react";
-import UserAvatar from "@/components/UserAvatar";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Home, Compass, LayoutGrid, Settings } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
+
+// Icône user.svg inline — même style que les autres icônes nav
+const UserSVG = ({ active }: { active: boolean }) => (
+  <svg
+    viewBox="0 0 16 16"
+    className="h-7 w-7 nav-icon"
+    fill={active ? "currentColor" : "none"}
+    stroke="currentColor"
+    strokeWidth={active ? 0 : 1.5}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M8 7C9.65685 7 11 5.65685 11 4C11 2.34315 9.65685 1 8 1C6.34315 1 5 2.34315 5 4C5 5.65685 6.34315 7 8 7Z" />
+    <path d="M14 12C14 10.3431 12.6569 9 11 9H5C3.34315 9 2 10.3431 2 12V15H14V12Z" />
+  </svg>
+);
 
 export default function BottomNav() {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const { user } = useAuth();
 
-  const base = [
+  const nav = [
     { to: "/", label: "Accueil", Icon: Home },
-    { to: "/simulateur", label: "Simulateur", Icon: Calculator },
-    { to: "/diagnose", label: "Diagnostic", Icon: Repeat },
-    { to: "/deals", label: "Swaps", Icon: Search },
+    { to: "/deals", label: "Explorer", Icon: Compass },
+    { to: "/simulateur", label: "Upgrade", Icon: LayoutGrid },
+    { to: "/settings", label: "Paramètres", Icon: Settings },
   ];
-  const last = user
-    ? { to: "/profile", label: "Profil", Icon: User as any }
-    : { to: "/login", label: "Se connecter", Icon: User as any };
-  const nav = [...base, last];
-  const colorMap: Record<string, string> = {
-    'Accueil': 'text-sky-500',
-    'Swaps': 'text-emerald-500',
-    'Simulateur': 'text-violet-500',
-    'Profil': 'text-amber-500',
-    'Se connecter': 'text-rose-500',
-    'Diagnostic': 'text-blue-500',
-  };
+
+  const profilePath = user ? "/profile" : "/login";
+  const profileActive = pathname === "/profile";
 
   return (
-    <nav className="fixed bottom-3 left-3 right-3 z-40 md:hidden">
-      <div className="mx-auto max-w-3xl px-3 py-2 h-16 rounded-2xl border border-white/30 bg-white/70 dark:bg-black/40 backdrop-blur-md shadow-xl flex items-center justify-around">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden h-20 bg-background/60 backdrop-blur-2xl border-t border-border/10 pb-safe">
+      <div className="flex items-center justify-around h-full max-w-lg mx-auto">
         {nav.map(({ to, label, Icon }) => {
           const active = pathname === to;
-          const color = colorMap[label] || 'text-primary';
           return (
-            <Link key={to} to={to} className="flex flex-col items-center justify-center gap-1">
-              <div className="relative flex items-center justify-center">
-                <div className={`h-9 w-9 rounded-full flex items-center justify-center ${active ? 'bg-white shadow-md dark:bg-white/10' : 'bg-transparent'}`}>
-                  {label === 'Profil' && user ? (
-                    <UserAvatar user={user} size="sm" />
-                  ) : (
-                    <Icon className={`h-6 w-6 ${active ? 'text-primary' : color}`} />
-                  )}
-                </div>
-                {active && <span className="absolute -bottom-1 h-1.5 w-1.5 rounded-full bg-primary" />}
-              </div>
-              <span className={`text-[10px] leading-none ${active ? 'text-primary font-semibold' : 'text-muted-foreground'}`}>{label}</span>
+            <Link
+              key={to}
+              to={to}
+              className={`flex flex-col items-center gap-1 transition-all duration-300 ${active ? "text-primary -translate-y-1" : "text-black dark:text-white"}`}
+            >
+              <Icon
+                className="h-7 w-7 nav-icon"
+                strokeWidth={active ? 3 : 2}
+                fill={active ? "currentColor" : "none"}
+              />
+              <span className={`text-[10px] font-black tracking-tight ${active ? "opacity-100" : "opacity-80"}`}>
+                {label}
+              </span>
             </Link>
           );
         })}
+
+        {/* 👤 Profil User — même style que les autres icônes */}
+        <button
+          onClick={() => navigate(profilePath)}
+          className={`flex flex-col items-center gap-1 transition-all duration-300 ${profileActive ? "text-primary -translate-y-1" : "text-black dark:text-white"}`}
+        >
+          <UserSVG active={profileActive} />
+          <span className={`text-[10px] font-black tracking-tight ${profileActive ? "opacity-100" : "opacity-80"}`}>
+            Profil
+          </span>
+        </button>
       </div>
-      <div className="h-[env(safe-area-inset-bottom)]" />
     </nav>
   );
 }

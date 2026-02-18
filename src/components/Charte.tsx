@@ -1,91 +1,99 @@
-import { ShieldCheck, Scale, BadgeCheck, Wallet, AlertTriangle, Users } from "lucide-react";
+import { ShieldCheck, Scale, BadgeCheck, Wallet, AlertTriangle, Users, ChevronLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Charte = () => {
   const items = [
     {
       icon: Users,
-      title: "Principe du SWAP",
+      title: "L'Esprit du SWAP",
       points: [
-        "Mise en relation pour échanger des téléphones entre particuliers ou avec des revendeurs",
-        "Échanges équitables (téléphone contre téléphone) ou compensés (différence de valeur)",
+        "Mise en relation pour échanger des téléphones entre particuliers de manière équitable.",
+        "Favoriser le troc direct pour éviter l'inflation des prix du neuf.",
+        "Possibilité de rajout (Soulte) si les deux appareils n'ont pas la même valeur.",
       ],
     },
     {
       icon: BadgeCheck,
-      title: "État des téléphones",
+      title: "Transparence Radicale",
       points: [
-        "Photos réelles et récentes (avant/arrière, écran allumé)",
-        "État: neuf, très bon, bon, endommagé",
-        "Fonctionnalités testées: écran, réseau, caméra, batterie, etc.",
-        "Mention: débloqué/tout opérateur, accessoires (chargeur/boîte/facture)",
+        "Obligation de fournir des photos réelles montrant tous les angles de l'appareil.",
+        "Description honnête : chaque micro-rayure ou usure batterie doit être mentionnée.",
+        "Indiquer clairement si l'appareil a déjà subi des réparations tierces.",
       ],
     },
     {
       icon: ShieldCheck,
-      title: "Vérification & Sécurité",
+      title: "Sécurité & Vérification",
       points: [
-        "Les utilisateurs sont responsables des informations publiées",
-        "Certaines annonces peuvent être vérifiées avant publication (option)",
-        "Échanges via un système sécurisé (SWAP Wallet). Aucun échange hors plateforme n’est couvert",
+        "Utilisation recommandée de nos points de swap certifiés pour l'échange physique.",
+        "Blocage des fonds via SWAP Wallet jusqu'à confirmation de réception par les deux parties.",
+        "Signalement immédiat de tout comportement suspect ou tentative de 'off-platform'.",
       ],
     },
     {
       icon: Scale,
-      title: "Valeur et compensation",
+      title: "Évaluation Équitable",
       points: [
-        "Valorisation basée sur modèle exact, état et tendances du marché",
-        "Calcul automatique d’une différence estimée et proposition d’un montant de compensation",
+        "L'algorithme TEKH+ sert de base neutre pour fixer la compensation.",
+        "Liberté de négociation dans la limite des standards du marché local.",
+        "Protection contre les propositions abusives ou dévalorisantes.",
       ],
     },
     {
       icon: AlertTriangle,
-      title: "Éthique et transparence",
+      title: "Intégrité du Réseau",
       points: [
-        "Interdiction des téléphones volés, contrefaits ou bloqués",
-        "Aucune annonce d’origine douteuse",
-        "Respect des conditions d’utilisation sous peine de suspension",
+        "Interdiction formelle des téléphones volés (vérification IMEI obligatoire).",
+        "Bannissement définitif pour toute tentative de vente de contrefaçon.",
+        "Respect mutuel et courtoisie lors de la messagerie WhatsApp ou interne.",
       ],
     },
     {
       icon: Wallet,
-      title: "Litiges & Protection",
+      title: "Garantie du Deal",
       points: [
-        "Médiation possible en cas de litige",
-        "Fonds/objets peuvent être retenus le temps de la résolution",
-        "Assurance optionnelle disponible",
+        "Assurance optionnelle couvrant le transport vers le point de swap.",
+        "Médiation TEKH+ gratuite en cas de désaccord sur l'état lors du face-à-face.",
+        "Finalisation du deal uniquement après validation technique mutuelle.",
       ],
     },
   ];
 
   return (
-    <section id="charte" className="py-16 md:py-24">
-      <div className="container mx-auto px-4">
-        <div className="text-center space-y-4 mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
-            Charte <span className="text-primary">SWAP</span>
-          </h2>
-          <p className="text-lg text-foreground/80 max-w-2xl mx-auto">
-            Règles et engagements pour des échanges responsables et sécurisés
-          </p>
-        </div>
+    <div className="min-h-screen bg-zinc-50 dark:bg-black text-black dark:text-white pt-24 pb-16">
+      <div className="container mx-auto px-4 max-w-6xl">
+        <Link to="/" className="inline-flex items-center gap-2 text-primary font-black mb-8 hover:-translate-x-1 transition-transform">
+          <ChevronLeft className="h-5 w-5" />
+          Retour à l'accueil
+        </Link>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <header className="text-center space-y-6 mb-20">
+          <h1 className="text-5xl md:text-8xl font-black tracking-tighter uppercase leading-none">
+            Charte du <span className="text-primary tracking-normal">SWAP</span>
+          </h1>
+          <p className="text-xl text-slate-500 font-bold max-w-2xl mx-auto leading-relaxed">
+            Les 6 Commandements pour un échange sécurisé, équitable et respectueux.
+          </p>
+        </header>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {items.map((item, idx) => {
             const Icon = item.icon;
             return (
-              <div key={idx} className="relative">
-                <div className="relative bg-card border border-border rounded-2xl p-6 shadow-card">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="relative">
-                      <div className="relative bg-primary p-2.5 rounded-xl">
-                        <Icon className="h-5 w-5 text-primary-foreground" />
-                      </div>
+              <div key={idx} className="group">
+                <div className="h-full bg-white dark:bg-zinc-900 border-2 border-black dark:border-white rounded-[32px] p-8 shadow-xl hover:border-primary transition-all duration-500">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="h-12 w-12 bg-primary rounded-xl flex items-center justify-center group-hover:rotate-12 transition-transform">
+                      <Icon className="h-6 w-6 text-black" />
                     </div>
-                    <h3 className="text-xl font-bold">{item.title}</h3>
+                    <h3 className="text-2xl font-black uppercase tracking-tight">{item.title}</h3>
                   </div>
-                  <ul className="list-disc pl-5 space-y-2 text-foreground/80">
+                  <ul className="space-y-4">
                     {item.points.map((p, i) => (
-                      <li key={i}>{p}</li>
+                      <li key={i} className="flex gap-3 text-slate-500 font-bold leading-relaxed">
+                        <span className="h-2 w-2 rounded-full bg-primary mt-2 shrink-0" />
+                        {p}
+                      </li>
                     ))}
                   </ul>
                 </div>
@@ -94,11 +102,11 @@ const Charte = () => {
           })}
         </div>
 
-        <div className="mt-10 text-sm text-foreground/70 text-center">
-          SWAP encourage des échanges équitables, responsables et durables.
+        <div className="mt-20 p-8 bg-zinc-100 dark:bg-zinc-900 rounded-[32px] border-2 border-black dark:border-white text-center">
+          <p className="text-lg font-black italic opacity-70 italic">"En swappant, vous n'échangez pas seulement un outil, vous partagez une vision du futur."</p>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

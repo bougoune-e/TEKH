@@ -1,67 +1,60 @@
-import { Link, useLocation } from 'react-router-dom';
-import { Home, Search, Plus, BookOpen, Calculator, Sun, Moon, User, ClipboardList } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Home, Compass, LayoutGrid, Settings } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
-import { HoverCard, HoverCardTrigger, HoverCardContent } from './ui/hover-card';
-import { useTheme } from '@/theme/ThemeProvider';
-import { useMemo } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import { useDeals } from '@/context/DealsContext';
-import UserAvatar from '@/components/UserAvatar';
+import logo from '@/assets/logos/robott.jpeg';
 
-const iconBtn = 'h-12 w-12 rounded-xl bg-card border border-border shadow-card hover:shadow-card-hover hover:scale-105 transition-spring inline-flex items-center justify-center transform-gpu will-change-transform';
+// Icône user.svg inline — visible en mode clair ET sombre
+const UserSVG = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 16 16" className={className} fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path d="M8 7C9.65685 7 11 5.65685 11 4C11 2.34315 9.65685 1 8 1C6.34315 1 5 2.34315 5 4C5 5.65685 6.34315 7 8 7Z" />
+    <path d="M14 12C14 10.3431 12.6569 9 11 9H5C3.34315 9 2 10.3431 2 12V15H14V12Z" />
+  </svg>
+);
 
 const Sidebar = () => {
-  const { theme, setTheme } = useTheme();
   const location = useLocation();
-
+  const navigate = useNavigate();
   const { user } = useAuth();
-
-  const displayName = (user as any)?.user_metadata?.full_name || (user as any)?.user_metadata?.name || (user as any)?.email || '';
-  const displayEmail = (user as any)?.email || '';
-  const { deals } = useDeals();
-  const myCount = useMemo(() => {
-    const uid = (user as any)?.id;
-    if (!uid) return 0;
-    return deals.filter((d) => d.ownerId === uid).length;
-  }, [deals, user]);
 
   const navItems = [
     { icon: Home, label: 'Accueil', path: '/' },
-    { icon: Search, label: 'Explorer', path: '/deals' },
-    { icon: Plus, label: 'Publier', path: '/post' },
-    { icon: ClipboardList, label: 'Mes publications', path: '/mes-publications' },
-    { icon: BookOpen, label: 'Charte', path: '/charte' },
-    { icon: Calculator, label: 'Simulateur', path: '/simulateur' },
-    { icon: ClipboardList, label: 'Diagnostic', path: '/diagnose' },
+    { icon: Compass, label: 'Explorer', path: '/deals' },
+    { icon: LayoutGrid, label: 'Upgrade', path: '/simulateur' },
   ];
-  const colorMap: Record<string, string> = {
-    'Accueil': 'text-sky-500',
-    'Explorer': 'text-fuchsia-500',
-    'Publier': 'text-emerald-500',
-    'Mes publications': 'text-amber-500',
-    'Charte': 'text-rose-500',
-    'Simulateur': 'text-violet-500',
-    'Diagnostic': 'text-blue-500',
+
+  const handleProfileClick = () => {
+    navigate(user ? '/profile' : '/login');
   };
 
   return (
-    <aside className="hidden md:flex fixed left-0 top-0 h-screen w-20 bg-background border-r border-border flex-col items-center py-4 gap-3">
+    <aside className="hidden md:flex fixed left-0 top-0 h-screen w-16 bg-white dark:bg-slate-900 flex-col items-center py-8 z-50 border-r border-border/10">
       {/* Logo */}
-      <Link to="/" className="mb-2">
-        <img src="/assets/logos/robot.png" alt="Tekh" className="h-10 w-10 rounded-full ring-1 ring-border object-cover" />
+      <Link to="/" className="mb-12">
+        <img src={logo} alt="TΞKΗ+" className="h-10 w-10 rounded-xl" />
       </Link>
 
       {/* Nav */}
-      <nav className="mt-2 flex-1 flex flex-col items-center gap-2">
+      <nav className="flex-1 flex flex-col items-center gap-10">
         {navItems.map((item) => {
           const active = location.pathname === item.path;
           const Icon = item.icon;
-          const color = colorMap[item.label] || 'text-primary';
           return (
             <Tooltip key={item.path}>
               <TooltipTrigger asChild>
-                <Link to={item.path} className={`${iconBtn} ${active ? 'bg-primary text-primary-foreground border-2 border-primary' : ''}`} aria-label={item.label}>
-                  <Icon className={`h-5 w-5 ${active ? 'text-primary-foreground' : color}`} />
+                <Link
+                  to={item.path}
+                  className={`relative transition-all duration-300 hover:scale-110 ${active ? 'text-primary dark:text-primary scale-110' : 'text-black dark:text-white hover:text-primary dark:hover:text-primary'}`}
+                  aria-label={item.label}
+                >
+                  <Icon
+                    className="h-8 w-8 nav-icon"
+                    strokeWidth={active ? 3 : 2}
+                    fill={active ? 'currentColor' : 'none'}
+                  />
+                  {active && (
+                    <span className="absolute -left-4 top-1/2 -translate-y-1/2 h-8 w-1 bg-primary rounded-r-full shadow-[0_0_15px_rgba(0,255,65,0.6)]" />
+                  )}
                 </Link>
               </TooltipTrigger>
               <TooltipContent side="right">{item.label}</TooltipContent>
@@ -70,53 +63,58 @@ const Sidebar = () => {
         })}
       </nav>
 
-      {/* Bottom actions */}
-      <div className="flex flex-col items-center gap-2 pb-2">
+      {/* Bottom Actions */}
+      <div className="pb-8 flex flex-col items-center gap-6">
+        {/* Settings */}
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Link
+              to="/settings"
+              className={`relative transition-all duration-300 hover:scale-110 ${location.pathname === '/settings' ? 'text-primary' : 'text-black dark:text-white hover:text-primary'}`}
+              aria-label="Paramètres"
+            >
+              <Settings
+                className="h-8 w-8 nav-icon"
+                strokeWidth={location.pathname === '/settings' ? 3 : 2}
+                fill={location.pathname === '/settings' ? 'currentColor' : 'none'}
+              />
+              {location.pathname === '/settings' && (
+                <span className="absolute -left-4 top-1/2 -translate-y-1/2 h-8 w-1 bg-accent rounded-r-full shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
+              )}
+            </Link>
+          </TooltipTrigger>
+          <TooltipContent side="right">Paramètres</TooltipContent>
+        </Tooltip>
+
+        {/* 👤 Profil User — même style que les autres icônes */}
         <Tooltip>
           <TooltipTrigger asChild>
             <button
-              className={iconBtn}
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              aria-label={theme === 'dark' ? 'Mode clair' : 'Mode sombre'}
+              onClick={handleProfileClick}
+              className={`relative transition-all duration-300 hover:scale-110 ${location.pathname === '/profile'
+                ? 'text-primary scale-110'
+                : 'text-black dark:text-white hover:text-primary dark:hover:text-primary'
+                }`}
+              aria-label="Profil"
             >
-              {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              <svg
+                viewBox="0 0 16 16"
+                className="h-8 w-8 nav-icon"
+                fill={location.pathname === '/profile' ? 'currentColor' : 'none'}
+                stroke="currentColor"
+                strokeWidth={location.pathname === '/profile' ? 0 : 1.5}
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M8 7C9.65685 7 11 5.65685 11 4C11 2.34315 9.65685 1 8 1C6.34315 1 5 2.34315 5 4C5 5.65685 6.34315 7 8 7Z" />
+                <path d="M14 12C14 10.3431 12.6569 9 11 9H5C3.34315 9 2 10.3431 2 12V15H14V12Z" />
+              </svg>
+              {location.pathname === '/profile' && (
+                <span className="absolute -left-4 top-1/2 -translate-y-1/2 h-8 w-1 bg-primary rounded-r-full shadow-[0_0_15px_rgba(0,255,65,0.6)]" />
+              )}
             </button>
           </TooltipTrigger>
-          <TooltipContent side="right">{theme === 'dark' ? 'Mode clair' : 'Mode sombre'}</TooltipContent>
+          <TooltipContent side="right">Mon Profil</TooltipContent>
         </Tooltip>
-
-        {user ? (
-          <HoverCard>
-            <HoverCardTrigger asChild>
-              <Link to="/profile" className={iconBtn} aria-label="Profil">
-                <UserAvatar user={user} size="sm" />
-              </Link>
-            </HoverCardTrigger>
-            <HoverCardContent side="right">
-              <div className="flex items-center gap-3">
-                <UserAvatar user={user} size="lg" />
-                <div className="text-sm">
-                  <div className="font-semibold leading-none">{displayName}</div>
-                  {displayEmail && <div className="text-muted-foreground text-xs mt-1">{displayEmail}</div>}
-                  <div className="text-xs text-muted-foreground mt-1">Publications: {myCount}</div>
-                </div>
-              </div>
-              <div className="mt-3 grid gap-1">
-                <Link to="/profile" className="text-sm underline">Voir le profil</Link>
-                <Link to="/mes-publications" className="text-sm underline">Mes publications</Link>
-              </div>
-            </HoverCardContent>
-          </HoverCard>
-        ) : (
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Link to="/login" className={iconBtn} aria-label="Se connecter">
-                <User className="h-5 w-5" />
-              </Link>
-            </TooltipTrigger>
-            <TooltipContent side="right">Se connecter</TooltipContent>
-          </Tooltip>
-        )}
       </div>
     </aside>
   );

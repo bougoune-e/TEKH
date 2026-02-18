@@ -77,7 +77,22 @@ export default function DealsPage() {
 
   useEffect(() => {
     if (!isSupabaseConfigured) return;
-    fetchDeals().then((rows) => setDealsList(rows as any)).catch(() => { });
+    fetchDeals()
+      .then((rows) => {
+        if (rows && rows.length > 0) {
+          setDealsList(rows as any);
+        } else {
+          // Fallback to mock data if DB is empty
+          import("@/data/mockDeals").then(mod => {
+            setDealsList(mod.mockDeals as any);
+          });
+        }
+      })
+      .catch(() => {
+        import("@/data/mockDeals").then(mod => {
+          setDealsList(mod.mockDeals as any);
+        });
+      });
   }, []);
 
   // Pré-appliquer filtres si lastSimulation ou matchRequest
@@ -142,8 +157,8 @@ export default function DealsPage() {
             </div>
           </div>
           <div className="flex flex-wrap gap-2">
-            {['iPhone 13', 'Samsung S23', 'Budget < 100k', '256 Go'].map((t) => (
-              <Badge key={t} variant="outline" className="rounded-full px-4 py-1.5 hover:bg-muted cursor-pointer transition-colors">{t}</Badge>
+            {['iPhone 15', 'Samsung S24', 'Budget < 200k', '512 Go'].map((t) => (
+              <Badge key={t} variant="outline" className="rounded-full px-4 py-1.5 bg-card hover:bg-primary hover:text-white hover:border-primary cursor-pointer transition-all font-bold">{t}</Badge>
             ))}
           </div>
         </div>

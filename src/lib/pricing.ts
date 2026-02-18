@@ -6,6 +6,8 @@ export interface Diagnostics {
     etat_moyen: boolean;
 }
 
+export const MINIMUM_TRADE_FEE = 10000; // Frais de service TEKH+
+
 /**
  * Calcule l'estimation de rachat selon les règles strictes :
  * 1. Prix Pivot = prixBase * 0.75
@@ -75,10 +77,19 @@ export const calculateEstimate = (specs: any, basePrice: number) => {
 };
 
 export function getSwapGap(userDeviceValue: number, targetDealPrice: number) {
-    const gap = targetDealPrice - userDeviceValue;
+    const theoreticalGap = targetDealPrice - userDeviceValue;
+
+    // Si c'est un downgrade (gap < 0), on force quand même le frais minimal
+    // Si c'est un upgrade, c'est le gap + le frais minimal (ou inclus dans la marge)
+    // Selon le souhait du client : "le downgrade mm est conditionnee a lajout dune somme minimale"
+
+    const finalGap = theoreticalGap > 0
+        ? theoreticalGap + (MINIMUM_TRADE_FEE * 0.5) // Petit surplus sur upgrade pour la marge
+        : MINIMUM_TRADE_FEE; // Pour les downgrades, on paye au moins le frais fixe
+
     return {
-        gap,
-        isPositive: gap > 0, // User needs to pay
-        formatted: Math.abs(gap).toLocaleString() + " FCFA"
+        gap: finalGap,
+        isPositive: true, // Dans ce modèle B2C, l'utilisateur paye toujours quelque chose pour le service/garantie
+        formatted: finalGap.toLocaleString() + " FCFA"
     };
 }

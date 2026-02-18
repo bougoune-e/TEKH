@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Cpu, HardDrive, Palette, Hash, Camera, DollarSign, Smartphone, User as UserIcon, Phone as PhoneIcon, MessageCircle, Mail } from "lucide-react";
+import { Cpu, HardDrive, Palette, Hash, Camera, DollarSign, Smartphone, User as UserIcon, Phone as PhoneIcon, MessageCircle, Mail, ShieldCheck } from "lucide-react";
 import { useDeals } from "@/context/DealsContext";
 import { useNavigate } from "react-router-dom";
 import type { DealPost } from "@/data/mockDeals";
@@ -321,8 +321,17 @@ export default function PublishPage() {
               <Textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Ajoutez quelques détails utiles (batterie, facture, accessoires…)" />
             </div>
           </CardContent>
-          <CardFooter className="p-6 pt-0">
-            <Button onClick={publish} className="w-full text-base font-semibold">Publier maintenant</Button>
+          <CardFooter className="p-6 pt-0 flex flex-col gap-4">
+            <div className="w-full bg-primary/10 border border-primary/20 rounded-2xl p-4 flex items-start gap-4">
+              <div className="h-10 w-10 shrink-0 bg-primary rounded-full flex items-center justify-center text-white shadow-glow">
+                <ShieldCheck className="h-6 w-6" />
+              </div>
+              <div className="space-y-1">
+                <p className="text-sm font-bold text-primary">Contrôle de Qualité TEKH</p>
+                <p className="text-xs text-muted-foreground leading-tight">Votre annonce sera auditée par notre équipe avant d'être certifiée. Les modèles de confiance se vendent 2x plus vite.</p>
+              </div>
+            </div>
+            <Button onClick={publish} className="w-full text-lg font-black rounded-full h-14 bg-primary hover:scale-[1.02] transition-transform shadow-xl">Certifier et Publier</Button>
           </CardFooter>
         </Card>
 

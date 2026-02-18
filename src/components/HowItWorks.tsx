@@ -1,8 +1,8 @@
 import { Smartphone, Search, ArrowRightLeft, CheckCircle } from "lucide-react";
-import offerImg from "../../assets/illustrations/deals/offer.png";
-import fcfaImg from "../../assets/illustrations/deals/fcfa.jpg";
-import swapImg from "../../assets/illustrations/deals/swap.jpeg";
-import badgeImg from "../../assets/illustrations/deals/badge.svg";
+import offerImg from "@/assets/illustrations/deals/offer.png";
+import fcfaImg from "@/assets/illustrations/deals/fcfa.jpg";
+import swapImg from "@/assets/illustrations/deals/swap.jpeg";
+import badgeImg from "@/assets/illustrations/deals/badge.svg";
 
 const HowItWorks = () => {
   const steps = [

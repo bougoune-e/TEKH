@@ -1,10 +1,10 @@
 import PhoneCard from "./PhoneCard";
-import hpImg from "../../assets/illustrations/homepage/smartphones.jpeg";
-import hpImg2 from "../../assets/illustrations/homepage/smartphone.jpeg";
-import iphone from "../../assets/illustrations/homepage/iphone.jpeg";
-import samsung from "../../assets/illustrations/homepage/samsungA35.jpeg";
-import pixel from "../../assets/illustrations/homepage/google_pixel.jpeg";
-import huawei from "../../assets/illustrations/homepage/huawei.jpeg";
+import hpImg from "@/assets/illustrations/homepage/smartphones.jpeg";
+import hpImg2 from "@/assets/illustrations/homepage/smartphone.jpeg";
+import iphone from "@/assets/illustrations/homepage/iphone.jpeg";
+import samsung from "@/assets/illustrations/homepage/samsungA35.jpeg";
+import pixel from "@/assets/illustrations/homepage/google_pixel.jpeg";
+import huawei from "@/assets/illustrations/homepage/huawei.jpeg";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Sparkles, BadgeCheck, Recycle, ArrowRight } from "lucide-react";
@@ -26,7 +26,7 @@ const DealsSection = () => {
     <section id="deals" className="py-16 md:py-24 relative">
       {/* Effet de fond subtil */}
       <div className="absolute inset-0 bg-gradient-subtle opacity-50"></div>
-      
+
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center space-y-4 mb-12">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
@@ -73,19 +73,17 @@ const DealsSection = () => {
           </div>
         </div>
 
-        <Tabs defaultValue="refurbished" className="w-full" aria-label="Catégories de deals">
-          <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8 bg-muted p-1 rounded-lg border border-border">
-            <TabsTrigger 
-              value="refurbished" 
-              className="rounded-md data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:font-bold transition-colors duration-200"
-              aria-label="Voir les téléphones reconditionnés"
+        <Tabs defaultValue="refurbished" className="w-full flex flex-col items-center" aria-label="Catégories de deals">
+          <TabsList className="flex w-auto mx-auto mb-8 bg-zinc-100 dark:bg-zinc-900 p-1 rounded-[16px] border-2 border-black dark:border-white overflow-hidden h-auto">
+            <TabsTrigger
+              value="refurbished"
+              className="rounded-[12px] px-8 py-2.5 data-[state=active]:bg-black data-[state=active]:text-white dark:data-[state=active]:bg-white dark:data-[state=active]:text-black font-black transition-all duration-300 min-w-max"
             >
               Reconditionnés
             </TabsTrigger>
-            <TabsTrigger 
-              value="new" 
-              className="rounded-md bg-black text-white data-[state=active]:bg-black data-[state=active]:text-white data-[state=inactive]:opacity-90 transition-colors duration-200"
-              aria-label="Voir les téléphones neufs"
+            <TabsTrigger
+              value="new"
+              className="rounded-[12px] px-8 py-2.5 data-[state=active]:bg-black data-[state=active]:text-white dark:data-[state=active]:bg-white dark:data-[state=active]:text-black font-black transition-all duration-300 min-w-max"
             >
               Neufs
             </TabsTrigger>

@@ -14,9 +14,9 @@ const ThemeToggle = ({ className = "" }: { className?: string }) => {
     <button
       aria-label={isDark ? "Mode clair" : "Mode sombre"}
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className={`inline-flex items-center justify-center h-10 w-10 rounded-full border border-border bg-card shadow-sm hover:bg-accent transition-smooth ${className}`}
+      className={`inline-flex items-center justify-center h-10 w-10 rounded-full border-2 border-black dark:border-white bg-white dark:bg-black shadow-lg hover:scale-110 active:scale-95 transition-all ${className}`}
     >
-      <EclipseIcon className="h-5 w-5" />
+      <EclipseIcon className="h-5 w-5 text-black dark:text-white" />
     </button>
   );
 };

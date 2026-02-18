@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { Smartphone, Star, MapPin, Heart, ArrowRightLeft } from "lucide-react";
+import { Smartphone, Star, MapPin, Heart, ArrowRightLeft, Zap } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 function tagClasses(t?: string) {
@@ -64,8 +64,9 @@ const PhoneCard = ({
   const navigate = useNavigate();
 
   // Dynamic brand icon lookup from assets if available
-  const modules = import.meta.glob<{ default: string }>("../../assets/icons/brands/*.svg", { eager: true, import: "default" });
+  const modules = import.meta.glob<{ default: string }>("@/assets/icons/brands/*.svg", { eager: true, import: "default" });
   const brandIcon = (() => {
+    if (!brand) return undefined;
     const entries = Object.entries(modules);
     const slug = brand.toLowerCase();
     const found = entries.find(([p]) => p.toLowerCase().includes(slug));
@@ -90,7 +91,7 @@ const PhoneCard = ({
   return (
     <Card
       onClick={() => { if (id) navigate(`/deal/${id}`); }}
-      className="group relative cursor-pointer overflow-hidden bg-card border border-border/50 rounded-[28px] hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+      className="group relative cursor-pointer overflow-hidden bg-card border border-border/40 rounded-[32px] hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
     >
       <CardHeader className="p-0 relative">
         <div className="aspect-[4/5] w-full bg-muted/20 flex items-center justify-center relative overflow-hidden">
@@ -102,8 +103,8 @@ const PhoneCard = ({
                 {tag}
               </span>
             )}
-            <span className="bg-white/90 backdrop-blur dark:bg-black/70 text-foreground text-[10px] font-bold px-2 py-0.5 rounded-full border border-border/20 shadow-sm">
-              CLASSE {trustClass}
+            <span className="bg-primary text-primary-foreground text-[10px] font-black px-3 py-1 rounded-full shadow-lg flex items-center gap-1 animate-pulse">
+              <Zap className="h-3 w-3 fill-current" /> CERTIFIÉ TΞKΗ+
             </span>
           </div>
 
@@ -155,9 +156,12 @@ const PhoneCard = ({
             <span className="text-sm text-muted-foreground line-through opacity-70">
               {originalPrice ? `${originalPrice.toLocaleString()} F` : ""}
             </span>
-            <span className="text-lg font-bold text-primary">
-              {price.toLocaleString()} <span className="text-xs font-normal text-muted-foreground">FCFA</span>
+            <span className="text-xl font-black text-primary tracking-tight">
+              {price.toLocaleString()} <span className="text-xs font-medium text-muted-foreground ml-1">FCFA</span>
             </span>
+          </div>
+          <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+            <ArrowRightLeft className="h-4 w-4" />
           </div>
         </div>
 

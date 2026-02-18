@@ -20,8 +20,6 @@ const Index = () => {
       <TrustSection />
       <MessagingSection />
       <RepairSection />
-      <HowItWorks />
-      <AboutSection />
     </>
   );
 };

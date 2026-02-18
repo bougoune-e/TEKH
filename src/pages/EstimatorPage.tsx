@@ -40,11 +40,23 @@ export default function EstimatorPage() {
   const [loadingModels, setLoadingModels] = useState(false);
   const [loadingStorages, setLoadingStorages] = useState(false);
   const [loadingPrice, setLoadingPrice] = useState(false);
+  const [loadingUpload, setLoadingUpload] = useState(false);
+
+  const [images, setImages] = useState<string[]>([]);
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
 
   const [basePrice, setBasePrice] = useState<number | null>(null);
 
   const [screenBroken, setScreenBroken] = useState(false);
   const [issueState, setIssueState] = useState<Record<string, boolean>>({});
+
+  const handleFiles = (files: FileList | null) => {
+    if (!files) return;
+    const picked = Array.from(files).slice(0, 4);
+    const urls = picked.map((f) => URL.createObjectURL(f));
+    setImageFiles((prev) => [...prev, ...picked].slice(0, 4));
+    setImages((prev) => [...prev, ...urls].slice(0, 4));
+  };
 
   useEffect(() => {
     (async () => {
@@ -162,8 +174,12 @@ export default function EstimatorPage() {
       <div className="container mx-auto px-4 max-w-3xl">
         <Card className="bg-card border-border/60">
           <CardHeader>
-            <CardTitle>Estimer mon téléphone</CardTitle>
-            <CardDescription>Choisissez votre appareil puis indiquez les pannes éventuelles</CardDescription>
+            <CardTitle className="text-3xl font-black tracking-tighter">Upgrade TEKH+: <span className="text-primary italic">Échangez & Évoluez</span></CardTitle>
+            <CardDescription className="text-base font-medium">
+              Estimez la valeur de votre appareil actuel pour un upgrade immédiat.
+              <br />
+              <span className="text-xs text-rose-500 font-bold mt-1 block uppercase tracking-wider">⚠️ Note : Nous ne rachetons pas en cash. Uniquement échange contre upgrade/downgrade.</span>
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
