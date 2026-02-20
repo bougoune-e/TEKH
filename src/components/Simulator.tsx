@@ -288,14 +288,14 @@ const Simulator = () => {
                 {/* Price Display */}
                 <div className="mt-8 pt-8 border-t border-zinc-100 dark:border-white/10 text-center">
                   <div className="text-[#374151] dark:text-gray-500 text-sm mb-1 uppercase tracking-widest font-bold">{t('simulator.estimate')}</div>
-                  <div className={cn("text-6xl font-black tracking-tighter drop-shadow-lg", getPriceColor())}>
+                  <div className={cn("text-4xl sm:text-6xl font-black tracking-tighter drop-shadow-lg", getPriceColor())}>
                     {estimate ? (
                       <span className="flex items-center justify-center gap-1">
                         <CountUp end={estimate} duration={0.8} separator=" " />
-                        <span className="text-2xl opacity-50 font-medium">FCFA</span>
+                        <span className="text-xl sm:text-2xl opacity-50 font-medium">FCFA</span>
                       </span>
                     ) : (
-                      <span className="text-gray-700 text-4xl">---</span>
+                      <span className="text-gray-700 text-3xl">---</span>
                     )}
                   </div>
                 </div>
