@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/lib/supabaseApi";
 import { cn } from "@/lib/utils";
+import ProfileIcon from "./ProfileIcon";
 
 type Size = "sm" | "md" | "lg" | "xl";
 
@@ -77,7 +78,7 @@ export default function UserAvatar({ user, src, path, size = "md", className = "
 
   const wrapperCls = cn(
     sizeToClass[size],
-    "rounded-2xl aspect-square overflow-hidden border-2 border-black/10 dark:border-white/10 shadow-lg relative bg-white/50 dark:bg-white/5 backdrop-blur-sm transition-all duration-500",
+    "rounded-xl aspect-square overflow-hidden border-2 border-zinc-100 dark:border-white/5 shadow-sm relative bg-white dark:bg-zinc-900 transition-all duration-500",
     className
   );
 
@@ -87,11 +88,8 @@ export default function UserAvatar({ user, src, path, size = "md", className = "
 
   if (!imgSrc || errored) {
     return (
-      <div className={cn(wrapperCls, "grid place-items-center bg-zinc-100 dark:bg-zinc-900 group")}>
-        <svg viewBox="0 0 16 16" className="absolute h-1/2 w-1/2 text-black/20 dark:text-white/20 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M8 7C9.65685 7 11 5.65685 11 4C11 2.34315 9.65685 1 8 1C6.34315 1 5 2.34315 5 4C5 5.65685 6.34315 7 8 7Z" />
-          <path d="M14 12C14 10.3431 12.6569 9 11 9H5C3.34315 9 2 10.3431 2 12V15H14V12Z" />
-        </svg>
+      <div className={cn(wrapperCls, "grid place-items-center group")}>
+        <ProfileIcon size="100%" className="text-black/20 dark:text-white/20 group-hover:scale-110 transition-transform" />
       </div>
     );
   }

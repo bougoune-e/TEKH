@@ -5,17 +5,10 @@ import SearchBar from "@/components/SearchBar";
 import BottomNav from "@/components/BottomNav";
 import ThemeToggle from "@/components/ThemeToggle";
 import { useAuth } from "@/context/AuthContext";
-import { supabase } from "@/lib/supabaseApi";
 import { Bell } from "lucide-react";
 import logo from "@/assets/logos/robott.jpeg";
+import PWAInstallBanner from "@/components/PWAInstallBanner";
 
-// Icône user.svg inline — visible en mode clair ET sombre
-const UserSVG = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 16 16" className={className} fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-    <path d="M8 7C9.65685 7 11 5.65685 11 4C11 2.34315 9.65685 1 8 1C6.34315 1 5 2.34315 5 4C5 5.65685 6.34315 7 8 7Z" />
-    <path d="M14 12C14 10.3431 12.6569 9 11 9H5C3.34315 9 2 10.3431 2 12V15H14V12Z" />
-  </svg>
-);
 
 const Layout = () => {
   const { user } = useAuth();
@@ -34,6 +27,7 @@ const Layout = () => {
   return (
     <div className="flex min-h-screen bg-background text-foreground transition-colors">
       <Sidebar />
+      <PWAInstallBanner />
       <div className="flex-1 flex flex-col md:pl-16">
         {/* Modern Header */}
         <header className="sticky top-0 z-40 border-b border-border/10 bg-background/80 backdrop-blur-md transition-all">
@@ -56,10 +50,11 @@ const Layout = () => {
               </div>
 
               {/* 🔔 Notification Bell */}
-              <button className="relative p-2 hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-all">
-                <Bell className="h-6 w-6 text-foreground" strokeWidth={2} />
+              <button className="relative p-2 hover:bg-black/5 dark:hover:bg-white/10 rounded-full transition-all group/bell">
+                <Bell className="h-6 w-6 text-black dark:text-white group-hover/bell:text-blue-700 dark:group-hover/bell:text-primary" strokeWidth={2} />
                 <span className="absolute top-1.5 right-1.5 h-2.5 w-2.5 bg-rose-600 rounded-full border-2 border-background" />
               </button>
+
             </div>
           </div>
         </header>
