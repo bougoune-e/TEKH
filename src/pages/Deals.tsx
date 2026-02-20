@@ -12,6 +12,7 @@ import { deleteDealById, getCurrentUser, fetchDeals } from "@/lib/supabaseApi";
 import { isSupabaseConfigured } from "@/lib/supabaseClient";
 import { toast } from "@/hooks/use-toast";
 import MasonryGrid from "@/components/ui/MasonryGrid";
+import { useTranslation } from "react-i18next";
 
 const BRANDS = ["Apple", "Samsung", "Xiaomi", "Infinix", "Tecno", "Google", "Huawei", "OnePlus", "Oppo", "Vivo"];
 const CONDITIONS = ["Neuf", "Très bon", "Bon", "Moyen"] as const;
@@ -66,6 +67,7 @@ function computeExtra(deal: DealPost, targetValue?: number, desired?: string, ma
 }
 
 export default function DealsPage() {
+  const { t } = useTranslation();
   const { deals: userDeals, lastSimulation, matchRequest, removeDeal, setDealsList } = useDeals();
   const [filters, setFilters] = useState<Filters>({ min: 0, max: 800000 });
   const allDeals = useMemo(() => userDeals, [userDeals]);
@@ -150,10 +152,10 @@ export default function DealsPage() {
         {/* Header / Trends */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight mb-2">Explorer</h1>
-            <div className="flex items-center gap-2 text-muted-foreground">
-              <Sparkles className="h-4 w-4 text-primary" />
-              <span>Tendances du moment</span>
+            <h1 className="text-3xl font-black tracking-tighter mb-2 text-slate-900 dark:text-white uppercase">{t('nav.deals')}</h1>
+            <div className="flex items-center gap-2 text-[#374151] dark:text-muted-foreground">
+              <Sparkles className="h-4 w-4 text-[#064e3b] dark:text-primary" />
+              <span className="text-sm font-bold uppercase tracking-widest">{t('deals.trends', 'Tendances du moment')}</span>
             </div>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -168,7 +170,7 @@ export default function DealsPage() {
           <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
             <div className="flex-1 w-full md:w-auto relative">
               <Input
-                placeholder="Rechercher un modèle..."
+                placeholder={t('deals.search', 'Rechercher un modèle...')}
                 value={filters.q || ''}
                 onChange={(e) => setFilters((f) => ({ ...f, q: e.target.value }))}
                 className="pl-4 rounded-full bg-muted/50 border-0 focus-visible:ring-1 ring-primary/50"
@@ -176,20 +178,20 @@ export default function DealsPage() {
             </div>
             <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 no-scrollbar">
               <Select value={filters.brand} onValueChange={(v) => setFilters((f) => ({ ...f, brand: v }))}>
-                <SelectTrigger className="w-[120px] rounded-full border-border/60 bg-card"><SelectValue placeholder="Marque" /></SelectTrigger>
+                <SelectTrigger className="w-[120px] rounded-full border-zinc-200 dark:border-border/60 bg-zinc-50 dark:bg-card text-black dark:text-white font-bold h-10"><SelectValue placeholder={t('simulator.brand')} /></SelectTrigger>
                 <SelectContent>
                   {BRANDS.map((b) => <SelectItem key={b} value={b}>{b}</SelectItem>)}
                 </SelectContent>
               </Select>
               <Select value={(filters.condition || '') as any} onValueChange={(v) => setFilters((f) => ({ ...f, condition: v as any }))}>
-                <SelectTrigger className="w-[120px] rounded-full border-border/60 bg-card"><SelectValue placeholder="État" /></SelectTrigger>
+                <SelectTrigger className="w-[120px] rounded-full border-zinc-200 dark:border-border/60 bg-zinc-50 dark:bg-card text-black dark:text-white font-bold h-10"><SelectValue placeholder={t('deals.condition', 'État')} /></SelectTrigger>
                 <SelectContent>
                   {CONDITIONS.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
                 </SelectContent>
               </Select>
 
               <div className="hidden md:flex items-center gap-2 px-2 min-w-[200px]">
-                <span className="text-xs text-muted-foreground whitespace-nowrap">Budget</span>
+                <span className="text-xs text-muted-foreground whitespace-nowrap">{t('deals.budget', 'Budget')}</span>
                 <Slider
                   value={[filters.min || 0, filters.max || 800000]}
                   min={0} max={1000000} step={10000}
@@ -248,9 +250,9 @@ export default function DealsPage() {
             <div className="bg-muted/50 p-6 rounded-full mb-4">
               <Sparkles className="h-8 w-8 text-muted-foreground" />
             </div>
-            <h3 className="text-lg font-semibold">Aucun deal trouvé</h3>
-            <p className="text-muted-foreground max-w-sm mt-2">Essayez d'ajuster vos filtres ou revenez plus tard pour de nouvelles offres.</p>
-            <button onClick={() => setFilters({ min: 0, max: 1000000 })} className="mt-6 text-primary hover:underline font-medium">Réinitialiser les filtres</button>
+            <h3 className="text-lg font-semibold">{t('deals.no_deals', 'Aucun deal trouvé')}</h3>
+            <p className="text-muted-foreground max-w-sm mt-2">{t('deals.no_deals_desc', "Essayez d'ajuster vos filtres ou revenez plus tard pour de nouvelles offres.")}</p>
+            <button onClick={() => setFilters({ min: 0, max: 1000000 })} className="mt-6 text-primary hover:underline font-medium">{t('deals.reset', 'Réinitialiser les filtres')}</button>
           </div>
         )}
 

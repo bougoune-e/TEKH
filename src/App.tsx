@@ -71,13 +71,13 @@ const App = () => (
                     <Route path="/deals" element={<DealsPage />} />
                     <Route path="/deal/:id" element={<DealDetails />} />
                     <Route path="/diagnose" element={<DiagnosePage />} />
-                    <Route path="/simulateur" element={<EstimatorPage />} />
-                    <Route path="/estimer" element={<EstimatorPage />} />
+                    <Route path="/simulateur" element={<SimulatorPage />} />
+                    <Route path="/estimer" element={<SimulatorPage />} />
                     <Route path="/deals-found" element={<DealsFound />} />
                     <Route path="/charte" element={<ChartePage />} />
                     <Route path="/charte-du-swap" element={<ChartePage />} />
                     <Route path="/charte-qualite" element={<CharteQualitePage />} />
-                    <Route path="/post" element={<EstimatorPage />} />
+                    <Route path="/post" element={<SimulatorPage />} />
                     <Route path="/mes-publications" element={<MyPosts />} />
                     <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
                     <Route path="/search" element={<SearchPage />} />

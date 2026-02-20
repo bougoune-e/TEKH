@@ -63,115 +63,102 @@ const PhoneCard = ({
   const discount = originalPrice ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;
   const navigate = useNavigate();
 
-  // Dynamic brand icon lookup from assets if available
-  const modules = import.meta.glob<{ default: string }>("@/assets/icons/brands/*.svg", { eager: true, import: "default" });
-  const brandIcon = (() => {
-    if (!brand) return undefined;
-    const entries = Object.entries(modules);
-    const slug = brand.toLowerCase();
-    const found = entries.find(([p]) => p.toLowerCase().includes(slug));
-    return found ? (found[1] as unknown as string) : undefined;
-  })();
-
-  const timeAgo = (() => {
-    if (!createdAt) return undefined;
-    const diffMs = Date.now() - new Date(createdAt).getTime();
-    const min = Math.floor(diffMs / 60000);
-    if (min < 1) return "Maintenant";
-    if (min < 60) return `${min} m`;
-    const h = Math.floor(min / 60);
-    if (h < 24) return `${h} h`;
-    const d = Math.floor(h / 24);
-    return d === 0 ? "Auj." : `${d} j`;
-  })();
-
-  // Calculate 'Class' based on condition/price (mock logic for now)
-  const trustClass = condition === 'Neuf' ? 'A+' : condition === 'Très bon' ? 'A' : condition === 'Bon' ? 'B' : 'C';
-
   return (
-    <Card
+    <div
       onClick={() => { if (id) navigate(`/deal/${id}`); }}
-      className="group relative cursor-pointer overflow-hidden bg-card border border-border/40 rounded-[32px] hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
+      className="group relative bg-white dark:bg-[#0b0e14] border border-zinc-100 dark:border-white/5 rounded-xl overflow-hidden hover:shadow-2xl transition-all duration-500 scale-in shadow-sm cursor-pointer"
     >
-      <CardHeader className="p-0 relative">
-        <div className="aspect-[4/5] w-full bg-muted/20 flex items-center justify-center relative overflow-hidden">
+      {/* Visual Badge Style SaaS */}
+      {(tag || true) && (
+        <div className="absolute top-3 left-3 z-20 flex flex-col gap-1">
+          {tag && (
+            <Badge className="bg-[#064e3b] dark:bg-primary text-white dark:text-black hover:bg-[#064e3b] dark:hover:bg-primary border-0 rounded-md font-black italic text-[9px] px-2 py-0.5 shadow-sm">
+              {tag}
+            </Badge>
+          )}
+          <Badge className="bg-black dark:bg-white text-white dark:text-black border-0 rounded-md font-black text-[8px] px-2 py-0.5 shadow-sm flex items-center gap-1">
+            <Zap className="h-2.5 w-2.5 fill-current" /> certifié TEKH+
+          </Badge>
+        </div>
+      )}
 
-          {/* Badges Overlay */}
-          <div className="absolute top-3 left-3 z-20 flex flex-col gap-1.5 items-start">
-            {tag && (
-              <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full shadow-sm uppercase tracking-wider ${tagClasses(tag)}`}>
-                {tag}
+      {/* Media with proper scale */}
+      <div className="relative aspect-[4/5] bg-zinc-50 dark:bg-zinc-900/50 overflow-hidden border-b border-zinc-100 dark:border-white/5">
+        {image ? (
+          <img
+            src={image}
+            alt={`${brand} ${model}`}
+            className="w-full h-full object-contain p-4 transition-transform duration-700 group-hover:scale-110"
+            loading="lazy"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-slate-100 dark:bg-zinc-800">
+            <Smartphone className="w-10 h-10 text-slate-300 dark:text-zinc-700" strokeWidth={1} />
+          </div>
+        )}
+        <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/20 to-transparent translate-y-full group-hover:translate-y-0 transition-transform">
+          <div className="flex flex-wrap gap-1.5">
+            {badges.slice(0, 2).map((b, i) => (
+              <Badge key={i} variant="secondary" className="bg-white/40 hover:bg-white/60 text-black border-0 text-[8px] font-black uppercase rounded-full backdrop-blur-md">
+                {b}
+              </Badge>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="p-4 space-y-3">
+        <div className="flex justify-between items-start">
+          <div className="space-y-1">
+            <h3 className="font-black text-slate-900 dark:text-white uppercase tracking-tight text-sm leading-none transition-colors">
+              {brand} <span className="text-[#374151] dark:text-slate-500">{model}</span>
+            </h3>
+            <div className="flex items-center gap-2">
+              <Badge variant="outline" className="text-[9px] uppercase font-black border-slate-200 dark:border-white/10 text-[#374151] dark:text-slate-500 rounded-md h-5 px-1.5 bg-zinc-50 dark:bg-transparent">
+                {condition}
+              </Badge>
+              {location && (
+                <span className="text-[9px] font-black uppercase text-slate-400 flex items-center gap-1">
+                  <MapPin className="w-3 h-3" /> {location}
+                </span>
+              )}
+            </div>
+          </div>
+          <div className="text-right">
+            <p className="text-base font-black text-black dark:text-white tracking-tighter italic leading-none">
+              {price.toLocaleString()} <span className="text-[10px] opacity-40 not-italic ml-0.5">FCFA</span>
+            </p>
+            {originalPrice && (
+              <span className="text-[9px] text-slate-400 line-through">
+                {originalPrice.toLocaleString()}
               </span>
             )}
-            <span className="bg-primary text-primary-foreground text-[10px] font-black px-3 py-1 rounded-full shadow-lg flex items-center gap-1 animate-pulse">
-              <Zap className="h-3 w-3 fill-current" /> CERTIFIÉ TΞKΗ+
-            </span>
-          </div>
-
-          <div className="absolute top-3 right-3 z-20 flex flex-col gap-2">
-            <button
-              onClick={(e) => { e.stopPropagation(); /* TODO: Toggle fav */ }}
-              className="h-8 w-8 rounded-full bg-white/90 dark:bg-black/60 backdrop-blur flex items-center justify-center text-foreground hover:scale-110 transition-transform shadow-sm"
-            >
-              <Heart className="h-4 w-4" />
-            </button>
-          </div>
-
-          {/* Image */}
-          {image ? (
-            <img
-              src={image}
-              alt={`${brand} ${model}`}
-              className="w-full h-full object-cover transition-transform duration-700 md:group-hover:scale-105"
-            />
-          ) : (
-            <div className="relative z-10 flex flex-col items-center justify-center text-muted-foreground/40">
-              <Smartphone className="h-16 w-16" />
-            </div>
-          )}
-
-          {/* Hover Action Overlay */}
-          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-10">
-            <Button size="sm" className="rounded-full font-semibold gap-2 bg-white text-black hover:bg-white/90 shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-              <ArrowRightLeft className="h-4 w-4" />
-              Swap Now
-            </Button>
-          </div>
-        </div>
-      </CardHeader>
-
-      <CardContent className="p-4 pt-3 space-y-2">
-        <div className="flex justify-between items-start gap-2">
-          <div>
-            <h3 className="font-semibold text-[15px] leading-tight text-foreground line-clamp-2">{brand} {model}</h3>
-            <div className="flex items-center gap-1.5 mt-1 text-xs text-muted-foreground">
-              <span className="font-medium bg-muted px-1.5 py-0.5 rounded">{condition}</span>
-              {timeAgo && <span>• {timeAgo}</span>}
-            </div>
-          </div>
-        </div>
-
-        <div className="flex items-end justify-between pt-1">
-          <div className="flex flex-col">
-            <span className="text-sm text-muted-foreground line-through opacity-70">
-              {originalPrice ? `${originalPrice.toLocaleString()} F` : ""}
-            </span>
-            <span className="text-xl font-black text-primary tracking-tight">
-              {price.toLocaleString()} <span className="text-xs font-medium text-muted-foreground ml-1">FCFA</span>
-            </span>
-          </div>
-          <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
-            <ArrowRightLeft className="h-4 w-4" />
           </div>
         </div>
 
         {extraLine && (
-          <div className="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium bg-emerald-50 dark:bg-emerald-950/30 px-2 py-1 rounded w-fit">
+          <p className="text-[9px] font-black text-[#064e3b] dark:text-primary uppercase tracking-wider py-1.5 border-t border-slate-100 dark:border-white/5 truncate">
             {extraLine}
-          </div>
+          </p>
         )}
-      </CardContent>
-    </Card>
+
+        <div className="flex items-center gap-2 mt-auto">
+          <Button className="flex-1 h-9 rounded-full bg-black dark:bg-primary text-white dark:text-black font-black text-[10px] uppercase tracking-widest shadow-sm hover:opacity-90 active:scale-95 transition-all border-0">
+            Détails Deal
+          </Button>
+          {onDelete && (
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={(e) => { e.stopPropagation(); onDelete(); }}
+              className="h-9 w-9 rounded-full border-slate-200 text-rose-500 hover:bg-rose-50 hover:text-rose-600 dark:border-white/10 dark:hover:bg-rose-500/10"
+            >
+              <LogOut className="w-4 h-4 rotate-180" />
+            </Button>
+          )}
+        </div>
+      </div>
+    </div>
   );
 };
 

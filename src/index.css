@@ -1,450 +1,7 @@
 @tailwind base;
-
-@layer base {
-  * {
-    @apply border-border;
-    font-weight: 700 !important;
-  }
-
-  body {
-    @apply bg-background text-foreground;
-  }
-}
-
-/* ---- Masonry Layout Utilities ------------------------------------------ */
-.masonry {
-  column-count: 1;
-  column-gap: 1rem;
-  /* 16px */
-}
-
-@media (min-width: 640px) {
-
-  /* sm */
-  .masonry {
-    column-count: 2;
-  }
-}
-
-@media (min-width: 1024px) {
-
-  /* lg */
-  .masonry {
-    column-count: 3;
-  }
-}
-
-.masonry-gap {
-  column-gap: 1rem;
-}
-
-.masonry .masonry-item {
-  break-inside: avoid;
-  margin-bottom: 1rem;
-}
-
-/* Mobile scaling overrides: reduce default rem base on small devices */
-@media (max-width: 480px) {
-  html {
-    font-size: 15px;
-  }
-
-  .container {
-    padding-left: 0.875rem;
-    padding-right: 0.875rem;
-  }
-}
-
-@media (max-width: 380px) {
-  html {
-    font-size: 14px;
-  }
-
-  .container {
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
-  }
-}
-
-[data-theme="dark"] body,
-.dark body {
-  background-color: #000000 !important;
-}
-
-[data-theme="light"] body,
-.light body {
-  background-color: #ffffff !important;
-}
-
 @tailwind components;
 @tailwind utilities;
 
-/* ---------- THEME-FIX (COLLER EN BAS DE index.css OU theme-fix.css) ---------- */
-
-/* 1) Si tu utilises data-theme */
-:root[data-theme="light"],
-html[data-theme="light"],
-body[data-theme="light"],
-.light,
-.theme-light {
-  --color-background: #f3f4f6;
-  --color-surface: #ffffff;
-  --color-border: #d0d5dd;
-  --color-text-primary: #1f2937;
-  --color-text-secondary: #4b5563;
-  --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
-  --shadow-card-hover: 0 8px 18px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.05);
-}
-
-/* 2) Force les couleurs des éléments liés aux cards (priorité élevée) */
-:root[data-theme="light"] .card,
-html[data-theme="light"] .card,
-body[data-theme="light"] .card,
-.light .card,
-.theme-light .card {
-  background-color: var(--color-surface) !important;
-  border: 1px solid var(--color-border) !important;
-  color: var(--color-text-primary) !important;
-  box-shadow: var(--shadow-card) !important;
-  border-radius: var(--radius, 0.875rem) !important;
-  transition: box-shadow .18s ease, transform .18s ease !important;
-}
-
-/* Hover */
-:root[data-theme="light"] .card:hover,
-.light .card:hover,
-.theme-light .card:hover {
-  box-shadow: var(--shadow-card-hover) !important;
-  transform: translateY(-2px) !important;
-}
-
-/* 3) Si des utilitaires tailwind comme `bg-white` existent sur .card,
-   forcer la taille minimale pour éviter cards "invisibles" (height 100%) */
-:root[data-theme="light"] .card .card-inner,
-.light .card .card-inner {
-  min-height: 220px !important;
-}
-
-/* 4) Si certains textes sont en gris clair (ex: text-gray-200), override */
-:root[data-theme="light"] .card,
-.light .card {
-  --tw-text-opacity: 1 !important;
-  color: var(--color-text-primary) !important;
-}
-
-/* 5) S'assurer que le fond de la page est le gris douce demandé */
-:root[data-theme="light"] body,
-html[data-theme="light"] body,
-.light body {
-  background-color: var(--color-background) !important;
-}
-
-/* 6) Fallback ultra-agressif (à retirer après validation) */
-body.theme-debug :where(.card) {
-  background: #fff !important;
-  border: 1px solid #d0d5dd !important;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08) !important;
-  color: #1f2937 !important;
-}
-
-/**
- * 🎨 Design System - ReDeal Togo
- * Thème professionnel avec couleurs vives et foncées
- * Toutes les couleurs sont en HSL pour une meilleure manipulation
- */
-
-@layer base {
-  :root {
-    /* Palette 1 - Mode Clair */
-    --color-primary: #00FF41;
-    /* Vert Néon */
-    --color-accent: #00FF41;
-    /* Vert Néon */
-    --color-background: #f8fafc;
-    /* Gris très clair */
-    --color-surface: #ffffff;
-    /* Blanc */
-    /* Textes (WCAG) */
-    --color-text-primary: #2C3E50;
-    /* Principal */
-    --color-text-secondary: #4A4A4A;
-    /* Secondaire */
-    --color-text-muted: #6E6E6E;
-    /* Faible mais lisible */
-    --color-border: #e2e8f0;
-    /* Gris clair */
-    --color-error: #dc2626;
-    --color-success: #16a34a;
-    /* Brand accent and component surfaces */
-    --brand-electric: #00C2FF;
-    /* Electric Blue for '+' */
-    --search-bg: #ffffff;
-    /* Search background (light) */
-    --brand-text: var(--color-text-primary);
-    --search-surface: var(--search-bg);
-  }
-
-  /* ---- Contrast fixes (appended) --------------------------------------- */
-  /* Light theme: stronger contrast so cards pop on background */
-  :root[data-theme="light"] {
-    --color-background: #f3f4f6;
-    /* light gray background so white cards stand out */
-    --color-surface: #ffffff;
-    /* pure white cards */
-    --color-border: #d0d5dd;
-    /* clearer borders */
-
-    --color-text-primary: #1f2937;
-    --color-text-secondary: #4b5563;
-    --color-text-muted: #6b7280;
-
-    --shadow-card:
-      0 2px 10px rgba(0, 0, 0, 0.06),
-      0 1px 3px rgba(0, 0, 0, 0.04);
-    --shadow-card-hover:
-      0 8px 18px rgba(0, 0, 0, 0.08),
-      0 4px 8px rgba(0, 0, 0, 0.05);
-  }
-
-  /* Dark theme: keep relief/visibility */
-  [data-theme="dark"] {
-    --shadow-card:
-      0 2px 8px rgba(0, 0, 0, 0.35),
-      0 1px 3px rgba(0, 0, 0, 0.25);
-    --shadow-card-hover:
-      0 8px 18px rgba(0, 0, 0, 0.40),
-      0 4px 10px rgba(0, 0, 0, 0.35);
-  }
-
-  [data-theme="dark"] {
-    /* Palette 1 - Mode Sombre */
-    --color-primary: #00FF41;
-    /* Vert Néon */
-    --color-accent: #00FF41;
-    /* Vert Néon */
-    --color-background: #0f172a;
-    /* Bleu nuit foncé */
-    --color-surface: #1e293b;
-    /* Gris bleuté foncé */
-    --color-text-primary: #f1f5f9;
-    /* Blanc cassé */
-    --color-text-secondary: #cbd5e1;
-    /* Gris clair */
-    --color-border: #334155;
-    /* Gris bleuté moyen */
-    --color-error: #f87171;
-    --color-success: #4ade80;
-    /* Brand + search overrides */
-    --brand-text: #E0E0E0;
-    --search-surface: #252525;
-  }
-
-  :root[data-theme="light"] {
-    /* Mode Clair explicite (prioritaire quand data-theme="light") */
-    --color-background: #ffffff;
-    /* Blanc pur */
-    --color-surface: #f8fafc;
-    /* Gris très léger pour cartes */
-
-    --color-text-primary: #2C3E50;
-    /* demandé */
-    --color-text-secondary: #4A4A4A;
-    /* demandé */
-    --color-text-muted: #6E6E6E;
-    /* demandé */
-
-    --color-primary: #000000;
-    --color-accent: #000000;
-    --color-background: #ffffff;
-    --color-surface: #f8fafc;
-    --color-border: #e2e8f0;
-    --color-text-primary: #000000;
-    --color-text-secondary: #64748b;
-  }
-
-  :root {
-    /* Map Tailwind tokens to brief */
-    --background: 0 0% 97%;
-    /* #F7F7F7 */
-    --foreground: 210 29% 25%;
-    /* ~#2C3E50 */
-
-    --card: 0 0% 100%;
-    /* #FFFFFF */
-    --card-foreground: 210 29% 25%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 0%;
-
-    --primary: 0 0% 0%;
-    /* #000000 (Pure Black) */
-    --primary-hover: 0 0% 15%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 161 86% 16%;
-    /* #064E3B */
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 0 0% 0%;
-    /* #000000 (Pure Black) */
-    --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 72% 51%;
-    /* #DC2626 */
-    --destructive-foreground: 0 0% 100%;
-
-    --success: 142 72% 45%;
-    /* #22C55E */
-    --success-foreground: 0 0% 100%;
-
-    --warning: 38 92% 50%;
-    /* #F59E0B */
-    --warning-foreground: 0 0% 4%;
-
-    --border: 214 32% 91%;
-    /* #e2e8f0 */
-    --input: 214 32% 91%;
-    --ring: 225 72% 47%;
-
-    /* 📐 Border Radius */
-    --radius: 0.875rem;
-
-    /* Very subtle gradients for light */
-    --gradient-hero: linear-gradient(180deg,
-        hsl(var(--background)) 0%,
-        hsl(220 16% 94%) 100%);
-    --gradient-accent: linear-gradient(180deg,
-        hsl(var(--background)) 0%,
-        hsl(220 16% 94%) 100%);
-    --gradient-subtle: linear-gradient(180deg,
-        hsl(var(--background)) 0%,
-        hsl(220 16% 94%) 100%);
-    --gradient-card: linear-gradient(180deg,
-        hsl(0 0% 100%) 0%,
-        hsl(0 0% 100%) 100%);
-    --gradient-glow: radial-gradient(circle at 50% 50%, transparent 0%, transparent 100%);
-
-    /* Subtle shadows for light */
-    /* Card shadow per brief */
-    --shadow-card: 0 2px 6px rgba(0, 0, 0, 0.1);
-    --shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.12);
-    --shadow-glow: 0 0 24px rgba(29, 78, 216, 0.18), 0 0 48px rgba(29, 78, 216, 0.08);
-    --shadow-glow-accent: 0 0 24px rgba(6, 78, 59, 0.18), 0 0 48px rgba(6, 78, 59, 0.08);
-    --shadow-inner:
-      inset 0 2px 4px 0 hsl(0 0% 0% / 0.06);
-
-    /* ⚡ Transitions - Animations fluides et professionnelles */
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    --transition-spring: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-
-    /* 📱 Sidebar Colors */
-    --sidebar-background: 220 17% 97%;
-    --sidebar-foreground: 217 33% 12%;
-    --sidebar-primary: 222 47% 11%;
-    --sidebar-primary-foreground: 217 33% 12%;
-    --sidebar-accent: 220 14% 96%;
-    --sidebar-accent-foreground: 217 33% 12%;
-    --sidebar-border: 220 14% 85%;
-    --sidebar-ring: 221 83% 53%;
-  }
-
-  .dark,
-  [data-theme="dark"] {
-    /* "High-Contrast Vivid" Palette */
-    --background: 0 0% 0%;
-    /* #000000 (Noir Pur) */
-    --foreground: 0 0% 100%;
-    /* #FFFFFF (Blanc Pur) */
-
-    --card: 0 0% 7%;
-    /* #121212 (Gris très foncé) */
-    --card-foreground: 0 0% 100%;
-    /* #FFFFFF */
-
-    --popover: 0 0% 7%;
-    /* #121212 */
-    --popover-foreground: 0 0% 100%;
-
-    /* Bouton Primaire: Green Néon #00FF41 */
-    --primary: 135 100% 50%;
-    /* #00FF41 */
-    --primary-hover: 135 100% 60%;
-    --primary-foreground: 135 100% 5%;
-
-    --secondary: 0 0% 15%;
-    /* #1A1A1A (Niveau 1) */
-    --secondary-foreground: 135 100% 50%;
-    /* Green highlight */
-
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 63%;
-    /* #A0A0A0 */
-
-    --accent: 135 100% 50%;
-    /* Vivid Accent matches Primary */
-    --accent-foreground: 0 0% 0%;
-
-    --destructive: 0 100% 50%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 0 0% 20%;
-    /* Contrast border */
-    --input: 0 0% 20%;
-    --ring: 145 100% 50%;
-
-    /* Vivid Specs */
-    --radius: 20px;
-    /* Rounded Pinterest Style */
-
-    /* "Vivid" Specific Variables */
-    --bg-dark: #000000;
-    --surface-dark: #121212;
-    --primary-vivid: #00FF41;
-    --text-main: #FFFFFF;
-    --text-muted: #B0B0B0;
-
-    /* Remove shadows in dark mode (flat vivid style) or keep subtle */
-    --shadow-card: none;
-    --shadow-card-hover: 0 0 0 1px var(--primary-vivid);
-    /* Glow effect on hover instead of shadow */
-
-    /* Gradients for Dark Mode */
-    --gradient-hero: linear-gradient(180deg, hsl(var(--background)) 0%, #050505 100%);
-    --gradient-accent: linear-gradient(180deg, hsl(var(--background)) 0%, #050505 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(var(--background)) 0%, #050505 100%);
-    --gradient-card: linear-gradient(180deg, #0a0a0a 0%, #000000 100%);
-  }
-
-  /* Custom Vivid Button Class */
-  .button-vivid {
-    background-color: #00A84D;
-    color: #ffffff;
-    font-weight: 800;
-    padding: 12px 24px;
-    border-radius: 9999px;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    box-shadow: 0 4px 15px rgba(0, 168, 77, 0.3);
-  }
-
-  .button-vivid:hover {
-    transform: scale(1.05);
-    filter: brightness(1.1);
-    box-shadow: 0 6px 20px rgba(0, 168, 77, 0.5);
-  }
-
-  /* Counter Animation Class */
-  .price-counter {
-    font-variant-numeric: tabular-nums;
-    transition: color 0.3s ease;
-  }
-}
-
 @layer base {
   * {
     @apply border-border;
@@ -452,95 +9,36 @@ body.theme-debug :where(.card) {
 
   body {
     @apply bg-background text-foreground;
-    font-family: Inter, Roboto, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
-    font-feature-settings: "rlig" 1, "calt" 1;
-    /* Améliore le rendu des polices */
+    font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-  }
-
-  /* Smooth scrolling uniquement pour les ancres, pas pour la navigation */
-  html {
-    scroll-behavior: auto;
-    /* touch-action: manipulation évite le zoom double-tap iOS en mode PWA */
-    touch-action: manipulation;
-    -webkit-text-size-adjust: 100%;
-  }
-
-  /* Sélection de texte personnalisée */
-  ::selection {
-    @apply bg-primary/30 text-primary-foreground;
-  }
-
-  ::-moz-selection {
-    @apply bg-primary/30 text-primary-foreground;
   }
 }
 
 @layer utilities {
-
-  /* 🎨 Effets glassmorphism */
-  .glass {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+  .masonry {
+    column-count: 1;
+    column-gap: 1rem;
   }
 
-  .glass-strong {
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-  }
-
-  /* ✨ Effets de glow */
-  .glow-primary {
-    box-shadow: var(--shadow-glow);
-  }
-
-  .glow-accent {
-    box-shadow: var(--shadow-glow-accent);
-  }
-
-  /* 🌊 Animations personnalisées */
-  @keyframes float {
-
-    0%,
-    100% {
-      transform: translateY(0px);
-    }
-
-    50% {
-      transform: translateY(-10px);
+  @media (min-width: 640px) {
+    .masonry {
+      column-count: 2;
     }
   }
 
-  @keyframes pulse-glow {
-
-    0%,
-    100% {
-      opacity: 1;
-      box-shadow: 0 0 20px hsl(195 100% 60% / 0.4);
-    }
-
-    50% {
-      opacity: 0.8;
-      box-shadow: 0 0 40px hsl(195 100% 60% / 0.6);
+  @media (min-width: 1024px) {
+    .masonry {
+      column-count: 3;
     }
   }
 
-  @keyframes shimmer {
-    0% {
-      background-position: -1000px 0;
-    }
-
-    100% {
-      background-position: 1000px 0;
-    }
+  .masonry-item {
+    break-inside: avoid;
+    margin-bottom: 1rem;
   }
 
+  /* SaaS Animations */
   @keyframes levitate {
 
     0%,
@@ -549,7 +47,7 @@ body.theme-debug :where(.card) {
     }
 
     50% {
-      transform: translateY(-15px);
+      transform: translateY(-10px);
     }
   }
 
@@ -557,239 +55,70 @@ body.theme-debug :where(.card) {
     animation: levitate 4s ease-in-out infinite;
   }
 
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
-  }
-
-  .animate-pulse-glow {
-    animation: pulse-glow 2s ease-in-out infinite;
-  }
-
-  .animate-shimmer {
-    animation: shimmer 2s linear infinite;
-    background: linear-gradient(to right,
-        transparent 0%,
-        rgba(255, 255, 255, 0.1) 50%,
-        transparent 100%);
-    background-size: 1000px 100%;
-  }
-
-  /* ✨ Badge entrance animation */
-  @keyframes badge-in {
-    0% {
+  @keyframes scale-in {
+    from {
+      transform: scale(0.95);
       opacity: 0;
-      transform: translateY(6px);
     }
 
-    100% {
+    to {
+      transform: scale(1);
       opacity: 1;
-      transform: translateY(0);
     }
   }
 
-  .animate-badge-in {
-    animation: badge-in 0.4s ease-out both;
-  }
-
-  /* 📐 Effets de perspective */
-  .perspective-1000 {
-    perspective: 1000px;
-  }
-
-  .transform-3d {
-    transform-style: preserve-3d;
-  }
-
-  /* 🎯 Focus visible amélioré */
-  .focus-ring {
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
-  }
-
-  .section-invert {
-    background-color: hsl(var(--section-bg, var(--card)));
-    color: hsl(var(--section-fg, var(--foreground)));
-  }
-
-  .pill {
-    @apply inline-flex items-center rounded-full px-3 py-1.5 border border-border bg-secondary text-foreground/80 hover:text-primary hover:border-primary/50 transition-colors;
-  }
-
-  .btn-primary {
-    background-color: hsl(var(--primary));
-    color: hsl(var(--primary-foreground));
-    transition: background-color .2s ease-in-out, color .2s ease-in-out;
-  }
-
-  .btn-primary:hover {
-    background-color: hsl(var(--primary-hover));
-  }
-
-  .btn-outline {
-    @apply border border-border bg-card text-foreground;
-    transition: border-color .2s ease-in-out, color .2s ease-in-out;
-  }
-
-  .btn-outline:hover {
-    border-color: hsl(var(--primary));
-    color: hsl(var(--primary));
+  .scale-in {
+    animation: scale-in 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 }
 
-@layer utilities {
-
-  /* Token-based components (Palette 1) */
-  .btn-accent {
-    background-color: var(--color-accent);
-    color: #1e293b;
-    /* text-dark for contrast on orange in both themes */
-    border: none;
-    border-radius: var(--radius);
-    padding: 0.75rem 1rem;
-    /* 12px 16px */
-    font-weight: 600;
-    transition: all 0.2s ease-in-out;
-  }
-
-  .btn-accent:hover {
-    opacity: 0.9;
-  }
-
-  .btn-accent:focus {
-    outline: 2px solid var(--color-primary);
-    outline-offset: 2px;
-  }
-
-  .btn-primary-tokens {
-    background-color: var(--color-primary);
-    color: #ffffff;
-    border: none;
-    border-radius: var(--radius);
-    padding: 0.75rem 1rem;
-    font-weight: 600;
-    transition: all 0.2s ease-in-out;
-  }
-
-  .btn-primary-tokens:hover {
-    opacity: 0.95;
-  }
-
-  .btn-primary-tokens:focus {
-    outline: 2px solid var(--color-primary);
-    outline-offset: 2px;
-  }
-
-  .btn-outline-tokens {
-    background-color: transparent;
-    color: var(--color-primary);
-    border: 2px solid var(--color-primary);
-    border-radius: var(--radius);
-    padding: 0.625rem 1rem;
-    /* 10px 16px */
-    font-weight: 600;
-    transition: all 0.2s ease-in-out;
-  }
-
-  .btn-outline-tokens:hover {
-    background-color: color-mix(in oklab, var(--color-primary) 12%, transparent);
-  }
-
-  .btn-outline-tokens:focus {
-    outline: 2px solid var(--color-primary);
-    outline-offset: 2px;
-  }
-
-  .card {
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    color: var(--color-text-primary);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-card);
-    transition: box-shadow 0.2s ease, transform 0.2s ease;
-  }
-
-  .card:hover {
-    box-shadow: var(--shadow-card-hover);
-    transform: translateY(-2px);
-  }
-
-  .input {
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    color: var(--color-text-primary);
-    border-radius: calc(var(--radius) - 2px);
-  }
-
-  .navbar {
-    background-color: var(--color-surface);
-    border-bottom: 1px solid var(--color-border);
-    color: var(--color-text-primary);
-  }
+/* Base Design Tokens */
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 84% 4.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 84% 4.9%;
+  --primary: 142.1 76.2% 36.3%;
+  /* #16a34a - SaaS Green */
+  --primary-foreground: 355.7 100% 97.3%;
+  --secondary: 210 40% 96.1%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --accent: 210 40% 96.1%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --ring: 142.1 76.2% 36.3%;
+  --radius: 0.75rem;
+  /* 12px for SaaS look */
 }
 
-/* ==============================
-   MODE SOMBRE - CONTRASTE AMÉLIORÉ (sans blanc pur)
-   ============================== */
-
-/* Texte principal - Blanc pur */
-[data-theme="dark"],
 .dark {
-  color: #E0E0E0 !important;
-  /* off-white for readability */
-}
-
-/* Cartes - Fond plus clair et texte blanc */
-[data-theme="dark"] .card,
-.dark .card {
-  background-color: #1A1A1A !important;
-  border: 1px solid #3b3b3b !important;
-  color: #E0E0E0 !important;
-}
-
-/* Tous les textes dans les cartes en blanc */
-[data-theme="dark"] .card *,
-.dark .card * {
-  color: #E0E0E0 !important;
-}
-
-/* Badge "Neuf" - Très visible */
-[data-theme="dark"] .bg-emerald-500\/10,
-.dark .bg-emerald-500\/10 {
-  background-color: #00A84D !important;
-  color: #ffffff !important;
-  font-weight: 700 !important;
-  border: none !important;
-  padding: 0.25rem 0.75rem !important;
-}
-
-/* Icône du badge Neuf */
-[data-theme="dark"] .bg-emerald-500\/10 svg,
-.dark .bg-emerald-500\/10 svg {
-  color: #ffffff !important;
-}
-
-/* Texte émeraude - Plus clair */
-[data-theme="dark"] .text-emerald-600,
-.dark .text-emerald-600 {
-  color: #00A84D !important;
-  font-weight: 700 !important;
-}
-
-/* Bordures émeraude */
-[data-theme="dark"] .border-emerald-500\/20,
-.dark .border-emerald-500\/20 {
-  border: 2px solid #00A84D !important;
-}
-
-/* Texte secondaire - Gris clair */
-[data-theme="dark"] .text-muted-foreground,
-.dark .text-muted-foreground {
-  color: #d1d5db !important;
-}
-
-/* Fond des cartes */
-[data-theme="dark"] .bg-card,
-.dark .bg-card {
-  background-color: #1a1d24 !important;
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  --card: 222.2 84% 4.9%;
+  --card-foreground: 210 40% 98%;
+  --popover: 222.2 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 142.1 70.6% 45.3%;
+  /* Brighter green for dark mode */
+  --primary-foreground: 144.9 80.4% 10%;
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 142.1 70.6% 45.3%;
 }
 
 /* Bordures */

@@ -1,5 +1,5 @@
-import Simulator from "@/components/Simulator";
+import EstimatorPage from "@/pages/EstimatorPage";
 
 export default function SimulatorPage() {
-  return <Simulator />;
+  return <EstimatorPage />;
 }

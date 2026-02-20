@@ -50,10 +50,9 @@ export async function fetchAllRams(): Promise<number[]> {
 
 export async function fetchBrands(): Promise<string[]> {
   try {
-    const rows = await getProduits();
-    if (rows && rows.length > 0) {
-      const set = Array.from(new Set((rows || []).map((r: any) => r.marque ?? r["Marques"] ?? r.brand).filter(Boolean)));
-      return set.sort((a, b) => String(a).localeCompare(String(b)));
+    if (realClient) {
+      const { data, error } = await realClient.from("brands").select("name").order("name");
+      if (!error && data) return data.map(b => b.name);
     }
   } catch (err) {
     console.warn("[supabaseApi] fetchBrands failed, using defaults", err);
@@ -63,13 +62,14 @@ export async function fetchBrands(): Promise<string[]> {
 
 export async function fetchModels(brand: string): Promise<string[]> {
   try {
-    const rows = await getProduits();
-    if (rows && rows.length > 0) {
-      const list = (rows || [])
-        .filter((r: any) => (r.marque ?? r["Marques"] ?? r.brand ?? "") === brand)
-        .map((r: any) => r.modele_exact ?? r["Modèle Exact"] ?? r.model) as string[];
-      const set = Array.from(new Set(list.filter(Boolean)));
-      return set.sort((a, b) => String(a).localeCompare(String(b)));
+    if (realClient) {
+      const { data, error } = await realClient
+        .from("models")
+        .select("name, brands!inner(name)")
+        .eq("brands.name", brand)
+        .order("name");
+
+      if (!error && data) return data.map((m: any) => m.name);
     }
   } catch (err) {
     console.warn("[supabaseApi] fetchModels failed", err);
@@ -79,15 +79,17 @@ export async function fetchModels(brand: string): Promise<string[]> {
 
 export async function fetchStorages(brand: string, model: string): Promise<number[]> {
   try {
-    const rows = await getProduits();
-    if (rows && rows.length > 0) {
-      const set = Array.from(new Set(
-        (rows || [])
-          .filter((r: any) => (r.marque ?? r["Marques"] ?? r.brand ?? "") === brand && (r.modele_exact ?? r["Modèle Exact"] ?? r.model ?? "") === model)
-          .map((r: any) => Number(r.stockage_gb ?? r["Stockages (GB)"] ?? r.storage))
-          .filter((n) => Number.isFinite(n))
-      ));
-      return set.sort((a, b) => a - b);
+    if (realClient) {
+      const { data, error } = await realClient
+        .from("variants")
+        .select("storage_gb, models!inner(name, brands!inner(name))")
+        .eq("models.name", model)
+        .eq("models.brands.name", brand)
+        .order("storage_gb");
+
+      if (!error && data) {
+        return Array.from(new Set(data.map(v => v.storage_gb)));
+      }
     }
   } catch (err) {
     console.warn("[supabaseApi] fetchStorages failed", err);
@@ -95,37 +97,94 @@ export async function fetchStorages(brand: string, model: string): Promise<numbe
   return [64, 128, 256, 512];
 }
 
-export async function getBasePriceCFA(brand: string, model: string, storage: number): Promise<number | null> {
+export interface ModelInfo {
+  base_price_fcfa: number | null;
+  release_year: number | null;
+  equivalence_class: string | null;
+}
+
+export async function getModelInfo(brand: string, model: string, storage: number): Promise<ModelInfo | null> {
   try {
-    const rows = await getProduits();
-    if (rows && rows.length > 0) {
-      const row = (rows || []).find((r: any) =>
-        (r.marque ?? r["Marques"] ?? r.brand ?? "") === brand &&
-        (r.modele_exact ?? r["Modèle Exact"] ?? r.model ?? "") === model &&
-        Number(r.stockage_gb ?? r["Stockages (GB)"] ?? r.storage) === Number(storage)
-      );
-      if (row) {
-        const p = Number(row.prix_neuf_fcfa ?? row["Prix neuf en FCFA"] ?? row["Prix neuf en FCFA (prix de référence)"] ?? row.price);
-        if (Number.isFinite(p)) return p;
+    if (realClient) {
+      const { data, error } = await realClient
+        .from("variants")
+        .select(`
+          base_price_fcfa,
+          models!inner(
+            name,
+            release_year,
+            equivalence_class,
+            brands!inner(name)
+          )
+        `)
+        .eq("models.name", model)
+        .eq("models.brands.name", brand)
+        .eq("storage_gb", storage)
+        .maybeSingle();
+
+      if (!error && data) {
+        const item: any = data;
+        return {
+          base_price_fcfa: item.base_price_fcfa,
+          release_year: item.models.release_year,
+          equivalence_class: item.models.equivalence_class
+        };
       }
     }
   } catch (err) {
-    console.warn("[supabaseApi] getBasePriceCFA failed", err);
+    console.warn("[supabaseApi] getModelInfo failed", err);
   }
   return null;
 }
 
+export interface ModelVariant {
+  ram_gb: number | null;
+  storage_gb: number;
+  base_price_fcfa: number;
+}
+
+export async function getAvailableVariants(brand: string, model: string): Promise<ModelVariant[]> {
+  try {
+    if (realClient) {
+      const { data, error } = await realClient
+        .from("variants")
+        .select(`
+          ram_gb,
+          storage_gb,
+          base_price_fcfa,
+          models!inner(name, brands!inner(name))
+        `)
+        .eq("models.name", model)
+        .eq("models.brands.name", brand)
+        .order("storage_gb");
+
+      if (!error && data) return data as any[];
+    }
+  } catch (err) {
+    console.warn("[supabaseApi] getAvailableVariants failed", err);
+  }
+  return [];
+}
+
+/** @deprecated Use getModelInfo */
+export async function getBasePriceCFA(brand: string, model: string, storage: number): Promise<number | null> {
+  const info = await getModelInfo(brand, model, storage);
+  return info?.base_price_fcfa ?? null;
+}
+
 export async function fetchRams(brand: string, model: string): Promise<number[]> {
   try {
-    const rows = await getProduits();
-    if (rows && rows.length > 0) {
-      const set = Array.from(new Set(
-        (rows || [])
-          .filter((r: any) => (r.marque ?? r["Marques"] ?? r.brand ?? "") === brand && (r.modele_exact ?? r["Modèle Exact"] ?? r.model ?? "") === model)
-          .map((r: any) => Number(r.ram ?? r.ram_gb ?? r['"RAM (GB)"'] ?? r["RAM (GB)"]))
-          .filter((n) => Number.isFinite(n))
-      ));
-      return set.sort((a, b) => a - b);
+    if (realClient) {
+      const { data, error } = await realClient
+        .from("variants")
+        .select("ram_gb, models!inner(name, brands!inner(name))")
+        .eq("models.name", model)
+        .eq("models.brands.name", brand)
+        .order("ram_gb");
+
+      if (!error && data) {
+        return Array.from(new Set(data.map(v => v.ram_gb).filter(Boolean)));
+      }
     }
   } catch (err) {
     console.warn("[supabaseApi] fetchRams failed", err);

@@ -1,95 +1,129 @@
+/**
+ * CHARTE OFFICIELLE DE PRICING TEHK+ (v1.0)
+ * Logic for calculating Trade-in Value (VRT) and Swap Gap.
+ */
+
 export interface Diagnostics {
     ecran_casse: boolean;
     batterie_faible: boolean;
     face_id_hs: boolean;
     camera_hs: boolean;
     etat_moyen: boolean;
+    // UI mapping
+    screenState?: "intact" | "cracked" | "burned" | "dead";
+    batteryState?: "good" | "low" | "replace";
+    biometricsState?: "ok" | "nok" | "na";
+    cameraState?: "ok" | "degraded" | "nok";
+    aestheticState?: "very_good" | "visible" | "damaged";
 }
 
-export const MINIMUM_TRADE_FEE = 10000; // Frais de service TEKH+
+export const MINIMUM_TRADE_FEE = 10000;
 
 /**
- * Calcule l'estimation de rachat selon les règles strictes :
- * 1. Prix Pivot = prixBase * 0.75
- * 2. Si écran cassé -> 30% du Pivot, arrêt.
- * 3. Sinon, application des malus cumulatifs.
- * 4. Plancher à 5000 FCFA.
+ * A. Coefficient MARQUE (C_marque)
  */
-export function calculerEstimation(prixBase: number, diagnostics: Diagnostics): number {
-    if (!prixBase || prixBase <= 0) return 0;
-
-    // 1. Prix Pivot
-    const prixPivot = Math.round(prixBase * 0.75);
-
-    // 2. Priorité Écran
-    if (diagnostics.ecran_casse) {
-        const est = Math.round(prixPivot * 0.30);
-        return Math.max(est, 5000);
-    }
-
-    let estimation = prixPivot;
-
-    // 3. Malus cumulatifs
-    // "Si diagnostics.batterie_faible : -20 000."
-    if (diagnostics.batterie_faible) {
-        estimation -= 20000;
-    }
-
-    // "Si diagnostics.face_id_hs : -40% du montant actuel."
-    if (diagnostics.face_id_hs) {
-        estimation = estimation * 0.60;
-    }
-
-    // "Si diagnostics.camera_hs : -20% du montant actuel."
-    if (diagnostics.camera_hs) {
-        estimation = estimation * 0.80;
-    }
-
-    // "Si diagnostics.etat_moyen : -15% du montant actuel."
-    if (diagnostics.etat_moyen) {
-        estimation = estimation * 0.85;
-    }
-
-    // 4. Sécurité (Plancher)
-    // "Assure-toi que le prix final ne descend jamais en dessous de 5 000 FCFA"
-    return Math.max(Math.round(estimation), 5000);
-}
-
-// Alias requested by prompt
-export const calculerValeurRachat = calculerEstimation;
-
-// Legacy / Utility functions
-
-/**
- * @deprecated Use calculerEstimation instead
- */
-export const calculateEstimate = (specs: any, basePrice: number) => {
-    // Adapter for backward compatibility if needed during migration, 
-    // strictly mapping old specs to new diagnostics
-    const diagnostics: Diagnostics = {
-        ecran_casse: specs.screenState && specs.screenState !== 'intact',
-        batterie_faible: specs.batteryState === 'low' || specs.batteryState === 'replace',
-        face_id_hs: specs.biometricsState === 'nok',
-        camera_hs: specs.cameraState === 'nok' || specs.cameraState === 'degraded',
-        etat_moyen: specs.aestheticState === 'visible' || specs.aestheticState === 'damaged'
-    };
-    return calculerEstimation(basePrice, diagnostics);
+const COEFFICIENTS_MARQUE: Record<string, number> = {
+    "apple": 0.90,
+    "iphone": 0.90,
+    "samsung": 0.85,
+    "huawei": 0.80,
+    "honor": 0.78,
+    "motorola": 0.75,
+    "tecno": 0.70,
+    "infinix": 0.68,
+    "itel": 0.60,
+    "others": 0.65
 };
 
-export function getSwapGap(userDeviceValue: number, targetDealPrice: number) {
-    const theoreticalGap = targetDealPrice - userDeviceValue;
+/**
+ * B. Coefficient ANCIENNETÉ (C_age)
+ */
+function getCoefficientAge(releaseYear: number | null): number {
+    if (!releaseYear) return 0.50; // Case unknown/very old
+    const currentYear = new Date().getFullYear();
+    const age = currentYear - releaseYear;
 
-    // Si c'est un downgrade (gap < 0), on force quand même le frais minimal
-    // Si c'est un upgrade, c'est le gap + le frais minimal (ou inclus dans la marge)
-    // Selon le souhait du client : "le downgrade mm est conditionnee a lajout dune somme minimale"
+    if (age < 1) return 0.95;
+    if (age >= 1 && age < 2) return 0.85;
+    if (age >= 2 && age < 3) return 0.75;
+    if (age >= 3 && age < 4) return 0.65;
+    return 0.50; // > 4 ans
+}
 
+/**
+ * C. Coefficient ÉTAT PHYSIQUE (C_état)
+ */
+function getCoefficientEtat(diag: Diagnostics): number {
+    // Priority: Critical (Screen/Biometrics)
+    if (diag.screenState === "dead" || diag.screenState === "burned" || diag.screenState === "cracked") return 0.25; // Critique
+    if (diag.biometricsState === "nok") return 0.25; // Critique
+
+    // Physical state
+    if (diag.aestheticState === "damaged") return 0.45; // Mauvais
+    if (diag.aestheticState === "visible") return 0.70; // Moyen
+    if (diag.cameraState === "degraded" || diag.cameraState === "nok") return 0.70; // Moyen (simplified)
+    if (diag.batteryState === "low" || diag.batteryState === "replace") return 0.75; // Custom between Moyen/Bon
+
+    if (diag.aestheticState === "very_good") return 0.95; // Excellent
+
+    return 0.85; // Bon (Default)
+}
+
+/**
+ * MAIN: VRT = PRT * (C_marque * C_age * C_etat * C_marche * C_securite)
+ */
+export function calculerEstimation(
+    prt: number,
+    brand: string,
+    releaseYear: number | null,
+    diag: Diagnostics
+): number {
+    if (!prt || prt <= 0) return 0;
+
+    const b = brand.toLowerCase();
+    const cMarque = COEFFICIENTS_MARQUE[b] || COEFFICIENTS_MARQUE["others"];
+    const cAge = getCoefficientAge(releaseYear);
+    const cEtat = getCoefficientEtat(diag);
+    const cMarche = 0.90;
+    const cSecurite = 0.85;
+
+    const vrt = prt * (cMarque * cAge * cEtat * cMarche * cSecurite);
+
+    return Math.round(vrt);
+}
+
+/**
+ * SOULTE = PRT_cible - VRT_utilisateur
+ */
+export function getSwapGap(vrtUtilisateur: number, prtCible: number, classUtilisateur: string, classCible: string) {
+    // Garde-fou 1: Downgrade Critique
+    if (vrtUtilisateur > 1.4 * prtCible) {
+        return {
+            gap: 0,
+            blocked: true,
+            reason: "Échange bloqué : La valeur de votre téléphone est trop élevée par rapport au modèle ciblé (Downgrade critique)."
+        };
+    }
+
+    // Garde-fou 2: Cohérence de Gamme
+    if (classUtilisateur === 'F' && classCible === 'A') {
+        return {
+            gap: 0,
+            blocked: true,
+            reason: "Échange non autorisé entre un appareil d'entrée de gamme (Classe F) et un appareil premium (Classe A)."
+        };
+    }
+
+    const theoreticalGap = prtCible - vrtUtilisateur;
+
+    // Règle: Le downgrade mm est conditionnée à l'ajout d'une somme minimale
     const finalGap = theoreticalGap > 0
-        ? theoreticalGap + (MINIMUM_TRADE_FEE * 0.5) // Petit surplus sur upgrade pour la marge
-        : MINIMUM_TRADE_FEE; // Pour les downgrades, on paye au moins le frais fixe
+        ? theoreticalGap + (MINIMUM_TRADE_FEE)
+        : MINIMUM_TRADE_FEE;
 
     return {
         gap: finalGap,
-        isPositive: true, // Dans ce modèle B2C, l'utilisateur paye toujours quelque chose pour le service/garantie
-        formatted: finalGap.toLocaleString() + " FCFA"
+        blocked: false,
+        formatted: new Intl.NumberFormat("fr-FR", { style: "currency", currency: "XOF" }).format(finalGap)
     };
 }
