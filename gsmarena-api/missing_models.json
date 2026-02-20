@@ -1,0 +1,870 @@
+[
+  {
+    "brand": "Apple",
+    "model": "iPhone se (1ere Gen.)"
+  },
+  {
+    "brand": "Apple",
+    "model": "iPhone se (2eme Gen.)"
+  },
+  {
+    "brand": "Apple",
+    "model": "iPhone se (3eme Gen.)"
+  },
+  {
+    "brand": "Apple",
+    "model": "iPhone7"
+  },
+  {
+    "brand": "Google Pixel",
+    "model": "google pixel 4a (5g)"
+  },
+  {
+    "brand": "Google Pixel",
+    "model": "google pixel 5a (5g)"
+  },
+  {
+    "brand": "Honor",
+    "model": "honor magic 4"
+  },
+  {
+    "brand": "Honor",
+    "model": "honor magic 4 pro"
+  },
+  {
+    "brand": "Honor",
+    "model": "honor magic 4 ultimate"
+  },
+  {
+    "brand": "Honor",
+    "model": "honor magic 5"
+  },
+  {
+    "brand": "Honor",
+    "model": "honor magic 5 pro"
+  },
+  {
+    "brand": "Honor",
+    "model": "honor magic 5 ultimate"
+  },
+  {
+    "brand": "Honor",
+    "model": "honor magic 6"
+  },
+  {
+    "brand": "Honor",
+    "model": "honor magic 6 pro"
+  },
+  {
+    "brand": "Honor",
+    "model": "honor magic 6 ultimate"
+  },
+  {
+    "brand": "Huawei",
+    "model": "huawei nova 13"
+  },
+  {
+    "brand": "Huawei",
+    "model": "huawei nova 13 pro"
+  },
+  {
+    "brand": "Infinix",
+    "model": "infinix hot 40 5g"
+  },
+  {
+    "brand": "Infinix",
+    "model": "infinix note 12 pro 4g"
+  },
+  {
+    "brand": "Infinix",
+    "model": "infinix note 40 4g"
+  },
+  {
+    "brand": "Infinix",
+    "model": "infinix note 40 pro 5g"
+  },
+  {
+    "brand": "Infinix",
+    "model": "infinix note 40 pro+ 5g"
+  },
+  {
+    "brand": "Infinix",
+    "model": "infinix smart 4 plus"
+  },
+  {
+    "brand": "Infinix",
+    "model": "infinix zero 30 5g"
+  },
+  {
+    "brand": "LG",
+    "model": "lg velvet 4g"
+  },
+  {
+    "brand": "Lenovo",
+    "model": "lenovo legion phone duel 2"
+  },
+  {
+    "brand": "Motorola ",
+    "model": "motorola edge (2020)"
+  },
+  {
+    "brand": "Motorola ",
+    "model": "motorola edge 40 fusion"
+  },
+  {
+    "brand": "Motorola ",
+    "model": "motorola edge 60 fusion"
+  },
+  {
+    "brand": "Motorola ",
+    "model": "motorola edge 60 pro"
+  },
+  {
+    "brand": "Motorola ",
+    "model": "motorola edge 60 ultra"
+  },
+  {
+    "brand": "Motorola ",
+    "model": "motorola edge+ (2022)"
+  },
+  {
+    "brand": "Motorola ",
+    "model": "motorola moto g34 5g"
+  },
+  {
+    "brand": "Motorola ",
+    "model": "motorola moto g53 5g"
+  },
+  {
+    "brand": "Motorola ",
+    "model": "motorola moto g54 5g"
+  },
+  {
+    "brand": "Motorola ",
+    "model": "motorola moto g73 5g"
+  },
+  {
+    "brand": "Motorola ",
+    "model": "motorola moto g84 5g"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus 10 pro"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus 10r"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus 10t"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus 11"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus 11r"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus 12"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus 12r"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus 2"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus 3"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus 3t"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus 5"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus 5t"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus 6"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus 6t"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus 6t mclaren"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus 7"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus 7 pro"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus 7 pro 5g"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus 7t"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus 7t pro"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus 7t pro mclaren"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus 8"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus 8 pro"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus 8t"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus 9"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus 9 pro"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus 9rt"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus nord"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus nord 2"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus nord 2t"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus nord 3"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus nord ce 2"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus nord ce 2 lite"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus nord ce 3"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus nord ce 3 lite"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus nord ce 4"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus one"
+  },
+  {
+    "brand": "One Plus",
+    "model": "oneplus open"
+  },
+  {
+    "brand": "Oppo",
+    "model": "find x8"
+  },
+  {
+    "brand": "Oppo",
+    "model": "find x8 ultra"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo a3 5g"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo a3 pro 5g"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo a31 (2020)"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo a5 5g"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo a5 pro"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo a5 pro 5g"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo a5i"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo a5i pro"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo a5i pro 5g"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo a5x"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo a6 pro"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo a6 pro 5g"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo a6x"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo a6x 5g"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo a77 5g"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo a78 5g"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo a79 5g"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo a83 pro"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo a92s 5g"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo a97 5g"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo a98 5g"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo f21 pro (4g/5g)"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo reno 10 pro"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo reno 10 pro+"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo reno 11"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo reno 11 pro"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo reno 12"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo reno 12 f"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo reno 12 fs"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo reno 12 pro"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo reno 13 f"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo reno 13 fs"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo reno 2f"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo reno 6"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo reno 6 pro"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo reno 7"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo reno 7 pro"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo reno 8"
+  },
+  {
+    "brand": "Oppo",
+    "model": "oppo reno 8 pro"
+  },
+  {
+    "brand": "Realme",
+    "model": "realme 12+ 5g"
+  },
+  {
+    "brand": "Realme",
+    "model": "realme gt 2"
+  },
+  {
+    "brand": "Realme",
+    "model": "realme gt 2 pro"
+  },
+  {
+    "brand": "Realme",
+    "model": "realme gt 3"
+  },
+  {
+    "brand": "Realme",
+    "model": "realme gt 5 pro"
+  },
+  {
+    "brand": "Samsung",
+    "model": "galaxy flip"
+  },
+  {
+    "brand": "Samsung",
+    "model": "galaxy flip 5g"
+  },
+  {
+    "brand": "Samsung",
+    "model": "galaxy a16 (4g)"
+  },
+  {
+    "brand": "Samsung",
+    "model": "galaxy a16 (5g)"
+  },
+  {
+    "brand": "Samsung",
+    "model": "galaxy note 10 lite"
+  },
+  {
+    "brand": "Samsung",
+    "model": "galaxy note 10 plus"
+  },
+  {
+    "brand": "Samsung",
+    "model": "galaxy note 20"
+  },
+  {
+    "brand": "Samsung",
+    "model": "galaxy note 20 ultra"
+  },
+  {
+    "brand": "Samsung",
+    "model": "galaxy z flip 3"
+  },
+  {
+    "brand": "Samsung",
+    "model": "galaxy z flip 4"
+  },
+  {
+    "brand": "Samsung",
+    "model": "galaxy z flip 6"
+  },
+  {
+    "brand": "Samsung",
+    "model": "galaxy z fold 2"
+  },
+  {
+    "brand": "Samsung",
+    "model": "galaxy z fold 3"
+  },
+  {
+    "brand": "Samsung",
+    "model": "galaxy z fold 4"
+  },
+  {
+    "brand": "Samsung",
+    "model": "galaxy z fold 5"
+  },
+  {
+    "brand": "Samsung",
+    "model": "galaxy z fold 6"
+  },
+  {
+    "brand": "Samsung",
+    "model": "Samsung galaxy a07 2025 (a confirmer)"
+  },
+  {
+    "brand": "Samsung",
+    "model": "Samsung galaxy a13 4g"
+  },
+  {
+    "brand": "Samsung",
+    "model": "Samsung galaxy a14 4g"
+  },
+  {
+    "brand": "Samsung",
+    "model": "Samsung galaxy a15 4g"
+  },
+  {
+    "brand": "Samsung",
+    "model": "Samsung galaxy a22 4g"
+  },
+  {
+    "brand": "Samsung",
+    "model": "Samsung galaxy a23 4g"
+  },
+  {
+    "brand": "Samsung",
+    "model": "Samsung galaxy a25 5g"
+  },
+  {
+    "brand": "Samsung",
+    "model": "Samsung galaxy a32 4g"
+  },
+  {
+    "brand": "Samsung",
+    "model": "Samsung galaxy a34 5g"
+  },
+  {
+    "brand": "Samsung",
+    "model": "Samsung galaxy a35 5g"
+  },
+  {
+    "brand": "Samsung",
+    "model": "Samsung galaxy a51 4g"
+  },
+  {
+    "brand": "Samsung",
+    "model": "Samsung galaxy a52 4g"
+  },
+  {
+    "brand": "Samsung",
+    "model": "Samsung galaxy a54 5g"
+  },
+  {
+    "brand": "Samsung",
+    "model": "Samsung galaxy a71 4g"
+  },
+  {
+    "brand": "Samsung",
+    "model": "Samsung galaxy a72 4g"
+  },
+  {
+    "brand": "Samsung",
+    "model": "Samsung galaxy a74 (rare)"
+  },
+  {
+    "brand": "Tecno",
+    "model": "camon 16 se"
+  },
+  {
+    "brand": "Tecno",
+    "model": "camon 20 premier 5g"
+  },
+  {
+    "brand": "Tecno",
+    "model": "camon 30 premier 5g"
+  },
+  {
+    "brand": "Tecno",
+    "model": "camon 30 pro 5g"
+  },
+  {
+    "brand": "Tecno",
+    "model": "camon 40"
+  },
+  {
+    "brand": "Tecno",
+    "model": "camon 40 premier"
+  },
+  {
+    "brand": "Tecno",
+    "model": "camon 40 pro"
+  },
+  {
+    "brand": "Tecno",
+    "model": "pop 10"
+  },
+  {
+    "brand": "Tecno",
+    "model": "pop 10 pro"
+  },
+  {
+    "brand": "Tecno",
+    "model": "pop 10 c"
+  },
+  {
+    "brand": "Tecno",
+    "model": "pop 3 lte"
+  },
+  {
+    "brand": "Tecno",
+    "model": "pop 4 lte"
+  },
+  {
+    "brand": "Tecno",
+    "model": "pop 4 pro"
+  },
+  {
+    "brand": "Tecno",
+    "model": "pop 6 lte"
+  },
+  {
+    "brand": "Tecno",
+    "model": "pop 7 lte"
+  },
+  {
+    "brand": "Tecno",
+    "model": "pop 8 lte"
+  },
+  {
+    "brand": "Tecno",
+    "model": "pop 8 pro"
+  },
+  {
+    "brand": "Tecno",
+    "model": "pop 9 5g"
+  },
+  {
+    "brand": "Tecno",
+    "model": "pop 9 pro"
+  },
+  {
+    "brand": "Tecno",
+    "model": "tecno spark 15"
+  },
+  {
+    "brand": "Tecno",
+    "model": "tecno spark 15 air"
+  },
+  {
+    "brand": "Tecno",
+    "model": "tecno spark 15 pro"
+  },
+  {
+    "brand": "Tecno",
+    "model": "tecno spark 16"
+  },
+  {
+    "brand": "Tecno",
+    "model": "tecno spark 16 pro"
+  },
+  {
+    "brand": "Tecno",
+    "model": "tecno spark 20 5g"
+  },
+  {
+    "brand": "Tecno",
+    "model": "tecno spark 30 4g"
+  },
+  {
+    "brand": "Tecno",
+    "model": "tecno spark 40"
+  },
+  {
+    "brand": "Tecno",
+    "model": "tecno spark 40 pro"
+  },
+  {
+    "brand": "Tecno",
+    "model": "tecno spark 40 pro+"
+  },
+  {
+    "brand": "Tecno",
+    "model": "tecno spark 40c"
+  },
+  {
+    "brand": "Vivo",
+    "model": "vivo v25 lite"
+  },
+  {
+    "brand": "Vivo",
+    "model": "vivo y200 5g"
+  },
+  {
+    "brand": "Xiaomi ",
+    "model": "xiaomi 11 pro"
+  },
+  {
+    "brand": "Xiaomi ",
+    "model": "xiaomi 11 ultra"
+  },
+  {
+    "brand": "Xiaomi ",
+    "model": "xiaomi 15"
+  },
+  {
+    "brand": "Xiaomi ",
+    "model": "xiaomi 15 pro"
+  },
+  {
+    "brand": "Xiaomi ",
+    "model": "xiaomi 15 ultra"
+  },
+  {
+    "brand": "Xiaomi ",
+    "model": "xiaomi 15t"
+  },
+  {
+    "brand": "Xiaomi ",
+    "model": "xiaomi 15t pro"
+  },
+  {
+    "brand": "Xiaomi ",
+    "model": "xiaomi mi 10 youth (lite zoom)"
+  },
+  {
+    "brand": "Xiaomi ",
+    "model": "xiaomi mi 11 lite (4g)"
+  },
+  {
+    "brand": "Xiaomi Poco",
+    "model": "poco m4 pro 4g"
+  },
+  {
+    "brand": "Xiaomi Poco",
+    "model": "poco m5 s"
+  },
+  {
+    "brand": "Xiaomi Poco",
+    "model": "poco m6 5g"
+  },
+  {
+    "brand": "Xiaomi Poco",
+    "model": "poco m6 pro 4g"
+  },
+  {
+    "brand": "Xiaomi Poco",
+    "model": "poco m7"
+  },
+  {
+    "brand": "Xiaomi Poco",
+    "model": "poco m7 pro 5g"
+  },
+  {
+    "brand": "Xiaomi Poco",
+    "model": "poco x5 5g"
+  },
+  {
+    "brand": "Xiaomi Poco",
+    "model": "poco x5 pro 5g"
+  },
+  {
+    "brand": "Xiaomi Poco",
+    "model": "poco x6 5g"
+  },
+  {
+    "brand": "Xiaomi Poco",
+    "model": "poco x6 pro 5g"
+  },
+  {
+    "brand": "Xiaomi Redmi ",
+    "model": "redmi 15c"
+  },
+  {
+    "brand": "Xiaomi Redmi ",
+    "model": "redmi note 11 pro +"
+  },
+  {
+    "brand": "Xiaomi Redmi ",
+    "model": "redmi note 12 5g"
+  },
+  {
+    "brand": "Xiaomi Redmi ",
+    "model": "redmi note 12 pro 5g"
+  },
+  {
+    "brand": "Xiaomi Redmi ",
+    "model": "redmi note 13 5g"
+  },
+  {
+    "brand": "Xiaomi Redmi ",
+    "model": "redmi note 13 pro 5g"
+  },
+  {
+    "brand": "Xiaomi Redmi ",
+    "model": "redmi note 13 pro+ 5g"
+  },
+  {
+    "brand": "red magic ",
+    "model": "red magic 5s pro"
+  },
+  {
+    "brand": "red magic ",
+    "model": "red magic 10 pro"
+  },
+  {
+    "brand": "red magic ",
+    "model": "red magic 10s pro"
+  },
+  {
+    "brand": "red magic ",
+    "model": "red magic 11 pro"
+  },
+  {
+    "brand": "ZTE",
+    "model": "zte axon 50 5g"
+  },
+  {
+    "brand": "ZTE",
+    "model": "zte axon 60 pro"
+  }
+]
