@@ -28,7 +28,7 @@ const Layout = () => {
     <div className="flex min-h-screen bg-background text-foreground transition-colors">
       <Sidebar />
       <PWAInstallBanner />
-      <div className="flex-1 flex flex-col md:pl-16">
+      <div className="flex-1 flex flex-col md:pl-16 relative">
         {/* Modern Header */}
         <header className="sticky top-0 z-40 border-b border-border/10 bg-background/80 backdrop-blur-md transition-all">
           <div className="container mx-auto px-4 h-16 flex items-center justify-between gap-4">
