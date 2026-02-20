@@ -48,6 +48,16 @@ export async function fetchAllRams(): Promise<number[]> {
   }
 }
 
+const STATIC_MODELS: Record<string, string[]> = {
+  "Apple": ["iPhone 15 Pro Max", "iPhone 15 Pro", "iPhone 15 Plus", "iPhone 15", "iPhone 14 Pro Max", "iPhone 14 Pro", "iPhone 14", "iPhone 13 Pro Max", "iPhone 13", "iPhone 12", "iPhone 11", "iPhone XR"],
+  "Samsung": ["Galaxy S24 Ultra", "Galaxy S24+", "Galaxy S24", "Galaxy S23 Ultra", "Galaxy S23", "Galaxy S22 Ultra", "Galaxy S22", "Galaxy A54", "Galaxy A34", "Galaxy A14", "Galaxy Note 20 Ultra"],
+  "Xiaomi": ["Redmi Note 13 Pro+", "Redmi Note 13", "Xiaomi 14", "Xiaomi 13T Pro", "Poco F5", "Poco X6 Pro"],
+  "Tecno": ["Camon 30 Premier", "Camon 30 Pro", "Camon 20 Premier", "Phantom V Flip", "Phantom X2 Pro", "Spark 20 Pro+"],
+  "Infinix": ["Zero 30 5G", "Note 40 Pro", "Note 30 VIP", "Hot 40 Pro", "GT 10 Pro"],
+  "Google": ["Pixel 8 Pro", "Pixel 8", "Pixel 7 Pro", "Pixel 7", "Pixel 6a"],
+  "Huawei": ["P60 Pro", "Mate 50 Pro", "Nova 11", "P40 Pro"]
+};
+
 export async function fetchBrands(): Promise<string[]> {
   try {
     if (realClient) {
@@ -57,7 +67,7 @@ export async function fetchBrands(): Promise<string[]> {
   } catch (err) {
     console.warn("[supabaseApi] fetchBrands failed, using defaults", err);
   }
-  return ["Apple", "Samsung", "Xiaomi", "Huawei", "Tecno", "Infinix", "Google", "OnePlus", "Oppo", "Vivo"];
+  return Object.keys(STATIC_MODELS);
 }
 
 export async function fetchModels(brand: string): Promise<string[]> {
@@ -69,12 +79,12 @@ export async function fetchModels(brand: string): Promise<string[]> {
         .eq("brands.name", brand)
         .order("name");
 
-      if (!error && data) return data.map((m: any) => m.name);
+      if (!error && data && data.length > 0) return data.map((m: any) => m.name);
     }
   } catch (err) {
     console.warn("[supabaseApi] fetchModels failed", err);
   }
-  return [];
+  return STATIC_MODELS[brand] || [];
 }
 
 export async function fetchStorages(brand: string, model: string): Promise<number[]> {

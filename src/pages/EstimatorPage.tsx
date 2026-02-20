@@ -112,13 +112,28 @@ export default function EstimatorPage() {
     right: useRef<HTMLInputElement>(null),
   };
 
-  const handleImageUpload = (slot: keyof typeof imageSlots, e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
 
-    const url = URL.createObjectURL(file);
-    setImageSlots(prev => ({ ...prev, [slot]: url }));
-    setImageFiles(prev => ({ ...prev, [slot]: file }));
+    const newSlots = { ...imageSlots };
+    const newFiles = { ...imageFiles };
+
+    // Fill empty slots sequentially
+    let fileIdx = 0;
+    const slots: Array<keyof typeof imageSlots> = ["front", "back", "left", "right"];
+
+    for (const slot of slots) {
+      if (!newSlots[slot] && fileIdx < files.length) {
+        const file = files[fileIdx];
+        newSlots[slot] = URL.createObjectURL(file);
+        newFiles[slot] = file;
+        fileIdx++;
+      }
+    }
+
+    setImageSlots(newSlots);
+    setImageFiles(newFiles);
   };
 
   const removeImage = (slot: keyof typeof imageSlots) => {
@@ -552,40 +567,50 @@ export default function EstimatorPage() {
                     <h2 className="text-2xl font-black tracking-tighter uppercase italic text-slate-900 dark:text-white">3. Rapport Photo OBLIGATOIRE</h2>
                   </div>
 
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
-                    {(Object.keys(imageSlots) as Array<keyof typeof imageSlots>).map((slot) => (
-                      <div key={slot} className="space-y-3">
-                        <div
-                          onClick={() => fileInputRefs[slot].current?.click()}
-                          className={cn(
-                            "aspect-square rounded-[32px] border-2 border-dashed flex flex-col items-center justify-center gap-3 cursor-pointer transition-all relative overflow-hidden group shadow-sm",
-                            imageSlots[slot]
-                              ? "border-blue-600 dark:border-primary bg-blue-600/5 dark:bg-primary/5"
-                              : "border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 hover:border-blue-600/50 dark:hover:border-primary/50"
-                          )}
-                        >
-                          {imageSlots[slot] ? (
-                            <>
-                              <img src={imageSlots[slot]!} alt={slot} className="w-full h-full object-cover" />
-                              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                <Button size="icon" variant="destructive" className="rounded-full w-10 h-10" onClick={(e) => { e.stopPropagation(); removeImage(slot); }}>
-                                  <X className="w-5 h-5" />
-                                </Button>
-                              </div>
-                            </>
-                          ) : (
-                            <>
-                              <Plus className="w-8 h-8 text-slate-300 dark:text-zinc-600 group-hover:text-blue-600 dark:group-hover:text-primary transition-colors" />
-                              <ImageIcon className="w-5 h-5 text-slate-400 dark:text-zinc-700" />
-                            </>
-                          )}
-                          <input type="file" ref={fileInputRefs[slot]} className="hidden" accept="image/*" onChange={(e) => handleImageUpload(slot, e)} />
-                        </div>
-                        <Label className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-zinc-500 text-center block">
-                          {slot === "front" ? "FACE AVANT" : slot === "back" ? "FACE ARRIÈRE" : slot === "left" ? "FLANC GAUCHE" : "FLANC DROIT"}
-                        </Label>
+                  <div className="bg-slate-50 dark:bg-white/5 rounded-3xl p-6 border-2 border-dashed border-slate-200 dark:border-white/10">
+                    <div className="flex flex-col items-center gap-4 text-center mb-6">
+                      <div
+                        onClick={() => fileInputRefs.front.current?.click()}
+                        className="w-20 h-20 rounded-2xl bg-blue-600 dark:bg-primary text-white flex items-center justify-center shadow-lg cursor-pointer hover:scale-105 active:scale-95 transition-transform"
+                      >
+                        <Plus className="w-10 h-10" />
                       </div>
-                    ))}
+                      <div>
+                        <h4 className="font-black text-slate-900 dark:text-white uppercase tracking-tight">Ajouter des photos</h4>
+                        <p className="text-[10px] font-bold text-slate-400 dark:text-zinc-500 uppercase tracking-widest">Prenez 4 photos nettes (Face, Dos, Côtés)</p>
+                      </div>
+                      <input type="file" ref={fileInputRefs.front} className="hidden" accept="image/*" multiple onChange={handleImageUpload} />
+                    </div>
+
+                    <div className="grid grid-cols-4 gap-3">
+                      {(Object.keys(imageSlots) as Array<keyof typeof imageSlots>).map((slot) => (
+                        <div key={slot} className="relative aspect-square">
+                          <div
+                            onClick={() => !imageSlots[slot] && fileInputRefs.front.current?.click()}
+                            className={cn(
+                              "w-full h-full rounded-xl border-2 overflow-hidden transition-all flex items-center justify-center",
+                              imageSlots[slot]
+                                ? "border-blue-600 dark:border-primary"
+                                : "border-slate-100 dark:border-white/5 bg-slate-100/50 dark:bg-white/5"
+                            )}
+                          >
+                            {imageSlots[slot] ? (
+                              <img src={imageSlots[slot]!} alt={slot} className="w-full h-full object-cover" />
+                            ) : (
+                              <ImageIcon className="w-5 h-5 text-slate-300 dark:text-zinc-700" />
+                            )}
+                          </div>
+                          {imageSlots[slot] && (
+                            <button
+                              onClick={() => removeImage(slot)}
+                              className="absolute -top-1 -right-1 w-5 h-5 bg-rose-500 text-white rounded-full flex items-center justify-center shadow-lg"
+                            >
+                              <X className="w-3 h-3" />
+                            </button>
+                          )}
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
