@@ -78,8 +78,8 @@ const PWAInstallBanner = () => {
                         </p>
                         <p className="text-[10px] font-medium text-white/80 leading-tight">
                             {isIOS
-                                ? "Appuyez sur 'Partager' puis 'Sur l'écran d'accueil'"
-                                : "Installez l'application pour une expérience fluide."}
+                                ? "Partagez puis 'Sur l'écran d'accueil'"
+                                : "TΞKΗ+, pour un accès au numérique pour tous."}
                         </p>
                     </div>
                 </div>
