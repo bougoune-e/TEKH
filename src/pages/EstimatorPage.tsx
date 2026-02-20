@@ -355,27 +355,27 @@ export default function EstimatorPage() {
     const currentIndex = steps.findIndex(s => s.id === step);
 
     return (
-      <div className="flex items-center justify-between mb-12 px-2 max-w-2xl mx-auto">
+      <div className="flex items-center justify-between mb-8 px-2 max-w-xl mx-auto">
         {steps.map((s, i) => (
-          <div key={s.id} className="flex flex-col items-center gap-3 flex-1 relative">
+          <div key={s.id} className="flex flex-col items-center gap-2 flex-1 relative">
             {i < steps.length - 1 && (
               <div className={cn(
-                "absolute top-5 left-[60%] right-[-40%] h-[3px] transition-all duration-700",
+                "absolute top-4 left-[60%] right-[-40%] h-[2px] transition-all duration-700",
                 i < currentIndex ? "bg-blue-600 dark:bg-primary" : "bg-slate-200 dark:bg-zinc-800"
               )} />
             )}
             <div className={cn(
-              "w-12 h-12 rounded-2xl flex items-center justify-center border-2 transition-all duration-700 z-10 font-black text-sm",
+              "w-9 h-9 rounded-xl flex items-center justify-center border-2 transition-all duration-700 z-10 font-black text-[11px]",
               i <= currentIndex
-                ? "border-blue-600 bg-blue-600 dark:border-primary dark:bg-primary text-white shadow-xl scale-110"
+                ? "border-blue-600 bg-blue-600 dark:border-primary dark:bg-primary text-white shadow-lg scale-105"
                 : "border-slate-200 bg-white dark:border-zinc-800 dark:bg-zinc-950 text-slate-400 dark:text-zinc-600"
             )}>
-              {i < currentIndex ? <CheckCircle2 className="w-6 h-6" /> : <span>0{i + 1}</span>}
+              {i < currentIndex ? <CheckCircle2 className="w-5 h-5" /> : <span>0{i + 1}</span>}
             </div>
             <span className={cn(
-              "text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] text-center",
+              "text-[8px] font-black uppercase tracking-[0.15em] text-center",
               i <= currentIndex ? "text-blue-600 dark:text-primary" : "text-slate-400 dark:text-zinc-600"
-            )}>{t(`simulator.${s.id}`)}</span>
+            )}>{s.label}</span>
           </div>
         ))}
       </div>
@@ -414,60 +414,60 @@ export default function EstimatorPage() {
         <Card className="bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/5 shadow-sm rounded-xl overflow-hidden border">
           <CardContent className="p-0">
             {step === "estimation" ? (
-              <div className="p-6 sm:p-14 space-y-8 sm:space-y-12 animate-in fade-in duration-700">
+              <div className="p-4 sm:p-8 space-y-5 sm:space-y-8 animate-in fade-in duration-700">
                 {/* 1. Device Info */}
-                <div className="space-y-8">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-2xl bg-blue-600/10 dark:bg-primary/10 text-blue-600 dark:text-primary flex items-center justify-center">
-                      <Smartphone className="w-6 h-6" />
+                <div className="space-y-6">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-blue-600/10 dark:bg-primary/10 text-blue-600 dark:text-primary flex items-center justify-center">
+                      <Smartphone className="w-5 h-5" />
                     </div>
-                    <h2 className="text-2xl font-black tracking-tighter uppercase font-sans text-black dark:text-white">1. Identité de l'appareil</h2>
+                    <h2 className="text-xl font-black tracking-tighter uppercase font-sans text-black dark:text-white">1. Identité de l'appareil</h2>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="space-y-3 text-left">
-                      <Label className="text-[11px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 ml-1">Marque</Label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-1.5 text-left">
+                      <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 ml-1">Marque</Label>
                       <Select value={brand || ""} onValueChange={(v) => { setBrand(v); setModel(""); setStorage(null); setRam(null); }}>
-                        <SelectTrigger className="h-14 sm:h-16 rounded-[24px] border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white hover:border-blue-600/50 dark:hover:border-primary/50 transition-all outline-none">
-                          <SelectValue placeholder={loadingBrands ? "Chargement..." : "SÉLECTIONNER MARQUE"} />
+                        <SelectTrigger className="h-12 rounded-xl border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white hover:border-blue-600/50 dark:hover:border-primary/50 transition-all outline-none">
+                          <SelectValue placeholder={loadingBrands ? "..." : "SÉLECTIONNER MARQUE"} />
                         </SelectTrigger>
-                        <SelectContent className="rounded-[24px] bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
+                        <SelectContent className="rounded-xl bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
                           {brands.map((b) => <SelectItem key={b} value={b}>{b}</SelectItem>)}
                         </SelectContent>
                       </Select>
                     </div>
 
-                    <div className="space-y-3 text-left">
-                      <Label className="text-[11px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 ml-1">Modèle</Label>
+                    <div className="space-y-1.5 text-left">
+                      <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 ml-1">Modèle</Label>
                       <Select value={model || ""} onValueChange={(v) => { setModel(v); setStorage(null); setRam(null); }} disabled={!brand || loadingModels}>
-                        <SelectTrigger className="h-14 sm:h-16 rounded-[24px] border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white disabled:opacity-30">
+                        <SelectTrigger className="h-12 rounded-xl border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white disabled:opacity-30">
                           <SelectValue placeholder={!brand ? "—" : loadingModels ? "..." : "SÉLECTIONNER MODÈLE"} />
                         </SelectTrigger>
-                        <SelectContent className="rounded-[24px] bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
+                        <SelectContent className="rounded-xl bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
                           {models.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}
                         </SelectContent>
                       </Select>
                     </div>
 
-                    <div className="space-y-3 text-left">
-                      <Label className="text-[11px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 ml-1">Stockage</Label>
+                    <div className="space-y-1.5 text-left">
+                      <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 ml-1">Stockage</Label>
                       <Select value={storage ? String(storage) : ""} onValueChange={(v) => { setStorage(Number(v)); setRam(null); }} disabled={!model || loadingStorages}>
-                        <SelectTrigger className="h-14 sm:h-16 rounded-[24px] border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white disabled:opacity-30">
+                        <SelectTrigger className="h-12 rounded-xl border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white disabled:opacity-30">
                           <SelectValue placeholder={!model ? "—" : loadingStorages ? "..." : "CAPACITÉ (GO)"} />
                         </SelectTrigger>
-                        <SelectContent className="rounded-[24px] bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
+                        <SelectContent className="rounded-xl bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
                           {storages.map((s) => <SelectItem key={s} value={String(s)}>{s} Go</SelectItem>)}
                         </SelectContent>
                       </Select>
                     </div>
 
-                    <div className="space-y-3 text-left">
-                      <Label className="text-[11px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 ml-1">RAM</Label>
+                    <div className="space-y-1.5 text-left">
+                      <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 ml-1">RAM</Label>
                       <Select value={ram ? String(ram) : ""} onValueChange={(v) => setRam(Number(v))} disabled={!storage || rams.length === 0}>
-                        <SelectTrigger className="h-14 sm:h-16 rounded-[24px] border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white disabled:opacity-30">
+                        <SelectTrigger className="h-12 rounded-xl border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white disabled:opacity-30">
                           <SelectValue placeholder={!storage ? "—" : rams.length === 0 ? "Non applicable" : "RAM (GO)"} />
                         </SelectTrigger>
-                        <SelectContent className="rounded-[24px] bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
+                        <SelectContent className="rounded-xl bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
                           {rams.map((x) => <SelectItem key={x} value={String(x)}>{x} Go</SelectItem>)}
                         </SelectContent>
                       </Select>
@@ -476,22 +476,22 @@ export default function EstimatorPage() {
                 </div>
 
                 {/* 2. Condition Diagnostic */}
-                <div className="space-y-8 pt-10 border-t border-slate-100 dark:border-white/5">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-2xl bg-blue-600/10 dark:bg-primary/10 text-blue-600 dark:text-primary flex items-center justify-center">
-                      <Monitor className="w-6 h-6" />
+                <div className="space-y-6 pt-8 border-t border-slate-100 dark:border-white/5">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-blue-600/10 dark:bg-primary/10 text-blue-600 dark:text-primary flex items-center justify-center">
+                      <Monitor className="w-5 h-5" />
                     </div>
-                    <h2 className="text-2xl font-black tracking-tighter uppercase italic text-slate-900 dark:text-white">2. Diagnostic Technique</h2>
+                    <h2 className="text-xl font-black tracking-tighter uppercase italic text-slate-900 dark:text-white">2. Diagnostic Technique</h2>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="space-y-3 text-left">
-                      <Label className="text-[11px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 ml-1">État de l'affichage</Label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-1.5 text-left">
+                      <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 ml-1">État de l'affichage</Label>
                       <Select value={screenState || ""} onValueChange={(v) => setScreenState(v as any)}>
-                        <SelectTrigger className="h-14 sm:h-16 rounded-[24px] border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white">
+                        <SelectTrigger className="h-12 rounded-xl border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white">
                           <SelectValue placeholder="ÉCRAN" />
                         </SelectTrigger>
-                        <SelectContent className="rounded-[24px] bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
+                        <SelectContent className="rounded-xl bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
                           <SelectItem value="intact">Intact / Aucun défaut</SelectItem>
                           <SelectItem value="cracked">Fissuré / Rayé</SelectItem>
                           <SelectItem value="burned">Brûlé / Taches LCD</SelectItem>
@@ -500,13 +500,13 @@ export default function EstimatorPage() {
                       </Select>
                     </div>
 
-                    <div className="space-y-3 text-left">
-                      <Label className="text-[11px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 ml-1">Santé Batterie</Label>
+                    <div className="space-y-1.5 text-left">
+                      <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 ml-1">Santé Batterie</Label>
                       <Select value={batteryState || ""} onValueChange={(v) => setBatteryState(v as any)}>
-                        <SelectTrigger className="h-14 sm:h-16 rounded-[24px] border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white">
+                        <SelectTrigger className="h-12 rounded-xl border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white">
                           <SelectValue placeholder="BATTERIE" />
                         </SelectTrigger>
-                        <SelectContent className="rounded-[24px] bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
+                        <SelectContent className="rounded-xl bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
                           <SelectItem value="good">Optimale (&gt; 85%)</SelectItem>
                           <SelectItem value="low">Dégradée (&lt; 85%)</SelectItem>
                           <SelectItem value="replace">Service / À remplacer</SelectItem>
@@ -514,13 +514,13 @@ export default function EstimatorPage() {
                       </Select>
                     </div>
 
-                    <div className="space-y-3 text-left">
-                      <Label className="text-[11px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 ml-1">Biométrie & Sécurité</Label>
-                      <Select value={biometricsState || undefined as any} onValueChange={(v) => setBiometricsState(v as any)}>
-                        <SelectTrigger className="h-16 rounded-[24px] border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white">
+                    <div className="space-y-1.5 text-left">
+                      <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 ml-1">Biométrie & Sécurité</Label>
+                      <Select value={biometricsState || ""} onValueChange={(v) => setBiometricsState(v as any)}>
+                        <SelectTrigger className="h-12 rounded-xl border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white">
                           <SelectValue placeholder="FACE ID / TOUCH ID" />
                         </SelectTrigger>
-                        <SelectContent className="rounded-[24px] bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
+                        <SelectContent className="rounded-xl bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
                           <SelectItem value="ok">100% Fonctionnel</SelectItem>
                           <SelectItem value="nok">Désactivé / Panne</SelectItem>
                           <SelectItem value="na">Non disponible</SelectItem>
@@ -528,13 +528,13 @@ export default function EstimatorPage() {
                       </Select>
                     </div>
 
-                    <div className="space-y-3 text-left">
-                      <Label className="text-[11px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 ml-1">Capture Optique</Label>
-                      <Select value={cameraState || undefined as any} onValueChange={(v) => setCameraState(v as any)}>
-                        <SelectTrigger className="h-16 rounded-[24px] border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white">
+                    <div className="space-y-1.5 text-left">
+                      <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 ml-1">Capture Optique</Label>
+                      <Select value={cameraState || ""} onValueChange={(v) => setCameraState(v as any)}>
+                        <SelectTrigger className="h-12 rounded-xl border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white">
                           <SelectValue placeholder="CAMÉRA" />
                         </SelectTrigger>
-                        <SelectContent className="rounded-[24px] bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
+                        <SelectContent className="rounded-xl bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
                           <SelectItem value="ok">Parfaite</SelectItem>
                           <SelectItem value="degraded">Flou / Taches sombres</SelectItem>
                           <SelectItem value="nok">HS / Lentille cassée</SelectItem>
@@ -542,244 +542,241 @@ export default function EstimatorPage() {
                       </Select>
                     </div>
 
-                    <div className="space-y-3 text-left md:col-span-2">
-                      <Label className="text-[11px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 ml-1">Esthétique Globale</Label>
-                      <Select value={aestheticState || undefined as any} onValueChange={(v) => setAestheticState(v as any)}>
-                        <SelectTrigger className="h-16 rounded-[24px] border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white">
+                    <div className="space-y-1.5 text-left md:col-span-2">
+                      <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 ml-1">Esthétique Globale</Label>
+                      <Select value={aestheticState || ""} onValueChange={(v) => setAestheticState(v as any)}>
+                        <SelectTrigger className="h-12 rounded-xl border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white">
                           <SelectValue placeholder="CHÂSSIS / DOS" />
                         </SelectTrigger>
-                        <SelectContent className="rounded-[24px] bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
-                          <SelectItem value="very_good">État Concours (Neuf)</SelectItem>
-                          <SelectItem value="visible">Traces d'usage léger</SelectItem>
-                          <SelectItem value="damaged">Chocs prononcés / Fissure dos</SelectItem>
+                        <SelectContent className="rounded-xl bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
+                          <SelectItem value="very_good">Presque Neuf</SelectItem>
+                          <SelectItem value="visible">Traces visibles</SelectItem>
+                          <SelectItem value="damaged">Chocs / Cassé</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
                   </div>
-                </div>
 
-                {/* 3. Mandatory Photos */}
-                <div className="space-y-8 pt-10 border-t border-slate-100 dark:border-white/5">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-2xl bg-blue-600/10 dark:bg-primary/10 text-blue-600 dark:text-primary flex items-center justify-center">
-                      <Camera className="w-6 h-6" />
-                    </div>
-                    <h2 className="text-2xl font-black tracking-tighter uppercase italic text-slate-900 dark:text-white">3. Rapport Photo OBLIGATOIRE</h2>
-                  </div>
-
-                  <div className="bg-slate-50 dark:bg-white/5 rounded-3xl p-6 border-2 border-dashed border-slate-200 dark:border-white/10">
-                    <div className="flex flex-col items-center gap-4 text-center mb-6">
-                      <div
-                        onClick={() => fileInputRefs.front.current?.click()}
-                        className="w-20 h-20 rounded-2xl bg-blue-600 dark:bg-primary text-white flex items-center justify-center shadow-lg cursor-pointer hover:scale-105 active:scale-95 transition-transform"
-                      >
-                        <Plus className="w-10 h-10" />
+                  <div className="space-y-6 pt-8 border-t border-slate-100 dark:border-white/5">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-blue-600/10 dark:bg-primary/10 text-blue-600 dark:text-primary flex items-center justify-center">
+                        <Camera className="w-5 h-5" />
                       </div>
-                      <div>
-                        <h4 className="font-black text-slate-900 dark:text-white uppercase tracking-tight">Ajouter des photos</h4>
-                        <p className="text-[10px] font-bold text-slate-400 dark:text-zinc-500 uppercase tracking-widest">Prenez 4 photos nettes (Face, Dos, Côtés)</p>
-                      </div>
-                      <input type="file" ref={fileInputRefs.front} className="hidden" accept="image/*" multiple onChange={handleImageUpload} />
+                      <h2 className="text-xl font-black tracking-tighter uppercase italic text-slate-900 dark:text-white">3. Rapport Photo OBLIGATOIRE</h2>
                     </div>
 
-                    <div className="grid grid-cols-4 gap-3">
-                      {(Object.keys(imageSlots) as Array<keyof typeof imageSlots>).map((slot) => (
-                        <div key={slot} className="relative aspect-square">
-                          <div
-                            onClick={() => !imageSlots[slot] && fileInputRefs.front.current?.click()}
-                            className={cn(
-                              "w-full h-full rounded-xl border-2 overflow-hidden transition-all flex items-center justify-center",
-                              imageSlots[slot]
-                                ? "border-blue-600 dark:border-primary"
-                                : "border-slate-100 dark:border-white/5 bg-slate-100/50 dark:bg-white/5"
-                            )}
-                          >
-                            {imageSlots[slot] ? (
-                              <img src={imageSlots[slot]!} alt={slot} className="w-full h-full object-cover" />
-                            ) : (
-                              <ImageIcon className="w-5 h-5 text-slate-300 dark:text-zinc-700" />
+                    <div className="bg-slate-50 dark:bg-white/5 rounded-2xl p-4 border-2 border-dashed border-slate-200 dark:border-white/10">
+                      <div className="flex flex-col items-center gap-3 text-center mb-4">
+                        <div
+                          onClick={() => fileInputRefs.front.current?.click()}
+                          className="w-14 h-14 rounded-xl bg-blue-600 dark:bg-primary text-white flex items-center justify-center shadow-lg cursor-pointer hover:scale-105 active:scale-95 transition-transform"
+                        >
+                          <Plus className="w-7 h-7" />
+                        </div>
+                        <div>
+                          <h4 className="font-black text-slate-900 dark:text-white uppercase tracking-tight text-sm">Photos de l'appareil</h4>
+                          <p className="text-[8px] font-bold text-slate-400 dark:text-zinc-500 uppercase tracking-widest">Face, Dos, Côtés (4 photos)</p>
+                        </div>
+                        <input type="file" ref={fileInputRefs.front} className="hidden" accept="image/*" multiple onChange={handleImageUpload} />
+                      </div>
+
+                      <div className="grid grid-cols-4 gap-2">
+                        {(Object.keys(imageSlots) as Array<keyof typeof imageSlots>).map((slot) => (
+                          <div key={slot} className="relative aspect-square">
+                            <div
+                              onClick={() => !imageSlots[slot] && fileInputRefs.front.current?.click()}
+                              className={cn(
+                                "w-full h-full rounded-lg border-2 overflow-hidden transition-all flex items-center justify-center",
+                                imageSlots[slot]
+                                  ? "border-blue-600 dark:border-primary"
+                                  : "border-slate-100 dark:border-white/5 bg-slate-100/50 dark:bg-white/5"
+                              )}
+                            >
+                              {imageSlots[slot] ? (
+                                <img src={imageSlots[slot]!} alt={slot} className="w-full h-full object-cover" />
+                              ) : (
+                                <ImageIcon className="w-4 h-4 text-slate-300 dark:text-zinc-700" />
+                              )}
+                            </div>
+                            {imageSlots[slot] && (
+                              <button
+                                onClick={() => removeImage(slot)}
+                                className="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 text-white rounded-full flex items-center justify-center shadow-lg"
+                              >
+                                <X className="w-2.5 h-2.5" />
+                              </button>
                             )}
                           </div>
-                          {imageSlots[slot] && (
-                            <button
-                              onClick={() => removeImage(slot)}
-                              className="absolute -top-1 -right-1 w-5 h-5 bg-rose-500 text-white rounded-full flex items-center justify-center shadow-lg"
-                            >
-                              <X className="w-3 h-3" />
-                            </button>
-                          )}
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="pt-12 flex flex-col items-center gap-8">
+                <div className="pt-8 flex flex-col items-center gap-6">
                   {/* The Reprise Value Display */}
                   <div className={cn(
-                    "w-full p-10 rounded-[48px] border-2 transition-all duration-700 relative overflow-hidden text-center",
+                    "w-full p-8 rounded-[40px] border-2 transition-all duration-700 relative overflow-hidden text-center",
                     finalPrice !== null
-                      ? "border-blue-600/20 bg-blue-600/5 dark:border-primary/20 dark:bg-primary/5 shadow-2xl"
+                      ? "border-blue-600/20 bg-blue-600/5 dark:border-primary/20 dark:bg-primary/5 shadow-xl"
                       : "border-slate-100 bg-slate-50 dark:border-white/5 dark:bg-white/[0.02] grayscale opacity-40"
                   )}>
                     {!isStep1Complete && (
                       <div className="absolute inset-0 z-20 flex items-center justify-center bg-white/60 dark:bg-black/40 backdrop-blur-[2px]">
-                        <div className="flex items-center gap-3 bg-white dark:bg-black px-6 py-3 rounded-full border border-zinc-100 dark:border-white/10 shadow-2xl">
-                          <AlertCircle className="w-5 h-5 text-[#064e3b] dark:text-primary animate-pulse" />
-                          <span className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white">{t('simulator.diagnose')}</span>
+                        <div className="flex items-center gap-2 bg-white dark:bg-black px-4 py-2 rounded-full border border-zinc-100 dark:border-white/10 shadow-xl">
+                          <AlertCircle className="w-4 h-4 text-[#064e3b] dark:text-primary animate-pulse" />
+                          <span className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white">Diagnostic incomplet</span>
                         </div>
                       </div>
                     )}
 
-                    <div className="text-[11px] font-black uppercase tracking-[0.5em] text-slate-400 dark:text-zinc-500 mb-3">estimation de reprise indicative</div>
-                    <div className="text-6xl sm:text-7xl font-black tracking-tighter text-slate-900 dark:text-white italic">
+                    <div className="text-[9px] font-black uppercase tracking-[0.4em] text-slate-400 dark:text-zinc-500 mb-2 italic">estimation indicative</div>
+                    <div className="text-3xl sm:text-5xl font-black tracking-tighter text-slate-900 dark:text-white italic">
                       {finalPrice !== null ? formatCFA(finalPrice) : formatCFA(0)}
                     </div>
-                    <div className="mt-4 flex items-center justify-center gap-3">
-                      <ShieldCheck className="w-5 h-5 text-[#064e3b] dark:text-primary" />
-                      <span className="text-[10px] font-black text-[#374151] dark:text-zinc-500 uppercase tracking-widest">{t('simulator.market_index', 'Indexé sur le MARCHÉ MONDIAL V2.4')}</span>
+                    <div className="mt-3 flex items-center justify-center gap-2">
+                      <ShieldCheck className="w-4 h-4 text-[#064e3b] dark:text-primary" />
+                      <span className="text-[9px] font-black text-[#374151] dark:text-zinc-500 uppercase tracking-widest">Indexé MARCHÉ V2.4</span>
                     </div>
                   </div>
 
                   <button
                     disabled={!isStep1Complete}
                     onClick={() => setStep("satisfaction")}
-                    className="flex items-center justify-center gap-3 bg-black hover:bg-zinc-900 transition-all duration-300 p-4 px-12 rounded-full border border-white/5 hover:scale-105 active:scale-95 group w-full disabled:opacity-50 disabled:grayscale shadow-xl"
+                    className="flex items-center justify-center gap-3 bg-black hover:bg-zinc-900 transition-all duration-300 p-3 px-10 rounded-full border border-white/5 hover:scale-105 active:scale-95 group w-full disabled:opacity-50 disabled:grayscale shadow-lg"
                   >
-                    <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center shadow-lg">
-                      <Zap className="text-black h-5 w-5 font-bold" />
+                    <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center shadow-lg">
+                      <Zap className="text-black h-4 w-4 font-bold" />
                     </div>
-                    <span className="text-lg font-bold tracking-tight text-white uppercase font-sans">Demander mon Upgrade</span>
+                    <span className="text-base font-bold tracking-tight text-white uppercase font-sans">Continuer l'Upgrade</span>
                   </button>
                 </div>
               </div>
             ) : step === "satisfaction" ? (
-              <div className="p-10 sm:p-20 space-y-16 animate-in slide-in-from-bottom-12 duration-700 text-center">
-                <div className="space-y-6">
-                  <div className="w-28 h-28 rounded-[32px] bg-blue-600/10 dark:bg-primary/20 flex items-center justify-center mx-auto mb-8 shadow-inner border border-blue-600/20 dark:border-primary/20">
-                    <Zap className="w-14 h-14 text-blue-600 dark:text-primary" />
+              <div className="p-4 sm:p-10 space-y-8 animate-in slide-in-from-bottom-12 duration-700 text-center">
+                <div className="space-y-4">
+                  <div className="w-20 h-20 rounded-[28px] bg-blue-600/10 dark:bg-primary/20 flex items-center justify-center mx-auto mb-6 shadow-inner border border-blue-600/20 dark:border-primary/20">
+                    <Zap className="w-10 h-10 text-blue-600 dark:text-primary" />
                   </div>
-                  <h2 className="text-4xl sm:text-6xl font-black tracking-tighter uppercase italic leading-[0.9] text-slate-900 dark:text-white">
+                  <h2 className="text-2xl sm:text-5xl font-black tracking-tighter uppercase italic leading-[0.9] text-slate-900 dark:text-white">
                     {t('simulator.votre_offre')} : <br /> <span className="text-[#064e3b] dark:text-primary">{formatCFA(finalPrice || 0)}</span>
                   </h2>
-                  <p className="text-[#374151] dark:text-zinc-500 font-black uppercase text-[12px] tracking-[0.5em]">{t('simulator.helper_text')}</p>
+                  <p className="text-[#374151] dark:text-zinc-500 font-black uppercase text-[10px] tracking-[0.4em]">{t('simulator.helper_text')}</p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-3xl mx-auto">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
                   <button
                     onClick={() => { setIsSatisfied(true); setStep("target_selection"); }}
-                    className="flex items-center justify-center gap-4 bg-black hover:bg-zinc-900 transition-all duration-300 p-4 px-10 rounded-full border border-white/5 hover:scale-105 active:scale-95 group shadow-sm"
+                    className="flex items-center justify-center gap-3 bg-black hover:bg-zinc-900 transition-all duration-300 p-3 px-8 rounded-full border border-white/5 hover:scale-105 active:scale-95 group shadow-sm"
                   >
-                    <div className="w-10 h-10 bg-[#00FF41] rounded-full flex items-center justify-center shadow">
-                      <CheckCircle2 className="text-black h-5 w-5" />
+                    <div className="w-8 h-8 bg-[#00FF41] rounded-full flex items-center justify-center shadow">
+                      <CheckCircle2 className="text-black h-4 w-4" />
                     </div>
-                    <span className="text-lg font-bold tracking-tight text-white uppercase font-sans">{t('simulator.perfect')}</span>
+                    <span className="text-base font-bold tracking-tight text-white uppercase font-sans">{t('simulator.perfect')}</span>
                   </button>
 
                   <button
                     onClick={() => setIsSatisfied(false)}
                     className={cn(
-                      "flex items-center justify-center gap-4 bg-black hover:bg-zinc-900 transition-all duration-300 p-4 px-10 rounded-full border border-white/5 hover:scale-105 active:scale-95 group shadow-sm",
+                      "flex items-center justify-center gap-3 bg-black hover:bg-zinc-900 transition-all duration-300 p-3 px-8 rounded-full border border-white/5 hover:scale-105 active:scale-95 group shadow-sm",
                       isSatisfied === false ? "border-amber-500 ring-1 ring-amber-500" : ""
                     )}
                   >
-                    <div className="w-10 h-10 bg-amber-500 rounded-full flex items-center justify-center shadow">
-                      <TrendingUp className="text-white h-5 w-5" />
+                    <div className="w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center shadow">
+                      <TrendingUp className="text-white h-4 w-4" />
                     </div>
-                    <span className="text-lg font-bold tracking-tight text-white uppercase font-sans">{t('simulator.low_estimate')}</span>
+                    <span className="text-base font-bold tracking-tight text-white uppercase font-sans">{t('simulator.low_estimate')}</span>
                   </button>
                 </div>
 
                 {isSatisfied === false && (
-                  <div className="space-y-6 pt-12 border-t border-slate-100 dark:border-white/5 animate-in fade-in slide-in-from-top-6 max-w-xl mx-auto">
-                    <div className="flex items-center justify-center gap-3 mb-2">
-                      <Zap className="w-4 h-4 text-blue-600 dark:text-primary" />
-                      <Label className="text-[11px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 italic">VOTRE VISION DU PRIX JUSTE (FCFA)</Label>
+                  <div className="space-y-4 pt-8 border-t border-slate-100 dark:border-white/5 animate-in fade-in slide-in-from-top-6 max-w-lg mx-auto">
+                    <div className="flex items-center justify-center gap-2 mb-1">
+                      <Zap className="w-3 h-3 text-blue-600 dark:text-primary" />
+                      <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 italic">VOTRE OFFRE (FCFA)</Label>
                     </div>
-                    <div className="relative group">
-                      <input
-                        type="number"
-                        placeholder="EX: 450,000"
-                        value={proposedPrice}
-                        onChange={(e) => setProposedPrice(e.target.value)}
-                        className="w-full bg-slate-50 dark:bg-white/5 border-2 border-zinc-100 dark:border-white/10 rounded-[24px] h-20 px-8 font-black text-4xl text-[#064e3b] dark:text-primary outline-none focus:border-[#064e3b] dark:focus:border-primary transition-all shadow-inner placeholder:text-slate-200 dark:placeholder:text-zinc-800 text-center"
-                      />
-                    </div>
+                    <input
+                      type="number"
+                      placeholder="EX: 450,000"
+                      value={proposedPrice}
+                      onChange={(e) => setProposedPrice(e.target.value)}
+                      className="w-full bg-slate-50 dark:bg-white/5 border-2 border-zinc-100 dark:border-white/10 rounded-2xl h-14 px-6 font-black text-2xl text-[#064e3b] dark:text-primary outline-none focus:border-[#064e3b] dark:focus:border-primary transition-all shadow-inner placeholder:text-slate-200 dark:placeholder:text-zinc-800 text-center"
+                    />
                     <Button
-                      className="w-full h-20 rounded-full font-black text-xl uppercase italic tracking-[0.2em] shadow-2xl bg-slate-900 hover:bg-black dark:bg-white dark:hover:bg-slate-100 text-white dark:text-black mt-6"
+                      className="w-full h-14 rounded-full font-black text-sm uppercase italic tracking-[0.2em] shadow-xl bg-slate-900 hover:bg-black dark:bg-white dark:hover:bg-slate-100 text-white dark:text-black mt-4"
                       onClick={() => setStep("target_selection")}
                       disabled={!proposedPrice}
                     >
-                      SOUMETTRE MON OFFRE <ArrowRightLeft className="w-6 h-6 ml-4" />
+                      SOUMETTRE <ArrowRightLeft className="w-5 h-5 ml-4" />
                     </Button>
                   </div>
                 )}
               </div>
             ) : step === "target_selection" ? (
-              <div className="p-10 sm:p-20 space-y-16 animate-in slide-in-from-bottom-12 duration-700">
-                <div className="text-center space-y-6">
-                  <p className="text-blue-600 dark:text-primary font-black uppercase text-[12px] tracking-[0.6em]">PHASE 3 / NAVIGATION</p>
-                  <h2 className="text-5xl sm:text-7xl font-black tracking-tighter uppercase italic leading-[0.85] text-slate-900 dark:text-white">
+              <div className="p-4 sm:p-10 space-y-8 animate-in slide-in-from-bottom-12 duration-700">
+                <div className="text-center space-y-4">
+                  <p className="text-blue-600 dark:text-primary font-black uppercase text-[10px] tracking-[0.5em]">PHASE 3 / NAVIGATION</p>
+                  <h2 className="text-4xl sm:text-6xl font-black tracking-tighter uppercase italic leading-[0.85] text-slate-900 dark:text-white">
                     {t('simulator.possession')} <br /> <span className="text-[#064e3b] dark:text-primary">{t('simulator.target')}</span>
                   </h2>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
                   <button
                     onClick={() => setExchangeType("upgrade")}
                     className={cn(
-                      "flex items-center gap-4 bg-zinc-50 dark:bg-black hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all duration-300 p-3 pr-10 rounded-2xl border-2 shadow-sm group",
+                      "flex items-center gap-3 bg-zinc-50 dark:bg-black hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all duration-300 p-3 pr-8 rounded-xl border-2 shadow-sm group",
                       exchangeType === "upgrade" ? "border-[#064e3b] dark:border-primary" : "border-slate-100 dark:border-white/5"
                     )}
                   >
-                    <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center transition-all shadow-sm", exchangeType === "upgrade" ? "bg-[#064e3b] dark:bg-primary text-white dark:text-black" : "bg-white dark:bg-zinc-800 text-slate-400")}>
-                      <TrendingUp className="w-5 h-5" />
+                    <div className={cn("w-9 h-9 rounded-lg flex items-center justify-center transition-all shadow-sm", exchangeType === "upgrade" ? "bg-[#064e3b] dark:bg-primary text-white dark:text-black" : "bg-white dark:bg-zinc-800 text-slate-400")}>
+                      <TrendingUp className="w-4 h-4" />
                     </div>
                     <div className="text-left font-sans">
-                      <span className="text-base font-black tracking-tight text-slate-900 dark:text-white uppercase transition-colors">UPGRADE</span>
-                      <span className="text-[10px] font-bold text-[#374151] dark:text-gray-500 uppercase tracking-widest block -mt-1 font-sans">PERFORMANCE</span>
+                      <span className="text-sm font-black tracking-tight text-slate-900 dark:text-white uppercase transition-colors">UPGRADE</span>
+                      <span className="text-[8px] font-bold text-[#374151] dark:text-gray-500 uppercase tracking-widest block -mt-1">PERFORMANCE</span>
                     </div>
                   </button>
 
                   <button
                     onClick={() => setExchangeType("downgrade")}
                     className={cn(
-                      "flex items-center gap-4 bg-zinc-50 dark:bg-black hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all duration-300 p-3 pr-10 rounded-2xl border-2 shadow-sm group opacity-60 grayscale",
+                      "flex items-center gap-3 bg-zinc-50 dark:bg-black hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all duration-300 p-3 pr-8 rounded-xl border-2 shadow-sm group opacity-60 grayscale",
                       exchangeType === "downgrade" ? "border-amber-500 ring-1 ring-amber-500" : "border-slate-100 dark:border-white/5"
                     )}
                   >
-                    <div className="w-10 h-10 bg-amber-500 rounded-full flex items-center justify-center shadow">
-                      <TrendingDown className="text-white h-5 w-5" />
+                    <div className="w-9 h-9 bg-amber-500 rounded-lg flex items-center justify-center shadow">
+                      <TrendingDown className="text-white h-4 h-4" />
                     </div>
                     <div className="text-left font-sans">
-                      <span className="text-base font-black tracking-tight text-slate-900 dark:text-white uppercase transition-colors">DOWNGRADE</span>
-                      <span className="text-[10px] font-bold text-[#374151] dark:text-gray-500 uppercase tracking-widest block -mt-1 font-sans">LIQUIDITÉS</span>
+                      <span className="text-sm font-black tracking-tight text-slate-900 dark:text-white uppercase transition-colors">DOWNGRADE</span>
+                      <span className="text-[8px] font-bold text-[#374151] dark:text-gray-500 uppercase tracking-widest block -mt-1">LIQUIDITÉS</span>
                     </div>
                   </button>
                 </div>
 
                 {exchangeType && (
-                  <div className="space-y-10 animate-in fade-in slide-in-from-top-12 duration-700 max-w-4xl mx-auto">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      <div className="space-y-3 text-left">
-                        <Label className="text-[11px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 ml-1">Marque cible</Label>
-                        <Select value={targetBrand || undefined as any} onValueChange={(v) => { setTargetBrand(v); setTargetModel(""); setTargetStorage(null); }}>
-                          <SelectTrigger className="h-16 rounded-[24px] border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white">
+                  <div className="space-y-8 animate-in fade-in slide-in-from-top-10 duration-700 max-w-3xl mx-auto">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-1.5 text-left">
+                        <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 ml-1">Marque cible</Label>
+                        <Select value={targetBrand || ""} onValueChange={(v) => { setTargetBrand(v); setTargetModel(""); setTargetStorage(null); }}>
+                          <SelectTrigger className="h-12 rounded-xl border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white">
                             <SelectValue placeholder="SÉLECTIONNER BRAND" />
                           </SelectTrigger>
-                          <SelectContent className="rounded-[24px] bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
+                          <SelectContent className="rounded-xl bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
                             {brands.map((b) => <SelectItem key={b} value={b}>{b}</SelectItem>)}
                           </SelectContent>
                         </Select>
                       </div>
 
-                      <div className="space-y-3 text-left">
-                        <Label className="text-[11px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 ml-1">Modèle cible</Label>
-                        <Select value={targetModel || undefined as any} onValueChange={(v) => { setTargetModel(v); setTargetStorage(null); }} disabled={!targetBrand || loadingTargetModels}>
-                          <SelectTrigger className="h-16 rounded-[24px] border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white disabled:opacity-30">
+                      <div className="space-y-1.5 text-left">
+                        <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 ml-1">Modèle cible</Label>
+                        <Select value={targetModel || ""} onValueChange={(v) => { setTargetModel(v); setTargetStorage(null); }} disabled={!targetBrand || loadingTargetModels}>
+                          <SelectTrigger className="h-12 rounded-xl border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white disabled:opacity-30">
                             <SelectValue placeholder={loadingTargetModels ? "..." : "SÉLECTIONNER MODEL"} />
                           </SelectTrigger>
-                          <SelectContent className="rounded-[24px] bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
+                          <SelectContent className="rounded-xl bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
                             {targetModels.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}
                           </SelectContent>
                         </Select>
@@ -787,18 +784,18 @@ export default function EstimatorPage() {
                     </div>
 
                     {targetModel && targetVariants.length > 0 && (
-                      <div className="space-y-5 animate-in fade-in">
-                        <Label className="text-[11px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 ml-1">Capacité Requise</Label>
-                        <div className="flex flex-wrap gap-4">
+                      <div className="space-y-3 animate-in fade-in">
+                        <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 ml-1">Capacité Requise</Label>
+                        <div className="flex flex-wrap gap-2">
                           {Array.from(new Set(targetVariants.map(v => v.storage_gb))).sort((a, b) => a - b).map(s => (
                             <button
                               key={s}
                               onClick={() => setTargetStorage(s)}
                               className={cn(
-                                "px-10 py-5 rounded-[22px] border-2 font-black text-sm transition-all tracking-widest uppercase italic",
+                                "px-6 py-3 rounded-lg border-2 font-black text-[11px] transition-all tracking-widest uppercase italic",
                                 targetStorage === s
-                                  ? "border-blue-600 bg-blue-600 dark:border-primary dark:bg-primary text-white shadow-xl scale-105"
-                                  : "border-slate-100 bg-slate-50 dark:bg-white/5 dark:bg-white/5 text-slate-400 dark:text-zinc-600 hover:border-slate-300"
+                                  ? "border-blue-600 bg-blue-600 dark:border-primary dark:bg-primary text-white shadow-lg scale-105"
+                                  : "border-slate-100 bg-slate-50 dark:bg-white/5 text-slate-400 dark:text-zinc-600 hover:border-slate-300"
                               )}
                             >
                               {s} GO
@@ -811,120 +808,108 @@ export default function EstimatorPage() {
                     <button
                       onClick={() => setStep("comparison")}
                       disabled={!targetModel || !targetStorage}
-                      className="flex items-center justify-center gap-4 bg-black hover:bg-zinc-900 transition-all duration-300 p-5 px-12 rounded-full border border-white/5 hover:scale-105 active:scale-95 group w-full disabled:opacity-50 shadow-2xl"
+                      className="flex items-center justify-center gap-3 bg-black hover:bg-zinc-900 transition-all duration-300 p-4 px-10 rounded-full border border-white/5 hover:scale-105 active:scale-95 group w-full disabled:opacity-50 shadow-xl"
                     >
-                      <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center shadow-lg">
-                        <ArrowRightLeft className="text-black h-6 w-6" />
+                      <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center shadow-lg">
+                        <ArrowRightLeft className="text-black h-5 w-5" />
                       </div>
-                      <span className="text-xl font-bold tracking-tight text-white uppercase font-sans">Analyser le Deal</span>
+                      <span className="text-lg font-bold tracking-tight text-white uppercase font-sans">Analyser le Deal</span>
                     </button>
                   </div>
                 )}
               </div>
             ) : (
-              <div className="p-8 sm:p-14 space-y-16 animate-in zoom-in-95 duration-700">
-                <div className="text-center space-y-4">
-                  <h2 className="text-5xl sm:text-7xl font-black tracking-tighter uppercase italic leading-[0.8] text-slate-900 dark:text-white mb-2">
+              <div className="p-6 sm:p-10 space-y-12 animate-in zoom-in-95 duration-700">
+                <div className="text-center space-y-3">
+                  <h2 className="text-4xl sm:text-6xl font-black tracking-tighter uppercase italic leading-[0.8] text-slate-900 dark:text-white mb-1">
                     ACCORD DE <span className="text-[#064e3b] dark:text-primary italic">SWAP</span>
                   </h2>
-                  <div className="flex items-center justify-center gap-3">
-                    <ShieldCheck className="w-5 h-5 text-[#064e3b] dark:text-primary" />
-                    <p className="text-[#374151] dark:text-zinc-500 font-black uppercase text-[11px] tracking-[0.6em]">CERTIFICATION TECHNIQUE TEKH+</p>
+                  <div className="flex items-center justify-center gap-2">
+                    <ShieldCheck className="w-4 h-4 text-[#064e3b] dark:text-primary" />
+                    <p className="text-[#374151] dark:text-zinc-500 font-black uppercase text-[9px] tracking-[0.5em]">CERTIFICATION TECHNIQUE TEKH+</p>
                   </div>
                 </div>
 
-                {/* THE VISUAL EXCHANGE BOX (REDESIGNED) */}
-                <div className="space-y-12">
-                  {/* Main Cards Row */}
-                  <div className="flex flex-col md:flex-row items-stretch justify-center gap-8 relative max-w-4xl mx-auto">
-                    {/* Left Card: Current Phone */}
-                    <div className="bg-white dark:bg-white/5 rounded-2xl p-6 sm:p-8 flex flex-col items-center gap-4 border border-zinc-100 dark:border-white/10 shadow-xl group">
-                      <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-blue-600/10 dark:bg-primary/10 flex items-center justify-center border-4 border-white dark:border-zinc-900 shadow-xl group-hover:scale-110 transition-transform">
-                        <Smartphone className="w-10 h-10 sm:w-12 sm:h-12 text-blue-600 dark:text-primary" />
+                {/* THE VISUAL EXCHANGE BOX */}
+                <div className="space-y-10">
+                  <div className="flex flex-col md:flex-row items-stretch justify-center gap-6 relative max-w-3xl mx-auto">
+                    {/* Left Card */}
+                    <div className="flex-1 bg-white dark:bg-white/5 rounded-xl p-6 flex flex-col items-center gap-3 border border-zinc-100 dark:border-white/10 shadow-lg group">
+                      <div className="w-16 h-16 rounded-full bg-blue-600/10 dark:bg-primary/10 flex items-center justify-center border-2 border-white dark:border-zinc-900 shadow-md group-hover:scale-110 transition-transform">
+                        <Smartphone className="w-8 h-8 text-blue-600 dark:text-primary" />
                       </div>
                       <div className="text-center">
-                        <p className="text-[10px] font-black text-slate-400 dark:text-zinc-500 uppercase tracking-widest">{t('simulator.possession')}</p>
-                        <h4 className="text-lg sm:text-xl font-black tracking-tighter text-black dark:text-white uppercase">{brand} {model}</h4>
-                        <p className="text-lg sm:text-2xl font-black text-blue-600 dark:text-primary mt-1">{formatCFA(finalPrice || 0)}</p>
+                        <p className="text-[9px] font-black text-slate-400 dark:text-zinc-500 uppercase tracking-widest">{t('simulator.possession')}</p>
+                        <h4 className="text-base font-black tracking-tighter text-black dark:text-white uppercase">{brand} {model}</h4>
+                        <p className="text-xl font-black text-blue-600 dark:text-primary mt-0.5">{formatCFA(finalPrice || 0)}</p>
                       </div>
                     </div>
 
-                    {/* Center Arrows */}
-                    <div className="flex items-center justify-center shrink-0 py-4 md:py-0">
-                      <div className="w-16 h-16 rounded-full bg-white dark:bg-[#05070a] border-[4px] border-zinc-50 dark:border-[#0b0e14] flex items-center justify-center z-10 shadow-xl scale-110">
-                        <div className="w-10 h-10 rounded-full bg-[#064e3b] dark:bg-primary flex items-center justify-center shadow-[0_0_20px_rgba(6,78,59,0.3)] dark:shadow-[0_0_20px_rgba(0,255,65,0.3)]">
-                          <ArrowRightLeft className="w-5 h-5 text-white dark:text-black" strokeWidth={3} />
+                    <div className="flex items-center justify-center shrink-0">
+                      <div className="w-12 h-12 rounded-full bg-white dark:bg-[#05070a] border-[3px] border-zinc-50 dark:border-[#0b0e14] flex items-center justify-center z-10 shadow-lg">
+                        <div className="w-8 h-8 rounded-full bg-[#064e3b] dark:bg-primary flex items-center justify-center">
+                          <ArrowRightLeft className="w-4 h-4 text-white dark:text-black" strokeWidth={3} />
                         </div>
                       </div>
                     </div>
 
-                    {/* Right Card: Target Phone */}
-                    <div className="bg-white dark:bg-white/5 rounded-2xl p-6 sm:p-8 flex flex-col items-center gap-4 border border-zinc-100 dark:border-white/10 shadow-xl group relative">
-                      <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-blue-600/10 dark:bg-primary/10 flex items-center justify-center border-4 border-white dark:border-zinc-900 shadow-xl group-hover:scale-110 transition-transform overflow-hidden">
-                        <Zap className="w-10 h-10 sm:w-12 sm:h-12 text-blue-600 dark:text-primary" fill="currentColor" />
+                    {/* Right Card */}
+                    <div className="flex-1 bg-white dark:bg-white/5 rounded-xl p-6 flex flex-col items-center gap-3 border border-zinc-100 dark:border-white/10 shadow-lg group relative">
+                      <div className="w-16 h-16 rounded-full bg-blue-600/10 dark:bg-primary/10 flex items-center justify-center border-2 border-white dark:border-zinc-900 shadow-md group-hover:scale-110 transition-transform overflow-hidden">
+                        <Zap className="w-8 h-8 text-blue-600 dark:text-primary" fill="currentColor" />
                       </div>
                       <div className="text-center">
-                        <p className="text-[10px] font-black text-slate-400 dark:text-zinc-500 uppercase tracking-widest">{t('simulator.acquisition')}</p>
-                        <h4 className="text-lg sm:text-xl font-black tracking-tighter text-black dark:text-white uppercase">{targetBrand} {targetModel}</h4>
-                        <p className="text-lg sm:text-2xl font-black text-blue-600 dark:text-primary mt-1">{formatCFA(targetModelInfo?.base_price_fcfa || 0)}</p>
+                        <p className="text-[9px] font-black text-slate-400 dark:text-zinc-500 uppercase tracking-widest">{t('simulator.acquisition')}</p>
+                        <h4 className="text-base font-black tracking-tighter text-black dark:text-white uppercase">{targetBrand} {targetModel}</h4>
+                        <p className="text-xl font-black text-blue-600 dark:text-primary mt-0.5">{formatCFA(targetModelInfo?.base_price_fcfa || 0)}</p>
                       </div>
                     </div>
                   </div>
 
                   {/* Specifications Grid */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 items-center bg-zinc-50 dark:bg-zinc-950 p-6 sm:p-10 rounded-2xl sm:rounded-[40px] border-2 border-slate-100 dark:border-white/5 shadow-2xl relative overflow-hidden">
-                    {/* Header Row */}
-                    <div className="contents md:flex">
-                      <div className="flex-1 p-6 bg-slate-50 dark:bg-zinc-900 flex flex-col items-center justify-center text-center border-b md:border-b-0 md:border-r border-slate-200 dark:border-white/5">
-                        <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 mb-2">CONFIGURATION ACTUELLE</span>
-                        <div className="space-y-1 font-black text-sm text-slate-900 dark:text-white italic uppercase tracking-tighter">
-                          <div>{storage} Go Stockage</div>
-                          <div>{ram} Go Mémoire vive</div>
-                          <div>Diagnostic: {aestheticState === 'very_good' ? 'Premium' : 'Standard'}</div>
-                        </div>
+                  <div className="grid grid-cols-1 md:flex items-stretch bg-zinc-50 dark:bg-zinc-950 rounded-2xl border-2 border-slate-100 dark:border-white/5 shadow-xl overflow-hidden max-w-3xl mx-auto">
+                    <div className="flex-1 p-6 flex flex-col items-center justify-center text-center border-b md:border-b-0 md:border-r border-slate-200 dark:border-white/5">
+                      <span className="text-[9px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 mb-3">POSSESSION</span>
+                      <div className="space-y-1 font-black text-[11px] text-slate-900 dark:text-white italic uppercase tracking-tighter">
+                        <div>{storage} Go Stockage</div>
+                        <div>État: {aestheticState === 'very_good' ? 'Premium' : 'Standard'}</div>
                       </div>
-                      <div className="flex-1 p-6 bg-blue-600/5 dark:bg-primary/5 flex flex-col items-center justify-center text-center">
-                        <span className="text-[10px] font-black uppercase tracking-widest text-blue-600 dark:text-primary/60 mb-2">CONFIGURATION CIBLE</span>
-                        <div className="space-y-1 font-black text-sm text-slate-900 dark:text-white italic uppercase tracking-tighter">
-                          <div>{targetStorage} Go Stockage</div>
-                          <div>Certifié TEKH+ Grade A</div>
-                          <div>Garantie 12 Mois Incluse</div>
-                        </div>
+                    </div>
+                    <div className="flex-1 p-6 bg-blue-600/5 dark:bg-primary/5 flex flex-col items-center justify-center text-center">
+                      <span className="text-[9px] font-black uppercase tracking-widest text-blue-600 dark:text-primary/60 mb-3">ACQUISITION</span>
+                      <div className="space-y-1 font-black text-[11px] text-slate-900 dark:text-white italic uppercase tracking-tighter">
+                        <div>{targetStorage} Go Stockage</div>
+                        <div>Grade A Certifié</div>
+                        <div>Garantie Tekh+ Incluse</div>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 {/* Financial Summary */}
-                <div className="bg-slate-900 dark:bg-black rounded-[52px] p-12 space-y-10 relative shadow-3xl text-white">
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-600 dark:bg-primary px-8 py-3 rounded-full shadow-2xl">
-                    <span className="text-[11px] font-black uppercase tracking-[0.5em] text-white">BILAN FINANCIER DU DEAL</span>
+                <div className="bg-slate-900 dark:bg-black rounded-[40px] p-10 space-y-8 relative shadow-2xl text-white max-w-4xl mx-auto mt-6">
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-600 dark:bg-primary px-6 py-2 rounded-full shadow-lg">
+                    <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white">BILAN FINANCIER</span>
                   </div>
 
-                  <div className="flex flex-col md:flex-row items-center justify-between gap-12">
-                    <div className="space-y-6 flex-1 w-full max-w-sm">
-                      <div className="flex items-center justify-between border-b border-white/10 pb-4">
-                        <span className="text-slate-400 text-[11px] font-black uppercase tracking-widest">Valeur Apportée</span>
-                        <span className="text-white text-xl font-black italic">{formatCFA(finalPrice || 0)}</span>
+                  <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div className="space-y-4 flex-1 w-full max-w-xs">
+                      <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                        <span className="text-slate-400 text-[10px] font-black uppercase tracking-widest">Apport</span>
+                        <span className="text-white text-lg font-black italic">{formatCFA(finalPrice || 0)}</span>
                       </div>
-                      <div className="flex items-center justify-between border-b border-white/10 pb-4">
-                        <span className="text-slate-400 text-[11px] font-black uppercase tracking-widest">Prix Nouvelle Unité</span>
-                        <span className="text-white text-xl font-black italic">{formatCFA(targetModelInfo?.base_price_fcfa || 0)}</span>
+                      <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                        <span className="text-slate-400 text-[10px] font-black uppercase tracking-widest">Cible</span>
+                        <span className="text-white text-lg font-black italic">{formatCFA(targetModelInfo?.base_price_fcfa || 0)}</span>
                       </div>
-                      {proposedPrice && (
-                        <div className="flex items-center justify-between pt-2 text-blue-400 dark:text-primary">
-                          <span className="text-[11px] font-black uppercase tracking-widest italic">VOTRE OFFRE SUGGÉRÉE</span>
-                          <span className="text-xl font-black italic">{formatCFA(Number(proposedPrice))}</span>
-                        </div>
-                      )}
                     </div>
 
-                    <div className="flex flex-col items-center md:items-end justify-center md:border-l border-white/10 md:pl-16 flex-1">
-                      <div className="text-[12px] font-black uppercase tracking-[0.6em] text-blue-400 dark:text-primary mb-4 italic">DIFFÉRENCE À RÉGLER</div>
-                      <div className="text-7xl sm:text-8xl font-black text-white italic tracking-tighter leading-none mb-4">
+                    <div className="flex flex-col items-center md:items-end justify-center md:border-l border-white/10 md:pl-10 flex-1">
+                      <div className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-400 dark:text-primary mb-2 italic">DIFFÉRENCE</div>
+                      <div className="text-5xl sm:text-6xl font-black text-white italic tracking-tighter leading-none mb-3">
                         {formatCFA(Math.max(0, (targetModelInfo?.base_price_fcfa || 0) - (finalPrice || 0)))}
                       </div>
-                      <p className="text-[11px] text-zinc-500 font-bold uppercase tracking-[0.3em] text-center md:text-right">RÈGLEMENT FINAL À EFFECTUER EN AGENCE PHYSIQUE</p>
+                      <p className="text-[9px] text-zinc-500 font-bold uppercase tracking-[0.2em] text-center md:text-right">RÈGLEMENT EN AGENCE TEKH+</p>
                     </div>
                   </div>
                 </div>

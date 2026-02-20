@@ -3,6 +3,7 @@ import { Home, Compass, LayoutGrid, Settings } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 
 import UserAvatar from "./UserAvatar";
+import ProfileIcon from "./ProfileIcon";
 
 export default function BottomNav() {
   const { pathname } = useLocation();
@@ -30,7 +31,7 @@ export default function BottomNav() {
               to={to}
               className={`flex flex-col items-center gap-1 transition-all duration-300 ${active
                 ? "text-[#064e3b] dark:text-primary -translate-y-1"
-                : "text-black dark:text-slate-500"
+                : "text-black dark:text-white"
                 }`}
             >
               <Icon
@@ -54,7 +55,7 @@ export default function BottomNav() {
           onClick={() => navigate(profilePath)}
           className={`flex flex-col items-center gap-1 transition-all duration-300 ${profileActive
             ? "text-[#064e3b] dark:text-primary -translate-y-1"
-            : "text-black dark:text-slate-500"
+            : "text-black dark:text-white"
             }`}
         >
           <div className={`transition-all duration-300 ${profileActive ? "scale-110" : ""}`}>

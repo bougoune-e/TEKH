@@ -13,11 +13,11 @@ const PWAInstallBanner = () => {
         const isStandalone = window.matchMedia("(display-mode: standalone)").matches || (window.navigator as any).standalone;
         if (isStandalone) return;
 
-        // Check if dismissed recently
+        // Check if dismissed recently (Reduced to 1 hour for better testing visibility)
         const dismissedAt = localStorage.getItem("pwa_dismissed_at");
         if (dismissedAt) {
-            const oneDay = 24 * 60 * 60 * 1000;
-            if (Date.now() - Number(dismissedAt) < oneDay) return;
+            const oneHour = 60 * 60 * 1000;
+            if (Date.now() - Number(dismissedAt) < oneHour) return;
         }
 
         // Detect iOS
@@ -32,9 +32,9 @@ const PWAInstallBanner = () => {
 
         window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
 
-        // For iOS, we show it after a short delay since there's no event
+        // For iOS, show it after 2 seconds
         if (isIOSDevice) {
-            const timer = setTimeout(() => setIsVisible(true), 3000);
+            const timer = setTimeout(() => setIsVisible(true), 2000);
             return () => clearTimeout(timer);
         }
 
@@ -66,17 +66,17 @@ const PWAInstallBanner = () => {
     if (!isVisible) return null;
 
     return (
-        <div className="fixed top-0 left-0 right-0 z-[100] animate-in slide-in-from-top duration-500">
-            <div className="bg-[#064e3b] text-white p-3 shadow-lg flex items-center justify-between gap-3 border-b border-white/10">
-                <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 bg-white/10 rounded-xl flex items-center justify-center shrink-0">
-                        <Smartphone className="h-6 w-6 text-primary" />
+        <div className="fixed top-0 left-0 right-0 z-[100] animate-in slide-in-from-top duration-700">
+            <div className="bg-black text-white p-2.5 shadow-2xl flex items-center justify-between gap-3 border-b border-white/5 backdrop-blur-md bg-black/95">
+                <div className="flex items-center gap-3 pl-2">
+                    <div className="h-9 w-9 bg-primary/20 rounded-xl flex items-center justify-center shrink-0 border border-primary/20">
+                        <Smartphone className="h-5 w-5 text-primary" />
                     </div>
                     <div>
-                        <p className="text-xs font-black uppercase tracking-widest leading-none mb-1">
+                        <p className="text-[10px] font-black uppercase tracking-[0.2em] leading-none mb-1 text-primary">
                             TΞKΗ+ App
                         </p>
-                        <p className="text-[10px] font-medium text-white/80 leading-tight">
+                        <p className="text-[9px] font-bold text-white/70 leading-tight uppercase tracking-tight">
                             {isIOS
                                 ? "Partagez puis 'Sur l'écran d'accueil'"
                                 : "TΞKΗ+, pour un accès au numérique pour tous."}
@@ -84,25 +84,25 @@ const PWAInstallBanner = () => {
                     </div>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1 pr-1">
                     {!isIOS && (
                         <button
                             onClick={handleInstallClick}
-                            className="bg-white text-[#064e3b] px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-tighter hover:bg-zinc-100 transition-colors whitespace-nowrap"
+                            className="bg-primary text-black h-8 px-4 rounded-lg text-[9px] font-black uppercase tracking-widest hover:brightness-110 active:scale-95 transition-all whitespace-nowrap"
                         >
                             Installer
                         </button>
                     )}
                     {isIOS && (
-                        <div className="flex items-center gap-1 opacity-80 scale-75 origin-right">
-                            <Share className="h-5 w-5" />
-                            <span className="text-xl">+</span>
-                            <PlusSquare className="h-5 w-5" />
+                        <div className="flex items-center gap-1.5 opacity-90 scale-90 py-1.5 px-3 bg-white/5 rounded-lg border border-white/10">
+                            <Share className="h-4 w-4" />
+                            <span className="text-sm font-light text-white/40">|</span>
+                            <PlusSquare className="h-4 w-4" />
                         </div>
                     )}
                     <button
                         onClick={handleDismiss}
-                        className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                        className="p-2 hover:bg-white/10 rounded-lg transition-colors text-white/40 hover:text-white"
                     >
                         <X className="h-4 w-4" />
                     </button>
