@@ -14,42 +14,43 @@ import DealBox from "@/admin/pages/DealBox";
 import Categories from "@/admin/pages/Categories";
 import Stats from "@/admin/pages/Stats";
 import Settings from "@/admin/pages/Settings";
-import PageLoader from "@/components/PageLoader";
+import PageLoader from "@/components/common/PageLoader";
 import { DealsProvider } from "@/context/DealsContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { ThemeProvider } from "@/theme/ThemeProvider";
-import Layout from "@/components/Layout";
-import ScrollRestorer from "@/components/ScrollToTop";
+import Layout from "@/components/layout/Layout";
+import ScrollRestorer from "@/components/common/ScrollToTop";
 
-const Index = lazy(() => import("./pages/Index"));
-const NotFound = lazy(() => import("./pages/NotFound"));
+const Index = lazy(() => import("@/pages/home/Index"));
+const NotFound = lazy(() => import("@/pages/misc/NotFound"));
 const Login = lazy(() => import("@/auth/Login"));
-const DealsPage = lazy(() => import("@/pages/Deals"));
-const DealsFound = lazy(() => import("@/pages/DealsFound"));
-const SimulatorPage = lazy(() => import("@/pages/SimulatorPage"));
-const HowItWorksPage = lazy(() => import("@/pages/HowItWorksPage"));
-const ChartePage = lazy(() => import("@/pages/ChartePage"));
-const CharteQualitePage = lazy(() => import("@/pages/CharteQualitePage"));
-const PublishPage = lazy(() => import("@/pages/PublishPage"));
+const DealsPage = lazy(() => import("@/pages/deal/Deals"));
+const DealsFound = lazy(() => import("@/pages/deal/DealsFound"));
+const SimulatorPage = lazy(() => import("@/pages/simulator/SimulatorPage"));
+const HowItWorksPage = lazy(() => import("@/pages/legal/HowItWorksPage"));
+const ChartePage = lazy(() => import("@/pages/legal/ChartePage"));
+const CharteQualitePage = lazy(() => import("@/pages/legal/CharteQualitePage"));
+const PublishPage = lazy(() => import("@/pages/deal/PublishPage"));
 const SearchPage = lazy(() => import("@/pages/SearchPage"));
-const DealDetails = lazy(() => import("@/pages/DealDetails"));
-const MyPosts = lazy(() => import("@/pages/MyPosts"));
-const Profile = lazy(() => import("@/pages/Profile"));
-const EstimatorPage = lazy(() => import("@/pages/EstimatorPage"));
-const APropos = lazy(() => import("@/pages/APropos"));
-const AideEtFaq = lazy(() => import("@/pages/legal/FAQ"));
-const Contact = lazy(() => import("@/pages/Contact"));
-const Blog = lazy(() => import("@/pages/Blog"));
+const DealDetails = lazy(() => import("@/pages/deal/DealDetails"));
+const MyPosts = lazy(() => import("@/pages/deal/MyPosts"));
+const Profile = lazy(() => import("@/pages/profile/Profile"));
+const EstimatorPage = lazy(() => import("@/pages/simulator/EstimatorPage"));
+const APropos = lazy(() => import("@/pages/legal/APropos"));
+const AideEtFaq = lazy(() => import("@/pages/legal/AideEtFaq"));
+const Contact = lazy(() => import("@/pages/contact/Contact"));
+const Blog = lazy(() => import("@/pages/blog/Blog"));
 const MentionsLegales = lazy(() => import("@/pages/legal/MentionsLegales"));
 const CGV = lazy(() => import("@/pages/legal/CGV"));
 const CGU = lazy(() => import("@/pages/legal/CGU"));
-const PolitiqueConfidentialite = lazy(() => import("@/pages/legal/Privacy"));
-const Apk = lazy(() => import("@/pages/Apk"));
-const SettingsPage = lazy(() => import("@/pages/Settings"));
+const PolitiqueConfidentialite = lazy(() => import("@/pages/legal/PolitiqueConfidentialite"));
+const Apk = lazy(() => import("@/pages/apk/Apk"));
+const SettingsPage = lazy(() => import("@/pages/settings/Settings"));
+const CharteDuSwap = lazy(() => import("@/pages/legal/CharteDuSwap"));
 
-const DiagnosePage = lazy(() => import("@/pages/Diagnose"));
-const AdminPage = lazy(() => import("@/pages/AdminPage"));
-const DealboxCatalog = lazy(() => import("@/pages/DealboxCatalog"));
+const DiagnosePage = lazy(() => import("@/pages/simulator/Diagnose"));
+const AdminPage = lazy(() => import("@/pages/misc/AdminPage"));
+const DealboxCatalog = lazy(() => import("@/pages/deal/DealboxCatalog"));
 
 const queryClient = new QueryClient();
 
@@ -75,7 +76,7 @@ const App = () => (
                     <Route path="/estimer" element={<SimulatorPage />} />
                     <Route path="/deals-found" element={<DealsFound />} />
                     <Route path="/charte" element={<ChartePage />} />
-                    <Route path="/charte-du-swap" element={<ChartePage />} />
+                    <Route path="/charte-du-swap" element={<CharteDuSwap />} />
                     <Route path="/charte-qualite" element={<CharteQualitePage />} />
                     <Route path="/post" element={<SimulatorPage />} />
                     <Route path="/mes-publications" element={<MyPosts />} />

@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useDeals } from "@/context/DealsContext";
-import PhoneCard from "@/components/PhoneCard";
+import PhoneCard from "@/components/features/deals/PhoneCard";
 import MasonryGrid from "@/components/ui/MasonryGrid";
 import { Input } from "@/components/ui/input";
 import { Sparkles, Search } from "lucide-react";

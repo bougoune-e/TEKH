@@ -10,7 +10,7 @@ import { Eye, EyeOff, LogIn } from "lucide-react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import logo from "@/assets/logos/robott.jpeg";
-import MotionRings from "@/components/MotionRings";
+import MotionRings from "@/components/common/MotionRings";
 import { useTranslation } from "react-i18next";
 
 export default function Login() {
