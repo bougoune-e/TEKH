@@ -1,7 +1,7 @@
 {
   "name": "TΞKΗ+",
   "short_name": "TΞKΗ+",
-  "description": "L'échange intelligent d'appareils électroniques pour une inclusion numérique de qualité pour tous.",
+  "description": "L'échange intelligent d'appareils électroniques.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -11,7 +11,8 @@
     {
       "src": "/icon.jpeg",
       "sizes": "192x192",
-      "type": "image/jpeg"
+      "type": "image/jpeg",
+      "purpose": "any"
     },
     {
       "src": "/icon-512.jpeg",
