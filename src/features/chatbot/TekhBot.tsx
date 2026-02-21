@@ -1,120 +1,109 @@
-import React, { useState, useRef, useEffect } from "react";
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import { Send, X, Sparkles } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { Send, X, Sparkles, AlertTriangle } from "lucide-react";
 import { cn } from "@/core/api/utils";
 import mascotVideo from "@/assets/illustrations/simulator/gifrobot.mp4";
 
-// Configuration Gemini
+// Configuration Gemini — Appel REST direct pour un contrôle maximal
 const API_KEY = "AIzaSyBzQROIK5AX0as3FjKv7yggBfp9jpMX3Ww";
-const genAI = new GoogleGenerativeAI(API_KEY);
+const MODEL = "gemini-2.5-flash";
+const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${API_KEY}`;
 
-const SYSTEM_PROMPT = `
-Tu es TekhBot, l'assistant IA officiel et expert de la plateforme TEKH+.
+const SYSTEM_PROMPT = `Tu es TekhBot, l'assistant IA officiel et expert de la plateforme TEKH+.
 Ton objectif est d'informer, guider et convertir chaque visiteur en utilisateur convaincu du programme SWAP.
 
-═══════════════════════════════════════
-  IDENTITÉ DE TEKH+
-═══════════════════════════════════════
-
+IDENTITÉ DE TEKH+ :
 TEKH+ est une plateforme africaine d'ÉCHANGE (SWAP) de smartphones et appareils électroniques.
 Slogan : "Pour une inclusion numérique de qualité pour tous."
-Marché principal : Afrique de l'Ouest (Togo, Lomé).
-Monnaie : FCFA (Franc CFA).
+Marché principal : Afrique de l'Ouest (Togo, Lomé). Monnaie : FCFA.
+TEKH+ N'EST PAS un site de vente classique. C'est un écosystème de SWAP.
 
-TEKH+ N'EST PAS un site de vente classique.
-C'est un écosystème de SWAP — on échange son ancien téléphone contre un meilleur (ou récupère du cash).
+COMMENT FONCTIONNE LE SWAP :
+1. ESTIMER : Le Simulateur (/simulateur) estime la valeur de reprise du téléphone via diagnostic IA.
+2. CHOISIR : On parcourt les Deals (/deals) pour trouver le téléphone cible. Tous certifiés Grade A, garantie 12 mois.
+3. ÉCHANGER : On calcule le "gap SWAP". Ex: téléphone vaut 80 000 FCFA, cible coûte 120 000 → on paie 40 000 FCFA seulement.
+- UPGRADE : monter en gamme en payant la différence.
+- DOWNGRADE : récupérer du cash en échangeant contre un modèle moins cher.
 
-═══════════════════════════════════════
-  COMMENT FONCTIONNE LE SWAP
-═══════════════════════════════════════
+FONCTIONNALITÉS :
+📱 Simulateur (/simulateur) - estimation instantanée de valeur de reprise
+🔍 Explorer/Deals (/deals) - catalogue d'appareils pour le swap
+📝 Publier (/post) - publier sa propre annonce d'échange
+🏪 DealBox (/dealboxes) - appareils certifiés TEKH+ premium, garantie 12 mois
+🔧 Diagnose (/diagnose) - diagnostic technique complet
+⚙️ Paramètres (/settings) - compte, thème, langue
 
-1. ESTIMER : L'utilisateur utilise le Simulateur pour estimer la valeur de son téléphone actuel.
-   → Diagnostic IA instantané basé sur : marque, modèle, stockage, RAM, état physique, batterie.
+CHARTE DE PRICING v1.0 :
+Le prix dépend de : marque, âge, état (Neuf/Très bon/Bon/Moyen), stockage, RAM.
+Garde-fous : échange refusé si VRT > 1.4× prix cible.
 
-2. CHOISIR : Il parcourt les Deals (catalogue) pour trouver le téléphone qu'il veut.
-   → Tous les appareils proposés sont certifiés Grade A (comme neufs), avec garantie 12 mois.
+MARQUES : Apple, Samsung, Xiaomi, Tecno, Infinix, Google, Huawei, OnePlus, Oppo, Vivo.
+PAIEMENT : Mobile Money (Flooz, TMoney), carte bancaire, virement.
 
-3. ÉCHANGER : On calcule la différence (le "gap SWAP").
-   → Si son téléphone vaut 80 000 FCFA et le nouveau coûte 120 000 FCFA → il paie seulement 40 000 FCFA.
-   → C'est beaucoup plus économique que d'acheter un neuf.
-
-Types d'échange :
-- UPGRADE : Passer à un meilleur téléphone en payant la différence.
-- DOWNGRADE : Récupérer du cash en échangeant contre un modèle moins cher.
-
-═══════════════════════════════════════
-  FONCTIONNALITÉS DE LA PLATEFORME
-═══════════════════════════════════════
-
-📱 SIMULATEUR (/simulateur)
-   Estimation instantanée de la valeur de reprise (VRT) de ton téléphone.
-   On sélectionne : marque → modèle → stockage → RAM → état → batterie.
-   Résultat en FCFA avec visualisation du gap pour l'upgrade.
-
-🔍 EXPLORER / DEALS (/deals)
-   Catalogue d'appareils disponibles pour le swap.
-   Filtres : marque, état, budget, recherche par modèle.
-   Chaque deal montre : prix, état, photos, localisation.
-
-📝 PUBLIER (/post)
-   Les utilisateurs peuvent publier leur propre annonce d'échange.
-   Formulaire guidé avec photos, description, prix souhaité.
-
-🏪 DEALBOX (/dealboxes)
-   Appareils certifiés par TEKH+ — la sélection premium.
-   Garantie 12 mois, diagnostic complet, remis à neuf professionnellement.
-
-🔧 DIAGNOSE (/diagnose)
-   Outil de diagnostic technique pour évaluer l'état de ton appareil.
-
-⚙️ PARAMÈTRES (/settings)
-   Gestion du compte, thème sombre/clair, langue (FR/EN).
-
-═══════════════════════════════════════
-  CHARTE DE PRICING TEKH+ v1.0
-═══════════════════════════════════════
-
-Le prix est calculé automatiquement selon :
-- Marque (Apple = coefficient élevé, Tecno = coefficient plus bas)
-- Âge de l'appareil (moins de 1 an = valeur maximale)
-- État physique : Neuf, Très bon, Bon, Moyen
-- Stockage et RAM
-- Prix de référence marché (PRT)
-
-Garde-fous :
-- Un échange est refusé si le VRT > 1.4 × prix cible (évite les échanges défavorables)
-- Downgrade de classe F vers classe A interdit
-
-═══════════════════════════════════════
-  MARQUES SUPPORTÉES
-═══════════════════════════════════════
-
-Apple, Samsung, Xiaomi, Tecno, Infinix, Google, Huawei, OnePlus, Oppo, Vivo.
-
-═══════════════════════════════════════
-  MOYENS DE PAIEMENT
-═══════════════════════════════════════
-
-Mobile Money (Flooz, TMoney), Carte bancaire, Virement.
-
-═══════════════════════════════════════
-  TON STYLE DE COMMUNICATION
-═══════════════════════════════════════
-
-- Amical, dynamique et hautement professionnel.
-- Utilise des emojis tech (📱, ⚡, 💎, 🔄, 💰) pour dynamiser l'échange.
-- Réponses concises (max 3-4 phrases) et orientées action.
-- Propose des liens vers les bonnes pages : /simulateur, /deals, /post, /dealboxes.
-- Si l'utilisateur hésite, rappelle-lui que swapper est plus rentable qu'acheter neuf.
-- Reste toujours en français sauf si l'utilisateur parle une autre langue.
-
-RÈGLE D'OR : Toujours orienter vers l'ÉCHANGE (Swap). Tu es le meilleur vendeur de l'échange intelligent.
-`;
+TON STYLE :
+- Amical, dynamique, professionnel. Emojis tech (📱⚡💎🔄💰).
+- Réponses concises (max 3-4 phrases), orientées action.
+- Propose les bons liens : /simulateur, /deals, /post, /dealboxes.
+- Toujours en français sauf si l'utilisateur parle une autre langue.
+RÈGLE D'OR : Toujours orienter vers l'ÉCHANGE (Swap).`;
 
 interface Message {
     role: "user" | "bot";
     content: string;
     timestamp: Date;
+}
+
+// Historique formaté pour l'API Gemini REST
+function buildContents(messages: Message[], newUserInput: string) {
+    const contents: Array<{ role: string; parts: Array<{ text: string }> }> = [];
+
+    // System prompt comme premier échange
+    contents.push({ role: "user", parts: [{ text: SYSTEM_PROMPT }] });
+    contents.push({ role: "model", parts: [{ text: "Compris. Je suis TekhBot, l'expert Swap de TEKH+. Prêt à aider !" }] });
+
+    // Historique de conversation
+    for (const msg of messages) {
+        contents.push({
+            role: msg.role === "user" ? "user" : "model",
+            parts: [{ text: msg.content }]
+        });
+    }
+
+    // Nouveau message utilisateur
+    contents.push({ role: "user", parts: [{ text: newUserInput }] });
+
+    return contents;
+}
+
+async function callGemini(messages: Message[], userInput: string): Promise<string> {
+    const body = {
+        contents: buildContents(messages, userInput),
+        generationConfig: {
+            temperature: 0.8,
+            maxOutputTokens: 1024,
+        }
+    };
+
+    const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+    });
+
+    if (!res.ok) {
+        const errText = await res.text();
+        console.error("[TekhBot] API error:", res.status, errText);
+        throw new Error(`API ${res.status}: ${errText.slice(0, 200)}`);
+    }
+
+    const data = await res.json();
+    const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+    if (!reply) {
+        console.error("[TekhBot] Empty response:", JSON.stringify(data));
+        throw new Error("Réponse Gemini vide");
+    }
+
+    return reply;
 }
 
 export const TekhBot = () => {
@@ -128,6 +117,7 @@ export const TekhBot = () => {
         }
     ]);
     const [isTyping, setIsTyping] = useState(false);
+    const [error, setError] = useState<string | null>(null);
     const scrollRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -147,43 +137,58 @@ export const TekhBot = () => {
 
         const userMsg: Message = {
             role: "user",
-            content: input,
+            content: input.trim(),
             timestamp: new Date()
         };
 
         setMessages(prev => [...prev, userMsg]);
+        const currentInput = input.trim();
         setInput("");
         setIsTyping(true);
+        setError(null);
 
         try {
-            const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
-            const chat = model.startChat({
-                history: [
-                    { role: "user", parts: [{ text: SYSTEM_PROMPT }] },
-                    { role: "model", parts: [{ text: "Compris. Je suis TekhBot, l'expert Swap de TEKH+. Je connais parfaitement la plateforme, le pricing, les fonctionnalités et le marché africain. Prêt à aider !" }] },
-                    ...messages.map(m => ({
-                        role: m.role === "user" ? "user" as const : "model" as const,
-                        parts: [{ text: m.content }]
-                    }))
-                ]
-            });
-
-            const result = await chat.sendMessage(input);
-            const response = await result.response;
-            const text = response.text();
-
-            const botMsg: Message = {
-                role: "bot",
-                content: text,
-                timestamp: new Date()
-            };
-
-            setMessages(prev => [...prev, botMsg]);
-        } catch (error) {
-            console.error("Gemini Error:", error);
+            const reply = await callGemini(messages, currentInput);
             setMessages(prev => [...prev, {
                 role: "bot",
-                content: "Oups, petit souci de connexion ! 📡 Réessaie dans quelques secondes.",
+                content: reply,
+                timestamp: new Date()
+            }]);
+        } catch (err: any) {
+            console.error("[TekhBot] Error:", err);
+            const errorMsg = err?.message || "Erreur inconnue";
+
+            // Fallback : essai avec gemini-1.5-flash si le modèle 2.5 échoue
+            try {
+                const fallbackUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+                const body = {
+                    contents: buildContents(messages, currentInput),
+                    generationConfig: { temperature: 0.8, maxOutputTokens: 1024 }
+                };
+                const res = await fetch(fallbackUrl, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body),
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+                    if (reply) {
+                        setMessages(prev => [...prev, {
+                            role: "bot",
+                            content: reply,
+                            timestamp: new Date()
+                        }]);
+                        setIsTyping(false);
+                        return;
+                    }
+                }
+            } catch { /* fallback also failed */ }
+
+            setError(errorMsg);
+            setMessages(prev => [...prev, {
+                role: "bot",
+                content: "⚠️ Petit souci technique ! Réessaie dans quelques secondes.",
                 timestamp: new Date()
             }]);
         } finally {
@@ -248,6 +253,14 @@ export const TekhBot = () => {
                 )}
             </div>
 
+            {/* Error Banner */}
+            {error && (
+                <div className="px-4 py-2 bg-red-500/10 border-t border-red-500/20 flex items-center gap-2 text-xs text-red-400">
+                    <AlertTriangle className="w-3 h-3 shrink-0" />
+                    <span className="truncate">{error}</span>
+                </div>
+            )}
+
             {/* Input Section */}
             <div className="p-4 border-t border-slate-100 dark:border-white/5 bg-white dark:bg-black/95 backdrop-blur-xl shrink-0 pb-safe">
                 <div className="relative flex items-center gap-3">
@@ -269,7 +282,7 @@ export const TekhBot = () => {
                 </div>
                 <div className="flex items-center justify-center gap-2 mt-4 opacity-40">
                     <Sparkles className="w-3 h-3 text-[#00FF41]" />
-                    <span className="text-[8px] font-black uppercase tracking-[0.3em] text-zinc-500">Gemini 2.5 Flash Engine</span>
+                    <span className="text-[8px] font-black uppercase tracking-[0.3em] text-zinc-500">Gemini AI Engine</span>
                 </div>
             </div>
         </div>
