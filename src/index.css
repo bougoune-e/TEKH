@@ -3,227 +3,232 @@
 @tailwind utilities;
 
 @layer base {
-  * {
-    @apply border-border;
-    max-width: 100%;
-    box-sizing: border-box;
-  }
+  @layer base {
+    * {
+      @apply border-border;
+      max-width: 100%;
+      box-sizing: border-box;
+      transition: background-color 0.3s ease, border-color 0.3s ease-in-out;
+    }
 
-  html,
-  body {
-    @apply bg-background text-foreground;
-    font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
-    width: 100%;
-    position: relative;
-  }
-}
-
-@layer utilities {
-  .masonry {
-    column-count: 1;
-    column-gap: 1rem;
-  }
-
-  @media (min-width: 640px) {
-    .masonry {
-      column-count: 2;
+    html,
+    body {
+      @apply bg-background text-foreground;
+      font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      width: 100%;
+      position: relative;
+      scroll-behavior: smooth;
     }
   }
 
-  @media (min-width: 1024px) {
+  @layer utilities {
     .masonry {
-      column-count: 3;
+      column-count: 1;
+      column-gap: 1rem;
+    }
+
+    /* ... masonry classes ... */
+
+    /* Micro-interactions */
+    .btn-bounce:active {
+      transform: scale(0.96);
+    }
+
+    .card-hover {
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+    }
+
+    .card-hover:hover {
+      transform: translateY(-4px) scale(1.01);
     }
   }
 
-  .masonry-item {
-    break-inside: avoid;
-    margin-bottom: 1rem;
+  /* Base Design Tokens */
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 142.1 76.2% 36.3%;
+    --primary-foreground: 355.7 100% 97.3%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 142.1 76.2% 36.3%;
+    --radius: 0.75rem;
   }
 
-  /* SaaS Animations */
-  @keyframes levitate {
+  .dark {
+    --background: 0 0% 0%;
+    /* Pure Black */
+    --foreground: 210 40% 98%;
+    --card: 0 0% 2%;
+    /* Very Deep Gray for Cards */
+    --card-foreground: 210 40% 98%;
+    --popover: 0 0% 3%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 142.1 70.6% 45.3%;
+    --primary-foreground: 144.9 80.4% 10%;
+    --secondary: 0 0% 8%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 0 0% 12%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 142.1 70.6% 45.3%;
+  }
 
-    0%,
+  /* Bordures Premium (Ultra fines) */
+  [data-theme="dark"] .border-border,
+  .dark .border-border {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  /* Boutons SaaS Native */
+  [data-theme="dark"] .btn,
+  .dark .btn {
+    background-color: #00FF41 !important;
+    /* Pure TEKH Green */
+    color: #000000 !important;
+    font-weight: 800;
+    border: none !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Titres */
+  [data-theme="dark"] h1,
+  [data-theme="dark"] h2,
+  [data-theme="dark"] h3,
+  .dark h1,
+  .dark h2,
+  .dark h3 {
+    color: #ffffff !important;
+  }
+
+  /* Cartes de la section deals */
+  [data-theme="dark"] .deals-grid .card,
+  .dark .deals-grid .card {
+    background-color: #050505 !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    @apply card-hover;
+  }
+
+  /* Texte dans les cartes de deals */
+  [data-theme="dark"] .deals-grid .card *,
+  .dark .deals-grid .card * {
+    color: #ffffff !important;
+  }
+
+  /* Prix dans les cartes */
+  [data-theme="dark"] .text-2xl,
+  .dark .text-2xl {
+    color: #00FF41 !important;
+    /* Pure TEKH Green */
+    font-weight: 900 !important;
+  }
+
+  /* Dark mode: dim images slightly to avoid glare */
+  [data-theme="dark"] img:not(.no-dim),
+  .dark img:not(.no-dim) {
+    filter: brightness(0.9) contrast(1.1);
+    transition: filter 0.3s ease;
+  }
+
+  [data-theme="dark"] img:not(.no-dim):hover,
+  .dark img:not(.no-dim):hover {
+    filter: brightness(1) contrast(1);
+  }
+
+  /* Texte barré (prix original) */
+  [data-theme="dark"] .line-through,
+  .dark .line-through {
+    color: #a0aec0 !important;
+  }
+
+  /* Styles spécifiques pour PhoneCard */
+  [data-theme="dark"] .phone-card,
+  .dark .phone-card {
+    background: #050505 !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  }
+
+  [data-theme="dark"] .phone-card *,
+  .dark .phone-card * {
+    color: #ffffff !important;
+  }
+
+  [data-theme="dark"] .phone-card .bg-gradient-subtle,
+  .dark .phone-card .bg-gradient-subtle {
+    background: #0a0a0a !important;
+  }
+
+  [data-theme="dark"] .phone-card .text-muted-foreground,
+  .dark .phone-card .text-muted-foreground {
+    color: #cbd5e0 !important;
+  }
+
+  [data-theme="dark"] .phone-card .bg-gradient-accent,
+  .dark .phone-card .bg-gradient-accent {
+    background: #00FF41 !important;
+    color: black !important;
+    font-weight: 900;
+  }
+
+  [data-theme="dark"] .phone-card .text-primary,
+  .dark .phone-card .text-primary {
+    color: #00A84D !important;
+  }
+
+  [data-theme="dark"] .phone-card .border-border,
+  .dark .phone-card .border-border {
+    border-color: #4a5568 !important;
+  }
+
+  [data-theme="dark"] .phone-card .bg-card,
+  .dark .phone-card .bg-card {
+    background-color: #1e293b !important;
+  }
+
+  /* Slogan Animation for Splash Screen */
+  @keyframes slogan-reveal {
+    0% {
+      transform: translateY(20px);
+      opacity: 0;
+      filter: blur(10px);
+    }
+
     100% {
       transform: translateY(0);
-    }
-
-    50% {
-      transform: translateY(-10px);
-    }
-  }
-
-  .animate-levitate {
-    animation: levitate 4s ease-in-out infinite;
-  }
-
-  @keyframes scale-in {
-    from {
-      transform: scale(0.95);
-      opacity: 0;
-    }
-
-    to {
-      transform: scale(1);
       opacity: 1;
+      filter: blur(0);
     }
   }
 
-  .scale-in {
-    animation: scale-in 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  .animate-slogan {
+    animation: slogan-reveal 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
-}
 
-/* Base Design Tokens */
-:root {
-  --background: 0 0% 100%;
-  --foreground: 222.2 84% 4.9%;
-  --card: 0 0% 100%;
-  --card-foreground: 222.2 84% 4.9%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 222.2 84% 4.9%;
-  --primary: 142.1 76.2% 36.3%;
-  /* #16a34a - SaaS Green */
-  --primary-foreground: 355.7 100% 97.3%;
-  --secondary: 210 40% 96.1%;
-  --secondary-foreground: 222.2 47.4% 11.2%;
-  --muted: 210 40% 96.1%;
-  --muted-foreground: 215.4 16.3% 46.9%;
-  --accent: 210 40% 96.1%;
-  --accent-foreground: 222.2 47.4% 11.2%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 214.3 31.8% 91.4%;
-  --input: 214.3 31.8% 91.4%;
-  --ring: 142.1 76.2% 36.3%;
-  --radius: 0.75rem;
-  /* 12px for SaaS look */
-}
-
-.dark {
-  --background: 222.2 84% 4.9%;
-  --foreground: 210 40% 98%;
-  --card: 222.2 84% 4.9%;
-  --card-foreground: 210 40% 98%;
-  --popover: 222.2 84% 4.9%;
-  --popover-foreground: 210 40% 98%;
-  --primary: 142.1 70.6% 45.3%;
-  /* Brighter green for dark mode */
-  --primary-foreground: 144.9 80.4% 10%;
-  --secondary: 217.2 32.6% 17.5%;
-  --secondary-foreground: 210 40% 98%;
-  --muted: 217.2 32.6% 17.5%;
-  --muted-foreground: 215 20.2% 65.1%;
-  --accent: 217.2 32.6% 17.5%;
-  --accent-foreground: 210 40% 98%;
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 217.2 32.6% 17.5%;
-  --input: 217.2 32.6% 17.5%;
-  --ring: 142.1 70.6% 45.3%;
-}
-
-/* Bordures */
-[data-theme="dark"] .border-border,
-.dark .border-border {
-  border-color: #4a5568 !important;
-}
-
-/* Boutons */
-[data-theme="dark"] .btn,
-.dark .btn {
-  background-color: #00A84D !important;
-  color: white !important;
-  border: none !important;
-}
-
-/* Titres */
-[data-theme="dark"] h1,
-[data-theme="dark"] h2,
-[data-theme="dark"] h3,
-.dark h1,
-.dark h2,
-.dark h3 {
-  color: #ffffff !important;
-}
-
-/* Cartes de la section deals */
-[data-theme="dark"] .deals-grid .card,
-.dark .deals-grid .card {
-  background-color: #1e293b !important;
-  border: 1px solid #4a5568 !important;
-}
-
-/* Texte dans les cartes de deals */
-[data-theme="dark"] .deals-grid .card *,
-.dark .deals-grid .card * {
-  color: #ffffff !important;
-}
-
-/* Prix dans les cartes */
-[data-theme="dark"] .text-2xl,
-.dark .text-2xl {
-  color: #F2F2F2 !important;
-  font-weight: 700 !important;
-}
-
-/* Dark mode: dim images slightly to avoid glare */
-[data-theme="dark"] img:not(.no-dim),
-.dark img:not(.no-dim) {
-  filter: brightness(0.9) contrast(1.05);
-}
-
-/* Texte barré (prix original) */
-[data-theme="dark"] .line-through,
-.dark .line-through {
-  color: #a0aec0 !important;
-}
-
-/* Styles spécifiques pour PhoneCard */
-[data-theme="dark"] .phone-card,
-.dark .phone-card {
-  background: #1e293b !important;
-  border: 1px solid #4a5568 !important;
-}
-
-[data-theme="dark"] .phone-card *,
-.dark .phone-card * {
-  color: #ffffff !important;
-}
-
-[data-theme="dark"] .phone-card .bg-gradient-subtle,
-.dark .phone-card .bg-gradient-subtle {
-  background: #2d3748 !important;
-}
-
-[data-theme="dark"] .phone-card .text-muted-foreground,
-.dark .phone-card .text-muted-foreground {
-  color: #cbd5e0 !important;
-}
-
-[data-theme="dark"] .phone-card .bg-gradient-accent,
-.dark .phone-card .bg-gradient-accent {
-  background: #00A84D !important;
-  color: white !important;
-}
-
-[data-theme="dark"] .phone-card .text-primary,
-.dark .phone-card .text-primary {
-  color: #00A84D !important;
-}
-
-[data-theme="dark"] .phone-card .border-border,
-.dark .phone-card .border-border {
-  border-color: #4a5568 !important;
-}
-
-[data-theme="dark"] .phone-card .bg-card,
-.dark .phone-card .bg-card {
-  background-color: #1e293b !important;
+  .text-gradient-green {
+    background: linear-gradient(135deg, #00FF41 0%, #00A84D 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }
 
 /* ---- Navigation Icons Custom Styling (Matching Reference Image) ---- */

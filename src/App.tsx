@@ -54,6 +54,12 @@ const DealboxCatalog = lazy(() => import("@/pages/deal/DealboxCatalog"));
 
 const queryClient = new QueryClient();
 
+const PageTransition = ({ children }: { children: React.ReactNode }) => (
+  <div className="animate-in fade-in slide-in-from-bottom-2 duration-500 w-full h-full">
+    {children}
+  </div>
+);
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider>
@@ -68,34 +74,34 @@ const App = () => (
                 <Routes>
                   {/* Routes principales avec Layout */}
                   <Route element={<Layout />}>
-                    <Route index element={<Index />} />
-                    <Route path="/deals" element={<DealsPage />} />
-                    <Route path="/deal/:id" element={<DealDetails />} />
-                    <Route path="/diagnose" element={<DiagnosePage />} />
-                    <Route path="/simulateur" element={<SimulatorPage />} />
-                    <Route path="/estimer" element={<SimulatorPage />} />
-                    <Route path="/deals-found" element={<DealsFound />} />
-                    <Route path="/charte" element={<ChartePage />} />
-                    <Route path="/charte-du-swap" element={<CharteDuSwap />} />
-                    <Route path="/charte-qualite" element={<CharteQualitePage />} />
-                    <Route path="/post" element={<SimulatorPage />} />
-                    <Route path="/mes-publications" element={<MyPosts />} />
-                    <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-                    <Route path="/search" element={<SearchPage />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/a-propos" element={<APropos />} />
-                    <Route path="/aide-et-faq" element={<AideEtFaq />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/blog" element={<Blog />} />
-                    <Route path="/mentions-legales" element={<MentionsLegales />} />
-                    <Route path="/cgv" element={<CGV />} />
-                    <Route path="/cgu" element={<CGU />} />
-                    <Route path="/politique-confidentialite" element={<PolitiqueConfidentialite />} />
-                    <Route path="/apk" element={<Apk />} />
-                    <Route path="/dealboxes" element={<DealboxCatalog />} />
-                    <Route path="/communities" element={<Index />} />
-                    <Route path="/messages" element={<Index />} />
-                    <Route path="/settings" element={<SettingsPage />} />
+                    <Route index element={<PageTransition><Index /></PageTransition>} />
+                    <Route path="/deals" element={<PageTransition><DealsPage /></PageTransition>} />
+                    <Route path="/deal/:id" element={<PageTransition><DealDetails /></PageTransition>} />
+                    <Route path="/diagnose" element={<PageTransition><DiagnosePage /></PageTransition>} />
+                    <Route path="/simulateur" element={<PageTransition><SimulatorPage /></PageTransition>} />
+                    <Route path="/estimer" element={<PageTransition><SimulatorPage /></PageTransition>} />
+                    <Route path="/deals-found" element={<PageTransition><DealsFound /></PageTransition>} />
+                    <Route path="/charte" element={<PageTransition><ChartePage /></PageTransition>} />
+                    <Route path="/charte-du-swap" element={<PageTransition><CharteDuSwap /></PageTransition>} />
+                    <Route path="/charte-qualite" element={<PageTransition><CharteQualitePage /></PageTransition>} />
+                    <Route path="/post" element={<PageTransition><SimulatorPage /></PageTransition>} />
+                    <Route path="/mes-publications" element={<PageTransition><MyPosts /></PageTransition>} />
+                    <Route path="/profile" element={<ProtectedRoute><PageTransition><Profile /></PageTransition></ProtectedRoute>} />
+                    <Route path="/search" element={<PageTransition><SearchPage /></PageTransition>} />
+                    <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
+                    <Route path="/a-propos" element={<PageTransition><APropos /></PageTransition>} />
+                    <Route path="/aide-et-faq" element={<PageTransition><AideEtFaq /></PageTransition>} />
+                    <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
+                    <Route path="/blog" element={<PageTransition><Blog /></PageTransition>} />
+                    <Route path="/mentions-legales" element={<PageTransition><MentionsLegales /></PageTransition>} />
+                    <Route path="/cgv" element={<PageTransition><CGV /></PageTransition>} />
+                    <Route path="/cgu" element={<PageTransition><CGU /></PageTransition>} />
+                    <Route path="/politique-confidentialite" element={<PageTransition><PolitiqueConfidentialite /></PageTransition>} />
+                    <Route path="/apk" element={<PageTransition><Apk /></PageTransition>} />
+                    <Route path="/dealboxes" element={<PageTransition><DealboxCatalog /></PageTransition>} />
+                    <Route path="/communities" element={<PageTransition><Index /></PageTransition>} />
+                    <Route path="/messages" element={<PageTransition><Index /></PageTransition>} />
+                    <Route path="/settings" element={<PageTransition><SettingsPage /></PageTransition>} />
                   </Route>
 
                   {/* Route Admin Exclusive */}
@@ -118,7 +124,7 @@ const App = () => (
                   </Route>
 
                   {/* Route 404 - Doit être la dernière */}
-                  <Route path="*" element={<NotFound />} />
+                  <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
                 </Routes>
               </Suspense>
             </DealsProvider>

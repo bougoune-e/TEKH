@@ -48,12 +48,19 @@ export const TekhBot = () => {
     const scrollRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        const handleToggle = () => setIsOpen(prev => !prev);
+        window.addEventListener('toggle-tekhbot', handleToggle);
+        return () => window.removeEventListener('toggle-tekhbot', handleToggle);
+    }, []);
+
+    useEffect(() => {
         if (scrollRef.current) {
             scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         }
     }, [messages, isTyping]);
 
     const handleSend = async () => {
+        // ... same handleSend logic ...
         if (!input.trim() || isTyping) return;
 
         const userMsg: Message = {
@@ -102,122 +109,89 @@ export const TekhBot = () => {
         }
     };
 
+    if (!isOpen) return null;
+
     return (
-        <>
-            {/* Chat Window - Fixed at screen level to avoid parent width constraints */}
-            {isOpen && (
-                <div className={cn(
-                    "fixed z-[1000] flex flex-col overflow-hidden animate-in slide-in-from-bottom-5 duration-300 shadow-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0b0e14] font-sans",
-                    // Mobile: Full screen
-                    "inset-0 rounded-none",
-                    // Desktop: Floating bottom-right
-                    "sm:inset-auto sm:bottom-28 sm:right-6 sm:w-[500px] sm:h-[700px] sm:max-h-[80vh] sm:rounded-3xl"
-                )}>
-                    {/* Header */}
-                    <div className="bg-black p-4 flex items-center justify-between text-white shrink-0">
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/30">
-                                <video src={mascotVideo} autoPlay loop muted playsInline className="w-full h-full object-cover scale-150" />
-                            </div>
-                            <div>
-                                <h3 className="font-black text-sm uppercase tracking-tighter">TekhBot</h3>
-                                <div className="flex items-center gap-1.5">
-                                    <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-                                    <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest text-emerald-500">Expert en Swap</span>
-                                </div>
-                            </div>
-                        </div>
-                        <button onClick={() => setIsOpen(false)} className="p-2 hover:bg-white/10 rounded-full transition-colors">
-                            <X className="w-6 h-6" />
-                        </button>
+        <div className={cn(
+            "fixed z-[1000] flex flex-col overflow-hidden animate-in slide-in-from-bottom-5 duration-300 shadow-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0b0e14] font-sans",
+            // Mobile: Full screen with offset for top bar if needed, but inset-0 is standard
+            "inset-0 rounded-none",
+            // Desktop: Floating bottom-right but centered for focus? No, let's keep it clean
+            "sm:inset-auto sm:bottom-24 sm:right-6 sm:w-[450px] sm:h-[650px] sm:max-h-[85vh] sm:rounded-3xl"
+        )}>
+            {/* Header */}
+            <div className="bg-black p-4 flex items-center justify-between text-white shrink-0 border-b border-white/5">
+                <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/30 bg-zinc-900">
+                        <video src={mascotVideo} autoPlay loop muted playsInline className="w-full h-full object-cover scale-150" />
                     </div>
-
-                    {/* Messages Section */}
-                    <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50 dark:bg-black/20">
-                        {messages.map((msg, idx) => (
-                            <div key={idx} className={cn("flex flex-col animate-in fade-in slide-in-from-bottom-2 duration-300", msg.role === "user" ? "items-end" : "items-start")}>
-                                <div className={cn(
-                                    "max-w-[85%] p-4 rounded-2xl text-[15px] font-medium leading-relaxed shadow-sm",
-                                    msg.role === "user"
-                                        ? "bg-blue-600 text-white rounded-br-none"
-                                        : "bg-white dark:bg-zinc-900 text-slate-900 dark:text-zinc-200 border border-slate-100 dark:border-white/5 rounded-bl-none"
-                                )}>
-                                    {msg.content}
-                                </div>
-                                <span className="text-[9px] text-zinc-500 mt-2 uppercase font-black tracking-widest opacity-60">
-                                    {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                </span>
-                            </div>
-                        ))}
-                        {isTyping && (
-                            <div className="flex items-start gap-2 animate-in fade-in duration-300">
-                                <div className="bg-white dark:bg-zinc-900 p-4 rounded-2xl rounded-bl-none border border-slate-100 dark:border-white/5 shadow-sm">
-                                    <div className="flex gap-1.5">
-                                        <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                                        <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                                        <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-                    </div>
-
-                    {/* Input Section */}
-                    <div className="p-4 border-t border-slate-100 dark:border-white/5 bg-white dark:bg-[#0b0e14] shrink-0 pb-safe">
-                        <div className="relative flex items-center gap-3">
-                            <input
-                                type="text"
-                                value={input}
-                                onChange={(e) => setInput(e.target.value)}
-                                onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                                placeholder="Discuter avec TekhBot..."
-                                className="flex-1 h-14 bg-slate-100 dark:bg-white/5 border-none rounded-2xl px-5 text-base font-semibold focus:ring-2 focus:ring-primary/50 text-slate-900 dark:text-white placeholder:text-zinc-500"
-                            />
-                            <button
-                                onClick={handleSend}
-                                disabled={!input.trim() || isTyping}
-                                className="w-14 h-14 bg-black dark:bg-primary text-white dark:text-black rounded-2xl flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all disabled:opacity-50"
-                            >
-                                <Send className="w-6 h-6" />
-                            </button>
-                        </div>
-                        <div className="flex items-center justify-center gap-1.5 mt-4 opacity-40">
-                            <Sparkles className="w-3 h-3 text-primary" />
-                            <span className="text-[9px] font-black uppercase tracking-[0.2em] text-zinc-500">Gemini 1.5 Flash Pro</span>
+                    <div>
+                        <h3 className="font-black text-sm uppercase tracking-tighter">TekhBot Assistant</h3>
+                        <div className="flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse shadow-[0_0_8px_#00FF41]" />
+                            <span className="text-[9px] font-black text-[#00FF41] uppercase tracking-widest">En ligne</span>
                         </div>
                     </div>
                 </div>
-            )}
-
-            {/* Toggle Button Container - Stays fixed bottom-right */}
-            <div className="fixed bottom-6 right-6 z-[1001] pointer-events-none">
-                <button
-                    onClick={() => setIsOpen(!isOpen)}
-                    className={cn(
-                        "w-16 h-16 rounded-3xl flex items-center justify-center shadow-2xl transition-all duration-500 hover:scale-110 active:scale-90 relative group overflow-hidden border-2 pointer-events-auto",
-                        isOpen ? "bg-rose-500 border-rose-400 rotate-90" : "bg-black border-primary/50"
-                    )}
-                >
-                    {isOpen ? (
-                        <X className="w-8 h-8 text-white -rotate-90" />
-                    ) : (
-                        <div className="w-full h-full relative">
-                            <video
-                                src={mascotVideo}
-                                autoPlay
-                                loop
-                                muted
-                                playsInline
-                                className="w-full h-full object-cover scale-150"
-                            />
-                            <div className="absolute inset-0 bg-primary/20 group-hover:bg-transparent transition-colors" />
-                            <div className="absolute -top-2 -right-2 w-6 h-6 bg-rose-600 rounded-full border-4 border-black flex items-center justify-center animate-bounce">
-                                <span className="w-1.5 h-1.5 bg-white rounded-full" />
-                            </div>
-                        </div>
-                    )}
+                <button onClick={() => setIsOpen(false)} className="p-2 hover:bg-white/10 rounded-full transition-colors">
+                    <X className="w-6 h-6" />
                 </button>
             </div>
-        </>
+
+            {/* Messages Section - Dark Mode Focus */}
+            <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50 dark:bg-black">
+                {messages.map((msg, idx) => (
+                    <div key={idx} className={cn("flex flex-col animate-in fade-in slide-in-from-bottom-2 duration-300", msg.role === "user" ? "items-end" : "items-start")}>
+                        <div className={cn(
+                            "max-w-[85%] p-4 rounded-2xl text-[14px] font-semibold leading-relaxed shadow-sm",
+                            msg.role === "user"
+                                ? "bg-blue-600 text-white rounded-br-none"
+                                : "bg-white dark:bg-zinc-900/50 dark:text-zinc-100 border border-slate-100 dark:border-white/5 rounded-bl-none backdrop-blur-sm"
+                        )}>
+                            {msg.content}
+                        </div>
+                        <span className="text-[8px] text-zinc-500 mt-2 uppercase font-black tracking-[0.2em] opacity-50 px-1">
+                            {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        </span>
+                    </div>
+                ))}
+                {isTyping && (
+                    <div className="flex items-start gap-2 animate-in fade-in duration-300">
+                        <div className="bg-white dark:bg-zinc-900 p-4 rounded-2xl rounded-bl-none border border-slate-100 dark:border-white/5 shadow-sm">
+                            <div className="flex gap-1.5">
+                                <div className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                                <div className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                                <div className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </div>
+
+            {/* Input Section - Pure Black Blur */}
+            <div className="p-4 border-t border-slate-100 dark:border-white/5 bg-white dark:bg-black/95 backdrop-blur-xl shrink-0 pb-safe">
+                <div className="relative flex items-center gap-3">
+                    <input
+                        type="text"
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+                        placeholder="Discuter avec l'IA TEKH+..."
+                        className="flex-1 h-12 bg-slate-100 dark:bg-zinc-900/50 border-none rounded-2xl px-5 text-sm font-bold focus:ring-2 focus:ring-primary/40 text-slate-900 dark:text-white placeholder:text-zinc-600"
+                    />
+                    <button
+                        onClick={handleSend}
+                        disabled={!input.trim() || isTyping}
+                        className="w-12 h-12 bg-black dark:bg-[#00FF41] text-white dark:text-black rounded-2xl flex items-center justify-center shadow-lg hover:scale-110 active:scale-90 transition-all disabled:opacity-50"
+                    >
+                        <Send className="w-5 h-5" />
+                    </button>
+                </div>
+                <div className="flex items-center justify-center gap-2 mt-4 opacity-40">
+                    <Sparkles className="w-3 h-3 text-[#00FF41]" />
+                    <span className="text-[8px] font-black uppercase tracking-[0.3em] text-zinc-500">Gemini 1.5 Professional Engine</span>
+                </div>
+            </div>
+        </div>
     );
 };
