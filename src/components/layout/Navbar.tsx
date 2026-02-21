@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Search, Bell, Settings, LogOut } from "lucide-react";
+import { Search, Bell, Settings, LogOut, Bot } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { supabase } from "@/lib/supabaseApi";
 import ThemeToggle from "@/components/common/ThemeToggle";
@@ -66,6 +66,14 @@ const Navbar = () => {
 
                 {/* Theme Toggle */}
                 <ThemeToggle />
+
+                {/* 🤖 TekhBot Toggle */}
+                <button
+                    onClick={() => window.dispatchEvent(new CustomEvent('toggle-tekhbot'))}
+                    className="p-2 hover:bg-zinc-50 dark:hover:bg-white/10 rounded-full transition-all group/bot"
+                >
+                    <Bot className="h-6 w-6 text-black dark:text-white group-hover/bot:text-primary" />
+                </button>
 
                 {/* 🔔 Notification Bell */}
                 <button className="relative p-2 hover:bg-zinc-50 dark:hover:bg-white/10 rounded-full transition-all group/bell">

@@ -5,7 +5,7 @@ import SearchBar from "@/components/layout/SearchBar";
 import BottomNav from "@/components/layout/BottomNav";
 import ThemeToggle from "@/components/common/ThemeToggle";
 import { useAuth } from "@/context/AuthContext";
-import { Bell } from "lucide-react";
+import { Bell, Bot } from "lucide-react";
 import logo from "@/assets/logos/robott.jpeg";
 import PWAInstallBanner from "@/components/layout/PWAInstallBanner";
 import { TekhBot } from "@/components/features/chatbot/TekhBot";
@@ -49,6 +49,14 @@ const Layout = () => {
               <div className="hidden sm:block standalone:hidden">
                 <ThemeToggle />
               </div>
+
+              {/* 🤖 TekhBot Toggle */}
+              <button
+                onClick={() => window.dispatchEvent(new CustomEvent('toggle-tekhbot'))}
+                className="p-2 hover:bg-black/5 dark:hover:bg-white/10 rounded-full transition-all group/bot"
+              >
+                <Bot className="h-6 w-6 text-black dark:text-white group-hover/bot:text-primary" />
+              </button>
 
               {/* 🔔 Notification Bell */}
               <button className="relative p-2 hover:bg-black/5 dark:hover:bg-white/10 rounded-full transition-all group/bell">
