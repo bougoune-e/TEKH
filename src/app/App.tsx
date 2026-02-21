@@ -2,7 +2,7 @@ import { Toaster } from "@/shared/ui/toaster";
 import { Toaster as Sonner } from "@/shared/ui/sonner";
 import { TooltipProvider } from "@/shared/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigationType } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import ProtectedRoute from "@/features/auth/ProtectedRoute";
 import AdminLayout from "@/features/admin/layout/AdminLayout";
