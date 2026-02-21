@@ -1,55 +1,77 @@
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { useLocation, useNavigationType } from "react-router-dom";
 
 /**
- * ScrollRestorer — Gère la restauration du scroll native-level.
- * Utilise sessionStorage pour mémoriser la position par 'key' (identifiant de visite unique).
+ * ScrollRestorer — Restauration native-level du scroll.
+ *
+ * Stratégie :
+ * - Désactive history.scrollRestoration du navigateur
+ * - Sauvegarde scrollY dans sessionStorage en continu (par clé de visite)
+ * - Sur POP (retour arrière) : masque le contenu, restaure le scroll, puis révèle
+ * - Sur PUSH/REPLACE (nouvelle nav) : remet en haut
+ *
+ * Cela empêche le "flash" visuel de re-défilement.
  */
 const ScrollRestorer = () => {
     const { pathname, key } = useLocation();
     const navType = useNavigationType();
+    const isRestoring = useRef(false);
 
+    // Désactive la gestion automatique du navigateur
     useEffect(() => {
-        // Désactive la gestion automatique du navigateur pour éviter les conflits
         if ("scrollRestoration" in window.history) {
             window.history.scrollRestoration = "manual";
         }
     }, []);
 
-    useEffect(() => {
+    // useLayoutEffect pour bloquer le paint AVANT le premier rendu visible
+    useLayoutEffect(() => {
         const scrollKey = `scroll-${key}`;
 
         if (navType === "POP") {
-            // Retour arrière : restauration instantanée
             const savedPosition = sessionStorage.getItem(scrollKey);
             if (savedPosition) {
                 const y = parseInt(savedPosition, 10);
-                // Utiliser behavior: 'instant' ou scrollTo direct pour éviter l'effet de glissement
+                isRestoring.current = true;
+
+                // Masquer le contenu pour empêcher le flash visuel
+                const root = document.getElementById("root");
+                if (root) {
+                    root.style.visibility = "hidden";
+                }
+
+                // Restaurer la position exacte
                 window.scrollTo(0, y);
+
+                // Révéler après que le scroll soit appliqué
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        if (root) {
+                            root.style.visibility = "";
+                        }
+                        isRestoring.current = false;
+                    });
+                });
             }
         } else {
-            // Nouvelle navigation : on repart du haut
+            // Navigation normale : scroll en haut instantanément
             window.scrollTo(0, 0);
         }
+    }, [pathname, key, navType]);
 
-        // Sauvegarde la position lors du scroll ou avant de quitter
+    // Sauvegarde continue de la position
+    useEffect(() => {
+        const scrollKey = `scroll-${key}`;
+
         const handleScroll = () => {
-            sessionStorage.setItem(scrollKey, window.scrollY.toString());
-        };
-
-        // On sauvegarde aussi de manière préventive sur l'événement avant déchargement
-        const handleUnload = () => {
-            sessionStorage.setItem(scrollKey, window.scrollY.toString());
+            if (!isRestoring.current) {
+                sessionStorage.setItem(scrollKey, window.scrollY.toString());
+            }
         };
 
         window.addEventListener("scroll", handleScroll, { passive: true });
-        window.addEventListener("beforeunload", handleUnload);
-
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-            window.removeEventListener("beforeunload", handleUnload);
-        };
-    }, [pathname, key, navType]);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [key]);
 
     return null;
 };
