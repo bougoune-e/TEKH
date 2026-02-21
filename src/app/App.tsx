@@ -54,11 +54,16 @@ const DealboxCatalog = lazy(() => import("@/features/marketplace/DealboxCatalog"
 
 const queryClient = new QueryClient();
 
-const PageTransition = ({ children }: { children: React.ReactNode }) => (
-  <div className="animate-in fade-in slide-in-from-bottom-2 duration-500 w-full h-full">
-    {children}
-  </div>
-);
+const PageTransition = ({ children, navType }: { children: React.ReactNode, navType?: string }) => {
+  // Désactive l'animation si on fait un retour arrière (POP)
+  if (navType === "POP") return <div className="w-full h-full">{children}</div>;
+
+  return (
+    <div className="animate-in fade-in slide-in-from-bottom-2 duration-500 w-full h-full">
+      {children}
+    </div>
+  );
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -67,72 +72,82 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <ScrollRestorer />
-          <AuthProvider>
-            <DealsProvider>
-              <Suspense fallback={<PageLoader />}>
-                <Routes>
-                  {/* Routes principales avec Layout */}
-                  <Route element={<Layout />}>
-                    <Route index element={<PageTransition><Index /></PageTransition>} />
-                    <Route path="/deals" element={<PageTransition><DealsPage /></PageTransition>} />
-                    <Route path="/deal/:id" element={<PageTransition><DealDetails /></PageTransition>} />
-                    <Route path="/diagnose" element={<PageTransition><DiagnosePage /></PageTransition>} />
-                    <Route path="/simulateur" element={<PageTransition><SimulatorPage /></PageTransition>} />
-                    <Route path="/estimer" element={<PageTransition><SimulatorPage /></PageTransition>} />
-                    <Route path="/deals-found" element={<PageTransition><DealsFound /></PageTransition>} />
-                    <Route path="/charte" element={<PageTransition><ChartePage /></PageTransition>} />
-                    <Route path="/charte-du-swap" element={<PageTransition><CharteDuSwap /></PageTransition>} />
-                    <Route path="/charte-qualite" element={<PageTransition><CharteQualitePage /></PageTransition>} />
-                    <Route path="/post" element={<PageTransition><SimulatorPage /></PageTransition>} />
-                    <Route path="/mes-publications" element={<PageTransition><MyPosts /></PageTransition>} />
-                    <Route path="/profile" element={<ProtectedRoute><PageTransition><Profile /></PageTransition></ProtectedRoute>} />
-                    <Route path="/search" element={<PageTransition><SearchPage /></PageTransition>} />
-                    <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
-                    <Route path="/a-propos" element={<PageTransition><APropos /></PageTransition>} />
-                    <Route path="/aide-et-faq" element={<PageTransition><AideEtFaq /></PageTransition>} />
-                    <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
-                    <Route path="/blog" element={<PageTransition><Blog /></PageTransition>} />
-                    <Route path="/mentions-legales" element={<PageTransition><MentionsLegales /></PageTransition>} />
-                    <Route path="/cgv" element={<PageTransition><CGV /></PageTransition>} />
-                    <Route path="/cgu" element={<PageTransition><CGU /></PageTransition>} />
-                    <Route path="/politique-confidentialite" element={<PageTransition><PolitiqueConfidentialite /></PageTransition>} />
-                    <Route path="/apk" element={<PageTransition><Apk /></PageTransition>} />
-                    <Route path="/dealboxes" element={<PageTransition><DealboxCatalog /></PageTransition>} />
-                    <Route path="/communities" element={<PageTransition><Index /></PageTransition>} />
-                    <Route path="/messages" element={<PageTransition><Index /></PageTransition>} />
-                    <Route path="/settings" element={<PageTransition><SettingsPage /></PageTransition>} />
-                  </Route>
-
-                  {/* Route Admin Exclusive */}
-                  <Route path="/admin-tekh-control" element={<AdminPage />} />
-
-                  {/* Routes d'administration */}
-                  <Route path="/admin" element={
-                    <ProtectedRoute>
-                      <AdminLayout />
-                    </ProtectedRoute>
-                  }>
-                    <Route index element={<Dashboard />} />
-                    <Route path="users" element={<Users />} />
-                    <Route path="annonces" element={<Annonces />} />
-                    <Route path="deals" element={<Deals />} />
-                    <Route path="dealbox" element={<DealBox />} />
-                    <Route path="categories" element={<Categories />} />
-                    <Route path="stats" element={<Stats />} />
-                    <Route path="settings" element={<Settings />} />
-                  </Route>
-
-                  {/* Route 404 - Doit être la dernière */}
-                  <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
-                </Routes>
-              </Suspense>
-            </DealsProvider>
-          </AuthProvider>
+          <NavigationWrapper />
         </BrowserRouter>
       </TooltipProvider>
     </ThemeProvider>
   </QueryClientProvider>
 );
+
+const NavigationWrapper = () => {
+  const navType = useNavigationType();
+
+  return (
+    <>
+      <ScrollRestorer />
+      <AuthProvider>
+        <DealsProvider>
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              {/* Routes principales avec Layout */}
+              <Route element={<Layout />}>
+                <Route index element={<PageTransition navType={navType}><Index /></PageTransition>} />
+                <Route path="/deals" element={<PageTransition navType={navType}><DealsPage /></PageTransition>} />
+                <Route path="/deal/:id" element={<PageTransition navType={navType}><DealDetails /></PageTransition>} />
+                <Route path="/diagnose" element={<PageTransition navType={navType}><DiagnosePage /></PageTransition>} />
+                <Route path="/simulateur" element={<PageTransition navType={navType}><SimulatorPage /></PageTransition>} />
+                <Route path="/estimer" element={<PageTransition navType={navType}><SimulatorPage /></PageTransition>} />
+                <Route path="/deals-found" element={<PageTransition navType={navType}><DealsFound /></PageTransition>} />
+                <Route path="/charte" element={<PageTransition navType={navType}><ChartePage /></PageTransition>} />
+                <Route path="/charte-du-swap" element={<PageTransition navType={navType}><CharteDuSwap /></PageTransition>} />
+                <Route path="/charte-qualite" element={<PageTransition navType={navType}><CharteQualitePage /></PageTransition>} />
+                <Route path="/post" element={<PageTransition navType={navType}><SimulatorPage /></PageTransition>} />
+                <Route path="/mes-publications" element={<PageTransition navType={navType}><MyPosts /></PageTransition>} />
+                <Route path="/profile" element={<ProtectedRoute><PageTransition navType={navType}><Profile /></PageTransition></ProtectedRoute>} />
+                <Route path="/search" element={<PageTransition navType={navType}><SearchPage /></PageTransition>} />
+                <Route path="/login" element={<PageTransition navType={navType}><Login /></PageTransition>} />
+                <Route path="/a-propos" element={<PageTransition navType={navType}><APropos /></PageTransition>} />
+                <Route path="/aide-et-faq" element={<PageTransition navType={navType}><AideEtFaq /></PageTransition>} />
+                <Route path="/contact" element={<PageTransition navType={navType}><Contact /></PageTransition>} />
+                <Route path="/blog" element={<PageTransition navType={navType}><Blog /></PageTransition>} />
+                <Route path="/mentions-legales" element={<PageTransition navType={navType}><MentionsLegales /></PageTransition>} />
+                <Route path="/cgv" element={<PageTransition navType={navType}><CGV /></PageTransition>} />
+                <Route path="/cgu" element={<PageTransition navType={navType}><CGU /></PageTransition>} />
+                <Route path="/politique-confidentialite" element={<PageTransition navType={navType}><PolitiqueConfidentialite /></PageTransition>} />
+                <Route path="/apk" element={<PageTransition navType={navType}><Apk /></PageTransition>} />
+                <Route path="/dealboxes" element={<PageTransition navType={navType}><DealboxCatalog /></PageTransition>} />
+                <Route path="/communities" element={<PageTransition navType={navType}><Index /></PageTransition>} />
+                <Route path="/messages" element={<PageTransition navType={navType}><Index /></PageTransition>} />
+                <Route path="/settings" element={<PageTransition navType={navType}><SettingsPage /></PageTransition>} />
+              </Route>
+
+              {/* Route Admin Exclusive */}
+              <Route path="/admin-tekh-control" element={<AdminPage />} />
+
+              {/* Routes d'administration */}
+              <Route path="/admin" element={
+                <ProtectedRoute>
+                  <AdminLayout />
+                </ProtectedRoute>
+              }>
+                <Route index element={<Dashboard />} />
+                <Route path="users" element={<Users />} />
+                <Route path="annonces" element={<Annonces />} />
+                <Route path="deals" element={<Deals />} />
+                <Route path="dealbox" element={<DealBox />} />
+                <Route path="categories" element={<Categories />} />
+                <Route path="stats" element={<Stats />} />
+                <Route path="settings" element={<Settings />} />
+              </Route>
+
+              {/* Route 404 - Doit être la dernière */}
+              <Route path="*" element={<PageTransition navType={navType}><NotFound /></PageTransition>} />
+            </Routes>
+          </Suspense>
+        </DealsProvider>
+      </AuthProvider>
+    </>
+  );
+}
 
 export default App;
