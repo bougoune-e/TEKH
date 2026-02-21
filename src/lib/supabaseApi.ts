@@ -321,7 +321,7 @@ export async function matchDeals(params: any) {
 
 export function subscribeDeals(cb: (payload: any) => void) {
   if (!realClient) return { unsubscribe() { } };
-  const channel = realClient.channel("realtime:deals").on("postgres_changes", { event: "INSERT", schema: "public", table: "deals" } as any, (payload) => cb(payload)).subscribe();
+  const channel = realClient.channel("realtime:deals").on("postgres_changes", { event: "INSERT", schema: "public", table: "annonces" } as any, (payload) => cb(payload)).subscribe();
   return { unsubscribe: () => realClient.removeChannel(channel) };
 }
 
@@ -380,7 +380,7 @@ export async function countDealsByOwner(ownerId: string) {
 
 export async function fetchDeals() {
   if (!realClient) return [];
-  const { data, error } = await realClient.from("deals").select("*").order("created_at", { ascending: false });
+  const { data, error } = await realClient.from("annonces").select("*").order("created_at", { ascending: false });
   if (error) throw error;
   return (data || []).map((row: any) => ({ ...row, createdAt: row.created_at, ownerId: row.owner_id, sellerName: row.seller_name, contactPhone: row.contact_phone, contactWhatsapp: row.contact_whatsapp, contactEmail: row.contact_email }));
 }
@@ -388,14 +388,14 @@ export async function fetchDeals() {
 export async function insertDeal(deal: any) {
   if (!realClient) return deal;
   const row = { ...deal, created_at: deal.createdAt ?? new Date().toISOString(), owner_id: deal.ownerId, seller_name: deal.sellerName, contact_phone: deal.contactPhone, contact_whatsapp: deal.contactWhatsapp, contact_email: deal.contactEmail };
-  const { data, error } = await realClient.from("deals").insert(row).select().single();
+  const { data, error } = await realClient.from("annonces").insert(row).select().single();
   if (error) throw error;
   return { ...data, createdAt: data.created_at, ownerId: data.owner_id };
 }
 
 export async function deleteDealById(id: string) {
   if (!realClient) return { success: true };
-  const { error } = await realClient.from("deals").delete().eq("id", id);
+  const { error } = await realClient.from("annonces").delete().eq("id", id);
   if (error) throw error;
   return { success: true };
 }
