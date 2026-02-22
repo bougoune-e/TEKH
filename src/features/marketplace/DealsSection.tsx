@@ -32,8 +32,8 @@ const DealsSection = () => {
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
             Nos meilleurs <span className="text-primary">deals</span>
           </h2>
-          <p className="text-lg text-foreground max-w-3xl mx-auto">
-            Les meilleurs deals d’échange équitable entre smartphones: marque/modèle/état pris en compte, compensation ajustée si besoin, et transaction sécurisée.
+          <p className="text-sm font-bold text-muted-foreground max-w-2xl mx-auto uppercase tracking-wider">
+            Échange équitable certifié : marque, modèle et état pris en compte.
           </p>
           <div className="flex items-center justify-center gap-2 mt-4">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium bg-primary/10 text-primary border border-primary/20">
