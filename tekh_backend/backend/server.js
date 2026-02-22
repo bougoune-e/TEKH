@@ -175,8 +175,11 @@ app.patch("/produits/:id/stock", async (req, res) => {
   return res.json({ success: true });
 });
 
-const server = app.listen(PORT, () => {
-  console.log("API démarrée sur le port", PORT);
+const server = app.listen(PORT, "0.0.0.0", () => {
+  console.log(`[API] Serveur démarré sur :`);
+  console.log(` - Port public (Railway) : ${PORT}`);
+  console.log(` - Interface : 0.0.0.0`);
+  console.log(` - Date : ${new Date().toLocaleString()}`);
 });
 
 server.on("error", (err) => {
