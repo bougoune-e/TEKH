@@ -179,25 +179,42 @@ export default function EstimatorPage() {
           let brandGuess = "";
           let modelGuess = "";
 
+          // Broad Brand Detection
           if (ua.includes("iPhone")) {
             brandGuess = "Apple";
-            // Heuristic for iPhone models (very basic)
             if (ua.includes("iPhone 15")) modelGuess = "iPhone 15";
             else if (ua.includes("iPhone 14")) modelGuess = "iPhone 14";
             else if (ua.includes("iPhone 13")) modelGuess = "iPhone 13";
             else if (ua.includes("iPhone 12")) modelGuess = "iPhone 12";
-            else modelGuess = "iPhone 13"; // Default guess
+            else modelGuess = "iPhone 11";
           } else if (ua.includes("Samsung") || ua.includes("SM-")) {
             brandGuess = "Samsung";
             if (ua.includes("SM-G99")) modelGuess = "Galaxy S21";
             else if (ua.includes("SM-G97")) modelGuess = "Galaxy S10";
-            else modelGuess = "Galaxy S21"; // Default guess
+            else if (ua.includes("SM-S9")) modelGuess = "Galaxy S23/S24";
+            else modelGuess = "Galaxy S Series";
+          } else if (ua.includes("Xiaomi") || ua.includes("Redmi") || ua.includes("POCO")) {
+            brandGuess = "Xiaomi";
+            modelGuess = ua.includes("Pro") ? "Redmi Note Pro" : "Redmi Note";
+          } else if (ua.includes("Huawei")) {
+            brandGuess = "Huawei";
+            modelGuess = "P-Series / Mate";
+          } else if (ua.includes("Infinix") || ua.includes("X6")) {
+            brandGuess = "Infinix";
+            modelGuess = "Note / Hot Series";
+          } else if (ua.includes("Tecno")) {
+            brandGuess = "Tecno";
+            modelGuess = "Camon / Spark";
+          } else if (ua.includes("Pixel")) {
+            brandGuess = "Google";
+            modelGuess = "Pixel";
           }
 
           if (brandGuess) {
             setDetectedBrand(brandGuess);
             setDetectedModel(modelGuess);
           } else {
+            // If we can't guess, still show the "detecting" UX but let them pick quickly
             setDetectionStep("manual");
           }
         }
@@ -292,13 +309,11 @@ export default function EstimatorPage() {
         const variant = availableVariants.find(v => v.storage_gb === storage && (!ram || v.ram_gb === ram));
         let info = await getModelInfo(brand, model, storage);
 
-        // Robustness: if variant not found or price is 0, use a fallback
         if ((!info || !info.base_price_fcfa) && variant) {
           if (!info) info = { base_price_fcfa: variant.base_price_fcfa, release_year: 2022, equivalence_class: 'B' };
           else info.base_price_fcfa = variant.base_price_fcfa;
         }
 
-        // Hard fallback for iPhone 13 or similar if still empty
         if (!info?.base_price_fcfa) {
           const fallbackPrice = brand.toLowerCase() === 'apple' ? 450000 : 250000;
           info = { base_price_fcfa: fallbackPrice, release_year: 2021, equivalence_class: 'A' };
@@ -307,7 +322,6 @@ export default function EstimatorPage() {
         setModelInfoData(info);
       } catch (e: any) {
         toast({ title: "Note", description: "Utilisation du prix de référence standard." });
-        // Fallback on error
         setModelInfoData({ base_price_fcfa: 350000, release_year: 2021, equivalence_class: 'B' });
       } finally {
         setLoadingPrice(false);
@@ -315,7 +329,6 @@ export default function EstimatorPage() {
     })();
   }, [brand, model, storage, ram, availableVariants]);
 
-  // Effects for Target Selection
   useEffect(() => {
     if (!targetBrand) {
       setTargetModels([]);
@@ -359,7 +372,6 @@ export default function EstimatorPage() {
           }
           setTargetModelInfo(info);
         } else {
-          // Target fallback
           setTargetModelInfo({ base_price_fcfa: 750000, release_year: 2023, equivalence_class: 'A' });
           setTargetStorage(128);
         }
@@ -380,7 +392,6 @@ export default function EstimatorPage() {
       face_id_hs: biometricsState === "nok",
       camera_hs: cameraState === "nok" || cameraState === "degraded",
       etat_moyen: aestheticState === "visible" || aestheticState === "damaged",
-      // Map explicit states for pricing.ts
       screenState,
       batteryState,
       biometricsState,
@@ -393,10 +404,6 @@ export default function EstimatorPage() {
 
   const formatCFA = (n: number) => new Intl.NumberFormat("fr-FR", { style: "currency", currency: "XOF", maximumFractionDigits: 0 }).format(n);
 
-  // BYPASS FOR VERIFICATION: If images are missing but we are in dev/test, allow proceeding
-  // In production, this would be strict.
-  // RELAXED: Allow if brand, model, storage, ram and basic diagnostics are there. 
-  // At least 1 photo for visual verification.
   const isStep1Complete = brand && model && storage && ram && screenState && batteryState && biometricsState && cameraState && aestheticState &&
     (imageSlots.front || imageSlots.back || imageSlots.left || imageSlots.right);
 
@@ -438,7 +445,6 @@ export default function EstimatorPage() {
     );
   };
 
-  // Summary for confirmed detection
   const renderDetectedSummary = () => (
     <div className="bg-blue-600/5 dark:bg-primary/5 border border-blue-600/20 dark:border-primary/20 rounded-2xl p-4 mb-6 animate-in slide-in-from-top-4 duration-500">
       <div className="flex items-center justify-between">
@@ -500,10 +506,9 @@ export default function EstimatorPage() {
         <Card className="bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/5 shadow-sm rounded-xl overflow-hidden border">
           <CardContent className="p-0">
             {step === "estimation" ? (
-              <div className="p-4 sm:p-8 space-y-5 sm:space-y-8 animate-in fade-in duration-700">
+              <div className="p-0 animate-in fade-in duration-700">
                 {(isPWA || window.innerWidth < 1024) && detectionStep === "detecting" && detectedBrand ? (
-                  <div className="flex flex-col items-center py-6 px-4 space-y-8 animate-in slide-in-from-bottom-8 duration-700">
-                    {/* Visual Banner - Glassmorphism */}
+                  <div className="p-4 sm:p-8 flex flex-col items-center py-6 px-4 space-y-8 animate-in slide-in-from-bottom-8 duration-700">
                     <div className="w-full bg-gradient-to-br from-[#00FF41]/20 via-[#00FF41]/5 to-transparent border border-[#00FF41]/20 rounded-[32px] p-8 text-center relative overflow-hidden group shadow-2xl">
                       <div className="absolute top-0 right-0 w-32 h-32 bg-[#00FF41]/10 blur-3xl -translate-y-16 translate-x-16 rounded-full" />
                       <div className="absolute bottom-0 left-0 w-24 h-24 bg-[#00FF41]/5 blur-2xl translate-y-8 -translate-x-8 rounded-full" />
@@ -529,14 +534,11 @@ export default function EstimatorPage() {
                       </div>
                     </div>
 
-                    {/* Core Actions */}
                     <div className="w-full space-y-3">
                       <Button
                         onClick={async () => {
                           setBrand(detectedBrand);
                           setModel(detectedModel);
-
-                          // FORCE AUTO-SELECT OF FIRST VARIANT
                           try {
                             const variants = await getAvailableVariants(detectedBrand, detectedModel);
                             if (variants && variants.length > 0) {
@@ -545,7 +547,6 @@ export default function EstimatorPage() {
                               setRam(best.ram_gb || null);
                             }
                           } catch (e) { }
-
                           setDetectionStep("confirmed");
                         }}
                         className="w-full h-20 rounded-3xl bg-[#00FF41] text-black font-black text-xl uppercase italic tracking-tight hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-[#00FF41]/20"
@@ -566,69 +567,93 @@ export default function EstimatorPage() {
                     </p>
                   </div>
                 ) : (
-                  <>
-                    {(isPWA && detectionStep === "confirmed") ? renderDetectedSummary() : (
-                      <IdentityStep
-                        brand={brand} setBrand={setBrand} brands={brands} loadingBrands={loadingBrands}
-                        model={model} setModel={setModel} models={models} loadingModels={loadingModels}
-                        storage={storage} setStorage={setStorage} storages={storages} loadingStorages={loadingStorages}
-                        ram={ram} setRam={setRam} rams={rams}
-                      />
-                    )}
-
-                    <DiagnosticStep
-                      screenState={screenState} setScreenState={setScreenState}
-                      batteryState={batteryState} setBatteryState={setBatteryState}
-                      biometricsState={biometricsState} setBiometricsState={setBiometricsState}
-                      cameraState={cameraState} setCameraState={setCameraState}
-                      aestheticState={aestheticState} setAestheticState={setAestheticState}
-                    />
-
-                    <PhotoStep
-                      imageSlots={imageSlots}
-                      fileInputRefs={fileInputRefs}
-                      handleImageUpload={handleImageUpload}
-                      removeImage={removeImage}
-                    />
-
-                    <div className="pt-4 flex flex-col items-center gap-4">
-                      <div className={cn(
-                        "w-full p-4 sm:p-8 rounded-[32px] border-2 transition-all duration-700 relative overflow-hidden text-center",
-                        finalPrice !== null
-                          ? "border-blue-600/20 bg-blue-600/5 dark:border-primary/20 dark:bg-primary/5 shadow-xl"
-                          : "border-slate-100 bg-slate-50 dark:border-white/5 dark:bg-white/[0.02] grayscale opacity-40"
-                      )}>
-                        {!isStep1Complete && (
-                          <div className="absolute inset-0 z-20 flex items-center justify-center bg-white/60 dark:bg-black/40 backdrop-blur-[2px]">
-                            <div className="flex items-center gap-2 bg-white dark:bg-black px-4 py-2 rounded-full border border-zinc-100 dark:border-white/10 shadow-xl">
-                              <AlertCircle className="w-4 h-4 text-[#064e3b] dark:text-primary animate-pulse" />
-                              <span className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white">Diagnostic incomplet</span>
-                            </div>
+                  <div className="transition-all duration-500">
+                    {(!brand || !model || !storage || !ram || detectionStep !== "confirmed") ? (
+                      <div className="p-4 sm:p-8 space-y-8 animate-in fade-in slide-in-from-top-4">
+                        {(isPWA && detectionStep === "confirmed") ? renderDetectedSummary() : (
+                          <IdentityStep
+                            brand={brand} setBrand={setBrand} brands={brands} loadingBrands={loadingBrands}
+                            model={model} setModel={setModel} models={models} loadingModels={loadingModels}
+                            storage={storage} setStorage={setStorage} storages={storages} loadingStorages={loadingStorages}
+                            ram={ram} setRam={setRam} rams={rams}
+                          />
+                        )}
+                        {(brand && model && storage && ram && detectionStep !== "confirmed") && (
+                          <div className="pt-4 border-t border-white/5 flex justify-end">
+                            <Button
+                              onClick={() => {
+                                setDetectionStep("confirmed");
+                                window.scrollTo({ top: 0, behavior: "smooth" });
+                              }}
+                              className="bg-[#00FF41] text-black font-black uppercase rounded-xl h-12 px-8"
+                            >
+                              Confirmer l'appareil
+                            </Button>
                           </div>
                         )}
+                      </div>
+                    ) : (
+                      <div className="p-4 sm:p-8 space-y-12 animate-in fade-in slide-in-from-bottom-4">
+                        {renderDetectedSummary()}
 
-                        <div className="text-[9px] font-black uppercase tracking-[0.4em] text-slate-400 dark:text-zinc-500 mb-2 italic">estimation indicative</div>
-                        <div className="text-3xl sm:text-5xl font-black tracking-tighter text-slate-900 dark:text-white italic">
-                          {finalPrice !== null ? formatCFA(finalPrice) : formatCFA(0)}
-                        </div>
-                        <div className="mt-3 flex items-center justify-center gap-2">
-                          <ShieldCheck className="w-4 h-4 text-[#064e3b] dark:text-primary" />
-                          <span className="text-[9px] font-black text-[#374151] dark:text-zinc-500 uppercase tracking-widest">Indexé MARCHÉ V2.4</span>
+                        <DiagnosticStep
+                          screenState={screenState} setScreenState={setScreenState}
+                          batteryState={batteryState} setBatteryState={setBatteryState}
+                          biometricsState={biometricsState} setBiometricsState={setBiometricsState}
+                          cameraState={cameraState} setCameraState={setCameraState}
+                          aestheticState={aestheticState} setAestheticState={setAestheticState}
+                        />
+
+                        <PhotoStep
+                          imageSlots={imageSlots}
+                          fileInputRefs={fileInputRefs}
+                          handleImageUpload={handleImageUpload}
+                          removeImage={removeImage}
+                        />
+
+                        <div className="pt-4 flex flex-col items-center gap-4">
+                          <div className={cn(
+                            "w-full p-4 sm:p-8 rounded-[32px] border-2 transition-all duration-700 relative overflow-hidden text-center",
+                            finalPrice !== null
+                              ? "border-blue-600/20 bg-blue-600/5 dark:border-primary/20 dark:bg-primary/5 shadow-xl"
+                              : "border-slate-100 bg-slate-50 dark:border-white/5 dark:bg-white/[0.02] grayscale opacity-40"
+                          )}>
+                            {!isStep1Complete && (
+                              <div className="absolute inset-0 z-20 flex items-center justify-center bg-white/60 dark:bg-black/40 backdrop-blur-[2px]">
+                                <div className="flex items-center gap-2 bg-white dark:bg-black px-4 py-2 rounded-full border border-zinc-100 dark:border-white/10 shadow-xl">
+                                  <AlertCircle className="w-4 h-4 text-[#064e3b] dark:text-primary animate-pulse" />
+                                  <span className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white">Diagnostic incomplet</span>
+                                </div>
+                              </div>
+                            )}
+
+                            <div className="text-[9px] font-black uppercase tracking-[0.4em] text-slate-400 dark:text-zinc-500 mb-2 italic">estimation indicative</div>
+                            <div className="text-3xl sm:text-5xl font-black tracking-tighter text-slate-900 dark:text-white italic">
+                              {finalPrice !== null ? formatCFA(finalPrice) : formatCFA(0)}
+                            </div>
+                            <div className="mt-3 flex items-center justify-center gap-2">
+                              <ShieldCheck className="w-4 h-4 text-[#064e3b] dark:text-primary" />
+                              <span className="text-[9px] font-black text-[#374151] dark:text-zinc-500 uppercase tracking-widest">Indexé MARCHÉ V2.4</span>
+                            </div>
+                          </div>
+
+                          <button
+                            disabled={!isStep1Complete}
+                            onClick={() => {
+                              setStep("satisfaction");
+                              window.scrollTo({ top: 0, behavior: "smooth" });
+                            }}
+                            className={`flex items-center justify-center gap-3 ${isPWA ? 'bg-[#00FF41] text-black' : 'bg-black text-white'} hover:opacity-90 transition-all duration-300 p-2.5 px-10 rounded-full border border-white/5 hover:scale-105 active:scale-95 group w-full disabled:opacity-50 disabled:grayscale shadow-lg`}
+                          >
+                            <div className={`w-7 h-7 ${isPWA ? 'bg-black/10' : 'bg-primary'} rounded-full flex items-center justify-center shadow-lg`}>
+                              <Zap className={`${isPWA ? 'text-black' : 'text-black'} h-3.5 w-3.5 font-bold`} />
+                            </div>
+                            <span className="text-sm font-bold tracking-tight uppercase font-sans">Continuer l'Upgrade</span>
+                          </button>
                         </div>
                       </div>
-
-                      <button
-                        disabled={!isStep1Complete}
-                        onClick={() => setStep("satisfaction")}
-                        className={`flex items-center justify-center gap-3 ${isPWA ? 'bg-[#00FF41] text-black' : 'bg-black text-white'} hover:opacity-90 transition-all duration-300 p-2.5 px-10 rounded-full border border-white/5 hover:scale-105 active:scale-95 group w-full disabled:opacity-50 disabled:grayscale shadow-lg`}
-                      >
-                        <div className={`w-7 h-7 ${isPWA ? 'bg-black/10' : 'bg-primary'} rounded-full flex items-center justify-center shadow-lg`}>
-                          <Zap className={`${isPWA ? 'text-black' : 'text-black'} h-3.5 w-3.5 font-bold`} />
-                        </div>
-                        <span className="text-sm font-bold tracking-tight uppercase font-sans">Continuer l'Upgrade</span>
-                      </button>
-                    </div>
-                  </>
+                    )}
+                  </div>
                 )}
               </div>
             ) : step === "satisfaction" ? (
