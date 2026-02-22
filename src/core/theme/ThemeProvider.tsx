@@ -17,9 +17,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     try {
       const saved = localStorage.getItem(STORAGE_KEY) as Theme | null;
       if (saved === "light" || saved === "dark") return saved;
-    } catch {}
-    const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-    return prefersDark ? "dark" : "light";
+    } catch { }
+    // Force dark by default for the premium look
+    return "dark";
   });
 
   const apply = useCallback((t: Theme) => {
@@ -31,7 +31,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, theme);
-    } catch {}
+    } catch { }
     apply(theme);
   }, [theme, apply]);
 
