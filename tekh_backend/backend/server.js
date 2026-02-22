@@ -6,6 +6,8 @@ import { supabase, TABLE_PRODUCTS } from "./supabase.js";
 
 const app = express();
 const PORT = process.env.PORT || 8083;
+// Railway configuration forcing: although process.env.PORT is usually set by Railway,
+// we ensure 8083 is the default fallback as seen in the user's dashboard.
 
 // Tableau qui contiendra les données du CSV (JSON)
 let produits = [];
@@ -113,7 +115,19 @@ importCsvOnce();
 
 // Route test
 app.get("/", (req, res) => {
-  res.send("API OK");
+  res.send(`API OK - Version 1.1 - Port: ${PORT}`);
+});
+
+// Health check
+app.get("/health", (req, res) => {
+  res.json({
+    status: "ok",
+    port: PORT,
+    env_port: process.env.PORT || "not set",
+    csv: csvLoaded,
+    supabase: !!supabase,
+    products_count: produits.length
+  });
 });
 
 // Route produits
