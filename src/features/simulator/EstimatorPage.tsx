@@ -41,7 +41,8 @@ import { TargetSelectionStep } from "./components/TargetSelectionStep";
 import { ComparisonStep } from "./components/ComparisonStep";
 import { PhotoStep } from "./components/PhotoStep";
 import { usePWA } from "@/shared/hooks/usePWA";
-import { Search, RotateCcw } from "lucide-react";
+import { Search, RotateCcw, Loader2 } from "lucide-react";
+import { detectDevice, predictVariants } from "@/core/api/deviceFinder";
 
 export default function EstimatorPage() {
   const { t } = useTranslation();
@@ -157,6 +158,9 @@ export default function EstimatorPage() {
     setImageFiles(prev => ({ ...prev, [slot]: null }));
   };
 
+  // Phone Finder state
+  const [isScanning, setIsScanning] = useState(false);
+
   useEffect(() => {
     if (isPWA && detectionStep === "manual") {
       setDetectionStep("detecting");
@@ -173,50 +177,34 @@ export default function EstimatorPage() {
         // Auto-scroll to top on step change
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
-        // Best effort auto-detection
+        // Advanced Phone Finder Logic
         if ((isPWA || window.innerWidth < 1024) && detectionStep === "detecting") {
-          const ua = navigator.userAgent;
-          let brandGuess = "";
-          let modelGuess = "";
+          setIsScanning(true);
 
-          // Broad Brand Detection
-          if (ua.includes("iPhone")) {
-            brandGuess = "Apple";
-            if (ua.includes("iPhone 15")) modelGuess = "iPhone 15";
-            else if (ua.includes("iPhone 14")) modelGuess = "iPhone 14";
-            else if (ua.includes("iPhone 13")) modelGuess = "iPhone 13";
-            else if (ua.includes("iPhone 12")) modelGuess = "iPhone 12";
-            else modelGuess = "iPhone 11";
-          } else if (ua.includes("Samsung") || ua.includes("SM-")) {
-            brandGuess = "Samsung";
-            if (ua.includes("SM-G99")) modelGuess = "Galaxy S21";
-            else if (ua.includes("SM-G97")) modelGuess = "Galaxy S10";
-            else if (ua.includes("SM-S9")) modelGuess = "Galaxy S23/S24";
-            else modelGuess = "Galaxy S Series";
-          } else if (ua.includes("Xiaomi") || ua.includes("Redmi") || ua.includes("POCO")) {
-            brandGuess = "Xiaomi";
-            modelGuess = ua.includes("Pro") ? "Redmi Note Pro" : "Redmi Note";
-          } else if (ua.includes("Huawei")) {
-            brandGuess = "Huawei";
-            modelGuess = "P-Series / Mate";
-          } else if (ua.includes("Infinix") || ua.includes("X6")) {
-            brandGuess = "Infinix";
-            modelGuess = "Note / Hot Series";
-          } else if (ua.includes("Tecno")) {
-            brandGuess = "Tecno";
-            modelGuess = "Camon / Spark";
-          } else if (ua.includes("Pixel")) {
-            brandGuess = "Google";
-            modelGuess = "Pixel";
-          }
+          // Native-feel: artificial delay for "scanning" effect
+          setTimeout(async () => {
+            const detection = detectDevice();
 
-          if (brandGuess) {
-            setDetectedBrand(brandGuess);
-            setDetectedModel(modelGuess);
-          } else {
-            // If we can't guess, still show the "detecting" UX but let them pick quickly
-            setDetectionStep("manual");
-          }
+            if (detection.confidence > 0.6) {
+              setDetectedBrand(detection.brand);
+              setDetectedModel(detection.model);
+
+              // PREDICT VARIANTS (RAM/Storage)
+              const prediction = predictVariants(detection.brand, detection.model);
+
+              // Verify prediction against DB if possible
+              const variants = await getAvailableVariants(detection.brand, detection.model);
+              if (variants && variants.length > 0) {
+                // Find closest match or first
+                const match = variants.find(v => v.storage_gb === prediction.storage) || variants[0];
+                // We don't set the actual brand/model/storage state yet,
+                // we keep them in "detected" state until confirmed.
+              }
+            } else {
+              setDetectionStep("manual");
+            }
+            setIsScanning(false);
+          }, 1500);
         }
       } catch (e: any) {
         toast({ title: "Erreur Supabase", description: e?.message || "Impossible de récupérer les marques.", variant: "destructive" as any });
@@ -507,68 +495,86 @@ export default function EstimatorPage() {
           <CardContent className="p-0">
             {step === "estimation" ? (
               <div className="p-0 animate-in fade-in duration-700">
-                {(isPWA || window.innerWidth < 1024) && detectionStep === "detecting" && detectedBrand ? (
-                  <div className="p-4 sm:p-8 flex flex-col items-center py-6 px-4 space-y-8 animate-in slide-in-from-bottom-8 duration-700">
-                    <div className="w-full bg-gradient-to-br from-[#00FF41]/20 via-[#00FF41]/5 to-transparent border border-[#00FF41]/20 rounded-[32px] p-8 text-center relative overflow-hidden group shadow-2xl">
-                      <div className="absolute top-0 right-0 w-32 h-32 bg-[#00FF41]/10 blur-3xl -translate-y-16 translate-x-16 rounded-full" />
-                      <div className="absolute bottom-0 left-0 w-24 h-24 bg-[#00FF41]/5 blur-2xl translate-y-8 -translate-x-8 rounded-full" />
-
-                      <div className="relative z-10 space-y-4">
-                        <div className="w-16 h-16 bg-[#00FF41]/20 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-[#00FF41]/30">
-                          <Zap className="w-8 h-8 text-[#00FF41]" />
-                        </div>
-                        <h2 className="text-3xl font-black tracking-tighter text-white uppercase italic leading-none">
-                          MODÈLE <span className="text-[#00FF41] italic">DÉTECTÉ</span>
-                        </h2>
-                        <p className="text-zinc-400 font-medium text-sm">
-                          Nous pensons que vous utilisez un :
-                        </p>
-                        <div className="py-2">
-                          <span className="text-4xl font-black text-white tracking-tight block">
-                            {detectedBrand}
-                          </span>
-                          <span className="text-2xl font-bold text-[#00FF41] block mt-1 uppercase tracking-tight">
-                            {detectedModel}
-                          </span>
+                {/* 
+                   AUTO-DETECTION FLOW (Only on Mobile/PWA and when in 'detecting' state)
+                */}
+                {(isPWA || (typeof window !== 'undefined' && window.innerWidth < 1024)) && detectionStep === "detecting" ? (
+                  isScanning ? (
+                    <div className="p-12 flex flex-col items-center justify-center min-h-[450px] space-y-8 animate-in fade-in zoom-in duration-500">
+                      <div className="relative">
+                        <div className="w-24 h-24 rounded-full border-4 border-[#00FF41]/10 border-t-[#00FF41] animate-spin" />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <Smartphone className="w-8 h-8 text-[#00FF41] animate-pulse" />
                         </div>
                       </div>
+                      <div className="text-center space-y-3">
+                        <h3 className="text-2xl font-black uppercase italic tracking-tighter text-white">Analyse en cours...</h3>
+                        <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.3em]">Lecture des spécifications hardware</p>
+                      </div>
                     </div>
+                  ) : detectedBrand ? (
+                    <div className="p-4 sm:p-8 flex flex-col items-center py-6 px-4 space-y-8 animate-in slide-in-from-bottom-8 duration-700">
+                      <div className="w-full bg-gradient-to-br from-[#00FF41]/20 via-[#00FF41]/5 to-transparent border border-[#00FF41]/20 rounded-[40px] p-10 text-center relative overflow-hidden group shadow-2xl">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-[#00FF41]/10 blur-3xl -translate-y-16 translate-x-16 rounded-full" />
+                        <div className="relative z-10 space-y-6">
+                          <div className="w-20 h-20 bg-[#00FF41] rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl shadow-[#00FF41]/20 rotate-3 group-hover:rotate-0 transition-transform">
+                            <Zap className="w-10 h-10 text-black" />
+                          </div>
+                          <h2 className="text-3xl font-black tracking-tighter text-white uppercase italic leading-none">
+                            MODÈLE <span className="text-[#00FF41] italic">DÉTECTÉ</span>
+                          </h2>
+                          <div className="space-y-1">
+                            <span className="text-4xl font-black text-white tracking-tight block leading-tight">{detectedBrand}</span>
+                            <span className="text-2xl font-bold text-[#00FF41] block uppercase tracking-tight italic">{detectedModel}</span>
+                          </div>
+                        </div>
+                      </div>
 
-                    <div className="w-full space-y-3">
-                      <Button
-                        onClick={async () => {
-                          setBrand(detectedBrand);
-                          setModel(detectedModel);
-                          try {
-                            const variants = await getAvailableVariants(detectedBrand, detectedModel);
-                            if (variants && variants.length > 0) {
-                              const best = variants[0];
-                              setStorage(best.storage_gb);
-                              setRam(best.ram_gb || null);
-                            }
-                          } catch (e) { }
-                          setDetectionStep("confirmed");
-                        }}
-                        className="w-full h-20 rounded-3xl bg-[#00FF41] text-black font-black text-xl uppercase italic tracking-tight hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-[#00FF41]/20"
-                      >
-                        C'est exact !
-                      </Button>
-                      <Button
-                        variant="outline"
-                        onClick={() => setDetectionStep("manual")}
-                        className="w-full h-16 rounded-3xl border-white/10 text-white font-bold uppercase tracking-widest text-xs hover:bg-white/5 active:scale-95 transition-all"
-                      >
-                        Non, modifier
-                      </Button>
+                      <div className="w-full space-y-4">
+                        <Button
+                          onClick={async () => {
+                            setBrand(detectedBrand);
+                            setModel(detectedModel);
+                            try {
+                              const v = await getAvailableVariants(detectedBrand, detectedModel);
+                              if (v && v.length > 0) {
+                                const pred = predictVariants(detectedBrand, detectedModel);
+                                const match = v.find((x: any) => x.storage_gb === pred.storage) || v[0];
+                                setStorage(match.storage_gb);
+                                setRam(match.ram_gb || null);
+                              }
+                            } catch (e) { }
+                            setDetectionStep("confirmed");
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                          }}
+                          className="w-full h-20 rounded-[32px] bg-[#00FF41] text-black font-black text-xl uppercase italic tracking-tight hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-[#00FF41]/20"
+                        >
+                          C'est exact !
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          onClick={() => setDetectionStep("manual")}
+                          className="w-full h-14 rounded-2xl text-zinc-500 font-bold uppercase tracking-widest text-[10px] hover:text-[#00FF41] transition-colors"
+                        >
+                          Non, choisir manuellement
+                        </Button>
+                      </div>
                     </div>
-
-                    <p className="text-[10px] text-zinc-600 font-bold uppercase tracking-[0.3em] text-center px-8">
-                      CETTE DÉTECTION NOUS PERMET DE VOUS OFFRIR LA MEILLEURE OFFRE DE SWAP INSTANTANÉE.
-                    </p>
-                  </div>
+                  ) : (
+                    <div className="p-20 text-center space-y-6">
+                      <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mx-auto">
+                        <AlertCircle className="w-8 h-8 text-zinc-600" />
+                      </div>
+                      <p className="text-zinc-500 font-bold uppercase tracking-widest text-[10px]">Détection impossible</p>
+                      <Button onClick={() => setDetectionStep("manual")} variant="outline" className="rounded-full border-white/10 uppercase font-black px-8">Continuer manuellement</Button>
+                    </div>
+                  )
                 ) : (
+                  /* 
+                     MANUAL OR CONFIRMED FLOW (Shows Identity Step or Diagnostic Step)
+                  */
                   <div className="transition-all duration-500">
-                    {(!brand || !model || !storage || !ram || detectionStep !== "confirmed") ? (
+                    {(!brand || !model || !storage || !ram || (detectionStep as string) !== "confirmed") ? (
                       <div className="p-4 sm:p-8 space-y-8 animate-in fade-in slide-in-from-top-4">
                         {(isPWA && detectionStep === "confirmed") ? renderDetectedSummary() : (
                           <IdentityStep
@@ -578,7 +584,7 @@ export default function EstimatorPage() {
                             ram={ram} setRam={setRam} rams={rams}
                           />
                         )}
-                        {(brand && model && storage && ram && detectionStep !== "confirmed") && (
+                        {(brand && model && storage && ram && (detectionStep as string) !== "confirmed") && (
                           <div className="pt-4 border-t border-white/5 flex justify-end">
                             <Button
                               onClick={() => {
@@ -595,7 +601,6 @@ export default function EstimatorPage() {
                     ) : (
                       <div className="p-4 sm:p-8 space-y-12 animate-in fade-in slide-in-from-bottom-4">
                         {renderDetectedSummary()}
-
                         <DiagnosticStep
                           screenState={screenState} setScreenState={setScreenState}
                           batteryState={batteryState} setBatteryState={setBatteryState}
@@ -603,53 +608,47 @@ export default function EstimatorPage() {
                           cameraState={cameraState} setCameraState={setCameraState}
                           aestheticState={aestheticState} setAestheticState={setAestheticState}
                         />
-
                         <PhotoStep
                           imageSlots={imageSlots}
                           fileInputRefs={fileInputRefs}
                           handleImageUpload={handleImageUpload}
                           removeImage={removeImage}
                         />
-
-                        <div className="pt-4 flex flex-col items-center gap-4">
+                        <div className="pt-4 flex flex-col items-center gap-6">
                           <div className={cn(
-                            "w-full p-4 sm:p-8 rounded-[32px] border-2 transition-all duration-700 relative overflow-hidden text-center",
+                            "w-full p-8 rounded-[40px] border-2 transition-all duration-700 relative overflow-hidden text-center",
                             finalPrice !== null
-                              ? "border-blue-600/20 bg-blue-600/5 dark:border-primary/20 dark:bg-primary/5 shadow-xl"
-                              : "border-slate-100 bg-slate-50 dark:border-white/5 dark:bg-white/[0.02] grayscale opacity-40"
+                              ? "border-[#00FF41]/20 bg-[#00FF41]/5 shadow-2xl shadow-[#00FF41]/5"
+                              : "border-white/5 bg-white/[0.02] grayscale opacity-40"
                           )}>
                             {!isStep1Complete && (
-                              <div className="absolute inset-0 z-20 flex items-center justify-center bg-white/60 dark:bg-black/40 backdrop-blur-[2px]">
-                                <div className="flex items-center gap-2 bg-white dark:bg-black px-4 py-2 rounded-full border border-zinc-100 dark:border-white/10 shadow-xl">
-                                  <AlertCircle className="w-4 h-4 text-[#064e3b] dark:text-primary animate-pulse" />
-                                  <span className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-900 dark:text-white">Diagnostic incomplet</span>
+                              <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/40 backdrop-blur-[2px]">
+                                <div className="flex items-center gap-2 bg-black px-4 py-2 rounded-full border border-white/10 shadow-2xl">
+                                  <AlertCircle className="w-3 h-3 text-[#00FF41] animate-pulse" />
+                                  <span className="text-[8px] font-black uppercase tracking-[0.2em] text-white">Diagnostic incomplet</span>
                                 </div>
                               </div>
                             )}
-
-                            <div className="text-[9px] font-black uppercase tracking-[0.4em] text-slate-400 dark:text-zinc-500 mb-2 italic">estimation indicative</div>
-                            <div className="text-3xl sm:text-5xl font-black tracking-tighter text-slate-900 dark:text-white italic">
+                            <div className="text-[9px] font-black uppercase tracking-[0.4em] text-zinc-500 mb-3 italic">Estimation Indicative</div>
+                            <div className="text-4xl sm:text-6xl font-black tracking-tighter text-white italic">
                               {finalPrice !== null ? formatCFA(finalPrice) : formatCFA(0)}
                             </div>
-                            <div className="mt-3 flex items-center justify-center gap-2">
-                              <ShieldCheck className="w-4 h-4 text-[#064e3b] dark:text-primary" />
-                              <span className="text-[9px] font-black text-[#374151] dark:text-zinc-500 uppercase tracking-widest">Indexé MARCHÉ V2.4</span>
+                            <div className="mt-4 flex items-center justify-center gap-2 opacity-50">
+                              <ShieldCheck className="w-3 h-3 text-[#00FF41]" />
+                              <span className="text-[8px] font-black text-zinc-500 uppercase tracking-widest">Garanti par Charte TEKH+</span>
                             </div>
                           </div>
 
-                          <button
+                          <Button
                             disabled={!isStep1Complete}
                             onClick={() => {
                               setStep("satisfaction");
                               window.scrollTo({ top: 0, behavior: "smooth" });
                             }}
-                            className={`flex items-center justify-center gap-3 ${isPWA ? 'bg-[#00FF41] text-black' : 'bg-black text-white'} hover:opacity-90 transition-all duration-300 p-2.5 px-10 rounded-full border border-white/5 hover:scale-105 active:scale-95 group w-full disabled:opacity-50 disabled:grayscale shadow-lg`}
+                            className="w-full h-20 rounded-[32px] bg-[#00FF41] text-black font-black text-xl uppercase italic tracking-tight hover:scale-[1.02] active:scale-95 disabled:opacity-30 disabled:grayscale transition-all shadow-xl shadow-[#00FF41]/20"
                           >
-                            <div className={`w-7 h-7 ${isPWA ? 'bg-black/10' : 'bg-primary'} rounded-full flex items-center justify-center shadow-lg`}>
-                              <Zap className={`${isPWA ? 'text-black' : 'text-black'} h-3.5 w-3.5 font-bold`} />
-                            </div>
-                            <span className="text-sm font-bold tracking-tight uppercase font-sans">Continuer l'Upgrade</span>
-                          </button>
+                            Continuer l'Upgrade
+                          </Button>
                         </div>
                       </div>
                     )}
