@@ -14,13 +14,16 @@
     html,
     body {
       @apply bg-background text-foreground;
-      font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      font-family: 'Inter', sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
       width: 100%;
       position: relative;
       scroll-behavior: smooth;
+      /* 8pt grid baseline */
+      font-size: 16px;
+      line-height: 1.5;
     }
   }
 
@@ -43,6 +46,27 @@
 
     .card-hover:hover {
       transform: translateY(-4px) scale(1.01);
+    }
+
+    /* PWA & Native SafeArea Utils */
+    .pt-safe {
+      padding-top: env(safe-area-inset-top, 0px);
+    }
+
+    .pb-safe {
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    .mt-safe {
+      margin-top: env(safe-area-inset-top, 0px);
+    }
+
+    .mb-safe {
+      margin-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    .h-safe-header {
+      height: calc(70px + env(safe-area-inset-top, 0px));
     }
   }
 
@@ -100,25 +124,35 @@
     border-color: rgba(255, 255, 255, 0.1) !important;
   }
 
+  /* Titres Premium */
+  h1,
+  h2,
+  h3 {
+    @apply font-black tracking-tighter;
+    line-height: 1.1;
+  }
+
+  h1 {
+    font-size: 2.25rem;
+  }
+
+  h2 {
+    font-size: 1.875rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+
   /* Boutons SaaS Native */
   [data-theme="dark"] .btn,
   .dark .btn {
     background-color: #00FF41 !important;
-    /* Pure TEKH Green */
     color: #000000 !important;
-    font-weight: 800;
+    font-weight: 600;
+    letter-spacing: -0.01em;
     border: none !important;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  /* Titres */
-  [data-theme="dark"] h1,
-  [data-theme="dark"] h2,
-  [data-theme="dark"] h3,
-  .dark h1,
-  .dark h2,
-  .dark h3 {
-    color: #ffffff !important;
   }
 
   /* Cartes de la section deals */
@@ -139,8 +173,8 @@
   [data-theme="dark"] .text-2xl,
   .dark .text-2xl {
     color: #00FF41 !important;
-    /* Pure TEKH Green */
-    font-weight: 900 !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.05em;
   }
 
   /* Dark mode: dim images slightly to avoid glare */

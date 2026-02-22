@@ -88,116 +88,121 @@ export default function SettingsPage() {
     ───────────────────────────────────────────── */
     if (isPWA) {
         return (
-            <div className="min-h-screen bg-background dark:bg-black pb-32 pt-safe transition-colors">
-                <div className="max-w-xl mx-auto px-4 pt-8 space-y-6">
+            <div className="min-h-screen bg-black pb-32 pt-safe transition-colors">
+                <div className="max-w-xl mx-auto space-y-8">
 
-                    {/* Header */}
-                    <div className="px-1">
-                        <h1 className="text-3xl font-black tracking-tighter text-foreground">{t('nav.settings')}</h1>
-                        <p className="text-sm text-muted-foreground font-medium">{t('settings.subtitle', 'Compte & préférences')}</p>
+                    {/* Header - Pure & Centered */}
+                    <div className="pt-8 pb-4 px-5 text-center">
+                        <h1 className="text-2xl font-black tracking-tighter text-white uppercase italic">
+                            Mon <span className="text-primary">Compte</span>
+                        </h1>
                     </div>
 
-                    {/* Profile card — compact */}
-                    <section className="bg-card border border-border/60 rounded-[2rem] p-4 flex items-center gap-4 shadow-sm">
-                        <div className="relative">
-                            <UserAvatar user={user} size="xl" className="h-16 w-16 ring-2 ring-background shadow" />
-                            <label className="absolute bottom-0 right-0 bg-primary text-primary-foreground p-1.5 rounded-full shadow cursor-pointer active:scale-90 transition-all">
-                                <Camera className="h-3.5 w-3.5" />
-                                <input type="file" className="hidden" accept="image/*" onChange={handleProfileUpload} disabled={uploading} />
-                            </label>
-                        </div>
-                        <div className="flex-1 min-w-0">
-                            <p className="font-black text-foreground truncate tracking-tight">
-                                {(user as any)?.user_metadata?.full_name || "Utilisateur TEKH+"}
-                            </p>
-                            <p className="text-xs text-muted-foreground truncate font-medium">{(user as any)?.email}</p>
+                    {/* Profile Section - List Style */}
+                    <section className="space-y-1">
+                        <div className="flex items-center gap-4 px-5 py-6 bg-zinc-900/10 border-y border-white/5 active:bg-white/5 transition-colors">
+                            <div className="relative shrink-0">
+                                <UserAvatar user={user} size="xl" className="h-[72px] w-[72px] rounded-full border border-white/10" />
+                                <label className="absolute -bottom-1 -right-1 bg-primary text-black p-1.5 rounded-full shadow-lg cursor-pointer active:scale-90 transition-all">
+                                    <Camera className="h-4 w-4" />
+                                    <input type="file" className="hidden" accept="image/*" onChange={handleProfileUpload} disabled={uploading} />
+                                </label>
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <p className="text-xl font-black text-white truncate tracking-tight">
+                                    {(user as any)?.user_metadata?.full_name || "Utilisateur TEKH+"}
+                                </p>
+                                <p className="text-sm text-zinc-500 truncate font-medium">{(user as any)?.email}</p>
+                            </div>
                         </div>
                     </section>
 
-                    {/* Naviguer — grille 2×2 */}
+                    {/* Dynamic Sections - Grouped Lists */}
                     {sections.map((section) => (
-                        <div key={section.title} className="space-y-3">
-                            <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-400 px-1">{section.title}</h3>
-                            <div className="grid grid-cols-2 gap-3">
+                        <div key={section.title} className="space-y-1">
+                            <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-zinc-500 px-5 mb-2">{section.title}</h3>
+                            <div className="bg-zinc-900/10 border-y border-white/5 divide-y divide-white/5">
                                 {section.items.map((item) => (
                                     <button
                                         key={item.label}
-                                        className="flex flex-col items-center justify-center gap-2.5 p-4 bg-card border border-border/60 rounded-[2rem] shadow-sm active:scale-95 transition-all min-h-[100px]"
+                                        className="w-full flex items-center justify-between h-[58px] px-5 active:bg-white/5 transition-colors group"
                                     >
-                                        <div className={`h-11 w-11 rounded-2xl ${item.color} flex items-center justify-center shadow`}>
-                                            <item.icon className="h-5 w-5" strokeWidth={2.5} />
+                                        <div className="flex items-center gap-4 text-left">
+                                            <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-zinc-900 border border-white/5">
+                                                <item.icon className="h-4 w-4 text-white" strokeWidth={2} />
+                                            </div>
+                                            <div>
+                                                <p className="font-semibold text-white text-[15px] tracking-tight">{item.label}</p>
+                                                <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">{item.desc}</p>
+                                            </div>
                                         </div>
-                                        <div className="text-center">
-                                            <p className="font-black text-foreground text-sm leading-tight tracking-tight">{item.label}</p>
-                                            <p className="text-[10px] text-muted-foreground leading-tight mt-0.5 font-bold uppercase tracking-wider">{item.desc}</p>
-                                        </div>
+                                        <ChevronRight className="h-4 w-4 text-zinc-600 group-hover:text-white transition-colors" />
                                     </button>
                                 ))}
                             </div>
                         </div>
                     ))}
 
-                    {/* Système — grille 2×2 */}
-                    <div className="space-y-3">
-                        <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-400 px-1">{t('settings.system', 'Système')}</h3>
-                        <div className="grid grid-cols-2 gap-3">
-
+                    {/* System Section - List Style */}
+                    <div className="space-y-1">
+                        <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-zinc-500 px-5 mb-2">{t('settings.system', 'Système')}</h3>
+                        <div className="bg-zinc-900/10 border-y border-white/5 divide-y divide-white/5">
                             {/* Apparence */}
-                            <div className="flex flex-col items-center justify-center gap-2.5 p-4 bg-card border border-border/60 rounded-[2rem] shadow-sm min-h-[100px]">
-                                <div className="h-11 w-11 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center shadow">
-                                    <Sun className="h-5 w-5" strokeWidth={2.5} />
+                            <div className="flex items-center justify-between h-[58px] px-5">
+                                <div className="flex items-center gap-4">
+                                    <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-zinc-900 border border-white/5">
+                                        <Sun className="h-4 w-4 text-white" strokeWidth={2} />
+                                    </div>
+                                    <p className="font-semibold text-white text-[15px] tracking-tight">{t('settings.theme', 'Thème')}</p>
                                 </div>
-                                <div className="text-center w-full">
-                                    <p className="font-black text-foreground text-sm tracking-tight">{t('settings.theme', 'Thème')}</p>
-                                    <select
-                                        value={theme}
-                                        onChange={(e) => setTheme(e.target.value as any)}
-                                        className="mt-1 bg-transparent font-black text-muted-foreground text-[10px] uppercase tracking-wider focus:outline-none cursor-pointer w-full text-center"
-                                    >
-                                        <option value="light">Clair</option>
-                                        <option value="dark">Sombre</option>
-                                        <option value="system">Système</option>
-                                    </select>
-                                </div>
+                                <select
+                                    value={theme}
+                                    onChange={(e) => setTheme(e.target.value as any)}
+                                    className="bg-transparent font-black text-primary text-[12px] uppercase tracking-wider focus:outline-none cursor-pointer text-right appearance-none px-2"
+                                >
+                                    <option value="light" className="bg-black text-white">Clair</option>
+                                    <option value="dark" className="bg-black text-white">Sombre</option>
+                                    <option value="system" className="bg-black text-white">Système</option>
+                                </select>
                             </div>
 
                             {/* Langue */}
-                            <div className="flex flex-col items-center justify-center gap-2.5 p-4 bg-card border border-border/60 rounded-[2rem] shadow-sm min-h-[100px]">
-                                <div className="h-11 w-11 rounded-2xl bg-blue-500 text-white flex items-center justify-center shadow">
-                                    <Globe className="h-5 w-5" strokeWidth={2.5} />
+                            <div className="flex items-center justify-between h-[58px] px-5">
+                                <div className="flex items-center gap-4">
+                                    <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-zinc-900 border border-white/5">
+                                        <Globe className="h-4 w-4 text-white" strokeWidth={2} />
+                                    </div>
+                                    <p className="font-semibold text-white text-[15px] tracking-tight">{t('settings.language', 'Langue')}</p>
                                 </div>
-                                <div className="text-center w-full">
-                                    <p className="font-black text-foreground text-sm tracking-tight">{t('settings.language', 'Langue')}</p>
-                                    <select
-                                        value={lang}
-                                        onChange={(e) => changeLanguage(e.target.value)}
-                                        className="mt-1 bg-transparent font-black text-muted-foreground text-[10px] uppercase tracking-wider focus:outline-none cursor-pointer w-full text-center"
-                                    >
-                                        <option value="fr">FR</option>
-                                        <option value="en">EN</option>
-                                    </select>
-                                </div>
+                                <select
+                                    value={lang}
+                                    onChange={(e) => changeLanguage(e.target.value)}
+                                    className="bg-transparent font-black text-primary text-[12px] uppercase tracking-wider focus:outline-none cursor-pointer text-right appearance-none px-2"
+                                >
+                                    <option value="fr" className="bg-black text-white">FR</option>
+                                    <option value="en" className="bg-black text-white">EN</option>
+                                </select>
                             </div>
 
-                            {/* Déconnexion — pleine largeur */}
+                            {/* Logout - Full List Row */}
                             <button
                                 onClick={() => signOut()}
-                                className="col-span-2 flex items-center gap-3 p-4 bg-card border border-border/60 rounded-[2rem] shadow-sm active:scale-95 transition-all"
+                                className="w-full h-[58px] px-5 flex items-center gap-4 active:bg-rose-500/10 transition-colors"
                             >
-                                <div className="h-11 w-11 rounded-2xl bg-rose-500 text-white flex items-center justify-center shadow shrink-0">
-                                    <LogOut className="h-5 w-5" strokeWidth={2.5} />
+                                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-rose-500 shadow-lg shadow-rose-500/20">
+                                    <LogOut className="h-4 w-4 text-white" strokeWidth={2.5} />
                                 </div>
-                                <div className="text-left">
-                                    <p className="font-black text-rose-500 text-sm tracking-tight">{t('profile.logout', 'Déconnexion')}</p>
-                                    <p className="text-[10px] font-bold text-rose-300 uppercase tracking-widest">{t('settings.logout_desc', 'Quitter votre session')}</p>
+                                <div>
+                                    <p className="font-bold text-rose-500 text-[15px] tracking-tight">{t('profile.logout', 'Déconnexion')}</p>
+                                    <p className="text-[10px] font-black text-rose-300/60 uppercase tracking-widest">{t('settings.logout_desc', 'Quitter votre session')}</p>
                                 </div>
                             </button>
                         </div>
                     </div>
 
                     {/* Version */}
-                    <p className="text-center text-[10px] font-bold text-slate-300 dark:text-slate-600 uppercase tracking-[0.2em] pb-4">
-                        TΞKΗ+ v2.2.0 • PWA
+                    <p className="text-center text-[10px] font-black text-zinc-700 uppercase tracking-[0.3em] py-8">
+                        TΞKΗ+ v3.0.0 • NATIVE PWA
                     </p>
                 </div>
             </div>
