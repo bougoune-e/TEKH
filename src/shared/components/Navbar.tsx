@@ -29,14 +29,20 @@ const Navbar = () => {
 
     return (
         <nav className="hidden md:flex sticky top-0 z-50 bg-white dark:bg-black backdrop-blur-3xl h-20 items-center px-8 gap-8 border-b border-slate-200 dark:border-white/10">
-            {/* Logo */}
-            <Link to="/" className="flex items-center gap-3 shrink-0 group">
-                <div className="h-11 w-11 rounded-xl overflow-hidden border-2 border-black dark:border-white bg-white group-hover:scale-110 transition-transform">
-                    <img src={logo} alt="TΞKΗ+" className="h-full w-full object-cover" />
+            {/* Logo or Settings in PWA */}
+            <Link to={isPWA ? "/settings" : "/"} className="flex items-center gap-3 shrink-0 group">
+                <div className="h-11 w-11 rounded-xl overflow-hidden border-2 border-black dark:border-white bg-white group-hover:scale-110 transition-transform flex items-center justify-center">
+                    {isPWA ? (
+                        <Settings className="h-6 w-6 text-black" />
+                    ) : (
+                        <img src={logo} alt="TΞKΗ+" className="h-full w-full object-cover" />
+                    )}
                 </div>
-                <span className="text-2xl font-black tracking-tighter text-black dark:text-white group-hover:text-[#064e3b] dark:group-hover:text-primary transition-colors">
-                    TΞKΗ<span className="text-[#064e3b] dark:text-primary italic">+</span>
-                </span>
+                {!isPWA && (
+                    <span className="text-2xl font-black tracking-tighter text-black dark:text-white group-hover:text-[#064e3b] dark:group-hover:text-primary transition-colors">
+                        TΞKΗ<span className="text-[#064e3b] dark:text-primary italic">+</span>
+                    </span>
+                )}
             </Link>
 
             {/* Global Search */}

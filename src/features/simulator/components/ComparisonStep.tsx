@@ -12,13 +12,14 @@ interface ComparisonStepProps {
     aestheticState: string;
     targetStorage: number | null;
     formatCFA: (n: number) => string;
+    isPWA?: boolean;
 }
 
 export const ComparisonStep = ({
     brand, model, finalPrice,
     targetBrand, targetModel, targetModelInfo,
     storage, aestheticState, targetStorage,
-    formatCFA
+    formatCFA, isPWA = false
 }: ComparisonStepProps) => {
     const { t } = useTranslation();
 
@@ -40,10 +41,10 @@ export const ComparisonStep = ({
         <div className="p-6 sm:p-10 space-y-12 animate-in zoom-in-95 duration-700">
             <div className="text-center space-y-3">
                 <h2 className="text-4xl sm:text-6xl font-black tracking-tighter uppercase italic leading-[0.8] text-slate-900 dark:text-white mb-1">
-                    ACCORD DE <span className="text-[#064e3b] dark:text-primary italic">SWAP</span>
+                    ACCORD DE <span className={cn(isPWA ? "text-[#00FF41]" : "text-[#064e3b] dark:text-primary", "italic")}>SWAP</span>
                 </h2>
                 <div className="flex items-center justify-center gap-2">
-                    <ShieldCheck className="w-4 h-4 text-[#064e3b] dark:text-primary" />
+                    <ShieldCheck className={cn("w-4 h-4", isPWA ? "text-[#00FF41]" : "text-[#064e3b] dark:text-primary")} />
                     <p className="text-slate-800 dark:text-zinc-300 font-black uppercase text-[9px] tracking-[0.5em]">CERTIFICATION TECHNIQUE TEKH+</p>
                 </div>
             </div>
@@ -65,8 +66,8 @@ export const ComparisonStep = ({
                     {/* Transfer Icon */}
                     <div className="flex items-center justify-center shrink-0">
                         <div className="w-12 h-12 rounded-full bg-white dark:bg-[#05070a] border-[3px] border-zinc-50 dark:border-[#0b0e14] flex items-center justify-center z-10 shadow-lg">
-                            <div className="w-8 h-8 rounded-full bg-[#064e3b] dark:bg-primary flex items-center justify-center">
-                                <ArrowRightLeft className="w-4 h-4 text-white dark:text-black" strokeWidth={3} />
+                            <div className={cn("w-8 h-8 rounded-full flex items-center justify-center", isPWA ? "bg-[#00FF41]" : "bg-[#064e3b] dark:bg-primary")}>
+                                <ArrowRightLeft className={cn("w-4 h-4", isPWA ? "text-black" : "text-white dark:text-black")} strokeWidth={3} />
                             </div>
                         </div>
                     </div>
@@ -139,7 +140,10 @@ export const ComparisonStep = ({
                         alert("VOTRE DEMANDE DE SWAP EST ENREGISTRÉE ! UN AGENT VA VOUS CONTACTER SUR WHATSAPP.");
                         window.location.href = "/";
                     }}
-                    className="w-full h-28 rounded-[48px] bg-blue-600 hover:bg-blue-700 dark:bg-primary dark:hover:bg-primary/90 text-white dark:text-black font-black text-4xl italic tracking-tighter hover:scale-[1.01] active:scale-95 transition-all shadow-3xl uppercase flex items-center justify-center gap-6 overflow-hidden relative group"
+                    className={cn(
+                        "w-full h-28 rounded-[48px] font-black text-4xl italic tracking-tighter hover:scale-[1.01] active:scale-95 transition-all shadow-3xl uppercase flex items-center justify-center gap-6 overflow-hidden relative group",
+                        isPWA ? "bg-[#00FF41] text-black" : "bg-blue-600 hover:bg-blue-700 dark:bg-primary dark:hover:bg-primary text-white dark:text-black"
+                    )}
                 >
                     <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-700" />
                     <span className="relative z-10">CONFIRMER L'ÉCHANGE</span>

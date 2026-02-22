@@ -7,10 +7,12 @@ import pixel from "@/assets/illustrations/homepage/google_pixel.jpeg";
 import huawei from "@/assets/illustrations/homepage/huawei.jpeg";
 import { Button } from "@/shared/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/tabs";
-import { Sparkles, BadgeCheck, Recycle, ArrowRight } from "lucide-react";
+import { Sparkles, BadgeCheck, Recycle, ArrowRight, ShoppingBag } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { usePWA } from "@/shared/hooks/usePWA";
 
 const DealsSection = () => {
+  const isPWA = usePWA();
   const deals = [
     { brand: "Apple", model: "iPhone 12", condition: "Très bon", price: 250000, originalPrice: 320000, image: iphone, tag: "Populaire" },
     { brand: "Samsung", model: "Galaxy A35", condition: "Bon", price: 180000, originalPrice: 220000, image: samsung, tag: "Vérifié" },
@@ -30,11 +32,23 @@ const DealsSection = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center space-y-4 mb-12">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
-            Nos meilleurs <span className="text-primary">deals</span>
+            Nos meilleurs <span className="text-primary">deals en live</span>
           </h2>
           <p className="text-sm font-bold text-muted-foreground max-w-2xl mx-auto uppercase tracking-wider">
             Échange équitable certifié : marque, modèle et état pris en compte.
           </p>
+
+          {isPWA && (
+            <div className="flex justify-center mt-6">
+              <Button
+                onClick={() => navigate('/deals')}
+                className="bg-[#00FF41] hover:bg-[#00FF41]/90 text-black font-black rounded-full px-8 py-6 gap-3 shadow-lg shadow-[#00FF41]/20 active:scale-95 transition-all text-sm uppercase tracking-widest"
+              >
+                <ShoppingBag className="w-5 h-5" />
+                Explorer le catalogue
+              </Button>
+            </div>
+          )}
           <div className="flex items-center justify-center gap-2 mt-4">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium bg-primary/10 text-primary border border-primary/20">
               <Sparkles className="h-4 w-4" aria-hidden="true" />
@@ -119,7 +133,13 @@ const DealsSection = () => {
         </Tabs>
 
         <div className="text-center mt-12">
-          <Button onClick={() => navigate('/deals')} variant="cta" size="lg" aria-label="Voir tous les deals disponibles" className="gap-2">
+          <Button
+            onClick={() => navigate('/deals')}
+            variant={isPWA ? "default" : "cta"}
+            size="lg"
+            aria-label="Voir tous les deals disponibles"
+            className={`gap-2 ${isPWA ? 'bg-[#00FF41] hover:bg-[#00FF41]/90 text-black font-black rounded-full' : ''}`}
+          >
             Voir tous les deals
             <ArrowRight className="h-5 w-5" aria-hidden="true" />
           </Button>

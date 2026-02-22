@@ -13,11 +13,11 @@ import { usePWA } from "@/shared/hooks/usePWA";
 
 const QuickActions = () => {
   const navigate = useNavigate();
+  const isPWA = usePWA();
   const actions = [
-    { label: "Estimer", icon: <Zap className="w-6 h-6" />, path: "/simulateur", color: "bg-amber-500" },
-    { label: "Explorer", icon: <Search className="w-6 h-6" />, path: "/deals", color: "bg-blue-500" },
-    { label: "DealBox", icon: <ShoppingBag className="w-6 h-6" />, path: "/dealboxes", color: "bg-[#00FF41]" },
-    { label: "Certifié", icon: <ShieldCheck className="w-6 h-6" />, path: "/charte-qualite", color: "bg-purple-500" },
+    { label: "Estimer", icon: <Zap className="w-6 h-6" />, path: "/simulateur", color: isPWA ? "bg-[#00FF41]" : "bg-amber-500" },
+    { label: "Explorer", icon: <Search className="w-6 h-6" />, path: "/deals", color: isPWA ? "bg-[#00FF41]" : "bg-blue-500" },
+    { label: "Certifié", icon: <ShieldCheck className="w-6 h-6" />, path: "/charte-qualite", color: isPWA ? "bg-[#00FF41]" : "bg-purple-500" },
   ];
 
   return (
@@ -29,7 +29,7 @@ const QuickActions = () => {
             onClick={() => navigate(action.path)}
             className="flex flex-col items-center gap-2 group"
           >
-            <div className={`w-14 h-14 md:w-16 md:h-16 ${action.color} rounded-2xl flex items-center justify-center shadow-lg group-active:scale-90 transition-transform text-white`}>
+            <div className={`w-14 h-14 md:w-16 md:h-16 ${action.color} rounded-2xl flex items-center justify-center shadow-lg group-active:scale-90 transition-transform ${isPWA ? 'text-black' : 'text-white'}`}>
               {action.icon}
             </div>
             <span className="text-[10px] font-black uppercase tracking-widest text-foreground opacity-80">
@@ -48,16 +48,13 @@ const Index = () => {
   return (
     <main className={`bg-background pb-20 ${!isPWA ? 'pt-0' : ''}`}>
       {isPWA ? (
-        /* VUE PWA / MOBILE NATIVE APP */
-        <>
+        /* VUE PWA / MOBILE NATIVE APP - ULTRA ÉPURÉE */
+        <div className="space-y-0">
           <HomeCarousel />
           <QuickActions />
+          <ServicesSection />
           <DealsSection />
-          <div className="container mx-auto px-4 py-8 space-y-12">
-            <MessagingSection />
-            <RepairSection />
-          </div>
-        </>
+        </div>
       ) : (
         /* VUE SITE WEB CLASSIQUE */
         <>
