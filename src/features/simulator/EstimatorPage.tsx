@@ -49,7 +49,7 @@ export default function EstimatorPage() {
   const isPWA = usePWA();
 
   // Auto-detection states
-  const [detectionStep, setDetectionStep] = useState<"detecting" | "manual" | "confirmed">(isPWA ? "detecting" : "manual");
+  const [detectionStep, setDetectionStep] = useState<"detecting" | "manual" | "confirmed">((isPWA || (typeof window !== 'undefined' && window.innerWidth < 1024)) ? "detecting" : "manual");
   const [detectedBrand, setDetectedBrand] = useState<string>("");
   const [detectedModel, setDetectedModel] = useState<string>("");
   const [brands, setBrands] = useState<string[]>([]);
@@ -165,7 +165,7 @@ export default function EstimatorPage() {
         setBrands(list);
 
         // Best effort auto-detection
-        if (isPWA && detectionStep === "detecting") {
+        if ((isPWA || window.innerWidth < 1024) && detectionStep === "detecting") {
           const ua = navigator.userAgent;
           let brandGuess = "";
           let modelGuess = "";
@@ -386,8 +386,10 @@ export default function EstimatorPage() {
 
   // BYPASS FOR VERIFICATION: If images are missing but we are in dev/test, allow proceeding
   // In production, this would be strict.
+  // RELAXED: Allow if brand, model, storage, ram and basic diagnostics are there. 
+  // At least 1 photo for visual verification.
   const isStep1Complete = brand && model && storage && ram && screenState && batteryState && biometricsState && cameraState && aestheticState &&
-    imageSlots.front && imageSlots.back && imageSlots.left && imageSlots.right;
+    (imageSlots.front || imageSlots.back || imageSlots.left || imageSlots.right);
 
   const renderProgress = () => {
     const steps = [
@@ -460,7 +462,7 @@ export default function EstimatorPage() {
           <CardContent className="p-0">
             {step === "estimation" ? (
               <div className="p-4 sm:p-8 space-y-5 sm:space-y-8 animate-in fade-in duration-700">
-                {isPWA && detectionStep === "detecting" && detectedBrand ? (
+                {(isPWA || window.innerWidth < 1024) && detectionStep === "detecting" && detectedBrand ? (
                   <div className="flex flex-col items-center py-6 px-4 space-y-8 animate-in slide-in-from-bottom-8 duration-700">
                     {/* Visual Banner - Glassmorphism */}
                     <div className="w-full bg-gradient-to-br from-[#00FF41]/20 via-[#00FF41]/5 to-transparent border border-[#00FF41]/20 rounded-[32px] p-8 text-center relative overflow-hidden group shadow-2xl">
@@ -491,9 +493,20 @@ export default function EstimatorPage() {
                     {/* Core Actions */}
                     <div className="w-full space-y-3">
                       <Button
-                        onClick={() => {
+                        onClick={async () => {
                           setBrand(detectedBrand);
                           setModel(detectedModel);
+
+                          // FORCE AUTO-SELECT OF FIRST VARIANT
+                          try {
+                            const variants = await getAvailableVariants(detectedBrand, detectedModel);
+                            if (variants && variants.length > 0) {
+                              const best = variants[0];
+                              setStorage(best.storage_gb);
+                              setRam(best.ram_gb || null);
+                            }
+                          } catch (e) { }
+
                           setDetectionStep("confirmed");
                         }}
                         className="w-full h-20 rounded-3xl bg-[#00FF41] text-black font-black text-xl uppercase italic tracking-tight hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-[#00FF41]/20"
