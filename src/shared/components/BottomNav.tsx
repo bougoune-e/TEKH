@@ -20,7 +20,6 @@ export default function BottomNav() {
       label: isPWA ? "Estimation" : "Upgrade",
       Icon: isPWA ? Zap : LayoutGrid
     },
-    { to: "/settings", label: "Paramètres", Icon: Settings },
   ];
 
   const profileActive = pathname === "/profile" || pathname === "/login";
@@ -66,7 +65,7 @@ export default function BottomNav() {
             {user ? (
               <ProfileIcon size="22px" className="text-current" />
             ) : (
-              <UserAvatar user={user} size="xs" className="h-[22px] w-[22px] rounded-full" />
+              <UserAvatar user={user} size="sm" className="h-[22px] w-[22px] rounded-full" />
             )}
           </div>
           <span
