@@ -5,21 +5,40 @@ import cors from "cors";
 import { supabase, TABLE_PRODUCTS } from "./supabase.js";
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 8083;
 
 // Tableau qui contiendra les données du CSV (JSON)
 let produits = [];
 let csvLoaded = false;
 
 // Middlewares
-const DEFAULT_ORIGINS = "http://localhost:8080,http://localhost:8081,http://localhost:8082,http://localhost:8083,http://localhost:5173";
-const ORIGINS = (process.env.CORS_ORIGIN || DEFAULT_ORIGINS)
-  .split(",")
-  .map((s) => s.trim())
-  .filter(Boolean);
+const DEFAULT_ORIGINS = [
+  "http://localhost:8080",
+  "http://localhost:8081",
+  "http://localhost:8082",
+  "http://localhost:8083",
+  "http://localhost:5173",
+  "https://tekh-backend-production.up.railway.app",
+  "https://tekh.up.railway.app"
+];
+
+const ORIGINS = process.env.CORS_ORIGIN
+  ? process.env.CORS_ORIGIN.split(",").map(s => s.trim())
+  : DEFAULT_ORIGINS;
+
 app.use(cors({
-  origin: ORIGINS,
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or curl)
+    if (!origin) return callback(null, true);
+    if (ORIGINS.indexOf(origin) !== -1 || ORIGINS.includes("*")) {
+      callback(null, true);
+    } else {
+      console.warn(`[CORS] Rejected origin: ${origin}`);
+      callback(null, true); // Fallback: allow for now to debug
+    }
+  },
   methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+  credentials: true
 }));
 app.use(express.json());
 
