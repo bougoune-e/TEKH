@@ -11,6 +11,19 @@ const FALLBACK_TABLE = "produits";
 let pendingPhone: string | null = null;
 let localUser: any = null;
 const localListeners: Array<(ev: string, session: any) => void> = [];
+// Cache for products from Railway API
+let cachedProduits: any[] | null = null;
+async function getApiProduits() {
+  if (cachedProduits) return cachedProduits;
+  try {
+    cachedProduits = await getProduits();
+    return cachedProduits;
+  } catch (e) {
+    console.warn("[supabaseApi] getApiProduits failed", e);
+    return [];
+  }
+}
+
 function emitLocal(ev: string) {
   const token = getToken();
   const session = localUser ? { access_token: token, user: localUser } : null;
@@ -62,7 +75,14 @@ export async function fetchBrands(): Promise<string[]> {
   try {
     if (realClient) {
       const { data, error } = await realClient.from("brands").select("name").order("name");
-      if (!error && data) return data.map(b => b.name);
+      if (!error && data && data.length > 0) return data.map(b => b.name);
+    }
+
+    // Fallback: Extract from API
+    const products = await getApiProduits();
+    if (products && products.length > 0) {
+      const brands = Array.from(new Set(products.map(p => p.marques ?? p.brand ?? p.Marque).filter(Boolean)));
+      if (brands.length > 0) return (brands as string[]).sort();
     }
   } catch (err) {
     console.warn("[supabaseApi] fetchBrands failed, using defaults", err);
@@ -80,6 +100,16 @@ export async function fetchModels(brand: string): Promise<string[]> {
         .order("name");
 
       if (!error && data && data.length > 0) return data.map((m: any) => m.name);
+    }
+
+    // Fallback: Extract from API
+    const products = await getApiProduits();
+    if (products && products.length > 0) {
+      const models = Array.from(new Set(products
+        .filter(p => (p.marques ?? p.brand ?? p.Marque) === brand)
+        .map(p => p.modele_exact ?? p.model ?? p["Modèle Exact"])
+        .filter(Boolean)));
+      if (models.length > 0) return (models as string[]).sort();
     }
   } catch (err) {
     console.warn("[supabaseApi] fetchModels failed", err);
@@ -141,6 +171,24 @@ export async function getModelInfo(brand: string, model: string, storage: number
         };
       }
     }
+
+    // Fallback: Extract from API
+    const products = await getApiProduits();
+    if (products && products.length > 0) {
+      const item = products.find(p =>
+        (p.marques ?? p.brand ?? p.Marque) === brand &&
+        (p.modele_exact ?? p.model ?? p["Modèle Exact"]) === model &&
+        Number(p.stockage_gb ?? p.storage ?? p["Stockages (GB)"]) === storage
+      );
+
+      if (item) {
+        return {
+          base_price_fcfa: Number(item.prix_neuf_fcfa ?? item.price ?? item["Prix neuf en FCFA"] ?? 0),
+          release_year: Number(item.annee ?? item.release_year ?? 2022),
+          equivalence_class: item.equivalence_class ?? item.classe ?? "C"
+        };
+      }
+    }
   } catch (err) {
     console.warn("[supabaseApi] getModelInfo failed", err);
   }
@@ -168,7 +216,24 @@ export async function getAvailableVariants(brand: string, model: string): Promis
         .eq("models.brands.name", brand)
         .order("storage_gb");
 
-      if (!error && data) return data as any[];
+      if (!error && data && data.length > 0) return data as any[];
+    }
+
+    // Fallback: Extract from API
+    const products = await getApiProduits();
+    if (products && products.length > 0) {
+      const filtered = products.filter(p =>
+        (p.marques ?? p.brand ?? p.Marque) === brand &&
+        (p.modele_exact ?? p.model ?? p["Modèle Exact"]) === model
+      );
+
+      if (filtered.length > 0) {
+        return filtered.map(p => ({
+          ram_gb: Number(p.ram_gb ?? p.ram ?? p["RAM (GB)"] ?? 0),
+          storage_gb: Number(p.stockage_gb ?? p.storage ?? p["Stockages (GB)"] ?? 0),
+          base_price_fcfa: Number(p.prix_neuf_fcfa ?? p.price ?? p["Prix neuf en FCFA"] ?? 0)
+        })).sort((a, b) => a.storage_gb - b.storage_gb);
+      }
     }
   } catch (err) {
     console.warn("[supabaseApi] getAvailableVariants failed", err);
