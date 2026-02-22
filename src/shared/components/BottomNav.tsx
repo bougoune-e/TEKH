@@ -77,7 +77,7 @@ export default function BottomNav() {
             className={`text-[10px] font-black tracking-tighter uppercase ${profileActive ? "opacity-100" : "opacity-100"
               }`}
           >
-            Profil
+            Compte
           </span>
         </button>
       </div>

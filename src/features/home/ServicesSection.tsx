@@ -1,5 +1,6 @@
 import React from 'react';
 import { RefreshCcw, Wrench, GraduationCap, Code } from 'lucide-react';
+import { usePWA } from '@/shared/hooks/usePWA';
 
 const services = [
     {
@@ -29,6 +30,10 @@ const services = [
 ];
 
 const ServicesSection = () => {
+    const isPWA = usePWA();
+    const iconColor = isPWA ? "bg-[#00FF41]" : "bg-blue-600";
+    const textColor = isPWA ? "text-black" : "text-white";
+
     return (
         <section className="py-16 bg-slate-50 dark:bg-zinc-900/30">
             <div className="container mx-auto px-4">
@@ -45,8 +50,8 @@ const ServicesSection = () => {
                             key={idx}
                             className="bg-white dark:bg-zinc-900 p-8 rounded-3xl border border-slate-100 dark:border-white/5 shadow-sm hover:shadow-xl transition-all group flex flex-col items-center text-center"
                         >
-                            <div className={`${service.color} w-16 h-16 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform`}>
-                                {service.icon}
+                            <div className={`${iconColor} w-16 h-16 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform`}>
+                                {React.cloneElement(service.icon as React.ReactElement, { className: `w-8 h-8 ${textColor}` })}
                             </div>
                             <h3 className="text-xl font-black text-slate-900 dark:text-white mb-3 tracking-tighter">
                                 {service.title}
