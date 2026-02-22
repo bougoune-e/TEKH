@@ -5,16 +5,19 @@ import SearchBar from "@/shared/components/SearchBar";
 import BottomNav from "@/shared/components/BottomNav";
 import ThemeToggle from "@/shared/components/ThemeToggle";
 import { useAuth } from "@/features/auth/auth.context";
-import { Bell, Bot } from "lucide-react";
+import { Bell, Bot, Settings as SettingsIcon } from "lucide-react";
 import logo from "@/assets/logos/robott.jpeg";
 import PWAInstallBanner from "@/shared/components/PWAInstallBanner";
 import { TekhBot } from "@/features/chatbot/TekhBot";
+import { usePWA } from "@/shared/hooks/usePWA";
+import { Link } from "react-router-dom";
 
 
 const Layout = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const isPWA = usePWA();
   const showFooter = location.pathname === "/";
 
   const handleProfileClick = () => {
@@ -30,40 +33,43 @@ const Layout = () => {
       <Sidebar />
       <PWAInstallBanner />
       <div className="flex-1 flex flex-col md:pl-16 relative">
-        {/* Modern Header */}
-        <header className="sticky top-0 z-40 border-b border-border/10 bg-background/80 backdrop-blur-md transition-all">
-          <div className="container mx-auto px-4 h-16 flex items-center justify-between gap-4">
-            {/* Logo Mobile */}
-            <a href="/" className="md:hidden">
-              <img src={logo} alt="TΞKΗ+" className="h-10 w-10 rounded-full" />
-            </a>
+        {/* Premium Native Header (Pinterest-Smooth) */}
+        <header className="sticky top-0 z-40 border-b border-border/5 bg-background/90 backdrop-blur-xl transition-all h-safe-header pt-safe">
+          <div className="container mx-auto px-5 h-[70px] flex items-center justify-between gap-4">
+            {/* Branding / Logo Area */}
+            <div className="flex items-center gap-3">
+              <Link
+                to={isPWA ? "/settings" : "/"}
+                className="md:hidden shrink-0 active:scale-95 transition-transform"
+              >
+                <div className="h-10 w-10 rounded-xl overflow-hidden border border-border/10 flex items-center justify-center bg-zinc-900 border-white/5">
+                  {isPWA ? (
+                    <SettingsIcon className="h-6 w-6 text-primary" />
+                  ) : (
+                    <img src={logo} alt="TΞKΗ+" className="h-full w-full object-cover" />
+                  )}
+                </div>
+              </Link>
+            </div>
 
-            {/* Central Search Bar */}
-            <div className="flex-1 max-w-2xl mx-auto">
+            {/* Central Search Bar - Pinterest Style (Centered & Fluid) */}
+            <div className="flex-1 max-w-lg">
               <SearchBar />
             </div>
 
-            {/* Action Group */}
-            <div className="flex items-center gap-3">
-              {/* Theme Toggle */}
-              <div className="hidden sm:block standalone:hidden">
-                <ThemeToggle />
-              </div>
-
-              {/* 🤖 TekhBot Toggle */}
+            {/* Action Group (Icons 24px) */}
+            <div className="flex items-center gap-2">
               <button
                 onClick={() => window.dispatchEvent(new CustomEvent('toggle-tekhbot'))}
-                className="p-2 hover:bg-black/5 dark:hover:bg-white/10 rounded-full transition-all group/bot"
+                className="p-2 hover:bg-white/5 rounded-full transition-all group/bot active:scale-90"
               >
-                <Bot className="h-6 w-6 text-black dark:text-white group-hover/bot:text-primary" />
+                <Bot className="h-[24px] w-[24px] text-foreground group-hover/bot:text-primary" />
               </button>
 
-              {/* 🔔 Notification Bell */}
-              <button className="relative p-2 hover:bg-black/5 dark:hover:bg-white/10 rounded-full transition-all group/bell">
-                <Bell className="h-6 w-6 text-black dark:text-white group-hover/bell:text-blue-700 dark:group-hover/bell:text-primary" strokeWidth={2} />
-                <span className="absolute top-1.5 right-1.5 h-2.5 w-2.5 bg-rose-600 rounded-full border-2 border-background" />
+              <button className="relative p-2 hover:bg-white/5 rounded-full transition-all group/bell active:scale-90">
+                <Bell className="h-[24px] w-[24px] text-foreground group-hover/bell:text-primary" strokeWidth={2} />
+                <span className="absolute top-2.5 right-2.5 h-2 w-2 bg-rose-500 rounded-full border-2 border-background" />
               </button>
-
             </div>
           </div>
         </header>

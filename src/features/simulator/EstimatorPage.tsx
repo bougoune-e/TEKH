@@ -461,39 +461,57 @@ export default function EstimatorPage() {
             {step === "estimation" ? (
               <div className="p-4 sm:p-8 space-y-5 sm:space-y-8 animate-in fade-in duration-700">
                 {isPWA && detectionStep === "detecting" && detectedBrand ? (
-                  <div className="flex flex-col items-center py-10 space-y-8 animate-in slide-in-from-bottom-4 duration-500">
-                    <div className="w-24 h-24 bg-[#00FF41]/10 rounded-full flex items-center justify-center border-2 border-[#00FF41]/20">
-                      <Search className="w-10 h-10 text-[#00FF41]" />
-                    </div>
-                    <div className="text-center space-y-2">
-                      <h3 className="text-xl font-black uppercase tracking-tight text-black dark:text-white">Détection automatique</h3>
-                      <p className="text-slate-500 dark:text-zinc-400 font-bold">
-                        Nous pensons que votre modèle est le <br />
-                        <span className="text-black dark:text-white text-2xl font-black">{detectedBrand} {detectedModel}</span>
-                      </p>
+                  <div className="flex flex-col items-center py-6 px-4 space-y-8 animate-in slide-in-from-bottom-8 duration-700">
+                    {/* Visual Banner - Glassmorphism */}
+                    <div className="w-full bg-gradient-to-br from-[#00FF41]/20 via-[#00FF41]/5 to-transparent border border-[#00FF41]/20 rounded-[32px] p-8 text-center relative overflow-hidden group shadow-2xl">
+                      <div className="absolute top-0 right-0 w-32 h-32 bg-[#00FF41]/10 blur-3xl -translate-y-16 translate-x-16 rounded-full" />
+                      <div className="absolute bottom-0 left-0 w-24 h-24 bg-[#00FF41]/5 blur-2xl translate-y-8 -translate-x-8 rounded-full" />
+
+                      <div className="relative z-10 space-y-4">
+                        <div className="w-16 h-16 bg-[#00FF41]/20 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-[#00FF41]/30">
+                          <Zap className="w-8 h-8 text-[#00FF41]" />
+                        </div>
+                        <h2 className="text-3xl font-black tracking-tighter text-white uppercase italic leading-none">
+                          MODÈLE <span className="text-[#00FF41] italic">DÉTECTÉ</span>
+                        </h2>
+                        <p className="text-zinc-400 font-medium text-sm">
+                          Nous pensons que vous utilisez un :
+                        </p>
+                        <div className="py-2">
+                          <span className="text-4xl font-black text-white tracking-tight block">
+                            {detectedBrand}
+                          </span>
+                          <span className="text-2xl font-bold text-[#00FF41] block mt-1 uppercase tracking-tight">
+                            {detectedModel}
+                          </span>
+                        </div>
+                      </div>
                     </div>
 
-                    <div className="flex flex-col w-full max-w-xs gap-4">
+                    {/* Core Actions */}
+                    <div className="w-full space-y-3">
                       <Button
                         onClick={() => {
                           setBrand(detectedBrand);
                           setModel(detectedModel);
                           setDetectionStep("confirmed");
                         }}
-                        className="bg-[#00FF41] hover:bg-[#00FF41]/90 text-black font-black rounded-full h-14 gap-3 shadow-lg shadow-[#00FF41]/20"
+                        className="w-full h-20 rounded-3xl bg-[#00FF41] text-black font-black text-xl uppercase italic tracking-tight hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-[#00FF41]/20"
                       >
-                        <CheckCircle2 className="w-6 h-6" />
-                        Confirmer
+                        C'est exact !
                       </Button>
                       <Button
                         variant="outline"
                         onClick={() => setDetectionStep("manual")}
-                        className="border-2 border-slate-200 dark:border-white/10 rounded-full h-14 gap-3 font-black text-slate-500"
+                        className="w-full h-16 rounded-3xl border-white/10 text-white font-bold uppercase tracking-widest text-xs hover:bg-white/5 active:scale-95 transition-all"
                       >
-                        <RotateCcw className="w-5 h-5" />
-                        Modifier
+                        Non, modifier
                       </Button>
                     </div>
+
+                    <p className="text-[10px] text-zinc-600 font-bold uppercase tracking-[0.3em] text-center px-8">
+                      CETTE DÉTECTION NOUS PERMET DE VOUS OFFRIR LA MEILLEURE OFFRE DE SWAP INSTANTANÉE.
+                    </p>
                   </div>
                 ) : (
                   <>
