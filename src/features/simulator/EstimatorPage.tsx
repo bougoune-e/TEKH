@@ -158,11 +158,20 @@ export default function EstimatorPage() {
   };
 
   useEffect(() => {
+    if (isPWA && detectionStep === "manual") {
+      setDetectionStep("detecting");
+    }
+  }, [isPWA, detectionStep]);
+
+  useEffect(() => {
     (async () => {
       try {
         setLoadingBrands(true);
         const list = await fetchBrands();
         setBrands(list);
+
+        // Auto-scroll to top on step change
+        window.scrollTo({ top: 0, behavior: 'smooth' });
 
         // Best effort auto-detection
         if ((isPWA || window.innerWidth < 1024) && detectionStep === "detecting") {
@@ -429,6 +438,36 @@ export default function EstimatorPage() {
     );
   };
 
+  // Summary for confirmed detection
+  const renderDetectedSummary = () => (
+    <div className="bg-blue-600/5 dark:bg-primary/5 border border-blue-600/20 dark:border-primary/20 rounded-2xl p-4 mb-6 animate-in slide-in-from-top-4 duration-500">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 rounded-xl bg-blue-600 dark:bg-primary flex items-center justify-center text-white shadow-lg">
+            <Smartphone className="w-6 h-6" />
+          </div>
+          <div>
+            <p className="text-[10px] font-black uppercase tracking-widest text-blue-600 dark:text-primary">Appareil Détecté</p>
+            <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase italic tracking-tighter">
+              {brand} {model}
+            </h3>
+            <p className="text-xs font-bold text-slate-500 dark:text-zinc-500 uppercase">
+              {storage} Go {ram ? `• ${ram} Go RAM` : ""}
+            </p>
+          </div>
+        </div>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setDetectionStep("manual")}
+          className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 hover:text-blue-600 dark:hover:text-primary"
+        >
+          Modifier
+        </Button>
+      </div>
+    </div>
+  );
+
   return (
     <section className="py-2 sm:py-6 bg-slate-50 dark:bg-[#05070a] min-h-screen transition-colors duration-500 pb-32">
       <div className="container mx-auto px-4 max-w-5xl">
@@ -528,12 +567,14 @@ export default function EstimatorPage() {
                   </div>
                 ) : (
                   <>
-                    <IdentityStep
-                      brand={brand} setBrand={setBrand} brands={brands} loadingBrands={loadingBrands}
-                      model={model} setModel={setModel} models={models} loadingModels={loadingModels}
-                      storage={storage} setStorage={setStorage} storages={storages} loadingStorages={loadingStorages}
-                      ram={ram} setRam={setRam} rams={rams}
-                    />
+                    {(isPWA && detectionStep === "confirmed") ? renderDetectedSummary() : (
+                      <IdentityStep
+                        brand={brand} setBrand={setBrand} brands={brands} loadingBrands={loadingBrands}
+                        model={model} setModel={setModel} models={models} loadingModels={loadingModels}
+                        storage={storage} setStorage={setStorage} storages={storages} loadingStorages={loadingStorages}
+                        ram={ram} setRam={setRam} rams={rams}
+                      />
+                    )}
 
                     <DiagnosticStep
                       screenState={screenState} setScreenState={setScreenState}
