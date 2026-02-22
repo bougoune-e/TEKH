@@ -5,6 +5,7 @@ import { supabase } from "@/core/api/supabaseApi";
 import ThemeToggle from "@/shared/components/ThemeToggle";
 import ProfileIcon from "@/shared/components/ProfileIcon";
 import { useTranslation } from "react-i18next";
+import { usePWA } from "@/shared/hooks/usePWA";
 import logo from "@/assets/logos/robott.jpeg";
 import {
     DropdownMenu,
@@ -20,6 +21,7 @@ import {
 const Navbar = () => {
     const { t } = useTranslation();
     const { user } = useAuth();
+    const isPWA = usePWA();
     const location = useLocation();
     const handleSignOut = () => supabase.auth.signOut();
 
@@ -61,7 +63,7 @@ const Navbar = () => {
                         : 'bg-transparent text-[#064e3b] dark:text-primary border-[#064e3b] dark:border-primary hover:bg-[#064e3b] dark:hover:bg-primary hover:text-white'
                         }`}
                 >
-                    Upgrade TEKH+
+                    {isPWA ? "Estimation" : "Upgrade TEKH+"}
                 </Link>
 
                 {/* Theme Toggle */}

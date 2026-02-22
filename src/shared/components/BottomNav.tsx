@@ -1,19 +1,25 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Home, Compass, LayoutGrid, Settings } from "lucide-react";
+import { Home, Compass, Zap, Settings, LayoutGrid } from "lucide-react";
 import { useAuth } from "@/features/auth/auth.context";
 
 import UserAvatar from "@/shared/components/UserAvatar";
 import ProfileIcon from "@/shared/components/ProfileIcon";
+import { usePWA } from "@/shared/hooks/usePWA";
 
 export default function BottomNav() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const isPWA = usePWA();
 
   const nav = [
     { to: "/", label: "Accueil", Icon: Home },
     { to: "/deals", label: "Explorer", Icon: Compass },
-    { to: "/simulateur", label: "Upgrade", Icon: LayoutGrid },
+    {
+      to: "/simulateur",
+      label: isPWA ? "Estimation" : "Upgrade",
+      Icon: isPWA ? Zap : LayoutGrid
+    },
     { to: "/settings", label: "Paramètres", Icon: Settings },
   ];
 
