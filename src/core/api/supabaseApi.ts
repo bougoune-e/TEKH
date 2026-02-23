@@ -41,7 +41,7 @@ export async function fetchAllStorages(): Promise<number[]> {
   try {
     const rows = await getProduits();
     const set = Array.from(new Set((rows || [])
-      .map((r: any) => Number(r.stockage_gb ?? r["Stockages (GB)"] ?? r.storage))
+      .map((r: any) => Number(r.stockages_gb ?? r.stockage_gb ?? r["Stockages (GB)"] ?? r.storage))
       .filter((n) => Number.isFinite(n))));
     const merged = Array.from(new Set([...set, ...DEFAULTS]));
     return merged.sort((a, b) => a - b);
@@ -184,14 +184,14 @@ export async function getModelInfo(brand: string, model: string, storage: number
       const item = products.find(p =>
         (p.marques ?? p.brand ?? p.Marque) === brand &&
         (p.modele_exact ?? p.model ?? p["Modèle Exact"]) === model &&
-        Number(p.stockage_gb ?? p.storage ?? p["Stockages (GB)"]) === storage
+        Number(p.stockages_gb ?? p.stockage_gb ?? p.storage ?? p["Stockages (GB)"]) === storage
       );
 
       if (item) {
         return {
-          base_price_fcfa: Number(item.prix_neuf_fcfa ?? item.price ?? item["Prix neuf en FCFA"] ?? 0),
-          release_year: Number(item.annee ?? item.release_year ?? 2022),
-          equivalence_class: item.equivalence_class ?? item.classe ?? "C"
+          base_price_fcfa: Number(item.prix_neuf_en_fcfa ?? item.prix_neuf_fcfa ?? item.price ?? item["Prix neuf en FCFA"] ?? 0),
+          release_year: Number(item.annee_sortie ?? item.annee ?? item.release_year ?? 2022),
+          equivalence_class: item.classe_equivalence ?? item.equivalence_class ?? item.classe ?? "C"
         };
       }
     }
@@ -236,8 +236,8 @@ export async function getAvailableVariants(brand: string, model: string): Promis
       if (filtered.length > 0) {
         return filtered.map(p => ({
           ram_gb: Number(p.ram_gb ?? p.ram ?? p["RAM (GB)"] ?? 0),
-          storage_gb: Number(p.stockage_gb ?? p.storage ?? p["Stockages (GB)"] ?? 0),
-          base_price_fcfa: Number(p.prix_neuf_fcfa ?? p.price ?? p["Prix neuf en FCFA"] ?? 0)
+          storage_gb: Number(p.stockages_gb ?? p.stockage_gb ?? p.storage ?? p["Stockages (GB)"] ?? 0),
+          base_price_fcfa: Number(p.prix_neuf_en_fcfa ?? p.prix_neuf_fcfa ?? p.price ?? p["Prix neuf en FCFA"] ?? 0)
         })).sort((a, b) => a.storage_gb - b.storage_gb);
       }
     }
@@ -489,10 +489,10 @@ export async function fetchCatalogItems() {
     try {
       const rows = await getProduits();
       return (rows || []).slice(0, 200).map((d: any) => ({
-        marque: d.marque ?? d.Marques ?? d.brand,
+        marque: d.marques ?? d.marque ?? d.Marques ?? d.brand,
         modele: d.modele_exact ?? d["Modèle Exact"] ?? d.model,
-        stockage: d.stockage_gb ?? d["Stockages (GB)"] ?? d.storage,
-        prix: d.prix_neuf_fcfa ?? d["Prix neuf en FCFA"] ?? d.price
+        stockage: d.stockages_gb ?? d.stockage_gb ?? d["Stockages (GB)"] ?? d.storage,
+        prix: d.prix_neuf_en_fcfa ?? d.prix_neuf_fcfa ?? d["Prix neuf en FCFA"] ?? d.price
       }));
     } catch { return []; }
   }
