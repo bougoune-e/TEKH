@@ -7,11 +7,25 @@ import { Badge } from "@/shared/ui/badge";
 import { Card } from "@/shared/ui/card";
 import { useDeals } from "@/features/marketplace/deals.context";
 import type { DealPost } from "@/shared/data/dealsData";
-import { Flame, Star, MessageSquare, Sparkles } from "lucide-react";
+import { Flame, Star, MessageSquare, Sparkles, TrendingUp } from "lucide-react";
 import { deleteDealById, getCurrentUser, fetchDeals } from "@/core/api/supabaseApi";
 import { isSupabaseConfigured } from "@/core/api/supabaseClient";
 import { toast } from "@/shared/hooks/use-toast";
 import { useTranslation } from "react-i18next";
+import { usePWA } from "@/shared/hooks/usePWA";
+import iphoneImg from "@/assets/illustrations/homepage/iphone.jpeg";
+import samsungImg from "@/assets/illustrations/homepage/samsungA35.jpeg";
+import pixelImg from "@/assets/illustrations/homepage/google_pixel.jpeg";
+import huaweiImg from "@/assets/illustrations/homepage/huawei.jpeg";
+
+/** Sélection mise en avant — cartes mock bien designées en haut de l'Explorer (web + PWA) */
+const FEATURED_DEALS = [
+  { brand: "Apple", model: "iPhone 13", condition: "Très bon", price: 300000, originalPrice: 380000, image: iphoneImg, tag: "Populaire" },
+  { brand: "Samsung", model: "Galaxy A54", condition: "Neuf reconditionné", price: 220000, originalPrice: 280000, image: samsungImg, tag: "Vérifié" },
+  { brand: "Google", model: "Pixel 8", condition: "Très bon", price: 280000, originalPrice: 350000, image: pixelImg, tag: "Nouveau" },
+  { brand: "Huawei", model: "P40 Pro", condition: "Bon", price: 170000, originalPrice: 220000, image: huaweiImg, tag: "Bon plan" },
+  { brand: "Apple", model: "iPhone 12", condition: "Très bon", price: 250000, originalPrice: 320000, image: iphoneImg, tag: "Confiance" },
+];
 
 const BRANDS = ["Apple", "Samsung", "Xiaomi", "Infinix", "Tecno", "Google", "Huawei", "OnePlus", "Oppo", "Vivo"];
 const CONDITIONS = ["Neuf", "Très bon", "Bon", "Moyen"] as const;
@@ -67,6 +81,7 @@ function computeExtra(deal: DealPost, targetValue?: number, desired?: string, ma
 
 export default function DealsPage() {
   const { t } = useTranslation();
+  const isPWA = usePWA();
   const { deals: userDeals, lastSimulation, matchRequest, removeDeal, setDealsList } = useDeals();
   const [filters, setFilters] = useState<Filters>({ min: 0, max: 800000 });
   const allDeals = useMemo(() => userDeals, [userDeals]);
@@ -153,6 +168,32 @@ export default function DealsPage() {
         <div className="flex items-center gap-3 mb-6 animate-in slide-in-from-left-2 duration-500">
           <Badge variant="outline" className="rounded-full px-4 py-1 bg-primary text-black font-black border-none animate-pulse">LIVE DEALS</Badge>
           <span className="text-xs font-black uppercase tracking-[0.3em] opacity-40">Explorer le catalogue</span>
+        </div>
+
+        {/* Sélection / À la une — cartes mock bien designées (web + PWA) */}
+        <div className="mb-8">
+          <div className="flex items-center gap-2 mb-4">
+            <TrendingUp className="w-5 h-5 text-primary" />
+            <h3 className="text-sm font-black uppercase tracking-widest text-foreground/90">Sélection TEKH+</h3>
+          </div>
+          <div className="overflow-x-auto no-scrollbar pb-2 -mx-1 px-1 md:mx-0 md:px-0">
+            <div className="flex gap-4 min-w-0 md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 w-max md:w-full">
+              {FEATURED_DEALS.map((deal, index) => (
+                <div key={`featured-${index}`} className="w-[280px] sm:w-[300px] shrink-0 md:shrink md:w-auto">
+                  <PhoneCard
+                    brand={deal.brand}
+                    model={deal.model}
+                    condition={deal.condition}
+                    price={deal.price}
+                    originalPrice={deal.originalPrice}
+                    image={deal.image}
+                    tag={deal.tag}
+                    compact={isPWA}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Filters Bar */}

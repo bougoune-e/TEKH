@@ -19,9 +19,13 @@ const DealsSection = () => {
     { brand: "Samsung", model: "Galaxy A35", condition: "Bon", price: 180000, originalPrice: 220000, image: samsung, tag: "Vérifié" },
     { brand: "Google", model: "Pixel 6", condition: "Très bon", price: 210000, originalPrice: 260000, image: pixel, tag: "Nouveau" },
     { brand: "Huawei", model: "P40", condition: "Correct", price: 150000, originalPrice: 195000, image: huawei },
+    { brand: "Apple", model: "iPhone 13", condition: "Très bon", price: 320000, originalPrice: 380000, image: iphone, tag: "Populaire" },
+    { brand: "Samsung", model: "Galaxy A54", condition: "Neuf reconditionné", price: 220000, originalPrice: 280000, image: samsung, tag: "Vérifié" },
   ];
   const newPhones = [
     { brand: "Apple", model: "iPhone 14 (Neuf)", condition: "Neuf", price: 600000, originalPrice: 650000, image: iphone, tag: "Nouveau" },
+    { brand: "Samsung", model: "Galaxy S24 (Neuf)", condition: "Neuf", price: 450000, originalPrice: 500000, image: samsung, tag: "Nouveau" },
+    { brand: "Google", model: "Pixel 8 (Neuf)", condition: "Neuf", price: 380000, originalPrice: 420000, image: pixel, tag: "Nouveau" },
   ];
 
   const navigate = useNavigate();
