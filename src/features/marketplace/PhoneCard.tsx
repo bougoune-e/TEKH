@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 function tagClasses(t?: string) {
   if (!t) return "bg-primary text-primary-foreground";
   const s = t.toLowerCase();
+  if (s.includes("grade") || s.includes("neuf") || s.includes("scellé")) return "bg-[#00FF41] text-black font-black";
   if (s.includes("match parfait")) return "bg-emerald-600 text-white";
   if (s.includes("match partiel")) return "bg-amber-500 text-black";
   if (s.includes("proche")) return "bg-sky-600 text-white";
@@ -130,10 +131,10 @@ const PhoneCard = ({
         <div className="flex items-center justify-between w-full pt-3">
           <div className="flex flex-col">
             <span className={cn(
-              "text-xl font-black",
+              "text-2xl font-black tracking-tighter",
               isPWA ? "text-[#00FF41]" : "text-slate-900 dark:text-white"
             )}>
-              {price.toLocaleString()} <span className="text-[10px] text-slate-400">FCFA</span>
+              {price.toLocaleString()} <span className="text-[10px] text-slate-400 font-bold">FCFA</span>
             </span>
             {originalPrice && (
               <span className="text-xs text-slate-400 line-through opacity-70">
