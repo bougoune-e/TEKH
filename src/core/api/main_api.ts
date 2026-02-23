@@ -6,7 +6,12 @@
  */
 function getApiBaseUrl(): string {
   const env = import.meta.env.VITE_API_URL;
-  if (env && typeof env === "string" && env.trim()) return env.trim().replace(/\/$/, "");
+  if (env && typeof env === "string" && env.trim()) {
+    let base = env.trim().replace(/\/$/, "");
+    // Sans protocole, le navigateur traite l'URL en relative → 404 sur tekh-1.onrender.com/tekh-backend...
+    if (!/^https?:\/\//i.test(base)) base = `https://${base}`;
+    return base;
+  }
   if (typeof window !== "undefined") return window.location.origin;
   return "http://localhost:3001";
 }

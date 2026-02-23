@@ -18,4 +18,5 @@ export const supabase = (SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY)
   : null;
 
 export const TABLE_PRICES = PRICE_TABLE || 'prix_telephones';
+// Table d'import CSV. Doit exister dans Supabase (public). Sinon utiliser 'produits' ou créer la table.
 export const TABLE_PRODUCTS = PRODUCTS_TABLE || 'produits';

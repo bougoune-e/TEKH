@@ -134,9 +134,14 @@ async function importCsvOnce() {
       return;
     }
 
-    // Insertion en lot
+    // Insertion en lot (avec repli si table absente : PGRST205)
     console.log(`[API] Importation de ${produits.length} produits dans ${activeTable}...`);
-    const { error: insErr } = await supabase.from(activeTable).insert(produits);
+    let { error: insErr } = await supabase.from(activeTable).insert(produits);
+    if (insErr && insErr.code === "PGRST205" && activeTable !== "produits") {
+      console.warn(`[API] Table ${activeTable} introuvable à l'insert. Repli sur 'produits'.`);
+      activeTable = "produits";
+      insErr = (await supabase.from("produits").insert(produits)).error;
+    }
     if (insErr) {
       console.error("[API] Erreur import CSV -> Supabase:", insErr);
       return;
