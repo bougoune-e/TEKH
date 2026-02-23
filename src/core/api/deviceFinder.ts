@@ -131,7 +131,8 @@ export function detectDevice(): DetectedDevice {
         const parts = ua.split(';');
         if (parts.length > 2) {
             const modelPart = parts[2].split(')')[0].trim();
-            if (modelPart && !modelPart.includes('Build') && modelPart.length < 30) {
+            // Filter out single letters or common noise
+            if (modelPart && !modelPart.includes('Build') && modelPart.length > 2 && modelPart.length < 30) {
                 model = modelPart;
                 confidence = 0.8;
             }

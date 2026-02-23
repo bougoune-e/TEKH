@@ -124,7 +124,10 @@ export const TargetSelectionStep = ({
 
                     {targetStorage && (
                         <button
-                            onClick={() => setStep("comparison")}
+                            onClick={() => {
+                                setStep("comparison");
+                                window.scrollTo({ top: 0, behavior: "smooth" });
+                            }}
                             className="w-full h-16 rounded-full bg-black dark:bg-white text-white dark:text-black font-black text-xl uppercase italic tracking-[0.2em] shadow-2xl hover:scale-[1.02] active:scale-95 transition-all mt-8"
                         >
                             Calculer le Deal <ArrowRightLeft className="w-6 h-6 ml-4" />

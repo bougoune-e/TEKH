@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import { ShieldCheck, Smartphone, ArrowRightLeft, Zap } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { cn } from "@/core/api/utils";
 
 interface ComparisonStepProps {
     brand: string;
@@ -23,6 +25,10 @@ export const ComparisonStep = ({
 }: ComparisonStepProps) => {
     const { t } = useTranslation();
 
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }, []);
+
     // Defensive parsing to ensure we have numbers
     const safeFinalPrice = Number(finalPrice) || 0;
     const safeTargetPrice = Number(targetModelInfo?.base_price_fcfa) || 0;
@@ -41,10 +47,10 @@ export const ComparisonStep = ({
         <div className="p-6 sm:p-10 space-y-12 animate-in zoom-in-95 duration-700">
             <div className="text-center space-y-3">
                 <h2 className="text-4xl sm:text-6xl font-black tracking-tighter uppercase italic leading-[0.8] text-slate-900 dark:text-white mb-1">
-                    ACCORD DE <span className={cn(isPWA ? "text-[#00FF41]" : "text-[#064e3b] dark:text-primary", "italic")}>SWAP</span>
+                    ACCORD DE <span className={cn(isPWA ? "text-blue-600 dark:text-[#00FF41]" : "text-[#064e3b] dark:text-primary", "italic")}>SWAP</span>
                 </h2>
                 <div className="flex items-center justify-center gap-2">
-                    <ShieldCheck className={cn("w-4 h-4", isPWA ? "text-[#00FF41]" : "text-[#064e3b] dark:text-primary")} />
+                    <ShieldCheck className={cn("w-4 h-4", isPWA ? "text-blue-600 dark:text-[#00FF41]" : "text-[#064e3b] dark:text-primary")} />
                     <p className="text-slate-800 dark:text-zinc-300 font-black uppercase text-[9px] tracking-[0.5em]">CERTIFICATION TECHNIQUE TEKH+</p>
                 </div>
             </div>
@@ -59,7 +65,7 @@ export const ComparisonStep = ({
                         <div className="text-center">
                             <p className="text-[9px] font-black text-slate-800 dark:text-zinc-300 uppercase tracking-widest">{t('simulator.possession')}</p>
                             <h4 className="text-base font-black tracking-tighter text-black dark:text-white uppercase">{brand} {model}</h4>
-                            <p className="text-xl font-black text-blue-600 dark:text-primary mt-0.5">{formatCFA(safeFinalPrice)}</p>
+                            <p className="text-xl font-black text-blue-700 dark:text-primary mt-0.5">{formatCFA(safeFinalPrice)}</p>
                         </div>
                     </div>
 
@@ -80,7 +86,7 @@ export const ComparisonStep = ({
                         <div className="text-center">
                             <p className="text-[9px] font-black text-slate-800 dark:text-zinc-300 uppercase tracking-widest">{t('simulator.acquisition')}</p>
                             <h4 className="text-base font-black tracking-tighter text-black dark:text-white uppercase">{targetBrand} {targetModel}</h4>
-                            <p className="text-xl font-black text-blue-600 dark:text-primary mt-0.5">{formatCFA(safeTargetPrice)}</p>
+                            <p className="text-xl font-black text-blue-700 dark:text-primary mt-0.5">{formatCFA(safeTargetPrice)}</p>
                         </div>
                     </div>
                 </div>
