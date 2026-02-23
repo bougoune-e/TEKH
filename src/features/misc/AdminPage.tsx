@@ -90,7 +90,7 @@ export default function AdminPage() {
 
     if (!isAuthenticated) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-black text-white p-4">
+            <div className="min-h-dvh flex items-center justify-center bg-black text-white p-4">
                 <Card className="w-full max-w-md bg-zinc-900 border-zinc-800 text-white">
                     <CardHeader>
                         <CardTitle className="text-center flex flex-col items-center gap-2">
@@ -119,7 +119,7 @@ export default function AdminPage() {
     }
 
     return (
-        <div className="min-h-screen bg-black text-white pb-20 p-4 font-sans">
+        <div className="min-h-dvh bg-black text-white pb-20 p-4 font-sans">
             <header className="flex justify-between items-center mb-8 border-b border-zinc-800 pb-4">
                 <h1 className="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
                     <ShieldCheck className="text-green-500" /> TEKH<span className="text-yellow-500">CONTROL</span>

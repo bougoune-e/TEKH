@@ -8,7 +8,7 @@ const Hero = () => {
   const navigate = useNavigate();
   const isPWA = usePWA();
   return (
-    <section className="pt-24 pb-16 md:pt-32 md:pb-24 bg-background relative overflow-hidden">
+    <section className="pt-24 pb-16 md:pt-32 md:pb-24 bg-background relative overflow-hidden min-h-[85dvh] flex flex-col justify-center">
       <div className="container mx-auto px-6 relative z-10">
         <div className="grid md:grid-cols-2 gap-12 items-center">
 

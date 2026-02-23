@@ -56,7 +56,7 @@ export default function Login() {
   };
 
   return (
-    <section className="min-h-screen bg-white dark:bg-black flex flex-col items-center justify-center p-6 overflow-hidden">
+    <section className="min-h-dvh bg-white dark:bg-black flex flex-col items-center justify-center p-6 overflow-hidden">
       <MotionRings className="mb-12">
         <div className="text-center space-y-2 z-20">
           <h2 className="text-4xl font-black tracking-tighter text-black dark:text-white font-sans uppercase">{t('auth.login')}</h2>

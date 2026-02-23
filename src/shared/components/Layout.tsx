@@ -29,7 +29,7 @@ const Layout = () => {
   };
 
   return (
-    <div className={`flex min-h-screen bg-background text-foreground transition-colors ${isPWA ? 'mode-pwa' : ''}`}>
+    <div className={`flex min-h-[100dvh] bg-background text-foreground transition-colors overflow-x-hidden ${isPWA ? 'mode-pwa' : ''} pt-safe pb-safe`}>
       <Sidebar />
       <PWAInstallBanner />
       <div className="flex-1 flex flex-col md:pl-16 relative">

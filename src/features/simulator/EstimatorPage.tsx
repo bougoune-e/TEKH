@@ -463,7 +463,7 @@ export default function EstimatorPage() {
   );
 
   return (
-    <section className="py-2 sm:py-6 bg-slate-50 dark:bg-[#05070a] min-h-screen transition-colors duration-500 pb-32">
+    <section className="py-2 sm:py-6 bg-slate-50 dark:bg-[#05070a] min-h-dvh transition-colors duration-500 pb-32">
       <div className="container mx-auto px-6 max-w-5xl">
         <div className="mb-4 sm:mb-8 flex items-center gap-4 sm:gap-6">
           <Button

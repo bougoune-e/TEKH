@@ -42,7 +42,7 @@ const PinterestSidebar = () => {
     const inactiveClass = "text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5";
 
     return (
-        <aside className="hidden md:flex sticky top-0 left-0 h-screen w-20 bg-white dark:bg-black border-r border-slate-100 dark:border-white/5 flex-col items-center py-6 gap-6 z-[60] shrink-0">
+        <aside className="hidden md:flex sticky top-0 left-0 h-dvh w-20 bg-white dark:bg-black border-r border-slate-100 dark:border-white/5 flex-col items-center py-6 gap-6 z-[60] shrink-0">
             {/* Logo */}
             <RouterLink to="/" className="mb-4">
                 <div className="h-9 w-9 bg-slate-900 rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-lg overflow-hidden">
