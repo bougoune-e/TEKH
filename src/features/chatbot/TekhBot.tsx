@@ -4,9 +4,15 @@ import { cn } from "@/core/api/utils";
 import mascotVideo from "@/assets/illustrations/simulator/gifrobot.mp4";
 
 // Configuration Gemini — Appel REST direct pour un contrôle maximal
-const API_KEY = "AIzaSyDSp0724-D4f5bCLitXM_86VbMh2fF3bu8";
-const MODEL = "gemini-1.5-flash";
-const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${API_KEY}`;
+// ⚠️ La clé API est lue depuis les variables d'environnement Vite
+//    (VITE_GEMINI_API_KEY, VITE_GEMINI_MODEL). Aucune clé n'est hardcodée.
+const API_KEY = import.meta.env.VITE_GEMINI_API_KEY as string | undefined;
+const MODEL = (import.meta.env.VITE_GEMINI_MODEL as string | undefined) || "gemini-1.5-flash";
+
+function buildApiUrl(model: string) {
+    if (!API_KEY) return "";
+    return `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${API_KEY}`;
+}
 
 const SYSTEM_PROMPT = `Tu es TekhBot, l'assistant IA officiel et expert de la plateforme TEKH+.
 Ton objectif est d'aider les utilisateurs au quotidien pour tout ce qui concerne leur vie numérique et le programme SWAP.
@@ -61,6 +67,10 @@ function buildContents(messages: Message[], newUserInput: string) {
 }
 
 async function callGemini(messages: Message[], userInput: string): Promise<string> {
+    if (!API_KEY) {
+        throw new Error("Aucune clé API Gemini n'est configurée (VITE_GEMINI_API_KEY).");
+    }
+
     const body = {
         contents: buildContents(messages, userInput),
         generationConfig: {
@@ -69,7 +79,9 @@ async function callGemini(messages: Message[], userInput: string): Promise<strin
         }
     };
 
-    const res = await fetch(API_URL, {
+    const primaryUrl = buildApiUrl(MODEL);
+
+    const res = await fetch(primaryUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -144,9 +156,10 @@ export const TekhBot = () => {
             console.error("[TekhBot] Error:", err);
             const errorMsg = err?.message || "Erreur inconnue";
 
-            // Fallback : essai avec gemini-1.5-flash si le modèle 2.5 échoue
+            // Fallback : essai avec gemini-1.5-flash si le modèle configuré échoue
             try {
-                const fallbackUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+                const fallbackUrl = buildApiUrl("gemini-1.5-flash");
+                if (!fallbackUrl) throw new Error("Clé API Gemini manquante pour le fallback.");
                 const body = {
                     contents: buildContents(messages, currentInput),
                     generationConfig: { temperature: 0.8, maxOutputTokens: 1024 }
