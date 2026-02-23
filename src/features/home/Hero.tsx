@@ -148,8 +148,16 @@ const Hero = () => {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 2.5rem;
-          padding: 60px 40px;
+          gap: 1.5rem;
+          padding: 40px 20px;
+          transform: scale(0.9);
+        }
+        @media (min-width: 400px) {
+          .trade-in-container {
+            gap: 2.5rem;
+            padding: 60px 40px;
+            transform: scale(1);
+          }
         }
 
         .ti-device {
