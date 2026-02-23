@@ -135,6 +135,12 @@
     /* 24px - App feel */
   }
 
+  /* PWA: éviter que les dropdowns (Select, etc.) soient coupés ou sous d'autres couches */
+  .mode-pwa [data-radix-select-content],
+  .mode-pwa [data-radix-popper-content-wrapper] {
+    z-index: 9999 !important;
+  }
+
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;

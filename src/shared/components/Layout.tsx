@@ -8,6 +8,7 @@ import { useAuth } from "@/features/auth/auth.context";
 import { Bell, Bot, Settings as SettingsIcon } from "lucide-react";
 import logo from "@/assets/logos/robott.jpeg";
 import PWAInstallBanner from "@/shared/components/PWAInstallBanner";
+import NewVersionBanner from "@/shared/components/NewVersionBanner";
 import { TekhBot } from "@/features/chatbot/TekhBot";
 import { usePWA } from "@/shared/hooks/usePWA";
 import { Link } from "react-router-dom";
@@ -32,10 +33,10 @@ const Layout = () => {
     <div className={`flex min-h-[100dvh] bg-background text-foreground transition-colors overflow-x-hidden ${isPWA ? 'mode-pwa' : ''} pt-safe pb-safe`}>
       <Sidebar />
       <PWAInstallBanner />
-      <div className="flex-1 flex flex-col md:pl-16 relative">
-        {/* Premium Native Header (Pinterest-Smooth) */}
-        <header className="sticky top-0 z-40 border-b border-border/5 bg-background/90 backdrop-blur-xl transition-all h-safe-header pt-safe">
-          <div className="container mx-auto px-6 h-[70px] flex items-center justify-between gap-4">
+      <div className="flex-1 flex flex-col md:pl-16 relative min-w-0">
+        {/* Header pleine largeur — prend bien l'écran */}
+        <header className="sticky top-0 z-40 w-full border-b border-border/5 bg-background/95 backdrop-blur-xl transition-all pt-safe shrink-0">
+          <div className="w-full px-4 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between gap-3">
             {/* Branding / Logo Area */}
             <div className="flex items-center gap-3">
               <Link
@@ -52,8 +53,8 @@ const Layout = () => {
               </Link>
             </div>
 
-            {/* Central Search Bar - Pinterest Style (Centered & Fluid) */}
-            <div className="flex-1 max-w-lg">
+            {/* Barre de recherche centrée, fluide */}
+            <div className="flex-1 min-w-0 max-w-xl mx-auto">
               <SearchBar />
             </div>
 
@@ -74,12 +75,13 @@ const Layout = () => {
           </div>
         </header>
 
-        <main className="flex-1">
+        <main className="flex-1 min-w-0 w-full">
           <Outlet />
         </main>
         {showFooter && <Footer />}
       </div>
       <TekhBot />
+      <NewVersionBanner />
       <BottomNav />
     </div>
   );
