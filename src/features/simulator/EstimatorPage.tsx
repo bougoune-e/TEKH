@@ -189,17 +189,22 @@ export default function EstimatorPage() {
 
           setTimeout(async () => {
             const detection = detectDevice();
+            if (import.meta.env.DEV) {
+              console.log("[TEKH detect] RAW UA:", navigator.userAgent);
+              console.log("[TEKH detect] detectDevice result:", detection);
+            }
             let finalModel = detection.model;
 
-            // Enrichir avec Client Hints si dispo (Chrome peut donner le modèle exact, ex. iPhone 15)
             try {
               const hintModel = await getDeviceModelFromClientHints();
+              if (import.meta.env.DEV) console.log("[TEKH detect] ClientHints model:", hintModel);
               if (hintModel) finalModel = hintModel;
             } catch (_) { /* ignore */ }
 
             if (detection.confidence > 0.6) {
               setDetectedBrand(detection.brand);
               setDetectedModel(finalModel);
+              if (import.meta.env.DEV) console.log("[TEKH detect] state set → brand:", detection.brand, "model:", finalModel);
 
               const prediction = predictVariants(detection.brand, finalModel);
               try {
@@ -210,6 +215,7 @@ export default function EstimatorPage() {
                 }
               } catch (_) { /* ignore */ }
             } else {
+              if (import.meta.env.DEV) console.log("[TEKH detect] confidence too low → manual, result was:", detection);
               setDetectionStep("manual");
             }
             setIsScanning(false);
@@ -531,10 +537,14 @@ export default function EstimatorPage() {
                           onClick={async () => {
                             const canonicalBrand =
                               brands.find(b => b.toLowerCase() === detectedBrand.toLowerCase()) || detectedBrand;
+                            if (import.meta.env.DEV) {
+                              console.log("[TEKH confirm] detectedBrand:", detectedBrand, "canonicalBrand:", canonicalBrand, "brands from API:", brands.slice(0, 10));
+                            }
                             setBrand(canonicalBrand);
                             setModel(detectedModel);
                             try {
                               const v = await getAvailableVariants(canonicalBrand, detectedModel);
+                              if (import.meta.env.DEV) console.log("[TEKH confirm] getAvailableVariants count:", v?.length ?? 0);
                               if (v && v.length > 0) {
                                 const pred = predictVariants(detectedBrand, detectedModel);
                                 const match = v.find((x: any) => x.storage_gb === pred.storage) || v[0];

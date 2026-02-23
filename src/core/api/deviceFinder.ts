@@ -123,7 +123,8 @@ export function detectDevice(): DetectedDevice {
                 }
             }
         } else {
-            const brands = Object.keys(BRAND_MAPPING);
+            // Ne jamais tester "apple" sur Android : le UA contient "AppleWebKit" → faux positif
+            const brands = Object.keys(BRAND_MAPPING).filter(b => b !== 'apple');
             for (const b of brands) {
                 if (ua.toLowerCase().includes(b)) {
                     brand = BRAND_MAPPING[b];
