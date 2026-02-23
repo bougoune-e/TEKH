@@ -23,6 +23,11 @@ export default defineConfig(({ mode }) => ({
   build: {
     // Relax the warning threshold a bit and improve vendor chunking
     chunkSizeWarningLimit: 1024, // in kB
+    // Désactive le polyfill de modulePreload pour éviter certains bugs
+    // de chargement sur des bundles minifiés (ex: erreurs 'Cannot access S before initialization')
+    modulePreload: {
+      polyfill: false,
+    },
     rollupOptions: {
       output: {
         manualChunks(id) {
