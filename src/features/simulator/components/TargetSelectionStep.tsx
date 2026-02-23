@@ -72,6 +72,16 @@ export const TargetSelectionStep = ({
                 </button>
             </div>
 
+            {/* Explication TEKH+ des modes Upgrade / Downgrade */}
+            <div className="max-w-3xl mx-auto mt-3 text-xs sm:text-sm text-slate-600 dark:text-zinc-400 space-y-1">
+                <p className="font-semibold">
+                    <span className="font-black text-[#064e3b] dark:text-primary">UPGRADE</span> : vous utilisez la valeur de votre téléphone actuel comme apport pour viser un modèle plus performant (même gamme ou au-dessus).
+                </p>
+                <p className="font-semibold">
+                    <span className="font-black text-amber-500">DOWNGRADE</span> : vous choisissez un modèle plus simple afin de récupérer un maximum de liquidités en retour.
+                </p>
+            </div>
+
             {exchangeType && (
                 <div className="space-y-8 animate-in fade-in slide-in-from-top-10 duration-700 max-w-3xl mx-auto">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

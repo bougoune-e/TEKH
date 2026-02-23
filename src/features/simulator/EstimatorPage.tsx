@@ -50,7 +50,8 @@ export default function EstimatorPage() {
   const isPWA = usePWA();
 
   // Auto-detection states
-  const [detectionStep, setDetectionStep] = useState<"detecting" | "manual" | "confirmed">((isPWA || (typeof window !== 'undefined' && window.innerWidth < 1024)) ? "detecting" : "manual");
+  // Default to manual; we will switch to "detecting" via effect only for real PWA context.
+  const [detectionStep, setDetectionStep] = useState<"detecting" | "manual" | "confirmed">("manual");
   const [detectedBrand, setDetectedBrand] = useState<string>("");
   const [detectedModel, setDetectedModel] = useState<string>("");
   const [brands, setBrands] = useState<string[]>([]);
@@ -161,11 +162,14 @@ export default function EstimatorPage() {
   // Phone Finder state
   const [isScanning, setIsScanning] = useState(false);
 
+  // When we detect that we're truly in a PWA context, trigger one detection pass.
+  // If the user later switches to manual, we don't force detection again.
   useEffect(() => {
     if (isPWA && detectionStep === "manual") {
       setDetectionStep("detecting");
     }
-  }, [isPWA, detectionStep]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPWA]);
 
   useEffect(() => {
     (async () => {
@@ -174,11 +178,11 @@ export default function EstimatorPage() {
         const list = await fetchBrands();
         setBrands(list);
 
-        // Auto-scroll to top on step change
+        // Auto-scroll to top on init
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
-        // Advanced Phone Finder Logic
-        if ((isPWA || window.innerWidth < 1024) && detectionStep === "detecting") {
+        // Advanced Phone Finder Logic - PWA-only lite detection
+        if (isPWA && detectionStep === "detecting") {
           setIsScanning(true);
 
           // Native-feel: artificial delay for "scanning" effect
@@ -483,8 +487,8 @@ export default function EstimatorPage() {
             <h2 className="text-[10px] sm:text-sm font-bold uppercase tracking-widest text-[#064e3b] dark:text-[#00FF41] mb-1 font-sans">
               Programme d'échange
             </h2>
-            <h1 className="text-2xl sm:text-5xl font-black tracking-tight uppercase font-sans text-black dark:text-white">
-              Upgrade <span className="text-[#064e3b] dark:text-primary">TEKH+</span>
+            <h1 className="text-3xl sm:text-5xl font-black uppercase font-sans tracking-[0.35em] text-black dark:text-white">
+              UPGRADE <span className="text-[#064e3b] dark:text-primary">TEKH+</span>
             </h1>
           </div>
         </div>
@@ -536,10 +540,14 @@ export default function EstimatorPage() {
                       <div className="w-full space-y-4">
                         <Button
                           onClick={async () => {
-                            setBrand(detectedBrand);
+                            // Try to align detected brand with canonical list (case-insensitive)
+                            const canonicalBrand =
+                              brands.find(b => b.toLowerCase() === detectedBrand.toLowerCase()) || detectedBrand;
+
+                            setBrand(canonicalBrand);
                             setModel(detectedModel);
                             try {
-                              const v = await getAvailableVariants(detectedBrand, detectedModel);
+                              const v = await getAvailableVariants(canonicalBrand, detectedModel);
                               if (v && v.length > 0) {
                                 const pred = predictVariants(detectedBrand, detectedModel);
                                 const match = v.find((x: any) => x.storage_gb === pred.storage) || v[0];
