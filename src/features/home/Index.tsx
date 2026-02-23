@@ -46,14 +46,18 @@ const Index = () => {
   const isPWA = usePWA();
 
   return (
-    <main className={`bg-background pb-20 ${!isPWA ? 'pt-0' : ''}`}>
+    <main className={`bg-background pb-20 ${!isPWA ? "pt-0" : ""}`}>
       {isPWA ? (
-        /* VUE PWA / MOBILE NATIVE APP - ULTRA ÉPURÉE */
-        <div className="space-y-0 px-6">
-          <HomeCarousel />
-          <QuickActions />
-          <ServicesSection />
-          <DealsSection />
+        /* VUE PWA — header déjà pleine largeur, contenu fluide */
+        <div className="space-y-0">
+          <section className="w-full min-h-[50vh] md:min-h-[55vh]">
+            <HomeCarousel />
+          </section>
+          <div className="px-4 sm:px-6">
+            <QuickActions />
+            <ServicesSection />
+            <DealsSection />
+          </div>
         </div>
       ) : (
         /* VUE SITE WEB CLASSIQUE */
