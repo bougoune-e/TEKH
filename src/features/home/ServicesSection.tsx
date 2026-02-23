@@ -44,25 +44,46 @@ const ServicesSection = () => {
                     </p>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-                    {services.map((service, idx) => (
-                        <div
-                            key={idx}
-                            className="bg-white dark:bg-zinc-900 p-8 rounded-3xl border border-slate-100 dark:border-white/5 shadow-sm hover:shadow-xl transition-all group flex flex-col items-center text-center"
-                        >
-                            <div className={`${iconColor} w-16 h-16 rounded-2xl flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform`}>
-                                {React.cloneElement(service.icon as React.ReactElement, { className: `w-8 h-8 ${textColor}` })}
+                {isPWA ? (
+                    <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
+                        {services.map((service, idx) => (
+                            <button
+                                key={idx}
+                                className="bg-white dark:bg-zinc-900/40 p-6 rounded-[28px] border border-slate-100 dark:border-white/5 shadow-sm active:scale-95 transition-all group flex flex-col items-center text-center backdrop-blur-sm"
+                            >
+                                <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-primary/15 dark:bg-primary/10 group-hover:scale-110 transition-transform shadow-inner">
+                                    {React.cloneElement(service.icon as React.ReactElement, {
+                                        className: "w-8 h-8 text-primary",
+                                        strokeWidth: 2.5
+                                    })}
+                                </div>
+                                <span className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest opacity-80 group-hover:opacity-100">
+                                    {service.title}
+                                </span>
+                            </button>
+                        ))}
+                    </div>
+                ) : (
+                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        {services.map((service, idx) => (
+                            <div
+                                key={idx}
+                                className="bg-white dark:bg-zinc-900 p-8 rounded-2xl border border-slate-100 dark:border-white/5 shadow-sm hover:shadow-md transition-all group"
+                            >
+                                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-6 bg-blue-600 group-hover:scale-110 transition-transform`}>
+                                    {service.icon}
+                                </div>
+                                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">
+                                    {service.title}
+                                </h3>
+                                <p className="text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                                    {service.desc}
+                                </p>
                             </div>
-                            <h3 className="text-xl font-black text-slate-900 dark:text-white mb-3 tracking-tighter">
-                                {service.title}
-                            </h3>
-                            <p className="text-slate-500 dark:text-slate-400 font-semibold leading-relaxed">
-                                {service.desc}
-                            </p>
-                        </div>
-                    ))}
-                </div>
-            </div>
+                        ))}
+                    </div>
+                )}
+                坐            </div>
         </section>
     );
 };

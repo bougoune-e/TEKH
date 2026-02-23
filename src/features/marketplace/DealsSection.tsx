@@ -30,100 +30,126 @@ const DealsSection = () => {
       <div className="absolute inset-0 bg-gradient-subtle opacity-50"></div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center space-y-4 mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
-            Nos meilleurs <span className="text-primary">deals en live</span>
-          </h2>
-          <p className="text-sm font-bold text-muted-foreground max-w-2xl mx-auto uppercase tracking-wider">
-            Échange équitable certifié : marque, modèle et état pris en compte.
-          </p>
+        {!isPWA && (
+          <div className="flex flex-col md:flex-row items-center gap-8 mb-16">
+            <div className="flex-1 space-y-4">
+              <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white">
+                Les meilleurs <span className="text-blue-600">Deals</span>
+              </h2>
+              <p className="text-slate-500 dark:text-slate-400 font-medium text-lg leading-relaxed">
+                Découvrez notre sélection de smartphones reconditionnés et neufs au meilleur prix, certifiés par TEKH+.
+              </p>
+            </div>
+            <div className="flex-1 grid grid-cols-2 gap-4">
+              <img src={hpImg} alt="Smartphones" className="rounded-2xl shadow-lg border border-slate-100" />
+              <img src={hpImg2} alt="Smartphone" className="rounded-2xl shadow-lg mt-8 border border-slate-100" />
+            </div>
+          </div>
+        )}
 
-          {isPWA && (
-            <div className="flex justify-center mt-6">
-              <Button
-                onClick={() => navigate('/deals')}
-                className="bg-[#00FF41] hover:bg-[#00FF41]/90 text-black font-black rounded-full px-8 py-6 gap-3 shadow-lg shadow-[#00FF41]/20 active:scale-95 transition-all text-sm uppercase tracking-widest"
+        {isPWA && (
+          <div className="flex items-end justify-between mb-8">
+            <div className="space-y-1 text-left">
+              <h2 className="text-3xl md:text-5xl font-black tracking-tight text-foreground leading-tight">
+                Nos meilleurs <span className="text-primary">deals</span>
+              </h2>
+              <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] opacity-60">
+                Certifiés & Prêts pour le Swap
+              </p>
+            </div>
+            <button
+              onClick={() => navigate('/deals')}
+              className="text-[11px] font-black text-primary uppercase tracking-[0.15em] hover:opacity-70 transition-opacity pb-2"
+            >
+              VOIR TOUT
+            </button>
+          </div>
+        )}
+
+        <Tabs defaultValue="refurbished" className="w-full" aria-label="Catégories de deals">
+          <div className="flex items-center justify-between mb-8 overflow-x-auto no-scrollbar pb-2">
+            <TabsList className={`bg-transparent h-auto p-0 flex gap-6 border-none ${!isPWA ? 'border-b border-border w-full' : ''}`}>
+              <TabsTrigger
+                value="refurbished"
+                className={isPWA
+                  ? "bg-transparent border-none p-0 text-xl md:text-2xl font-black text-foreground/30 data-[state=active]:text-foreground data-[state=active]:bg-transparent transition-all relative after:absolute after:bottom-[-8px] after:left-0 after:w-0 data-[state=active]:after:w-full after:h-[3px] after:bg-primary after:transition-all"
+                  : "bg-transparent border-none px-0 py-2 text-lg font-bold text-slate-400 data-[state=active]:text-blue-600 data-[state=active]:bg-transparent transition-all relative data-[state=active]:after:w-full after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-blue-600"
+                }
               >
-                <ShoppingBag className="w-5 h-5" />
-                Explorer le catalogue
-              </Button>
-            </div>
-          )}
-          <div className="flex items-center justify-center gap-2 mt-4">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium bg-primary/10 text-primary border border-primary/20">
-              <Sparkles className="h-4 w-4" aria-hidden="true" />
-              2025
-            </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-bold bg-green-600 text-white border-none shadow-md">
-              <BadgeCheck className="h-4 w-4 text-white" aria-hidden="true" />
-              Neuf
-            </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium bg-amber-500/10 text-amber-600 border border-amber-500/20">
-              <Recycle className="h-4 w-4" aria-hidden="true" />
-              Reconditionné
-            </span>
+                Reconditionnés
+              </TabsTrigger>
+              <TabsTrigger
+                value="new"
+                className={isPWA
+                  ? "bg-transparent border-none p-0 text-xl md:text-2xl font-black text-foreground/30 data-[state=active]:text-foreground data-[state=active]:bg-transparent transition-all relative after:absolute after:bottom-[-8px] after:left-0 after:w-0 data-[state=active]:after:w-full after:h-[3px] after:bg-primary after:transition-all"
+                  : "bg-transparent border-none px-0 py-2 text-lg font-bold text-slate-400 data-[state=active]:text-blue-600 data-[state=active]:bg-transparent transition-all relative data-[state=active]:after:w-full after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-blue-600"
+                }
+              >
+                Neufs
+              </TabsTrigger>
+            </TabsList>
           </div>
-          <div className="mt-6 max-w-4xl mx-auto">
-            <div className="md:hidden -mx-4 px-4 overflow-x-auto snap-x snap-mandatory flex gap-4">
-              <div className="snap-start shrink-0 w-64 h-40 bg-card border border-border/60 rounded-2xl shadow-card overflow-hidden relative">
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-muted/40 to-muted/60" aria-hidden="true"></div>
-                <img src={hpImg} alt="Smartphones récents" className="w-full h-full object-cover" />
-              </div>
-              <div className="snap-start shrink-0 w-64 h-40 bg-card border border-border/60 rounded-2xl shadow-card overflow-hidden relative">
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-muted/40 to-muted/60" aria-hidden="true"></div>
-                <img src={hpImg2} alt="Sélection 2025" className="w-full h-full object-cover" />
-              </div>
-            </div>
-            <div className="hidden md:grid grid-cols-2 gap-5">
-              <div className="group relative bg-card border border-border/60 rounded-2xl shadow-card transition-all duration-300 hover:shadow-card-hover hover:-translate-y-0.5 overflow-hidden w-full h-48 flex items-center justify-center">
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-muted/40 to-muted/60" aria-hidden="true"></div>
-                <img src={hpImg} alt="Smartphones récents" className="relative max-w-full max-h-full object-contain" />
-              </div>
-              <div className="group relative bg-card border border-border/60 rounded-2xl shadow-card transition-all duration-300 hover:shadow-card-hover hover:-translate-y-0.5 overflow-hidden w-full h-48 flex items-center justify-center">
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-muted/40 to-muted/60" aria-hidden="true"></div>
-                <img src={hpImg2} alt="Sélection 2025" className="relative max-w-full max-h-full object-contain" />
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <Tabs defaultValue="refurbished" className="w-full flex flex-col items-center" aria-label="Catégories de deals">
-          <TabsList className="flex w-auto mx-auto mb-8 bg-zinc-100 dark:bg-zinc-900 p-1 rounded-[16px] border-2 border-black dark:border-white overflow-hidden h-auto">
-            <TabsTrigger
-              value="refurbished"
-              className="rounded-[12px] px-8 py-2.5 data-[state=active]:bg-black data-[state=active]:text-white dark:data-[state=active]:bg-white dark:data-[state=active]:text-black font-black transition-all duration-300 min-w-max"
-            >
-              Reconditionnés
-            </TabsTrigger>
-            <TabsTrigger
-              value="new"
-              className="rounded-[12px] px-8 py-2.5 data-[state=active]:bg-black data-[state=active]:text-white dark:data-[state=active]:bg-white dark:data-[state=active]:text-black font-black transition-all duration-300 min-w-max"
-            >
-              Neufs
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="refurbished">
+          <TabsContent value="refurbished" className="mt-0">
             {deals.length === 0 ? (
               <div className="text-center text-muted-foreground py-12 border border-dashed border-border/50 rounded-xl bg-card/40">
                 Aucune offre disponible pour le moment.
               </div>
             ) : (
-              <div className="deals-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {deals.map((deal, index) => (
-                  <PhoneCard key={index} {...deal} />
-                ))}
-              </div>
+              <>
+                {isPWA ? (
+                  <>
+                    {/* Mobile: Horizontal Carousel */}
+                    <div className="md:hidden -mx-4 px-4 scroll-horizontal snap-x snap-mandatory">
+                      {deals.map((deal, index) => (
+                        <div key={index} className="scroll-snap-center shrink-0 w-[280px]">
+                          <PhoneCard {...deal} />
+                        </div>
+                      ))}
+                      <div className="shrink-0 w-8" />
+                    </div>
+
+                    {/* Desktop: Asymmetric Pinterest Grid */}
+                    <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-6">
+                      {deals.map((deal, index) => (
+                        <div
+                          key={index}
+                          className={`${index % 3 === 0 ? 'lg:row-span-2' : ''} h-full`}
+                        >
+                          <PhoneCard {...deal} isLarge={index % 3 === 0} />
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {deals.map((deal, index) => (
+                      <PhoneCard key={index} {...deal} />
+                    ))}
+                  </div>
+                )}
+              </>
             )}
           </TabsContent>
 
-          <TabsContent value="new">
-            {newPhones.length === 0 ? (
-              <div className="text-center text-muted-foreground py-12 border border-dashed border-border/50 rounded-xl bg-card/40">
-                Aucun téléphone neuf disponible pour le moment.
-              </div>
+          <TabsContent value="new" className="mt-0">
+            {isPWA ? (
+              <>
+                <div className="md:hidden -mx-4 px-4 scroll-horizontal snap-x snap-mandatory">
+                  {newPhones.map((phone, index) => (
+                    <div key={index} className="scroll-snap-center shrink-0 w-[280px]">
+                      <PhoneCard {...phone} />
+                    </div>
+                  ))}
+                </div>
+                <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-6">
+                  {newPhones.map((phone, index) => (
+                    <PhoneCard key={index} {...phone} />
+                  ))}
+                </div>
+              </>
             ) : (
-              <div className="deals-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {newPhones.map((phone, index) => (
                   <PhoneCard key={index} {...phone} />
                 ))}
@@ -131,7 +157,7 @@ const DealsSection = () => {
             )}
           </TabsContent>
         </Tabs>
-
+        坐
         <div className="text-center mt-12">
           <Button
             onClick={() => navigate('/deals')}
