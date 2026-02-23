@@ -11,10 +11,9 @@ export const usePWA = () => {
         const checkPWA = () => {
             const isStandalone = window.matchMedia('(display-mode: standalone)').matches
                 || (window.navigator as any).standalone
-                || document.referrer.includes('android-app://');
+                || document.referrer.includes('android-app://')
+                || window.innerWidth < 768;
 
-            // For development and user preference, we might also consider small screens 
-            // as "PWA-like" context if that's the intention.
             setIsPWA(isStandalone);
         };
 
