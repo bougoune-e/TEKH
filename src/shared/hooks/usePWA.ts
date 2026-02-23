@@ -12,7 +12,7 @@ export const usePWA = () => {
             const isStandalone = window.matchMedia('(display-mode: standalone)').matches
                 || (window.navigator as any).standalone
                 || document.referrer.includes('android-app://')
-                || window.innerWidth < 768;
+                || document.referrer.includes('android-app://');
 
             setIsPWA(isStandalone);
         };

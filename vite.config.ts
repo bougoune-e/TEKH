@@ -18,6 +18,36 @@ export default defineConfig(({ mode }) => ({
       "@shared": path.resolve(__dirname, "./src/shared"),
       "@app": path.resolve(__dirname, "./src/app"),
     },
-    extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json'],
+    extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json"],
+  },
+  build: {
+    // Relax the warning threshold a bit and improve vendor chunking
+    chunkSizeWarningLimit: 1024, // in kB
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("node_modules")) {
+            if (id.includes("react") || id.includes("react-dom") || id.includes("react-router-dom")) {
+              return "react-vendor";
+            }
+            if (id.includes("@tanstack/react-query")) {
+              return "react-query";
+            }
+            if (id.includes("@supabase")) {
+              return "supabase";
+            }
+            if (id.includes("recharts")) {
+              return "charts";
+            }
+            if (id.includes("framer-motion")) {
+              return "motion";
+            }
+            if (id.includes("@radix-ui")) {
+              return "radix";
+            }
+          }
+        },
+      },
+    },
   },
 }));

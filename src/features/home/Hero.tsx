@@ -13,7 +13,7 @@ const Hero = () => {
         <div className="grid md:grid-cols-2 gap-12 items-center">
 
           {/* LEFT: text + mascot */}
-          <div className="flex flex-col items-center text-center md:items-start md:text-left space-y-6" style={{ animation: 'reveal 700ms ease-out both' }}>
+          <div className="space-y-6" style={{ animation: 'reveal 700ms ease-out both' }}>
             <div className="flex flex-col md:flex-row items-center gap-6">
               <div className="relative group perspective-1000">
                 <div className="absolute -top-12 -right-12 z-20 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
@@ -21,20 +21,20 @@ const Hero = () => {
                     {Math.random() > 0.5 ? "Besoin d'un diagnostic ?" : "Prêt pour un Swap ?"}
                   </div>
                 </div>
-                <div className="w-20 h-20 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-accent/20 shadow-glow animate-levitate bg-black transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3 cursor-pointer">
+                <div className="w-14 h-14 md:w-28 md:h-28 rounded-full overflow-hidden border-4 border-accent/20 shadow-glow animate-levitate bg-black transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3 cursor-pointer">
                   <video
                     src={mascotVideo}
                     autoPlay
                     loop
                     muted
                     playsInline
-                    className="w-full h-full object-cover scale-150"
+                    className="w-full h-full object-cover scale-125"
                   />
                 </div>
               </div>
 
-              <h1 className="text-3xl md:text-5xl lg:text-8xl font-black leading-[1.1] tracking-tighter text-black dark:text-white">
-                <span className="block mb-2">Change ton</span>
+              <h1 className="text-2xl md:text-5xl lg:text-8xl font-black leading-[1.2] tracking-tighter text-black dark:text-white">
+                <span className="block mb-1">Change ton</span>
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-black via-primary to-black dark:bg-none dark:text-white">téléphone,</span>
                 <br />
                 <span className="text-primary italic drop-shadow-sm font-black">pas ton budget.</span>
@@ -50,8 +50,8 @@ const Hero = () => {
               <Button
                 onClick={() => navigate('/simulateur')}
                 className={isPWA
-                  ? "group rounded-full px-10 py-7 shadow-[0_20px_40px_rgba(0,255,65,0.25)] bg-[#00FF41] hover:bg-[#00FF41]/90 text-black font-black text-xl transition-all duration-300 active:scale-95"
-                  : "group rounded-full px-8 py-6 font-bold text-lg"
+                  ? "group rounded-full px-6 py-5 shadow-[0_15px_30px_rgba(0,255,65,0.2)] bg-[#00FF41] hover:bg-[#00FF41]/90 text-black font-black text-lg transition-all duration-300 active:scale-95"
+                  : "group rounded-full px-6 py-4 font-bold text-base md:text-lg"
                 }
               >
                 Estimer mon téléphone
