@@ -21,7 +21,7 @@ const QuickActions = () => {
   ];
 
   return (
-    <section className="px-4 -mt-10 relative z-20 md:hidden">
+    <section className="px-6 -mt-10 relative z-20 md:hidden">
       <div className="grid grid-cols-4 gap-3">
         {actions.map((action, i) => (
           <button
@@ -49,7 +49,7 @@ const Index = () => {
     <main className={`bg-background pb-20 ${!isPWA ? 'pt-0' : ''}`}>
       {isPWA ? (
         /* VUE PWA / MOBILE NATIVE APP - ULTRA ÉPURÉE */
-        <div className="space-y-0">
+        <div className="space-y-0 px-6">
           <HomeCarousel />
           <QuickActions />
           <ServicesSection />

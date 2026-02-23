@@ -10,7 +10,7 @@ const features = [
 const MessagingSection = () => {
   return (
     <section className="py-16 md:py-24 border-t border-border">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-6">
         <div className="grid md:grid-cols-2 gap-10 items-center">
           <div>
             <h2 className="text-3xl font-bold mb-3">Messagerie sécurisée</h2>
