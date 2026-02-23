@@ -162,10 +162,10 @@ export default function EstimatorPage() {
   // Phone Finder state
   const [isScanning, setIsScanning] = useState(false);
 
-  // When we detect that we're truly in a PWA context, trigger one detection pass.
-  // If the user later switches to manual, we don't force detection again.
+  // PWA ou mobile : lancer la détection du modèle au chargement.
   useEffect(() => {
-    if (isPWA && detectionStep === "manual") {
+    const isMobileOrPWA = isPWA || (typeof window !== "undefined" && window.innerWidth < 1024);
+    if (isMobileOrPWA && detectionStep === "manual") {
       setDetectionStep("detecting");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -181,8 +181,8 @@ export default function EstimatorPage() {
         // Auto-scroll to top on init
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
-        // Advanced Phone Finder Logic - PWA-only lite detection
-        if (isPWA && detectionStep === "detecting") {
+        // Phone Finder (PWA + mobile web) quand on est en phase détection
+        if (detectionStep === "detecting") {
           setIsScanning(true);
 
           // Native-feel: artificial delay for "scanning" effect
@@ -216,7 +216,7 @@ export default function EstimatorPage() {
         setLoadingBrands(false);
       }
     })();
-  }, [isPWA]);
+  }, [isPWA, detectionStep]);
 
   useEffect(() => {
     if (!brand) {
@@ -499,9 +499,7 @@ export default function EstimatorPage() {
           <CardContent className="p-0">
             {step === "estimation" ? (
               <div className="p-0 animate-in fade-in duration-700">
-                {/* 
-                   AUTO-DETECTION FLOW (Only on Mobile/PWA and when in 'detecting' state)
-                */}
+                {/* Auto-détection (PWA ou mobile) quand en état "detecting" */}
                 {(isPWA || (typeof window !== 'undefined' && window.innerWidth < 1024)) && detectionStep === "detecting" ? (
                   isScanning ? (
                     <div className="p-12 flex flex-col items-center justify-center min-h-[450px] space-y-8 animate-in fade-in zoom-in duration-500">

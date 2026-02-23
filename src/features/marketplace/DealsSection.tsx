@@ -93,12 +93,14 @@ const DealsSection = () => {
               </div>
             ) : (
               <div className={cn(
-                "grid gap-6",
-                isPWA ? "flex overflow-x-auto no-scrollbar scroll-horizontal pb-4 -mx-4 px-4" : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+                "gap-4",
+                isPWA
+                  ? "grid grid-cols-2 gap-4"
+                  : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
               )}>
                 {deals.map((deal, index) => (
-                  <div key={index} className={cn(isPWA && "min-w-[280px] scroll-snap-center")}>
-                    <PhoneCard {...deal} />
+                  <div key={index}>
+                    <PhoneCard {...deal} compact={isPWA} />
                   </div>
                 ))}
               </div>
@@ -107,12 +109,14 @@ const DealsSection = () => {
 
           <TabsContent value="new" className="mt-0">
             <div className={cn(
-              "grid gap-6",
-              isPWA ? "flex overflow-x-auto no-scrollbar scroll-horizontal pb-4 -mx-4 px-4" : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+              "gap-4",
+              isPWA
+                ? "grid grid-cols-2 gap-4"
+                : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
             )}>
               {newPhones.map((phone, index) => (
-                <div key={index} className={cn(isPWA && "min-w-[280px] scroll-snap-center")}>
-                  <PhoneCard {...phone} />
+                <div key={index}>
+                  <PhoneCard {...phone} compact={isPWA} />
                 </div>
               ))}
             </div>

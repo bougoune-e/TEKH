@@ -44,6 +44,8 @@ interface PhoneCardProps {
   location?: string;
   createdAt?: string;
   onDelete?: (() => void) | null;
+  /** En PWA : rend la carte plus petite pour faciliter le scroll */
+  compact?: boolean;
 }
 
 const PhoneCard = ({
@@ -57,6 +59,7 @@ const PhoneCard = ({
   tag,
   badges = [],
   location,
+  compact = false,
 }: PhoneCardProps) => {
   const navigate = useNavigate();
   const isPWA = usePWA();
@@ -66,57 +69,58 @@ const PhoneCard = ({
       onClick={() => { if (id) navigate(`/deal/${id}`); }}
       className={cn(
         "group overflow-hidden transition-all duration-300 cursor-pointer h-full flex flex-col hover:shadow-lg rounded-2xl",
+        compact && "rounded-xl",
         isPWA
           ? "phone-card"
           : "border-slate-200/60 dark:border-white/5 hover:border-blue-500/30 bg-white dark:bg-zinc-950"
       )}
     >
-      <div className="relative aspect-[4/3] overflow-hidden bg-slate-50 dark:bg-zinc-900/50">
+      <div className={cn("relative overflow-hidden bg-slate-50 dark:bg-zinc-900/50", compact ? "aspect-[4/3] max-h-[120px]" : "aspect-[4/3]")}>
         {image ? (
           <img
             src={image}
             alt={model}
-            className="h-full w-full object-contain p-4 transition-transform duration-500 group-hover:scale-105"
+            className={cn("h-full w-full object-contain transition-transform duration-500 group-hover:scale-105", compact ? "p-2" : "p-4")}
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
-            <Smartphone className="w-12 h-12 text-slate-200" />
+            <Smartphone className={cn("text-slate-200", compact ? "w-8 h-8" : "w-12 h-12")} />
           </div>
         )}
         {tag && (
-          <Badge className={`absolute top-3 left-3 z-10 font-bold border-none shadow-sm ${tagClasses(tag)}`}>
+          <Badge className={cn("absolute top-2 left-2 z-10 font-bold border-none shadow-sm", compact ? "text-[9px] px-1.5 py-0" : "top-3 left-3", tagClasses(tag))}>
             {tag}
           </Badge>
         )}
       </div>
 
-      <CardHeader className="p-4 pb-2">
+      <CardHeader className={compact ? "p-2 pb-0" : "p-4 pb-2"}>
         <div className="flex justify-between items-start gap-2">
           <div>
-            <p className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider mb-1">
+            <p className={cn("font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider mb-1", compact ? "text-[9px]" : "text-xs")}>
               {brand}
             </p>
-            <h3 className="font-bold text-slate-900 dark:text-white line-clamp-1 group-hover:text-blue-600 transition-colors">
+            <h3 className={cn("font-bold text-slate-900 dark:text-white line-clamp-1 group-hover:text-blue-600 transition-colors", compact ? "text-xs" : "")}>
               {model}
             </h3>
           </div>
         </div>
       </CardHeader>
 
-      <CardContent className="p-4 pt-0 flex-1">
-        <div className="flex flex-wrap gap-1.5 mb-3">
+      <CardContent className={cn("flex-1", compact ? "p-2 pt-0 min-h-0" : "p-4 pt-0")}>
+        <div className={cn("flex flex-wrap gap-1.5", compact ? "mb-1" : "mb-3")}>
           {badges.map((badge, idx) => (
-            <Badge key={idx} variant="secondary" className={`text-[10px] px-2 py-0 border-none font-medium ${badgeClasses(badge)}`}>
+            <Badge key={idx} variant="secondary" className={cn("border-none font-medium", compact ? "text-[8px] px-1.5 py-0 hidden" : "text-[10px] px-2 py-0", badgeClasses(badge))}>
               {badge}
             </Badge>
           ))}
           {condition && (
-            <Badge variant="outline" className="text-[10px] px-2 py-0 border-slate-200 text-slate-600 font-medium">
+            <Badge variant="outline" className={cn("border-slate-200 text-slate-600 font-medium", compact ? "text-[8px] px-1.5 py-0" : "text-[10px] px-2 py-0")}>
               {condition}
             </Badge>
           )}
         </div>
-        {location && (
+        {location && !compact && (
           <div className="flex items-center text-slate-400 text-[11px] font-medium">
             <MapPin className="h-3 w-3 mr-1" />
             {location}
@@ -125,28 +129,31 @@ const PhoneCard = ({
       </CardContent>
 
       <CardFooter className={cn(
-        "p-4 pt-0 mt-auto",
+        "pt-0 mt-auto",
+        compact ? "p-2" : "p-4 pt-0",
         !isPWA && "border-t border-slate-50 dark:border-white/5 bg-slate-50/30 dark:bg-transparent"
       )}>
-        <div className="flex items-center justify-between w-full pt-3">
+        <div className={cn("flex items-center justify-between w-full", compact ? "pt-1" : "pt-3")}>
           <div className="flex flex-col">
             <span className={cn(
-              "text-2xl font-black tracking-tighter",
+              "font-black tracking-tighter",
+              compact ? "text-base" : "text-2xl",
               isPWA ? "text-[#00FF41]" : "text-slate-900 dark:text-white"
             )}>
-              {price.toLocaleString()} <span className="text-[10px] text-slate-400 font-bold">FCFA</span>
+              {price.toLocaleString()} <span className={cn("text-slate-400 font-bold", compact ? "text-[8px]" : "text-[10px]")}>FCFA</span>
             </span>
             {originalPrice && (
-              <span className="text-xs text-slate-400 line-through opacity-70">
+              <span className={cn("text-slate-400 line-through opacity-70", compact ? "text-[9px]" : "text-xs")}>
                 {originalPrice.toLocaleString()}
               </span>
             )}
           </div>
           <Button size="icon" className={cn(
-            "w-10 h-10 rounded-xl shadow-lg shrink-0",
+            "rounded-xl shadow-lg shrink-0",
+            compact ? "w-8 h-8" : "w-10 h-10",
             isPWA ? "bg-zinc-800 hover:bg-zinc-700 text-white" : "bg-blue-600 hover:bg-blue-700 text-white"
           )}>
-            <ShoppingCart className="w-5 h-5" />
+            <ShoppingCart className={compact ? "w-4 h-4" : "w-5 h-5"} />
           </Button>
         </div>
       </CardFooter>
