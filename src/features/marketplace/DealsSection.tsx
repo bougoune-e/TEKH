@@ -49,18 +49,13 @@ const DealsSection = () => {
         )}
 
         {isPWA && (
-          <div className="flex items-end justify-between mb-8">
-            <div className="space-y-1 text-left">
-              <h2 className="text-3xl md:text-5xl font-black tracking-tight text-foreground leading-tight">
-                Nos meilleurs <span className="text-primary">deals</span>
-              </h2>
-              <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] opacity-60">
-                Certifiés & Prêts pour le Swap
-              </p>
-            </div>
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white uppercase">
+              Nos meilleurs deals
+            </h2>
             <button
               onClick={() => navigate('/deals')}
-              className="text-[11px] font-black text-primary uppercase tracking-[0.15em] hover:opacity-70 transition-opacity pb-2"
+              className="text-xs font-black text-[#00FF41] uppercase tracking-widest hover:opacity-70 transition-opacity"
             >
               VOIR TOUT
             </button>
