@@ -35,7 +35,7 @@ const Layout = () => {
       <div className="flex-1 flex flex-col md:pl-16 relative">
         {/* Premium Native Header (Pinterest-Smooth) */}
         <header className="sticky top-0 z-40 border-b border-border/5 bg-background/90 backdrop-blur-xl transition-all h-safe-header pt-safe">
-          <div className="container mx-auto px-5 h-[70px] flex items-center justify-between gap-4">
+          <div className="container mx-auto px-6 h-[70px] flex items-center justify-between gap-4">
             {/* Branding / Logo Area */}
             <div className="flex items-center gap-3">
               <Link

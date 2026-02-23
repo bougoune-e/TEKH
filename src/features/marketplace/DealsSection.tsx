@@ -30,7 +30,7 @@ const DealsSection = () => {
       {/* Effet de fond subtil */}
       <div className="absolute inset-0 bg-gradient-subtle opacity-50"></div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-6 relative z-10">
         {!isPWA && (
           <div className="flex flex-col md:flex-row items-center gap-8 mb-16">
             <div className="flex-1 space-y-4">

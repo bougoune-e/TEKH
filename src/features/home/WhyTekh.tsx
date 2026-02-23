@@ -25,7 +25,7 @@ const reasons = [
 const WhyTekh = () => {
     return (
         <section className="py-16 bg-white dark:bg-black">
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto px-6">
                 <div className="text-center mb-12">
                     <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white mb-4">Pourquoi TEKH ?</h2>
                     <p className="text-slate-500 dark:text-slate-400 font-bold max-w-2xl mx-auto">

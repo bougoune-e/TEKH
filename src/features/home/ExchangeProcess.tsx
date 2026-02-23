@@ -31,7 +31,7 @@ const ExchangeProcess = () => {
 
     return (
         <section className="py-10 md:py-16 bg-white dark:bg-black overflow-hidden">
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto px-6">
                 <div className="text-center mb-8 space-y-2">
                     <h2 className="text-3xl md:text-5xl font-black tracking-tighter text-black dark:text-white">
                         Le processus <span className="italic" style={{ color: '#00FF41' }}>SWAP.</span>

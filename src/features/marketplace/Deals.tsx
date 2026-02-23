@@ -147,7 +147,7 @@ export default function DealsPage() {
 
   return (
     <section className="py-8 bg-background min-h-screen">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-6">
         {/* Header / Trends */}
         {/* PWA Optimised Header - Simple and Clean */}
         <div className="flex items-center gap-3 mb-6 animate-in slide-in-from-left-2 duration-500">
