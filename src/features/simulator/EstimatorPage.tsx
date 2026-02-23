@@ -42,7 +42,7 @@ import { ComparisonStep } from "./components/ComparisonStep";
 import { PhotoStep } from "./components/PhotoStep";
 import { usePWA } from "@/shared/hooks/usePWA";
 import { Search, RotateCcw, Loader2 } from "lucide-react";
-import { detectDevice, predictVariants } from "@/core/api/deviceFinder";
+import { detectDevice, predictVariants, isMobileUserAgent, getDeviceModelFromClientHints } from "@/core/api/deviceFinder";
 
 export default function EstimatorPage() {
   const { t } = useTranslation();
@@ -162,10 +162,12 @@ export default function EstimatorPage() {
   // Phone Finder state
   const [isScanning, setIsScanning] = useState(false);
 
-  // PWA ou mobile : lancer la détection du modèle au chargement.
+  // PWA ou mobile (viewport ou User-Agent) : lancer la détection du modèle au chargement.
   useEffect(() => {
-    const isMobileOrPWA = isPWA || (typeof window !== "undefined" && window.innerWidth < 1024);
-    if (isMobileOrPWA && detectionStep === "manual") {
+    const byViewport = typeof window !== "undefined" && window.innerWidth < 1024;
+    const byUA = typeof navigator !== "undefined" && isMobileUserAgent();
+    const shouldDetect = isPWA || byViewport || byUA;
+    if (shouldDetect && detectionStep === "manual") {
       setDetectionStep("detecting");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -185,25 +187,28 @@ export default function EstimatorPage() {
         if (detectionStep === "detecting") {
           setIsScanning(true);
 
-          // Native-feel: artificial delay for "scanning" effect
           setTimeout(async () => {
             const detection = detectDevice();
+            let finalModel = detection.model;
+
+            // Enrichir avec Client Hints si dispo (Chrome peut donner le modèle exact, ex. iPhone 15)
+            try {
+              const hintModel = await getDeviceModelFromClientHints();
+              if (hintModel) finalModel = hintModel;
+            } catch (_) { /* ignore */ }
 
             if (detection.confidence > 0.6) {
               setDetectedBrand(detection.brand);
-              setDetectedModel(detection.model);
+              setDetectedModel(finalModel);
 
-              // PREDICT VARIANTS (RAM/Storage)
-              const prediction = predictVariants(detection.brand, detection.model);
-
-              // Verify prediction against DB if possible
-              const variants = await getAvailableVariants(detection.brand, detection.model);
-              if (variants && variants.length > 0) {
-                // Find closest match or first
-                const match = variants.find(v => v.storage_gb === prediction.storage) || variants[0];
-                // We don't set the actual brand/model/storage state yet,
-                // we keep them in "detected" state until confirmed.
-              }
+              const prediction = predictVariants(detection.brand, finalModel);
+              try {
+                const variants = await getAvailableVariants(detection.brand, finalModel);
+                if (variants && variants.length > 0) {
+                  const match = variants.find((v: any) => v.storage_gb === prediction.storage) || variants[0];
+                  // gardé pour usage à la confirmation
+                }
+              } catch (_) { /* ignore */ }
             } else {
               setDetectionStep("manual");
             }
@@ -499,8 +504,8 @@ export default function EstimatorPage() {
           <CardContent className="p-0">
             {step === "estimation" ? (
               <div className="p-0 animate-in fade-in duration-700">
-                {/* Auto-détection (PWA ou mobile) quand en état "detecting" */}
-                {(isPWA || (typeof window !== 'undefined' && window.innerWidth < 1024)) && detectionStep === "detecting" ? (
+                {/* Auto-détection : afficher dès qu'on est en phase "detecting" (déclenchée par PWA / viewport / UA mobile) */}
+                {detectionStep === "detecting" ? (
                   isScanning ? (
                     <div className="p-12 flex flex-col items-center justify-center min-h-[450px] space-y-8 animate-in fade-in zoom-in duration-500">
                       <div className="relative">
