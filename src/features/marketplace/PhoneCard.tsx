@@ -2,6 +2,8 @@ import { Button } from "@/shared/ui/button";
 import { Badge } from "@/shared/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader } from "@/shared/ui/card";
 import { Smartphone, MapPin, ShoppingCart } from "lucide-react";
+import { cn } from "@/core/api/utils";
+import { usePWA } from "@/shared/hooks/usePWA";
 import { useNavigate } from "react-router-dom";
 
 function tagClasses(t?: string) {
@@ -56,11 +58,17 @@ const PhoneCard = ({
   location,
 }: PhoneCardProps) => {
   const navigate = useNavigate();
+  const isPWA = usePWA();
 
   return (
     <Card
       onClick={() => { if (id) navigate(`/deal/${id}`); }}
-      className="group overflow-hidden border-slate-200/60 dark:border-white/5 hover:border-blue-500/30 transition-all duration-300 cursor-pointer h-full flex flex-col hover:shadow-lg bg-white dark:bg-zinc-950 rounded-xl"
+      className={cn(
+        "group overflow-hidden transition-all duration-300 cursor-pointer h-full flex flex-col hover:shadow-lg rounded-2xl",
+        isPWA
+          ? "phone-card"
+          : "border-slate-200/60 dark:border-white/5 hover:border-blue-500/30 bg-white dark:bg-zinc-950"
+      )}
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-slate-50 dark:bg-zinc-900/50">
         {image ? (
@@ -115,10 +123,16 @@ const PhoneCard = ({
         )}
       </CardContent>
 
-      <CardFooter className="p-4 pt-0 border-t border-slate-50 dark:border-white/5 mt-auto bg-slate-50/30 dark:bg-transparent">
+      <CardFooter className={cn(
+        "p-4 pt-0 mt-auto",
+        !isPWA && "border-t border-slate-50 dark:border-white/5 bg-slate-50/30 dark:bg-transparent"
+      )}>
         <div className="flex items-center justify-between w-full pt-3">
           <div className="flex flex-col">
-            <span className="text-xl font-black text-[#00FF41]">
+            <span className={cn(
+              "text-xl font-black",
+              isPWA ? "text-[#00FF41]" : "text-slate-900 dark:text-white"
+            )}>
               {price.toLocaleString()} <span className="text-[10px] text-slate-400">FCFA</span>
             </span>
             {originalPrice && (
@@ -127,7 +141,10 @@ const PhoneCard = ({
               </span>
             )}
           </div>
-          <Button size="icon" className="w-10 h-10 rounded-xl bg-slate-800 hover:bg-slate-700 text-white shadow-lg shrink-0">
+          <Button size="icon" className={cn(
+            "w-10 h-10 rounded-xl shadow-lg shrink-0",
+            isPWA ? "bg-zinc-800 hover:bg-zinc-700 text-white" : "bg-blue-600 hover:bg-blue-700 text-white"
+          )}>
             <ShoppingCart className="w-5 h-5" />
           </Button>
         </div>

@@ -261,6 +261,24 @@ export const TekhBot = () => {
                 </div>
             )}
 
+            {/* Quick Suggestions */}
+            <div className="px-4 py-2 flex gap-2 overflow-x-auto no-scrollbar bg-slate-50 dark:bg-black/40 border-t border-slate-100 dark:border-white/5">
+                {[
+                    { label: "📱 Estimer", text: "Comment estimer mon téléphone ?" },
+                    { label: "🔄 Swap", text: "C'est quoi le programme SWAP ?" },
+                    { label: "💎 Deals", text: "Quels sont les meilleurs deals ?" },
+                    { label: "🏪 DealBoxes", text: "Où sont les boutiques TEKH+ ?" }
+                ].map((s, i) => (
+                    <button
+                        key={i}
+                        onClick={() => { setInput(s.text); }}
+                        className="whitespace-nowrap px-3 py-1.5 rounded-full bg-white dark:bg-zinc-900 border border-slate-200 dark:border-white/10 text-[10px] font-black uppercase tracking-wider text-slate-600 dark:text-zinc-400 hover:border-primary hover:text-primary transition-all active:scale-95"
+                    >
+                        {s.label}
+                    </button>
+                ))}
+            </div>
+
             {/* Input Section */}
             <div className="p-4 border-t border-slate-100 dark:border-white/5 bg-white dark:bg-black/95 backdrop-blur-xl shrink-0 pb-safe">
                 <div className="relative flex items-center gap-3">
