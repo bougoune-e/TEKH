@@ -18,7 +18,13 @@ export const usePWA = () => {
         };
 
         checkPWA();
+        window.addEventListener('resize', checkPWA);
         window.matchMedia('(display-mode: standalone)').addListener(checkPWA);
+
+        return () => {
+            window.removeEventListener('resize', checkPWA);
+            window.matchMedia('(display-mode: standalone)').removeListener(checkPWA);
+        };
     }, []);
 
     return isPWA;

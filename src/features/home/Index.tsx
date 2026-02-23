@@ -22,7 +22,7 @@ const QuickActions = () => {
 
   return (
     <section className="px-6 -mt-10 relative z-20 md:hidden">
-      <div className="grid grid-cols-4 gap-3">
+      <div className="grid grid-cols-3 gap-3">
         {actions.map((action, i) => (
           <button
             key={i}

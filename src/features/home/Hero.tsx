@@ -13,7 +13,7 @@ const Hero = () => {
         <div className="grid md:grid-cols-2 gap-12 items-center">
 
           {/* LEFT: text + mascot */}
-          <div className="space-y-6" style={{ animation: 'reveal 700ms ease-out both' }}>
+          <div className="flex flex-col items-center text-center md:items-start md:text-left space-y-6" style={{ animation: 'reveal 700ms ease-out both' }}>
             <div className="flex flex-col md:flex-row items-center gap-6">
               <div className="relative group perspective-1000">
                 <div className="absolute -top-12 -right-12 z-20 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
@@ -21,7 +21,7 @@ const Hero = () => {
                     {Math.random() > 0.5 ? "Besoin d'un diagnostic ?" : "Prêt pour un Swap ?"}
                   </div>
                 </div>
-                <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-accent/20 shadow-glow animate-levitate bg-black transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3 cursor-pointer">
+                <div className="w-20 h-20 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-accent/20 shadow-glow animate-levitate bg-black transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3 cursor-pointer">
                   <video
                     src={mascotVideo}
                     autoPlay
@@ -33,7 +33,7 @@ const Hero = () => {
                 </div>
               </div>
 
-              <h1 className="text-4xl md:text-5xl lg:text-8xl font-black leading-[1] tracking-tighter text-black dark:text-white">
+              <h1 className="text-3xl md:text-5xl lg:text-8xl font-black leading-[1.1] tracking-tighter text-black dark:text-white">
                 <span className="block mb-2">Change ton</span>
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-black via-primary to-black dark:bg-none dark:text-white">téléphone,</span>
                 <br />
@@ -41,12 +41,12 @@ const Hero = () => {
               </h1>
             </div>
 
-            <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">
+            <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-xl mx-auto md:mx-0">
               Échangez votre smartphone cassé contre un modèle reconditionné ou neuf.
               Estimation instantanée, transaction sécurisée, et récupération à domicile.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto items-center md:items-start">
               <Button
                 onClick={() => navigate('/simulateur')}
                 className={isPWA
