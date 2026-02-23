@@ -46,7 +46,7 @@ export const ComparisonStep = ({
     return (
         <div className="p-6 sm:p-10 space-y-12 animate-in zoom-in-95 duration-700">
             <div className="text-center space-y-3">
-                <h2 className="text-4xl sm:text-6xl font-black tracking-tighter uppercase italic leading-[0.8] text-slate-900 dark:text-white mb-1">
+                <h2 className="text-3xl sm:text-5xl font-black tracking-[0.3em] uppercase leading-[0.9] text-slate-900 dark:text-white mb-1 font-sans">
                     ACCORD DE <span className={cn(isPWA ? "text-blue-600 dark:text-[#00FF41]" : "text-[#064e3b] dark:text-primary", "italic")}>SWAP</span>
                 </h2>
                 <div className="flex items-center justify-center gap-2">
@@ -56,7 +56,8 @@ export const ComparisonStep = ({
             </div>
 
             <div className="space-y-10">
-                <div className="flex flex-col md:flex-row items-stretch justify-center gap-6 relative max-w-3xl mx-auto">
+                {/* Desktop / tablette: grille détaillée en 2 colonnes */}
+                <div className="hidden md:flex flex-row items-stretch justify-center gap-6 relative max-w-3xl mx-auto">
                     {/* Block 1: Possession */}
                     <div className="flex-1 bg-white dark:bg-white/5 rounded-xl p-6 flex flex-col items-center gap-3 border border-zinc-100 dark:border-white/10 shadow-lg group">
                         <div className="w-16 h-16 rounded-full bg-blue-600/10 dark:bg-primary/10 flex items-center justify-center border-2 border-white dark:border-zinc-900 shadow-md group-hover:scale-110 transition-transform">
@@ -64,7 +65,7 @@ export const ComparisonStep = ({
                         </div>
                         <div className="text-center">
                             <p className="text-[9px] font-black text-slate-800 dark:text-zinc-300 uppercase tracking-widest">{t('simulator.possession')}</p>
-                            <h4 className="text-base font-black tracking-tighter text-black dark:text-white uppercase">{brand} {model}</h4>
+                            <h4 className="text-base font-black tracking-tighter text-black dark:text-white uppercase">{model}</h4>
                             <p className="text-xl font-black text-blue-700 dark:text-primary mt-0.5">{formatCFA(safeFinalPrice)}</p>
                         </div>
                     </div>
@@ -85,14 +86,37 @@ export const ComparisonStep = ({
                         </div>
                         <div className="text-center">
                             <p className="text-[9px] font-black text-slate-800 dark:text-zinc-300 uppercase tracking-widest">{t('simulator.acquisition')}</p>
-                            <h4 className="text-base font-black tracking-tighter text-black dark:text-white uppercase">{targetBrand} {targetModel}</h4>
+                            <h4 className="text-base font-black tracking-tighter text-black dark:text-white uppercase">{targetModel}</h4>
                             <p className="text-xl font-black text-blue-700 dark:text-primary mt-0.5">{formatCFA(safeTargetPrice)}</p>
                         </div>
                     </div>
                 </div>
 
-                {/* Summary Table */}
-                <div className="grid grid-cols-1 md:flex items-stretch bg-zinc-50 dark:bg-zinc-950 rounded-2xl border-2 border-slate-100 dark:border-white/5 shadow-xl overflow-hidden max-w-3xl mx-auto">
+                {/* Mobile: carte résumée plus compacte */}
+                <div className="md:hidden max-w-md mx-auto space-y-4">
+                    <div className="bg-white dark:bg-white/5 rounded-2xl p-4 border border-zinc-100 dark:border-white/10 shadow-md">
+                        <p className="text-[9px] font-black text-slate-800 dark:text-zinc-300 uppercase tracking-widest mb-2">{t('simulator.possession')}</p>
+                        <p className="text-sm font-black text-black dark:text-white uppercase leading-tight">{model}</p>
+                        <p className="text-xs font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-widest mt-1">APPORT</p>
+                        <p className="text-lg font-black text-blue-700 dark:text-primary">{formatCFA(safeFinalPrice)}</p>
+                    </div>
+                    <div className="flex items-center justify-center">
+                        <div className="w-10 h-10 rounded-full bg-white dark:bg-[#05070a] border-[3px] border-zinc-50 dark:border-[#0b0e14] flex items-center justify-center shadow-lg">
+                            <div className={cn("w-7 h-7 rounded-full flex items-center justify-center", isPWA ? "bg-[#00FF41]" : "bg-[#064e3b] dark:bg-primary")}>
+                                <ArrowRightLeft className={cn("w-4 h-4", isPWA ? "text-black" : "text-white dark:text-black")} strokeWidth={3} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="bg-white dark:bg-white/5 rounded-2xl p-4 border border-zinc-100 dark:border-white/10 shadow-md">
+                        <p className="text-[9px] font-black text-slate-800 dark:text-zinc-300 uppercase tracking-widest mb-2">{t('simulator.acquisition')}</p>
+                        <p className="text-sm font-black text-black dark:text-white uppercase leading-tight">{targetModel}</p>
+                        <p className="text-xs font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-widest mt-1">CIBLE</p>
+                        <p className="text-lg font-black text-blue-700 dark:text-primary">{formatCFA(safeTargetPrice)}</p>
+                    </div>
+                </div>
+
+                {/* Summary Table - desktop only pour éviter trop de scroll sur mobile */}
+                <div className="hidden md:flex items-stretch bg-zinc-50 dark:bg-zinc-950 rounded-2xl border-2 border-slate-100 dark:border-white/5 shadow-xl overflow-hidden max-w-3xl mx-auto">
                     <div className="flex-1 p-6 flex flex-col items-center justify-center text-center border-b md:border-b-0 md:border-r border-slate-200 dark:border-white/5">
                         <span className="text-[9px] font-black uppercase tracking-widest text-[#064e3b] dark:text-primary mb-3">POSSESSION</span>
                         <div className="space-y-1 font-black text-[11px] text-slate-900 dark:text-white italic uppercase tracking-tighter">
@@ -112,7 +136,7 @@ export const ComparisonStep = ({
             </div>
 
             {/* Financial Balance Section */}
-            <div className="bg-slate-900 dark:bg-black rounded-[40px] p-10 space-y-8 relative shadow-2xl text-white max-w-4xl mx-auto mt-6">
+            <div className="bg-slate-900 dark:bg-black rounded-[32px] p-6 sm:p-8 md:p-10 space-y-8 relative shadow-2xl text-white max-w-4xl mx-auto mt-6">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-600 dark:bg-primary px-6 py-2 rounded-full shadow-lg">
                     <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white">BILAN FINANCIER</span>
                 </div>

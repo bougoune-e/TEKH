@@ -2,10 +2,16 @@ import express from "express";
 import fs from "fs";
 import csv from "csv-parser";
 import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
 import { supabase, TABLE_PRODUCTS } from "./supabase.js";
 
 const app = express();
 const PORT = process.env.PORT || 8083;
+
+// Resolve filesystem paths in ESM context
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Diagnostic logs for Railway
 console.log(`[DIAG] process.env.PORT: ${process.env.PORT}`);
@@ -223,6 +229,31 @@ app.patch("/produits/:id/stock", async (req, res) => {
   if (idx < 0) return res.status(404).json({ error: "Produit introuvable" });
   produits[idx].stock = stock;
   return res.json({ success: true });
+});
+
+// ──────────────────────────────────────────────────────────────
+// FRONTEND STATIC FILES (VITE BUILD) + SPA FALLBACK
+// ──────────────────────────────────────────────────────────────
+// In production, serve the built React app from /dist so that
+// routes like /simulateur or /deals are handled client-side.
+const CLIENT_DIST = path.resolve(__dirname, "..", "..", "dist");
+console.log("[STATIC] Serving frontend from:", CLIENT_DIST);
+
+app.use(express.static(CLIENT_DIST));
+
+// SPA fallback: for any non-API GET request, send index.html
+app.get("*", (req, res, next) => {
+  // Let explicitly defined API routes behave as usual
+  if (req.path.startsWith("/produits") || req.path.startsWith("/api")) {
+    return next();
+  }
+
+  // Only handle HTML navigations
+  if (req.method === "GET" && req.accepts("html")) {
+    return res.sendFile(path.join(CLIENT_DIST, "index.html"));
+  }
+
+  return next();
 });
 
 const server = app.listen(PORT, "0.0.0.0", () => {
