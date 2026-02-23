@@ -11,7 +11,6 @@ import { Flame, Star, MessageSquare, Sparkles } from "lucide-react";
 import { deleteDealById, getCurrentUser, fetchDeals } from "@/core/api/supabaseApi";
 import { isSupabaseConfigured } from "@/core/api/supabaseClient";
 import { toast } from "@/shared/hooks/use-toast";
-import MasonryGrid from "@/shared/ui/MasonryGrid";
 import { useTranslation } from "react-i18next";
 
 const BRANDS = ["Apple", "Samsung", "Xiaomi", "Infinix", "Tecno", "Google", "Huawei", "OnePlus", "Oppo", "Vivo"];
@@ -195,8 +194,8 @@ export default function DealsPage() {
         </div>
 
 
-        {/* Masonry Layout */}
-        <MasonryGrid>
+        {/* Responsive Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {list.map((d) => {
             const { tag, badges, extraLine } = computeExtra(d, targetValue, desired, maxAddition);
             const canDelete = userId && d.ownerId && userId === d.ownerId;
@@ -231,7 +230,7 @@ export default function DealsPage() {
               />
             );
           })}
-        </MasonryGrid>
+        </div>
 
         {/* Sentinel for infinite scroll */}
         <div ref={sentinelRef} className="h-20" />

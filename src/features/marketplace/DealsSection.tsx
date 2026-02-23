@@ -96,65 +96,20 @@ const DealsSection = () => {
                 Aucune offre disponible pour le moment.
               </div>
             ) : (
-              <>
-                {isPWA ? (
-                  <>
-                    {/* Mobile: Horizontal Carousel */}
-                    <div className="md:hidden -mx-4 px-4 scroll-horizontal snap-x snap-mandatory">
-                      {deals.map((deal, index) => (
-                        <div key={index} className="scroll-snap-center shrink-0 w-[280px]">
-                          <PhoneCard {...deal} />
-                        </div>
-                      ))}
-                      <div className="shrink-0 w-8" />
-                    </div>
-
-                    {/* Desktop: Asymmetric Pinterest Grid */}
-                    <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-6">
-                      {deals.map((deal, index) => (
-                        <div
-                          key={index}
-                          className={`${index % 3 === 0 ? 'lg:row-span-2' : ''} h-full`}
-                        >
-                          <PhoneCard {...deal} isLarge={index % 3 === 0} />
-                        </div>
-                      ))}
-                    </div>
-                  </>
-                ) : (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {deals.map((deal, index) => (
-                      <PhoneCard key={index} {...deal} />
-                    ))}
-                  </div>
-                )}
-              </>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {deals.map((deal, index) => (
+                  <PhoneCard key={index} {...deal} />
+                ))}
+              </div>
             )}
           </TabsContent>
 
           <TabsContent value="new" className="mt-0">
-            {isPWA ? (
-              <>
-                <div className="md:hidden -mx-4 px-4 scroll-horizontal snap-x snap-mandatory">
-                  {newPhones.map((phone, index) => (
-                    <div key={index} className="scroll-snap-center shrink-0 w-[280px]">
-                      <PhoneCard {...phone} />
-                    </div>
-                  ))}
-                </div>
-                <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-6">
-                  {newPhones.map((phone, index) => (
-                    <PhoneCard key={index} {...phone} />
-                  ))}
-                </div>
-              </>
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {newPhones.map((phone, index) => (
-                  <PhoneCard key={index} {...phone} />
-                ))}
-              </div>
-            )}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {newPhones.map((phone, index) => (
+                <PhoneCard key={index} {...phone} />
+              ))}
+            </div>
           </TabsContent>
         </Tabs>
         坐

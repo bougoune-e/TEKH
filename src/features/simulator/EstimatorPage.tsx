@@ -512,7 +512,7 @@ export default function EstimatorPage() {
                         <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.3em]">Lecture des spécifications hardware</p>
                       </div>
                     </div>
-                  ) : detectedBrand ? (
+                  ) : detectedModel ? (
                     <div className="p-4 sm:p-8 flex flex-col items-center py-6 px-4 space-y-8 animate-in slide-in-from-bottom-8 duration-700">
                       <div className="w-full bg-gradient-to-br from-[#00FF41]/20 via-[#00FF41]/5 to-transparent border border-[#00FF41]/20 rounded-[40px] p-10 text-center relative overflow-hidden group shadow-2xl">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-[#00FF41]/10 blur-3xl -translate-y-16 translate-x-16 rounded-full" />
@@ -520,13 +520,16 @@ export default function EstimatorPage() {
                           <div className="w-20 h-20 bg-[#00FF41] rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl shadow-[#00FF41]/20 rotate-3 group-hover:rotate-0 transition-transform">
                             <Zap className="w-10 h-10 text-black" />
                           </div>
-                          <h2 className="text-3xl font-black tracking-tighter text-white uppercase italic leading-none">
-                            MODÈLE <span className="text-[#00FF41] italic">DÉTECTÉ</span>
+                          <h2 className="text-3xl font-black tracking-tighter text-slate-900 dark:text-white uppercase italic leading-none">
+                            MODÈLE <span className="text-blue-600 dark:text-[#00FF41] italic">DÉTECTÉ</span>
                           </h2>
                           <div className="space-y-1">
-                            <span className="text-4xl font-black text-white tracking-tight block leading-tight">{detectedBrand}</span>
-                            <span className="text-2xl font-bold text-[#00FF41] block uppercase tracking-tight italic">{detectedModel}</span>
+                            <span className="text-4xl font-black text-slate-900 dark:text-white tracking-tight block leading-tight">{detectedBrand}</span>
+                            <span className="text-2xl font-bold text-blue-600 dark:text-[#00FF41] block uppercase tracking-tight italic">{detectedModel}</span>
                           </div>
+                          <p className="text-slate-600 dark:text-zinc-400 font-bold text-sm mt-4">
+                            Nous avons détecté votre appareil. <br /> Confirmez-vous ce modèle ?
+                          </p>
                         </div>
                       </div>
 
@@ -549,12 +552,12 @@ export default function EstimatorPage() {
                           }}
                           className="w-full h-20 rounded-[32px] bg-[#00FF41] text-black font-black text-xl uppercase italic tracking-tight hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-[#00FF41]/20"
                         >
-                          C'est exact !
+                          Oui, c'est mon appareil
                         </Button>
                         <Button
                           variant="ghost"
                           onClick={() => setDetectionStep("manual")}
-                          className="w-full h-14 rounded-2xl text-zinc-500 font-bold uppercase tracking-widest text-[10px] hover:text-[#00FF41] transition-colors"
+                          className="w-full h-14 rounded-2xl text-slate-500 dark:text-zinc-500 font-bold uppercase tracking-widest text-[10px] hover:text-blue-600 dark:hover:text-[#00FF41] transition-colors"
                         >
                           Non, choisir manuellement
                         </Button>
@@ -566,7 +569,7 @@ export default function EstimatorPage() {
                         <AlertCircle className="w-8 h-8 text-zinc-600" />
                       </div>
                       <p className="text-zinc-500 font-bold uppercase tracking-widest text-[10px]">Détection impossible</p>
-                      <Button onClick={() => setDetectionStep("manual")} variant="outline" className="rounded-full border-white/10 uppercase font-black px-8">Continuer manuellement</Button>
+                      <Button onClick={() => setDetectionStep("manual")} variant="outline" className="rounded-full border-slate-200 dark:border-white/10 uppercase font-black px-8">Continuer manuellement</Button>
                     </div>
                   )
                 ) : (
@@ -585,7 +588,7 @@ export default function EstimatorPage() {
                           />
                         )}
                         {(brand && model && storage && ram && (detectionStep as string) !== "confirmed") && (
-                          <div className="pt-4 border-t border-white/5 flex justify-end">
+                          <div className="pt-4 border-t border-slate-100 dark:border-white/5 flex justify-end">
                             <Button
                               onClick={() => {
                                 setDetectionStep("confirmed");
@@ -615,11 +618,11 @@ export default function EstimatorPage() {
                           removeImage={removeImage}
                         />
                         <div className="pt-4 flex flex-col items-center gap-6">
-                          <div className={cn(
+                          <div id="estimation-result" className={cn(
                             "w-full p-8 rounded-[40px] border-2 transition-all duration-700 relative overflow-hidden text-center",
                             finalPrice !== null
                               ? "border-[#00FF41]/20 bg-[#00FF41]/5 shadow-2xl shadow-[#00FF41]/5"
-                              : "border-white/5 bg-white/[0.02] grayscale opacity-40"
+                              : "border-slate-100 dark:border-white/5 bg-slate-50/50 dark:bg-white/[0.02] grayscale opacity-40"
                           )}>
                             {!isStep1Complete && (
                               <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/40 backdrop-blur-[2px]">
@@ -629,13 +632,13 @@ export default function EstimatorPage() {
                                 </div>
                               </div>
                             )}
-                            <div className="text-[9px] font-black uppercase tracking-[0.4em] text-zinc-500 mb-3 italic">Estimation Indicative</div>
-                            <div className="text-4xl sm:text-6xl font-black tracking-tighter text-white italic">
+                            <div className="text-[9px] font-black uppercase tracking-[0.4em] text-slate-500 dark:text-zinc-500 mb-3 italic">Estimation Indicative</div>
+                            <div className="text-4xl sm:text-6xl font-black tracking-tighter text-slate-900 dark:text-white italic">
                               {finalPrice !== null ? formatCFA(finalPrice) : formatCFA(0)}
                             </div>
                             <div className="mt-4 flex items-center justify-center gap-2 opacity-50">
-                              <ShieldCheck className="w-3 h-3 text-[#00FF41]" />
-                              <span className="text-[8px] font-black text-zinc-500 uppercase tracking-widest">Garanti par Charte TEKH+</span>
+                              <ShieldCheck className="w-3 h-3 text-blue-600 dark:text-[#00FF41]" />
+                              <span className="text-[8px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Garanti par Charte TEKH+</span>
                             </div>
                           </div>
 

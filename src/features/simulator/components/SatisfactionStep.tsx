@@ -31,7 +31,7 @@ export const SatisfactionStep = ({
                     <Zap className={cn("w-10 h-10 transition-colors", isPWA ? "text-[#00FF41]" : "text-blue-600 dark:text-primary")} />
                 </div>
                 <h2 className="text-2xl sm:text-5xl font-black tracking-tighter uppercase italic leading-[0.9] text-slate-900 dark:text-white">
-                    {t('simulator.votre_offre')} : <br /> <span className={isPWA ? "text-[#00FF41]" : "text-[#064e3b] dark:text-primary"}>{formatCFA(finalPrice || 0)}</span>
+                    {t('simulator.votre_offre')} : <br /> <span className={cn("italic", isPWA ? "text-blue-700 dark:text-[#00FF41]" : "text-[#064e3b] dark:text-primary")}>{formatCFA(finalPrice || 0)}</span>
                 </h2>
                 <p className="text-slate-700 dark:text-zinc-400 font-extrabold uppercase text-[10px] tracking-[0.4em]">{t('simulator.helper_text')}</p>
             </div>
