@@ -147,12 +147,31 @@ export default function DealsPage() {
 
   return (
     <section className="py-8 bg-background min-h-dvh">
-      <div className="container mx-auto px-6">
-        {/* Header / Trends */}
-        {/* PWA Optimised Header - Simple and Clean */}
-        <div className="flex items-center gap-3 mb-6 animate-in slide-in-from-left-2 duration-500">
-          <Badge variant="outline" className="rounded-full px-4 py-1 bg-primary text-black font-black border-none animate-pulse">LIVE DEALS</Badge>
-          <span className="text-xs font-black uppercase tracking-[0.3em] opacity-40">Explorer le catalogue</span>
+      <div className="container mx-auto px-4 sm:px-6">
+        {/* Header — titre + tendances + badges (ancienne version: grilles de cartes mockées) */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+          <div>
+            <h1 className="text-3xl font-black tracking-tighter mb-2 text-slate-900 dark:text-white uppercase">{t('nav.deals', 'Explorer')}</h1>
+            <div className="flex items-center gap-2 text-slate-600 dark:text-muted-foreground">
+              <Sparkles className="h-4 w-4 text-primary" />
+              <span className="text-sm font-bold uppercase tracking-widest">{t('deals.trends', 'Tendances du moment')}</span>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {['iPhone 15', 'Samsung S24', 'Budget < 200k', '512 Go'].map((label) => (
+              <Badge
+                key={label}
+                variant="outline"
+                className="rounded-full px-4 py-1.5 bg-card hover:bg-primary hover:text-primary-foreground hover:border-primary cursor-pointer transition-all font-bold"
+                onClick={() => {
+                  if (label === 'Budget < 200k') setFilters((f) => ({ ...f, min: 0, max: 200000 }));
+                  else setFilters((f) => ({ ...f, q: label.includes('iPhone') ? 'iPhone 15' : label.includes('Samsung') ? 'Samsung S24' : f.q }));
+                }}
+              >
+                {label}
+              </Badge>
+            ))}
+          </div>
         </div>
 
         {/* Filters Bar */}
