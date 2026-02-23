@@ -438,18 +438,18 @@ export default function EstimatorPage() {
   };
 
   const renderDetectedSummary = () => (
-    <div className="bg-blue-600/5 dark:bg-primary/5 border border-blue-600/20 dark:border-primary/20 rounded-2xl p-4 mb-6 animate-in slide-in-from-top-4 duration-500">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-blue-600 dark:bg-primary flex items-center justify-center text-white shadow-lg">
-            <Smartphone className="w-6 h-6" />
+    <div className="bg-blue-600/5 dark:bg-primary/5 border border-blue-600/20 dark:border-primary/20 rounded-xl p-3 mb-4 animate-in slide-in-from-top-4 duration-500">
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center gap-3 min-w-0">
+          <div className="w-10 h-10 rounded-lg bg-blue-600 dark:bg-primary flex items-center justify-center text-white shrink-0">
+            <Smartphone className="w-5 h-5" />
           </div>
-          <div>
-            <p className="text-[10px] font-black uppercase tracking-widest text-blue-600 dark:text-primary">Appareil Détecté</p>
-            <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase italic tracking-tighter">
+          <div className="min-w-0">
+            <p className="text-[9px] font-black uppercase tracking-widest text-blue-600 dark:text-primary">Appareil</p>
+            <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase italic tracking-tighter truncate">
               {brand} {model}
             </h3>
-            <p className="text-xs font-bold text-slate-500 dark:text-zinc-500 uppercase">
+            <p className="text-[10px] font-bold text-slate-500 dark:text-zinc-500">
               {storage} Go {ram ? `• ${ram} Go RAM` : ""}
             </p>
           </div>
@@ -458,7 +458,7 @@ export default function EstimatorPage() {
           variant="ghost"
           size="sm"
           onClick={() => setDetectionStep("manual")}
-          className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 hover:text-blue-600 dark:hover:text-primary"
+          className="text-[10px] font-black uppercase shrink-0 text-slate-400 dark:text-zinc-500 hover:text-blue-600 dark:hover:text-primary h-8 px-3"
         >
           Modifier
         </Button>
@@ -515,33 +515,17 @@ export default function EstimatorPage() {
                       </div>
                     </div>
                   ) : detectedModel ? (
-                    <div className="p-4 sm:p-8 flex flex-col items-center py-6 px-4 space-y-8 animate-in slide-in-from-bottom-8 duration-700">
-                      <div className="w-full bg-gradient-to-br from-[#00FF41]/20 via-[#00FF41]/5 to-transparent border border-[#00FF41]/20 rounded-[40px] p-10 text-center relative overflow-hidden group shadow-2xl">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-[#00FF41]/10 blur-3xl -translate-y-16 translate-x-16 rounded-full" />
-                        <div className="relative z-10 space-y-6">
-                          <div className="w-20 h-20 bg-[#00FF41] rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl shadow-[#00FF41]/20 rotate-3 group-hover:rotate-0 transition-transform">
-                            <Zap className="w-10 h-10 text-black" />
-                          </div>
-                          <h2 className="text-3xl font-black tracking-tighter text-slate-900 dark:text-white uppercase italic leading-none">
-                            MODÈLE <span className="text-blue-600 dark:text-[#00FF41] italic">DÉTECTÉ</span>
-                          </h2>
-                          <div className="space-y-1">
-                            <span className="text-4xl font-black text-slate-900 dark:text-white tracking-tight block leading-tight">{detectedBrand}</span>
-                            <span className="text-2xl font-bold text-blue-600 dark:text-[#00FF41] block uppercase tracking-tight italic">{detectedModel}</span>
-                          </div>
-                          <p className="text-slate-600 dark:text-zinc-400 font-bold text-sm mt-4">
-                            Nous avons détecté votre appareil. <br /> Confirmez-vous ce modèle ?
-                          </p>
-                        </div>
+                    <div className="p-3 sm:p-4 flex flex-col items-center py-3 px-3 space-y-3 animate-in slide-in-from-bottom-8 duration-700">
+                      <div className="w-full bg-[#00FF41]/10 border border-[#00FF41]/20 rounded-xl p-3 text-center">
+                        <p className="text-[9px] font-black uppercase tracking-widest text-[#00FF41]">Modèle détecté</p>
+                        <p className="text-sm font-black text-slate-900 dark:text-white">{detectedBrand} {detectedModel}</p>
+                        <p className="text-[10px] text-slate-500 dark:text-zinc-400 mt-0.5">Confirmez-vous ce modèle ?</p>
                       </div>
-
-                      <div className="w-full space-y-4">
+                      <div className="w-full space-y-2">
                         <Button
                           onClick={async () => {
-                            // Try to align detected brand with canonical list (case-insensitive)
                             const canonicalBrand =
                               brands.find(b => b.toLowerCase() === detectedBrand.toLowerCase()) || detectedBrand;
-
                             setBrand(canonicalBrand);
                             setModel(detectedModel);
                             try {
@@ -556,26 +540,32 @@ export default function EstimatorPage() {
                             setDetectionStep("confirmed");
                             window.scrollTo({ top: 0, behavior: 'smooth' });
                           }}
-                          className="w-full h-20 rounded-[32px] bg-[#00FF41] text-black font-black text-xl uppercase italic tracking-tight hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-[#00FF41]/20"
+                          className="w-full h-11 rounded-xl bg-[#00FF41] text-black font-black text-xs uppercase tracking-tight hover:opacity-95 active:scale-[0.98]"
                         >
                           Oui, c'est mon appareil
                         </Button>
                         <Button
                           variant="ghost"
+                          size="sm"
                           onClick={() => setDetectionStep("manual")}
-                          className="w-full h-14 rounded-2xl text-slate-500 dark:text-zinc-500 font-bold uppercase tracking-widest text-[10px] hover:text-blue-600 dark:hover:text-[#00FF41] transition-colors"
+                          className="w-full h-9 rounded-xl text-slate-500 dark:text-zinc-500 text-[11px] font-bold uppercase hover:text-[#00FF41]"
                         >
                           Non, choisir manuellement
                         </Button>
                       </div>
                     </div>
                   ) : (
-                    <div className="p-20 text-center space-y-6">
-                      <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mx-auto">
-                        <AlertCircle className="w-8 h-8 text-zinc-600" />
+                    <div className="p-6 text-center space-y-4">
+                      <div className="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center mx-auto">
+                        <AlertCircle className="w-6 h-6 text-zinc-600" />
                       </div>
-                      <p className="text-zinc-500 font-bold uppercase tracking-widest text-[10px]">Détection impossible</p>
-                      <Button onClick={() => setDetectionStep("manual")} variant="outline" className="rounded-full border-slate-200 dark:border-white/10 uppercase font-black px-8">Continuer manuellement</Button>
+                      <p className="text-zinc-500 font-bold uppercase tracking-widest text-[10px]">
+                        {typeof navigator !== "undefined" && /iPhone|iPad/i.test(navigator.userAgent)
+                          ? "Détection impossible"
+                          : "Modèle non reconnu"}
+                      </p>
+                      <p className="text-[10px] text-zinc-600 dark:text-zinc-500">Choisissez votre appareil manuellement.</p>
+                      <Button onClick={() => setDetectionStep("manual")} variant="outline" className="rounded-xl border-slate-200 dark:border-white/10 uppercase font-black text-xs px-6 h-10">Continuer manuellement</Button>
                     </div>
                   )
                 ) : (
@@ -594,13 +584,13 @@ export default function EstimatorPage() {
                           />
                         )}
                         {(brand && model && storage && ram && (detectionStep as string) !== "confirmed") && (
-                          <div className="pt-4 border-t border-slate-100 dark:border-white/5 flex justify-end">
+                          <div className="pt-3 border-t border-slate-100 dark:border-white/5 flex justify-end">
                             <Button
                               onClick={() => {
                                 setDetectionStep("confirmed");
                                 window.scrollTo({ top: 0, behavior: "smooth" });
                               }}
-                              className="bg-[#00FF41] text-black font-black uppercase rounded-xl h-12 px-8"
+                              className="bg-[#00FF41] text-black font-black uppercase rounded-xl h-10 text-xs px-6"
                             >
                               Confirmer l'appareil
                             </Button>
@@ -625,26 +615,26 @@ export default function EstimatorPage() {
                         />
                         <div className="pt-4 flex flex-col items-center gap-6">
                           <div id="estimation-result" className={cn(
-                            "w-full p-8 rounded-[40px] border-2 transition-all duration-700 relative overflow-hidden text-center",
+                            "w-full p-5 rounded-2xl border-2 transition-all duration-700 relative overflow-hidden text-center",
                             finalPrice !== null
-                              ? "border-[#00FF41]/20 bg-[#00FF41]/5 shadow-2xl shadow-[#00FF41]/5"
+                              ? "border-[#00FF41]/20 bg-[#00FF41]/5 shadow-lg shadow-[#00FF41]/5"
                               : "border-slate-100 dark:border-white/5 bg-slate-50/50 dark:bg-white/[0.02] grayscale opacity-40"
                           )}>
                             {!isStep1Complete && (
                               <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/40 backdrop-blur-[2px]">
-                                <div className="flex items-center gap-2 bg-black px-4 py-2 rounded-full border border-white/10 shadow-2xl">
+                                <div className="flex items-center gap-2 bg-black px-3 py-1.5 rounded-full border border-white/10 shadow-xl">
                                   <AlertCircle className="w-3 h-3 text-[#00FF41] animate-pulse" />
                                   <span className="text-[8px] font-black uppercase tracking-[0.2em] text-white">Diagnostic incomplet</span>
                                 </div>
                               </div>
                             )}
-                            <div className="text-[9px] font-black uppercase tracking-[0.4em] text-slate-500 dark:text-zinc-500 mb-3 italic">Estimation Indicative</div>
-                            <div className="text-4xl sm:text-6xl font-black tracking-tighter text-slate-900 dark:text-white italic">
+                            <div className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-500 dark:text-zinc-500 mb-1 italic">Estimation indicative</div>
+                            <div className="text-2xl sm:text-4xl font-black tracking-tighter text-slate-900 dark:text-white italic">
                               {finalPrice !== null ? formatCFA(finalPrice) : formatCFA(0)}
                             </div>
-                            <div className="mt-4 flex items-center justify-center gap-2 opacity-50">
+                            <div className="mt-2 flex items-center justify-center gap-2 opacity-50">
                               <ShieldCheck className="w-3 h-3 text-blue-600 dark:text-[#00FF41]" />
-                              <span className="text-[8px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Garanti par Charte TEKH+</span>
+                              <span className="text-[8px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Charte TEKH+</span>
                             </div>
                           </div>
 
@@ -654,9 +644,9 @@ export default function EstimatorPage() {
                               setStep("satisfaction");
                               window.scrollTo({ top: 0, behavior: "smooth" });
                             }}
-                            className="w-full h-20 rounded-[32px] bg-[#00FF41] text-black font-black text-xl uppercase italic tracking-tight hover:scale-[1.02] active:scale-95 disabled:opacity-30 disabled:grayscale transition-all shadow-xl shadow-[#00FF41]/20"
+                            className="w-full h-14 rounded-2xl bg-[#00FF41] text-black font-black text-sm uppercase tracking-tight hover:scale-[1.01] active:scale-95 disabled:opacity-30 disabled:grayscale transition-all shadow-lg shadow-[#00FF41]/20"
                           >
-                            Continuer l'Upgrade
+                            Continuer l'estimation
                           </Button>
                         </div>
                       </div>

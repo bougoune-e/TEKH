@@ -22,45 +22,48 @@ export const SatisfactionStep = ({
     const { t } = useTranslation();
 
     return (
-        <div className="p-4 sm:p-10 space-y-8 animate-in slide-in-from-bottom-12 duration-700 text-center">
+        <div className="p-4 sm:p-6 space-y-6 animate-in slide-in-from-bottom-12 duration-700 text-center">
             <div className="space-y-4">
                 <div className={cn(
-                    "w-20 h-20 rounded-[28px] flex items-center justify-center mx-auto mb-6 shadow-inner border transition-colors",
+                    "w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-inner border transition-colors",
                     isPWA ? "bg-[#00FF41]/10 border-[#00FF41]/20" : "bg-blue-600/10 dark:bg-primary/20 border-blue-600/20 dark:border-primary/20"
                 )}>
-                    <Zap className={cn("w-10 h-10 transition-colors", isPWA ? "text-[#00FF41]" : "text-blue-600 dark:text-primary")} />
+                    <Zap className={cn("w-7 h-7 transition-colors", isPWA ? "text-[#00FF41]" : "text-blue-600 dark:text-primary")} />
                 </div>
-                <h2 className="text-2xl sm:text-5xl font-black tracking-tighter uppercase italic leading-[0.9] text-slate-900 dark:text-white">
-                    {t('simulator.votre_offre')} : <br /> <span className={cn("italic", isPWA ? "text-blue-700 dark:text-[#00FF41]" : "text-[#064e3b] dark:text-primary")}>{formatCFA(finalPrice || 0)}</span>
+                <h2 className="text-xl sm:text-3xl font-black tracking-tighter uppercase italic leading-[0.9] text-slate-900 dark:text-white">
+                    {t('simulator.offre_reprise', 'Offre de reprise TEKH+')} <br /> <span className={cn("italic", isPWA ? "text-blue-700 dark:text-[#00FF41]" : "text-[#064e3b] dark:text-primary")}>{formatCFA(finalPrice || 0)}</span>
                 </h2>
-                <p className="text-slate-700 dark:text-zinc-400 font-extrabold uppercase text-[10px] tracking-[0.4em]">{t('simulator.helper_text')}</p>
+                <p className="text-slate-600 dark:text-zinc-500 text-xs font-bold mt-1 max-w-sm mx-auto">{t('simulator.offre_reprise_desc', 'Prix de reprise proposé par TEKH+ selon l\'état de votre appareil.')}</p>
+                <p className="text-slate-500 dark:text-zinc-500 font-medium uppercase text-[10px] tracking-widest mt-2">{t('simulator.helper_text')}</p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl mx-auto">
                 <button
                     onClick={() => { setIsSatisfied(true); setStep("target_selection"); }}
                     className={cn(
-                        "flex items-center justify-center gap-3 transition-all duration-300 p-3 px-8 rounded-full border border-white/5 hover:scale-105 active:scale-95 group shadow-sm",
+                        "flex flex-col items-center justify-center gap-1.5 transition-all duration-300 p-4 px-6 rounded-2xl border border-white/5 hover:scale-[1.02] active:scale-95 group shadow-sm text-left sm:text-center",
                         isPWA ? "bg-[#00FF41] text-black" : "bg-black text-white hover:bg-zinc-900"
                     )}
                 >
                     <div className={cn("w-8 h-8 rounded-full flex items-center justify-center shadow", isPWA ? "bg-black/10" : "bg-[#00FF41]")}>
                         <CheckCircle2 className={cn("h-4 w-4", isPWA ? "text-black" : "text-black")} />
                     </div>
-                    <span className="text-base font-bold tracking-tight uppercase font-sans">{t('simulator.perfect')}</span>
+                    <span className="text-sm font-bold tracking-tight uppercase font-sans">{t('simulator.perfect')}</span>
+                    <span className="text-[10px] font-medium opacity-90">{t('simulator.perfect_desc', 'J\'accepte ce prix de reprise.')}</span>
                 </button>
 
                 <button
                     onClick={() => setIsSatisfied(false)}
                     className={cn(
-                        "flex items-center justify-center gap-3 bg-black hover:bg-zinc-900 transition-all duration-300 p-3 px-8 rounded-full border border-white/5 hover:scale-105 active:scale-95 group shadow-sm",
+                        "flex flex-col items-center justify-center gap-1.5 bg-black hover:bg-zinc-900 transition-all duration-300 p-4 px-6 rounded-2xl border border-white/5 hover:scale-[1.02] active:scale-95 group shadow-sm text-left sm:text-center",
                         isSatisfied === false ? "border-amber-500 ring-1 ring-amber-500" : ""
                     )}
                 >
                     <div className="w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center shadow">
                         <TrendingUp className="text-white h-4 w-4" />
                     </div>
-                    <span className="text-base font-bold tracking-tight text-white uppercase font-sans">{t('simulator.low_estimate')}</span>
+                    <span className="text-sm font-bold tracking-tight text-white uppercase font-sans">{t('simulator.low_estimate')}</span>
+                    <span className="text-[10px] font-medium text-zinc-400">{t('simulator.low_estimate_desc', 'Je souhaite proposer un autre montant.')}</span>
                 </button>
             </div>
 
@@ -68,7 +71,7 @@ export const SatisfactionStep = ({
                 <div className="space-y-4 pt-8 border-t border-slate-100 dark:border-white/5 animate-in fade-in slide-in-from-top-6 max-w-lg mx-auto">
                     <div className="flex items-center justify-center gap-2 mb-1">
                         <Zap className="w-3 h-3 text-blue-600 dark:text-primary" />
-                        <Label className="text-[10px] font-black uppercase tracking-widest text-slate-700 dark:text-zinc-400 italic">VOTRE OFFRE (FCFA)</Label>
+                        <Label className="text-[10px] font-black uppercase tracking-widest text-slate-700 dark:text-zinc-400 italic">MON MONTANT PROPOSÉ (FCFA)</Label>
                     </div>
                     <input
                         type="number"

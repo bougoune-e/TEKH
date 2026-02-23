@@ -58,15 +58,17 @@ const Layout = () => {
               <SearchBar />
             </div>
 
-            {/* Action Group (Icons 24px) — Settings visible web + PWA */}
+            {/* Action Group — Settings masqué en PWA (accès via logo) */}
             <div className="flex items-center gap-2">
-              <Link
-                to="/settings"
-                className="p-2 hover:bg-white/5 rounded-full transition-all active:scale-90"
-                aria-label="Paramètres"
-              >
-                <SettingsIcon className="h-[24px] w-[24px] text-foreground hover:text-primary" />
-              </Link>
+              {!isPWA && (
+                <Link
+                  to="/settings"
+                  className="p-2 hover:bg-white/5 rounded-full transition-all active:scale-90"
+                  aria-label="Paramètres"
+                >
+                  <SettingsIcon className="h-[24px] w-[24px] text-foreground hover:text-primary" />
+                </Link>
+              )}
               <button
                 onClick={() => window.dispatchEvent(new CustomEvent('toggle-tekhbot'))}
                 className="p-2 hover:bg-white/5 rounded-full transition-all group/bot active:scale-90"

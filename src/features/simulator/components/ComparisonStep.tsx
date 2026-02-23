@@ -55,81 +55,41 @@ export const ComparisonStep = ({
                 </div>
             </div>
 
-            <div className="space-y-10">
-                {/* Desktop / tablette: grille détaillée en 2 colonnes */}
-                <div className="hidden md:flex flex-row items-stretch justify-center gap-6 relative max-w-3xl mx-auto">
-                    {/* Block 1: Possession */}
-                    <div className="flex-1 bg-white dark:bg-white/5 rounded-xl p-6 flex flex-col items-center gap-3 border border-zinc-100 dark:border-white/10 shadow-lg group">
-                        <div className="w-16 h-16 rounded-full bg-blue-600/10 dark:bg-primary/10 flex items-center justify-center border-2 border-white dark:border-zinc-900 shadow-md group-hover:scale-110 transition-transform">
-                            <Smartphone className="w-8 h-8 text-blue-600 dark:text-primary" />
+            <div className="space-y-6">
+                {/* Deux cartes smartphone face à face — même layout web + PWA */}
+                <div className="flex flex-row items-stretch justify-center gap-3 sm:gap-6 max-w-2xl mx-auto">
+                    {/* Carte 1: Votre appareil (forme smartphone) */}
+                    <div className="flex-1 max-w-[180px] sm:max-w-[200px] flex flex-col rounded-[20px] sm:rounded-[24px] overflow-hidden border-2 border-zinc-200 dark:border-white/10 bg-white dark:bg-white/5 shadow-xl">
+                        <div className="aspect-[9/19] min-h-[140px] flex items-center justify-center bg-gradient-to-b from-slate-100 to-slate-50 dark:from-white/10 dark:to-transparent">
+                            <Smartphone className="w-12 h-12 sm:w-14 sm:h-14 text-blue-600 dark:text-primary opacity-80" />
                         </div>
-                        <div className="text-center">
-                            <p className="text-[9px] font-black text-slate-800 dark:text-zinc-300 uppercase tracking-widest">{t('simulator.possession')}</p>
-                            <h4 className="text-base font-black tracking-tighter text-black dark:text-white uppercase">{model}</h4>
-                            <p className="text-xl font-black text-blue-700 dark:text-primary mt-0.5">{formatCFA(safeFinalPrice)}</p>
+                        <div className="p-3 border-t border-zinc-100 dark:border-white/5 bg-white dark:bg-white/5">
+                            <p className="text-[8px] sm:text-[9px] font-black text-slate-500 dark:text-zinc-400 uppercase tracking-widest">{t('simulator.possession')}</p>
+                            <p className="text-xs sm:text-sm font-black text-black dark:text-white truncate mt-0.5">{model}</p>
+                            <p className="text-[10px] font-bold text-slate-500 dark:text-zinc-400 mt-1">{storage || '—'} Go · {aestheticState === 'very_good' || aestheticState === 'Premium' ? 'Premium' : 'Standard'}</p>
+                            <p className="text-sm sm:text-base font-black text-blue-700 dark:text-primary mt-1">{formatCFA(safeFinalPrice)}</p>
                         </div>
                     </div>
 
-                    {/* Transfer Icon */}
+                    {/* Icône échange au centre */}
                     <div className="flex items-center justify-center shrink-0">
-                        <div className="w-12 h-12 rounded-full bg-white dark:bg-[#05070a] border-[3px] border-zinc-50 dark:border-[#0b0e14] flex items-center justify-center z-10 shadow-lg">
-                            <div className={cn("w-8 h-8 rounded-full flex items-center justify-center", isPWA ? "bg-[#00FF41]" : "bg-[#064e3b] dark:bg-primary")}>
-                                <ArrowRightLeft className={cn("w-4 h-4", isPWA ? "text-black" : "text-white dark:text-black")} strokeWidth={3} />
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white dark:bg-[#05070a] border-2 border-zinc-200 dark:border-white/10 flex items-center justify-center z-10 shadow-lg">
+                            <div className={cn("w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center", isPWA ? "bg-[#00FF41]" : "bg-[#064e3b] dark:bg-primary")}>
+                                <ArrowRightLeft className={cn("w-3 h-3 sm:w-4 sm:h-4", isPWA ? "text-black" : "text-white dark:text-black")} strokeWidth={3} />
                             </div>
                         </div>
                     </div>
 
-                    {/* Block 2: Acquisition */}
-                    <div className="flex-1 bg-white dark:bg-white/5 rounded-xl p-6 flex flex-col items-center gap-3 border border-zinc-100 dark:border-white/10 shadow-lg group relative">
-                        <div className="w-16 h-16 rounded-full bg-blue-600/10 dark:bg-primary/10 flex items-center justify-center border-2 border-white dark:border-zinc-900 shadow-md group-hover:scale-110 transition-transform overflow-hidden">
-                            <Zap className="w-8 h-8 text-blue-600 dark:text-primary" fill="currentColor" />
+                    {/* Carte 2: Appareil cible (forme smartphone) */}
+                    <div className="flex-1 max-w-[180px] sm:max-w-[200px] flex flex-col rounded-[20px] sm:rounded-[24px] overflow-hidden border-2 border-zinc-200 dark:border-white/10 bg-white dark:bg-white/5 shadow-xl">
+                        <div className="aspect-[9/19] min-h-[140px] flex items-center justify-center bg-gradient-to-b from-[#00FF41]/10 to-transparent dark:from-primary/10 dark:to-transparent">
+                            <Zap className="w-12 h-12 sm:w-14 sm:h-14 text-blue-600 dark:text-primary opacity-80" fill="currentColor" />
                         </div>
-                        <div className="text-center">
-                            <p className="text-[9px] font-black text-slate-800 dark:text-zinc-300 uppercase tracking-widest">{t('simulator.acquisition')}</p>
-                            <h4 className="text-base font-black tracking-tighter text-black dark:text-white uppercase">{targetModel}</h4>
-                            <p className="text-xl font-black text-blue-700 dark:text-primary mt-0.5">{formatCFA(safeTargetPrice)}</p>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Mobile: carte résumée plus compacte */}
-                <div className="md:hidden max-w-md mx-auto space-y-4">
-                    <div className="bg-white dark:bg-white/5 rounded-2xl p-4 border border-zinc-100 dark:border-white/10 shadow-md">
-                        <p className="text-[9px] font-black text-slate-800 dark:text-zinc-300 uppercase tracking-widest mb-2">{t('simulator.possession')}</p>
-                        <p className="text-sm font-black text-black dark:text-white uppercase leading-tight">{model}</p>
-                        <p className="text-xs font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-widest mt-1">APPORT</p>
-                        <p className="text-lg font-black text-blue-700 dark:text-primary">{formatCFA(safeFinalPrice)}</p>
-                    </div>
-                    <div className="flex items-center justify-center">
-                        <div className="w-10 h-10 rounded-full bg-white dark:bg-[#05070a] border-[3px] border-zinc-50 dark:border-[#0b0e14] flex items-center justify-center shadow-lg">
-                            <div className={cn("w-7 h-7 rounded-full flex items-center justify-center", isPWA ? "bg-[#00FF41]" : "bg-[#064e3b] dark:bg-primary")}>
-                                <ArrowRightLeft className={cn("w-4 h-4", isPWA ? "text-black" : "text-white dark:text-black")} strokeWidth={3} />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="bg-white dark:bg-white/5 rounded-2xl p-4 border border-zinc-100 dark:border-white/10 shadow-md">
-                        <p className="text-[9px] font-black text-slate-800 dark:text-zinc-300 uppercase tracking-widest mb-2">{t('simulator.acquisition')}</p>
-                        <p className="text-sm font-black text-black dark:text-white uppercase leading-tight">{targetModel}</p>
-                        <p className="text-xs font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-widest mt-1">CIBLE</p>
-                        <p className="text-lg font-black text-blue-700 dark:text-primary">{formatCFA(safeTargetPrice)}</p>
-                    </div>
-                </div>
-
-                {/* Summary Table - desktop only pour éviter trop de scroll sur mobile */}
-                <div className="hidden md:flex items-stretch bg-zinc-50 dark:bg-zinc-950 rounded-2xl border-2 border-slate-100 dark:border-white/5 shadow-xl overflow-hidden max-w-3xl mx-auto">
-                    <div className="flex-1 p-6 flex flex-col items-center justify-center text-center border-b md:border-b-0 md:border-r border-slate-200 dark:border-white/5">
-                        <span className="text-[9px] font-black uppercase tracking-widest text-[#064e3b] dark:text-primary mb-3">POSSESSION</span>
-                        <div className="space-y-1 font-black text-[11px] text-slate-900 dark:text-white italic uppercase tracking-tighter">
-                            <div>{storage || '—'} Go Stockage</div>
-                            <div>État: {aestheticState === 'very_good' || aestheticState === 'Premium' ? 'Premium' : 'Standard'}</div>
-                        </div>
-                    </div>
-                    <div className="flex-1 p-6 bg-blue-600/5 dark:bg-primary/5 flex flex-col items-center justify-center text-center">
-                        <span className="text-[9px] font-black uppercase tracking-widest text-blue-700 dark:text-primary mb-3">ACQUISITION</span>
-                        <div className="space-y-1 font-black text-[11px] text-slate-900 dark:text-white italic uppercase tracking-tighter">
-                            <div>{targetStorage || '—'} Go Stockage</div>
-                            <div>Grade A Certifié</div>
-                            <div>Garantie Tekh+ Incluse</div>
+                        <div className="p-3 border-t border-zinc-100 dark:border-white/5 bg-white dark:bg-white/5">
+                            <p className="text-[8px] sm:text-[9px] font-black text-slate-500 dark:text-zinc-400 uppercase tracking-widest">{t('simulator.acquisition')}</p>
+                            <p className="text-xs sm:text-sm font-black text-black dark:text-white truncate mt-0.5">{targetModel}</p>
+                            <p className="text-[10px] font-bold text-slate-500 dark:text-zinc-400 mt-1">{targetStorage || '—'} Go · Grade A</p>
+                            <p className="text-sm sm:text-base font-black text-blue-700 dark:text-primary mt-1">{formatCFA(safeTargetPrice)}</p>
                         </div>
                     </div>
                 </div>
@@ -163,23 +123,22 @@ export const ComparisonStep = ({
                 </div>
             </div>
 
-            {/* CTA Button */}
-            <div className="pt-8">
+            {/* CTA — style minimal comme "Estimer mon téléphone" */}
+            <div className="pt-6">
                 <button
                     onClick={() => {
                         alert("VOTRE DEMANDE DE SWAP EST ENREGISTRÉE ! UN AGENT VA VOUS CONTACTER SUR WHATSAPP.");
                         window.location.href = "/";
                     }}
                     className={cn(
-                        "w-full h-28 rounded-[48px] font-black text-4xl italic tracking-tighter hover:scale-[1.01] active:scale-95 transition-all shadow-3xl uppercase flex items-center justify-center gap-6 overflow-hidden relative group",
+                        "w-full h-12 sm:h-14 rounded-2xl font-black text-sm sm:text-base uppercase tracking-tight hover:scale-[1.01] active:scale-95 transition-all shadow-lg flex items-center justify-center gap-2",
                         isPWA ? "bg-[#00FF41] text-black" : "bg-blue-600 hover:bg-blue-700 dark:bg-primary dark:hover:bg-primary text-white dark:text-black"
                     )}
                 >
-                    <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-700" />
-                    <span className="relative z-10">CONFIRMER L'ÉCHANGE</span>
-                    <ShieldCheck className="w-10 h-10 relative z-10" />
+                    <ShieldCheck className="w-5 h-5" />
+                    <span>Confirmer l'échange</span>
                 </button>
-                <p className="text-center text-[10px] font-black text-slate-400 dark:text-zinc-600 uppercase tracking-[0.5em] mt-8">EN CLIQUANT SUR CONFIRMER, VOUS ACCEPTEZ LES CONDITIONS GÉNÉRALES DU PROGRAMME TEKH+</p>
+                <p className="text-center text-[9px] font-bold text-slate-400 dark:text-zinc-600 uppercase tracking-wider mt-3">En cliquant, vous acceptez les CG du programme TEKH+</p>
             </div>
         </div>
     );

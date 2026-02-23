@@ -61,9 +61,14 @@ const SAMSUNG_MODELS: Record<string, string> = {
     'SM-S908': 'Galaxy S22 Ultra',
     'SM-G998': 'Galaxy S21 Ultra',
     'SM-G991': 'Galaxy S21',
+    'SM-A556': 'Galaxy A55 5G',
     'SM-A546': 'Galaxy A54 5G',
     'SM-A536': 'Galaxy A53 5G',
     'SM-A346': 'Galaxy A34 5G',
+    'SM-A256': 'Galaxy A25 5G',
+    'SM-A246': 'Galaxy A24',
+    'SM-A156': 'Galaxy A15 5G',
+    'SM-A145': 'Galaxy A14 5G',
     'SM-A136': 'Galaxy A13 5G',
     'SM-G780': 'Galaxy S20 FE',
 };
@@ -113,12 +118,32 @@ export function detectDevice(): DetectedDevice {
                     break;
                 }
             }
+            // Extraction modèle Android: (Linux; Android X; DEVICE_MODEL) ou ; DEVICE_MODEL)
             const parts = ua.split(';');
             if (parts.length > 2) {
                 const modelPart = parts[2].split(')')[0].trim();
-                if (modelPart && !modelPart.includes('Build') && modelPart.length > 2 && modelPart.length < 30) {
+                if (modelPart && !modelPart.toLowerCase().includes('build') && modelPart.length > 2 && modelPart.length < 35) {
                     model = modelPart;
                     confidence = 0.8;
+                }
+            }
+            // Fallback: chercher un code type SM-xxx, M20xx, RMXxxxx, CPHxxxx dans tout le UA
+            if (model === 'Modèle inconnu') {
+                const smMatch = ua.match(/SM-[A-Z0-9]+/);
+                if (smMatch) {
+                    const code = smMatch[0];
+                    for (const [key, val] of Object.entries(SAMSUNG_MODELS)) {
+                        if (code.startsWith(key)) {
+                            model = val;
+                            brand = 'Samsung';
+                            confidence = 0.85;
+                            break;
+                        }
+                    }
+                    if (model === 'Modèle inconnu') {
+                        model = code;
+                        confidence = 0.65;
+                    }
                 }
             }
         }
