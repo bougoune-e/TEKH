@@ -31,7 +31,7 @@ export default function DealboxCatalog() {
     }, []);
 
     return (
-        <div className="min-h-screen bg-black text-white p-4 pb-20 font-sans">
+        <div className="min-h-dvh bg-black text-white p-4 pb-20 font-sans">
             <header className="max-w-6xl mx-auto py-8 flex justify-between items-center mb-8">
                 <div>
                     <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-yellow-200 to-yellow-600 bg-clip-text text-transparent flex items-center gap-2">

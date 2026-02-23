@@ -86,7 +86,7 @@ export default function Profile() {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-32 pt-8 overflow-hidden">
+    <div className="min-h-dvh bg-background pb-32 pt-8 overflow-hidden">
       <div className="container mx-auto px-4 max-w-4xl space-y-8">
 
         {/* Profile Header Card */}

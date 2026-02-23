@@ -26,7 +26,7 @@ const Sidebar = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <aside className="hidden md:flex fixed left-0 top-0 h-screen w-16 bg-white dark:bg-slate-900 flex-col items-center py-8 z-50 border-r border-border/10 transition-colors">
+    <aside className="hidden md:flex fixed left-0 top-0 h-dvh w-16 bg-white dark:bg-slate-900 flex-col items-center py-8 z-50 border-r border-border/10 transition-colors">
       {/* Logo */}
       <Link to="/" className="mb-12">
         <img src={logo} alt="TΞKΗ+" className="h-10 w-10 rounded-xl" />

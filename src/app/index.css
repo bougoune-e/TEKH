@@ -19,11 +19,15 @@
       -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
       width: 100%;
+      min-height: 100dvh;
+      /* Fix for WebView 100vh issue */
       position: relative;
       scroll-behavior: smooth;
       /* 8pt grid baseline */
       font-size: 16px;
       line-height: 1.5;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
     }
   }
 
@@ -90,6 +94,14 @@
 
     .h-safe-header {
       height: calc(74px + env(safe-area-inset-top, 0px));
+    }
+
+    .min-h-dvh {
+      min-height: 100dvh;
+    }
+
+    .h-dvh {
+      height: 100dvh;
     }
   }
 

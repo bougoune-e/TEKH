@@ -17,7 +17,7 @@ const items = [
 const AdminSidebar = () => {
   return (
     <SidebarProvider className="w-64 border-r bg-sidebar">
-      <div className="h-screen sticky top-0 p-4">
+      <div className="h-dvh sticky top-0 p-4">
         <div className="mb-6 flex items-center gap-2">
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-hero opacity-30 blur-xl rounded-xl" />

@@ -32,7 +32,7 @@ export default function BottomNav() {
   return (
     <nav className={`fixed bottom-0 left-0 right-0 z-50 md:hidden transition-all duration-300 ${isPWA
       ? "h-[74px] bg-background/95 backdrop-blur-2xl border-t border-border/10 px-4 pb-safe shadow-[0_-8px_30px_rgb(0,0,0,0.12)]"
-      : "h-[62px] bg-background/90 backdrop-blur-xl border-t border-border/5 px-2 pb-1"
+      : "h-[74px] bg-background/90 backdrop-blur-xl border-t border-border/5 px-2 pb-safe"
       }`}>
       <div className={`flex items-center h-full max-w-md mx-auto justify-around`}>
         {navItems.map(({ to, label, Icon, isFocal }) => {

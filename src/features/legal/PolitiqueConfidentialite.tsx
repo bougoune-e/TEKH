@@ -3,7 +3,7 @@ import { ChevronLeft, ShieldCheck } from "lucide-react";
 
 const PolitiqueConfidentialite = () => {
   return (
-    <main className="pt-24 pb-12 bg-white dark:bg-black text-black dark:text-white min-h-screen">
+    <main className="pt-24 pb-12 bg-white dark:bg-black text-black dark:text-white min-h-dvh">
       <div className="container mx-auto px-4 max-w-4xl">
         <Link to="/" className="inline-flex items-center gap-2 text-primary font-black mb-8 hover:-translate-x-1 transition-transform">
           <ChevronLeft className="h-5 w-5" />

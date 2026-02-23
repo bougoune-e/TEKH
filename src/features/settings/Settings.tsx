@@ -88,7 +88,7 @@ export default function SettingsPage() {
     ───────────────────────────────────────────── */
     if (isPWA) {
         return (
-            <div className="min-h-screen bg-background pb-32 pt-safe transition-colors">
+            <div className="min-h-dvh bg-background pb-32 pt-safe transition-colors">
                 <div className="max-w-xl mx-auto space-y-8 text-foreground">
 
                     {/* Header - Pure & Centered */}
@@ -213,7 +213,7 @@ export default function SettingsPage() {
        WEB LAYOUT — design original inchangé
     ───────────────────────────────────────────── */
     return (
-        <div className="min-h-screen bg-white dark:bg-black pb-32 pt-safe transition-colors">
+        <div className="min-h-dvh bg-white dark:bg-black pb-32 pt-safe transition-colors">
             <div className="max-w-xl mx-auto px-4 pt-8 space-y-8">
 
                 {/* Profile Title */}

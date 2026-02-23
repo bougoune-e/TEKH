@@ -146,7 +146,7 @@ export default function DealsPage() {
   const maxAddition = matchRequest?.maxAddition;
 
   return (
-    <section className="py-8 bg-background min-h-screen">
+    <section className="py-8 bg-background min-h-dvh">
       <div className="container mx-auto px-6">
         {/* Header / Trends */}
         {/* PWA Optimised Header - Simple and Clean */}

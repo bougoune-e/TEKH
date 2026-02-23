@@ -29,7 +29,7 @@ export default function DiagnosePage() {
     const progress = (touchGrid.filter(Boolean).length / touchGrid.length) * 100;
 
     return (
-        <section className="py-10 bg-background min-h-screen">
+        <section className="py-10 bg-background min-h-dvh">
             <div className="container mx-auto px-4 max-w-2xl">
                 <header className="mb-8 text-center">
                     <Badge variant="outline" className="mb-2 border-primary text-primary">Beta - MVP</Badge>

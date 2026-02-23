@@ -30,7 +30,7 @@ export default function SearchPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 min-h-screen">
+    <div className="container mx-auto px-4 py-8 min-h-dvh">
       <div className="max-w-4xl mx-auto mb-12">
         <h1 className="text-4xl font-black tracking-tighter mb-6 text-center">
           Trouvez votre <span className="text-primary">Match</span>
