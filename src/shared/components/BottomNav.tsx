@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Home, Compass, Search, Calculator, User, Zap, LayoutGrid } from "lucide-react";
+import { Home, Compass, Search, Calculator, User, Zap, LayoutGrid, Settings } from "lucide-react";
 import { useAuth } from "@/features/auth/auth.context";
 import { usePWA } from "@/shared/hooks/usePWA";
 
@@ -19,11 +19,8 @@ export default function BottomNav() {
   ] : [
     { to: "/", label: "Accueil", Icon: Home },
     { to: "/deals", label: "Explorer", Icon: Compass },
-    {
-      to: "/simulateur",
-      label: "Upgrade",
-      Icon: LayoutGrid
-    },
+    { to: "/simulateur", label: "Upgrade", Icon: LayoutGrid },
+    { to: "/settings", label: "Paramètres", Icon: Settings },
   ];
 
   const profileActive = pathname === "/profile" || pathname === "/login";

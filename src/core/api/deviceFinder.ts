@@ -64,82 +64,85 @@ const SAMSUNG_MODELS: Record<string, string> = {
     'SM-A546': 'Galaxy A54 5G',
     'SM-A536': 'Galaxy A53 5G',
     'SM-A346': 'Galaxy A34 5G',
+    'SM-A136': 'Galaxy A13 5G',
     'SM-G780': 'Galaxy S20 FE',
 };
 
+/**
+ * Détection appareil robuste pour PWA et web.
+ * Règle critique : ne jamais utiliser ua.includes("Apple") — le UA Android
+ * contient souvent "AppleWebKit". Toujours tester Android/Samsung avant iPhone/iPad.
+ */
 export function detectDevice(): DetectedDevice {
     const ua = navigator.userAgent;
+    if (import.meta.env.DEV) {
+        console.debug('[deviceFinder] userAgent:', ua);
+    }
     let brand = 'Inconnu';
     let model = 'Modèle inconnu';
     let confidence = 0.5;
     let type: 'mobile' | 'tablet' | 'desktop' | 'unknown' = 'unknown';
 
-    // 1. Precise Code Extraction (Regex)
-    // Apple
-    if (ua.includes('iPhone')) {
+    // 1. Android en premier (évite toute confusion avec "AppleWebKit" dans le UA)
+    if (ua.includes('Android')) {
+        type = 'mobile';
+        // Samsung / SM- en priorité (ex: SAMSUNG SM-A136B → Galaxy A13 5G)
+        if (ua.includes('Samsung') || ua.includes('SM-')) {
+            brand = 'Samsung';
+            const modelMatch = ua.match(/SM-[A-Z0-9]+/);
+            if (modelMatch) {
+                const code = modelMatch[0];
+                for (const [key, val] of Object.entries(SAMSUNG_MODELS)) {
+                    if (code.startsWith(key)) {
+                        model = val;
+                        confidence = 0.95;
+                        break;
+                    }
+                }
+                if (model === 'Modèle inconnu') {
+                    model = code;
+                    confidence = 0.7;
+                }
+            }
+        } else {
+            const brands = Object.keys(BRAND_MAPPING);
+            for (const b of brands) {
+                if (ua.toLowerCase().includes(b)) {
+                    brand = BRAND_MAPPING[b];
+                    confidence = 0.7;
+                    break;
+                }
+            }
+            const parts = ua.split(';');
+            if (parts.length > 2) {
+                const modelPart = parts[2].split(')')[0].trim();
+                if (modelPart && !modelPart.includes('Build') && modelPart.length > 2 && modelPart.length < 30) {
+                    model = modelPart;
+                    confidence = 0.8;
+                }
+            }
+        }
+    }
+    // 2. iPhone / iPad uniquement via chaînes explicites (jamais "Apple" seul)
+    else if (ua.includes('iPhone')) {
         brand = 'Apple';
         type = 'mobile';
-        // Unfortunately, Browser userAgent doesn't always expose the iPhone15,2 code directly anymore 
-        // for privacy, but some PWA wrappers or custom browsers might.
-        // We fallback to standard version sniffing if exact machine code is missing.
-        const versionMatch = ua.match(/OS (\d+)_/);
-        const version = versionMatch ? versionMatch[1] : '';
-
         if (ua.includes('iPhone 15')) model = 'iPhone 15';
         else if (ua.includes('iPhone 14')) model = 'iPhone 14';
         else if (ua.includes('iPhone 13')) model = 'iPhone 13';
         else if (ua.includes('iPhone 12')) model = 'iPhone 12';
         else if (ua.includes('iPhone 11')) model = 'iPhone 11';
         else model = 'iPhone';
-
         confidence = 0.8;
     }
-    // Samsung
-    else if (ua.includes('Samsung') || ua.includes('SM-')) {
-        brand = 'Samsung';
-        type = 'mobile';
-        const modelMatch = ua.match(/SM-[A-Z0-9]+/);
-        if (modelMatch) {
-            const code = modelMatch[0];
-            // Lookup in mapping
-            for (const [key, val] of Object.entries(SAMSUNG_MODELS)) {
-                if (code.startsWith(key)) {
-                    model = val;
-                    confidence = 0.95;
-                    break;
-                }
-            }
-            if (model === 'Modèle inconnu') {
-                model = code; // Fallback to raw code
-                confidence = 0.7;
-            }
-        }
-    }
-    // Generic Android / Brands
-    else if (ua.includes('Android')) {
-        type = 'mobile';
-        const brands = Object.keys(BRAND_MAPPING);
-        for (const b of brands) {
-            if (ua.toLowerCase().includes(b)) {
-                brand = BRAND_MAPPING[b];
-                confidence = 0.7;
-                break;
-            }
-        }
-
-        // Try to extract content between ";" and ")"
-        const parts = ua.split(';');
-        if (parts.length > 2) {
-            const modelPart = parts[2].split(')')[0].trim();
-            // Filter out single letters or common noise
-            if (modelPart && !modelPart.includes('Build') && modelPart.length > 2 && modelPart.length < 30) {
-                model = modelPart;
-                confidence = 0.8;
-            }
-        }
+    else if (ua.includes('iPad')) {
+        brand = 'Apple';
+        type = 'tablet';
+        model = 'iPad';
+        confidence = 0.8;
     }
 
-    // Detect Tablet
+    // Tablet / Desktop
     if (ua.includes('iPad') || (ua.includes('Android') && !ua.includes('Mobile'))) {
         type = 'tablet';
     } else if (!ua.includes('Mobile') && (ua.includes('Windows') || ua.includes('Macintosh') || ua.includes('Linux'))) {
