@@ -17,9 +17,12 @@ async function getApiProduits() {
   if (cachedProduits) return cachedProduits;
   try {
     cachedProduits = await getProduits();
+    if (import.meta.env.DEV && cachedProduits?.length !== undefined) {
+      console.debug("[supabaseApi] getApiProduits ok, count:", cachedProduits.length);
+    }
     return cachedProduits;
   } catch (e) {
-    console.warn("[supabaseApi] getApiProduits failed", e);
+    console.warn("[supabaseApi] getApiProduits failed (fallback to static lists)", e);
     return [];
   }
 }
@@ -85,8 +88,9 @@ export async function fetchBrands(): Promise<string[]> {
       if (brands.length > 0) return (brands as string[]).sort();
     }
   } catch (err) {
-    console.warn("[supabaseApi] fetchBrands failed, using defaults", err);
+    console.warn("[supabaseApi] fetchBrands failed, using STATIC_MODELS", err);
   }
+  if (import.meta.env.DEV) console.debug("[supabaseApi] fetchBrands fallback:", Object.keys(STATIC_MODELS).length, "brands");
   return Object.keys(STATIC_MODELS);
 }
 
@@ -112,9 +116,11 @@ export async function fetchModels(brand: string): Promise<string[]> {
       if (models.length > 0) return (models as string[]).sort();
     }
   } catch (err) {
-    console.warn("[supabaseApi] fetchModels failed", err);
+    console.warn("[supabaseApi] fetchModels failed for brand:", brand, err);
   }
-  return STATIC_MODELS[brand] || [];
+  const fallback = STATIC_MODELS[brand] || [];
+  if (import.meta.env.DEV && fallback.length) console.debug("[supabaseApi] fetchModels fallback for", brand, ":", fallback.length);
+  return fallback;
 }
 
 export async function fetchStorages(brand: string, model: string): Promise<number[]> {
@@ -132,7 +138,7 @@ export async function fetchStorages(brand: string, model: string): Promise<numbe
       }
     }
   } catch (err) {
-    console.warn("[supabaseApi] fetchStorages failed", err);
+    console.warn("[supabaseApi] fetchStorages failed", brand, model, err);
   }
   return [64, 128, 256, 512];
 }
@@ -236,7 +242,7 @@ export async function getAvailableVariants(brand: string, model: string): Promis
       }
     }
   } catch (err) {
-    console.warn("[supabaseApi] getAvailableVariants failed", err);
+    console.warn("[supabaseApi] getAvailableVariants failed", brand, model, err);
   }
   return [];
 }
