@@ -30,27 +30,9 @@ export default defineConfig(({ mode }) => ({
     },
     rollupOptions: {
       output: {
-        manualChunks(id) {
-          if (id.includes("node_modules")) {
-            if (id.includes("react") || id.includes("react-dom") || id.includes("react-router-dom")) {
-              return "react-vendor";
-            }
-            if (id.includes("@tanstack/react-query")) {
-              return "react-query";
-            }
-            if (id.includes("@supabase")) {
-              return "supabase";
-            }
-            if (id.includes("recharts")) {
-              return "charts";
-            }
-            if (id.includes("framer-motion")) {
-              return "motion";
-            }
-            if (id.includes("@radix-ui")) {
-              return "radix";
-            }
-          }
+        // React + Recharts dans le même chunk pour éviter "Cannot access 'S' before initialization"
+        manualChunks: {
+          vendor: ["react", "react-dom", "recharts"],
         },
       },
     },
