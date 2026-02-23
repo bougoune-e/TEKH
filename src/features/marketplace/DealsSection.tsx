@@ -8,6 +8,7 @@ import huawei from "@/assets/illustrations/homepage/huawei.jpeg";
 import { Button } from "@/shared/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/tabs";
 import { Sparkles, BadgeCheck, Recycle, ArrowRight, ShoppingBag } from "lucide-react";
+import { cn } from "@/core/api/utils";
 import { useNavigate } from "react-router-dom";
 import { usePWA } from "@/shared/hooks/usePWA";
 
@@ -96,23 +97,32 @@ const DealsSection = () => {
                 Aucune offre disponible pour le moment.
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className={cn(
+                "grid gap-6",
+                isPWA ? "flex overflow-x-auto no-scrollbar scroll-horizontal pb-4 -mx-4 px-4" : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+              )}>
                 {deals.map((deal, index) => (
-                  <PhoneCard key={index} {...deal} />
+                  <div key={index} className={cn(isPWA && "min-w-[280px] scroll-snap-center")}>
+                    <PhoneCard {...deal} />
+                  </div>
                 ))}
               </div>
             )}
           </TabsContent>
 
           <TabsContent value="new" className="mt-0">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className={cn(
+              "grid gap-6",
+              isPWA ? "flex overflow-x-auto no-scrollbar scroll-horizontal pb-4 -mx-4 px-4" : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+            )}>
               {newPhones.map((phone, index) => (
-                <PhoneCard key={index} {...phone} />
+                <div key={index} className={cn(isPWA && "min-w-[280px] scroll-snap-center")}>
+                  <PhoneCard {...phone} />
+                </div>
               ))}
             </div>
           </TabsContent>
         </Tabs>
-        坐
         <div className="text-center mt-12">
           <Button
             onClick={() => navigate('/deals')}

@@ -1,7 +1,7 @@
 import { Button } from "@/shared/ui/button";
 import { Badge } from "@/shared/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader } from "@/shared/ui/card";
-import { Smartphone, MapPin } from "lucide-react";
+import { Smartphone, MapPin, ShoppingCart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 function tagClasses(t?: string) {
@@ -118,7 +118,7 @@ const PhoneCard = ({
       <CardFooter className="p-4 pt-0 border-t border-slate-50 dark:border-white/5 mt-auto bg-slate-50/30 dark:bg-transparent">
         <div className="flex items-center justify-between w-full pt-3">
           <div className="flex flex-col">
-            <span className="text-lg font-black text-slate-900 dark:text-white">
+            <span className="text-xl font-black text-[#00FF41]">
               {price.toLocaleString()} <span className="text-[10px] text-slate-400">FCFA</span>
             </span>
             {originalPrice && (
@@ -127,8 +127,8 @@ const PhoneCard = ({
               </span>
             )}
           </div>
-          <Button size="sm" className="rounded-full font-bold px-4 h-8 bg-blue-600 hover:bg-blue-700">
-            Détails
+          <Button size="icon" className="w-10 h-10 rounded-xl bg-slate-800 hover:bg-slate-700 text-white shadow-lg shrink-0">
+            <ShoppingCart className="w-5 h-5" />
           </Button>
         </div>
       </CardFooter>

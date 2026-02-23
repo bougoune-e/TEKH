@@ -4,8 +4,8 @@ import { cn } from "@/core/api/utils";
 import mascotVideo from "@/assets/illustrations/simulator/gifrobot.mp4";
 
 // Configuration Gemini — Appel REST direct pour un contrôle maximal
-const API_KEY = "AIzaSyBzQROIK5AX0as3FjKv7yggBfp9jpMX3Ww";
-const MODEL = "gemini-2.5-flash";
+const API_KEY = "AIzaSyDSp0724-D4f5bCLitXM_86VbMh2fF3bu8";
+const MODEL = "gemini-1.5-flash";
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${API_KEY}`;
 
 const SYSTEM_PROMPT = `Tu es TekhBot, l'assistant IA officiel et expert de la plateforme TEKH+.
