@@ -28,24 +28,47 @@
   }
 
   @layer utilities {
-    .masonry {
-      column-count: 1;
-      column-gap: 1rem;
+    .masonry-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      grid-auto-rows: 20px;
+      gap: 12px;
     }
 
-    /* ... masonry classes ... */
+    .masonry-item {
+      break-inside: avoid;
+    }
+
+    /* Horizontal scroll container for deals */
+    .scroll-horizontal {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 16px;
+      padding-bottom: 20px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .scroll-horizontal::-webkit-scrollbar {
+      display: none;
+    }
+
+    .scroll-snap-center {
+      scroll-snap-align: center;
+    }
 
     /* Micro-interactions */
     .btn-bounce:active {
-      transform: scale(0.96);
+      transform: scale(0.94);
     }
 
     .card-hover {
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .card-hover:hover {
-      transform: translateY(-4px) scale(1.01);
+      transform: translateY(-8px);
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
     }
 
     /* PWA & Native SafeArea Utils */
@@ -66,20 +89,20 @@
     }
 
     .h-safe-header {
-      height: calc(70px + env(safe-area-inset-top, 0px));
+      height: calc(74px + env(safe-area-inset-top, 0px));
     }
   }
 
   /* Base Design Tokens */
   :root {
-    --background: 0 0% 100%;
+    --background: 255 0% 100%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-    --primary: 142.1 76.2% 36.3%;
-    --primary-foreground: 355.7 100% 97.3%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
     --muted: 210 40% 96.1%;
@@ -90,31 +113,47 @@
     --destructive-foreground: 210 40% 98%;
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 142.1 76.2% 36.3%;
-    --radius: 0.75rem;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 0.5rem;
+  }
+
+  .mode-pwa {
+    --primary: 142.1 76.2% 36.3%;
+    --radius: 1.5rem;
+    /* 24px - App feel */
   }
 
   .dark {
-    --background: 0 0% 0%;
-    /* Pure Black */
+    --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
-    --card: 0 0% 2%;
-    /* Very Deep Gray for Cards */
+    --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
-    --popover: 0 0% 3%;
+    --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-    --primary: 142.1 70.6% 45.3%;
-    --primary-foreground: 144.9 80.4% 10%;
-    --secondary: 0 0% 8%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
-    --muted: 0 0% 10%;
+    --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-    --accent: 0 0% 12%;
+    --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+  }
+
+  .mode-pwa.dark {
+    --background: 0 0% 0%;
+    /* Absolute Black */
+    --card: 0 0% 5%;
+    /* Slight lift for cards */
+    --primary: 142.1 70.6% 45.3%;
+    /* Tekh Green */
+    --primary-foreground: 144.9 80.4% 10%;
+    --border: 0 0% 18%;
     --ring: 142.1 70.6% 45.3%;
   }
 
@@ -124,29 +163,29 @@
     border-color: rgba(255, 255, 255, 0.1) !important;
   }
 
-  /* Titres Premium */
-  h1,
-  h2,
-  h3 {
+  /* Titres Premium (Only PWA) */
+  .mode-pwa h1,
+  .mode-pwa h2,
+  .mode-pwa h3 {
     @apply font-black tracking-tighter;
     line-height: 1.1;
   }
 
-  h1 {
+  .mode-pwa h1 {
     font-size: 2.25rem;
   }
 
-  h2 {
+  .mode-pwa h2 {
     font-size: 1.875rem;
   }
 
-  h3 {
+  .mode-pwa h3 {
     font-size: 1.5rem;
   }
 
-  /* Boutons SaaS Native */
-  [data-theme="dark"] .btn,
-  .dark .btn {
+  /* Boutons SaaS Native (Only PWA) */
+  .mode-pwa.dark .btn,
+  .mode-pwa .dark .btn {
     background-color: #00FF41 !important;
     color: #000000 !important;
     font-weight: 600;
@@ -155,23 +194,23 @@
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* Cartes de la section deals */
-  [data-theme="dark"] .deals-grid .card,
-  .dark .deals-grid .card {
+  /* Cartes de la section deals (Only PWA) */
+  .mode-pwa.dark .deals-grid .card,
+  .mode-pwa .dark .deals-grid .card {
     background-color: #050505 !important;
     border: 1px solid rgba(255, 255, 255, 0.05) !important;
     @apply card-hover;
   }
 
-  /* Texte dans les cartes de deals */
-  [data-theme="dark"] .deals-grid .card *,
-  .dark .deals-grid .card * {
+  /* Texte dans les cartes de deals (Only PWA) */
+  .mode-pwa.dark .deals-grid .card *,
+  .mode-pwa .dark .deals-grid .card * {
     color: #ffffff !important;
   }
 
-  /* Prix dans les cartes */
-  [data-theme="dark"] .text-2xl,
-  .dark .text-2xl {
+  /* Prix dans les cartes (Only PWA) */
+  .mode-pwa.dark .text-2xl,
+  .mode-pwa .dark .text-2xl {
     color: #00FF41 !important;
     font-weight: 700 !important;
     letter-spacing: -0.05em;
@@ -195,47 +234,47 @@
     color: #a0aec0 !important;
   }
 
-  /* Styles spécifiques pour PhoneCard */
-  [data-theme="dark"] .phone-card,
-  .dark .phone-card {
+  /* Styles spécifiques pour PhoneCard (Only PWA) */
+  .mode-pwa.dark .phone-card,
+  .mode-pwa .dark .phone-card {
     background: #050505 !important;
     border: 1px solid rgba(255, 255, 255, 0.05) !important;
   }
 
-  [data-theme="dark"] .phone-card *,
-  .dark .phone-card * {
+  .mode-pwa.dark .phone-card *,
+  .mode-pwa .dark .phone-card * {
     color: #ffffff !important;
   }
 
-  [data-theme="dark"] .phone-card .bg-gradient-subtle,
-  .dark .phone-card .bg-gradient-subtle {
+  .mode-pwa.dark .phone-card .bg-gradient-subtle,
+  .mode-pwa .dark .phone-card .bg-gradient-subtle {
     background: #0a0a0a !important;
   }
 
-  [data-theme="dark"] .phone-card .text-muted-foreground,
-  .dark .phone-card .text-muted-foreground {
+  .mode-pwa.dark .phone-card .text-muted-foreground,
+  .mode-pwa .dark .phone-card .text-muted-foreground {
     color: #cbd5e0 !important;
   }
 
-  [data-theme="dark"] .phone-card .bg-gradient-accent,
-  .dark .phone-card .bg-gradient-accent {
+  .mode-pwa.dark .phone-card .bg-gradient-accent,
+  .mode-pwa .dark .phone-card .bg-gradient-accent {
     background: #00FF41 !important;
     color: black !important;
     font-weight: 900;
   }
 
-  [data-theme="dark"] .phone-card .text-primary,
-  .dark .phone-card .text-primary {
+  .mode-pwa.dark .phone-card .text-primary,
+  .mode-pwa .dark .phone-card .text-primary {
     color: #00A84D !important;
   }
 
-  [data-theme="dark"] .phone-card .border-border,
-  .dark .phone-card .border-border {
+  .mode-pwa.dark .phone-card .border-border,
+  .mode-pwa .dark .phone-card .border-border {
     border-color: #4a5568 !important;
   }
 
-  [data-theme="dark"] .phone-card .bg-card,
-  .dark .phone-card .bg-card {
+  .mode-pwa.dark .phone-card .bg-card,
+  .mode-pwa .dark .phone-card .bg-card {
     background-color: #1e293b !important;
   }
 

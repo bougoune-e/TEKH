@@ -1,10 +1,12 @@
 import { Button } from "@/shared/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { usePWA } from "@/shared/hooks/usePWA";
 import mascotVideo from "@/assets/illustrations/simulator/gifrobot.mp4";
 
 const Hero = () => {
   const navigate = useNavigate();
+  const isPWA = usePWA();
   return (
     <section className="pt-24 pb-16 md:pt-32 md:pb-24 bg-background relative overflow-hidden">
       <div className="container mx-auto px-4 relative z-10">
@@ -45,11 +47,17 @@ const Hero = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button onClick={() => navigate('/simulateur')} variant="default" size="xl" className="group rounded-full px-8 shadow-xl">
+              <Button
+                onClick={() => navigate('/simulateur')}
+                className={isPWA
+                  ? "group rounded-full px-10 py-7 shadow-[0_20px_40px_rgba(0,255,65,0.25)] bg-[#00FF41] hover:bg-[#00FF41]/90 text-black font-black text-xl transition-all duration-300 active:scale-95"
+                  : "group rounded-full px-8 py-6 font-bold text-lg"
+                }
+              >
                 Estimer mon téléphone
-                <ArrowRight className="group-hover:translate-x-1 transition-spring" />
+                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
-              <Button onClick={() => navigate('/deals')} variant="outline" size="xl" className="rounded-full px-8 border-2">
+              <Button onClick={() => navigate('/deals')} variant="outline" size="xl" className="rounded-full px-8 border-2 font-bold opacity-80 hover:opacity-100 bg-transparent text-foreground border-foreground/20">
                 Voir les deals
               </Button>
             </div>

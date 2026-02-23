@@ -1,8 +1,9 @@
 import { Button } from "@/shared/ui/button";
 import { Badge } from "@/shared/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader } from "@/shared/ui/card";
-import { Smartphone, Star, MapPin, Heart, ArrowRightLeft, Zap } from "lucide-react";
+import { Smartphone, Star, MapPin, Heart, ArrowRightLeft, Zap, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { usePWA } from "@/shared/hooks/usePWA";
 
 function tagClasses(t?: string) {
   if (!t) return "bg-primary text-primary-foreground";
@@ -41,7 +42,7 @@ interface PhoneCardProps {
   location?: string;
   createdAt?: string;
   onDelete?: (() => void) | null;
-  variant?: "default" | "compact"; // We'll ignore this now as we want a uniform look
+  isLarge?: boolean;
 }
 
 const PhoneCard = ({
@@ -52,113 +53,152 @@ const PhoneCard = ({
   price,
   originalPrice,
   image,
-  rating = 4.5,
   tag,
   badges = [],
-  extraLine,
   location,
-  createdAt,
-  onDelete,
+  isLarge,
 }: PhoneCardProps) => {
-  const discount = originalPrice ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;
   const navigate = useNavigate();
+  const isPWA = usePWA();
 
-  return (
-    <div
-      onClick={() => { if (id) navigate(`/deal/${id}`); }}
-      className="group relative bg-white dark:bg-[#0b0e14] border border-zinc-100 dark:border-white/5 rounded-xl overflow-hidden hover:shadow-2xl transition-all duration-500 scale-in shadow-sm cursor-pointer"
-    >
-      {/* Visual Badge Style SaaS */}
-      {(tag || true) && (
-        <div className="absolute top-3 left-3 z-20 flex flex-col gap-1">
+  if (isPWA) {
+    return (
+      <div
+        onClick={() => { if (id) navigate(`/deal/${id}`); }}
+        className={`group relative bg-white dark:bg-zinc-900 border border-slate-100 dark:border-white/5 rounded-[24px] overflow-hidden flex flex-col h-full shadow-sm hover:shadow-xl transition-all duration-500 cursor-pointer ${isLarge ? 'md:col-span-1 md:row-span-2' : ''}`}
+      >
+        <div className="absolute top-4 left-4 z-20 flex flex-col gap-1.5">
           {tag && (
-            <Badge className="bg-[#064e3b] dark:bg-primary text-white dark:text-black hover:bg-[#064e3b] dark:hover:bg-primary border-0 rounded-md font-black italic text-[9px] px-2 py-0.5 shadow-sm">
+            <Badge className="bg-primary text-black hover:bg-primary border-0 rounded-full font-black text-[9px] px-3 py-1 shadow-md">
               {tag}
             </Badge>
           )}
-          <Badge className="bg-black dark:bg-white text-white dark:text-black border-0 rounded-md font-black text-[8px] px-2 py-0.5 shadow-sm flex items-center gap-1">
-            <Zap className="h-2.5 w-2.5 fill-current" /> certifié TEKH+
-          </Badge>
         </div>
-      )}
 
-      {/* Media with proper scale */}
-      <div className="relative aspect-[4/5] bg-zinc-50 dark:bg-zinc-900/50 overflow-hidden border-b border-zinc-100 dark:border-white/5">
-        {image ? (
-          <img
-            src={image}
-            alt={`${brand} ${model}`}
-            className="w-full h-full object-contain p-4 transition-transform duration-700 group-hover:scale-110"
-            loading="lazy"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center bg-slate-100 dark:bg-zinc-800">
-            <Smartphone className="w-10 h-10 text-slate-300 dark:text-zinc-700" strokeWidth={1} />
-          </div>
-        )}
-        <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/20 to-transparent translate-y-full group-hover:translate-y-0 transition-transform">
-          <div className="flex flex-wrap gap-1.5">
-            {badges.slice(0, 2).map((b, i) => (
-              <Badge key={i} variant="secondary" className="bg-white/40 hover:bg-white/60 text-black border-0 text-[8px] font-black uppercase rounded-full backdrop-blur-md">
-                {b}
-              </Badge>
-            ))}
-          </div>
+        <div className={`relative ${isLarge ? 'flex-1' : 'aspect-square'} bg-slate-50 dark:bg-zinc-800/50 overflow-hidden flex items-center justify-center p-6`}>
+          {image ? (
+            <img
+              src={image}
+              alt={`${brand} ${model}`}
+              className="w-full h-full object-contain transition-transform duration-1000 group-hover:scale-110"
+              loading="lazy"
+            />
+          ) : (
+            <Smartphone className="w-12 h-12 text-slate-300 dark:text-zinc-700" strokeWidth={1} />
+          )}
         </div>
-      </div>
 
-      <div className="p-4 space-y-3">
-        <div className="flex justify-between items-start">
-          <div className="space-y-1">
-            <h3 className="font-black text-slate-900 dark:text-white uppercase tracking-tight text-sm leading-none transition-colors">
-              {brand} <span className="text-[#374151] dark:text-slate-500">{model}</span>
+        <div className="p-5 flex flex-col gap-1 relative">
+          <div className="space-y-0.5">
+            <p className="text-[10px] font-black text-primary uppercase tracking-[0.15em] opacity-80">
+              {brand}
+            </p>
+            <h3 className="font-black text-lg text-slate-900 dark:text-white leading-tight">
+              {model}
             </h3>
-            <div className="flex items-center gap-2">
-              <Badge variant="outline" className="text-[9px] uppercase font-black border-slate-200 dark:border-white/10 text-[#374151] dark:text-slate-500 rounded-md h-5 px-1.5 bg-zinc-50 dark:bg-transparent">
-                {condition}
-              </Badge>
-              {location && (
-                <span className="text-[9px] font-black uppercase text-slate-400 flex items-center gap-1">
-                  <MapPin className="w-3 h-3" /> {location}
+          </div>
+
+          <div className="flex items-center justify-between mt-3">
+            <div className="flex flex-col">
+              <p className="text-xl font-black text-slate-900 dark:text-white tracking-tight">
+                {price.toLocaleString()} <span className="text-[10px] opacity-40 ml-0.5">FCFA</span>
+              </p>
+              {originalPrice && (
+                <span className="text-[10px] text-slate-400 line-through font-bold">
+                  {originalPrice.toLocaleString()}
                 </span>
               )}
             </div>
+
+            <button
+              onClick={(e) => { e.stopPropagation(); /* logic to add to cart */ }}
+              className="w-10 h-10 rounded-full bg-slate-900 dark:bg-white text-white dark:text-black flex items-center justify-center shadow-lg active:scale-90 transition-all hover:scale-110"
+            >
+              <Plus size={20} strokeWidth={3} />
+            </button>
           </div>
-          <div className="text-right">
-            <p className="text-base font-black text-black dark:text-white tracking-tighter italic leading-none">
-              {price.toLocaleString()} <span className="text-[10px] opacity-40 not-italic ml-0.5">FCFA</span>
+        </div>
+      </div>
+    );
+  }
+
+  // Standard Website Card
+  return (
+    <Card
+      onClick={() => { if (id) navigate(`/deal/${id}`); }}
+      className="group overflow-hidden border-slate-200/60 dark:border-white/5 hover:border-blue-500/30 transition-all duration-300 cursor-pointer h-full flex flex-col hover:shadow-lg bg-white dark:bg-zinc-950"
+    >
+      <div className="relative aspect-[4/3] overflow-hidden bg-slate-50 dark:bg-zinc-900/50">
+        {image ? (
+          <img
+            src={image}
+            alt={model}
+            className="h-full w-full object-contain p-4 transition-transform duration-500 group-hover:scale-105"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            <Smartphone className="w-12 h-12 text-slate-200" />
+          </div>
+        )}
+        {tag && (
+          <Badge className={`absolute top-3 left-3 z-10 font-bold border-none shadow-sm ${tagClasses(tag)}`}>
+            {tag}
+          </Badge>
+        )}
+      </div>
+
+      <CardHeader className="p-4 pb-2">
+        <div className="flex justify-between items-start gap-2">
+          <div>
+            <p className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider mb-1">
+              {brand}
             </p>
+            <h3 className="font-bold text-slate-900 dark:text-white line-clamp-1 group-hover:text-blue-600 transition-colors">
+              {model}
+            </h3>
+          </div>
+        </div>
+      </CardHeader>
+
+      <CardContent className="p-4 pt-0 flex-1">
+        <div className="flex flex-wrap gap-1.5 mb-3">
+          {badges.map((badge, idx) => (
+            <Badge key={idx} variant="secondary" className={`text-[10px] px-2 py-0 border-none font-medium ${badgeClasses(badge)}`}>
+              {badge}
+            </Badge>
+          ))}
+          {condition && (
+            <Badge variant="outline" className="text-[10px] px-2 py-0 border-slate-200 text-slate-600 font-medium">
+              {condition}
+            </Badge>
+          )}
+        </div>
+        {location && (
+          <div className="flex items-center text-slate-400 text-[11px] font-medium">
+            <MapPin className="h-3 w-3 mr-1" />
+            {location}
+          </div>
+        )}
+      </CardContent>
+
+      <CardFooter className="p-4 pt-0 border-t border-slate-50 dark:border-white/5 mt-auto bg-slate-50/30 dark:bg-transparent">
+        <div className="flex items-center justify-between w-full pt-3">
+          <div className="flex flex-col">
+            <span className="text-lg font-black text-slate-900 dark:text-white">
+              {price.toLocaleString()} <span className="text-[10px] text-slate-400">FCFA</span>
+            </span>
             {originalPrice && (
-              <span className="text-[9px] text-slate-400 line-through">
+              <span className="text-xs text-slate-400 line-through opacity-70">
                 {originalPrice.toLocaleString()}
               </span>
             )}
           </div>
-        </div>
-
-        {extraLine && (
-          <p className="text-[9px] font-black text-[#064e3b] dark:text-primary uppercase tracking-wider py-1.5 border-t border-slate-100 dark:border-white/5 truncate">
-            {extraLine}
-          </p>
-        )}
-
-        <div className="flex items-center gap-2 mt-auto">
-          <Button className="flex-1 h-9 rounded-full bg-black dark:bg-primary text-white dark:text-black font-black text-[10px] uppercase tracking-widest shadow-sm hover:opacity-90 active:scale-95 transition-all border-0">
-            Détails Deal
+          <Button size="sm" className="rounded-full font-bold px-4 h-8 bg-blue-600 hover:bg-blue-700">
+            Détails
           </Button>
-          {onDelete && (
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={(e) => { e.stopPropagation(); onDelete(); }}
-              className="h-9 w-9 rounded-full border-slate-200 text-rose-500 hover:bg-rose-50 hover:text-rose-600 dark:border-white/10 dark:hover:bg-rose-500/10"
-            >
-              <LogOut className="w-4 h-4 rotate-180" />
-            </Button>
-          )}
         </div>
-      </div>
-    </div>
+      </CardFooter>
+    </Card>
   );
 };
 
