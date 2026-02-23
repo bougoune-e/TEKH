@@ -28,6 +28,12 @@ const BRAND_MAPPING: Record<string, string> = {
     'motorola': 'Motorola',
     'sony': 'Sony',
     'lg': 'LG',
+    'oneplus': 'OnePlus',
+    'nothing': 'Nothing',
+    'honor': 'Honor',
+    'nokia': 'Nokia',
+    'asus': 'Asus',
+    'lenovo': 'Lenovo',
 };
 
 const APPLE_MODELS: Record<string, string> = {
@@ -73,6 +79,13 @@ const SAMSUNG_MODELS: Record<string, string> = {
     'SM-G780': 'Galaxy S20 FE',
 };
 
+/** Retourne true si le User-Agent indique un appareil mobile (Android, iPhone, etc.). */
+export function isMobileUserAgent(): boolean {
+    if (typeof navigator === 'undefined' || !navigator.userAgent) return false;
+    const ua = navigator.userAgent;
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile/i.test(ua);
+}
+
 /**
  * Détection appareil robuste pour PWA et web.
  * Règle critique : ne jamais utiliser ua.includes("Apple") — le UA Android
@@ -94,11 +107,11 @@ export function detectDevice(): DetectedDevice {
         // Samsung / SM- en priorité (ex: SAMSUNG SM-A136B → Galaxy A13 5G)
         if (ua.includes('Samsung') || ua.includes('SM-')) {
             brand = 'Samsung';
-            const modelMatch = ua.match(/SM-[A-Z0-9]+/);
+            const modelMatch = ua.match(/SM-[A-Z0-9]+/i);
             if (modelMatch) {
                 const code = modelMatch[0];
                 for (const [key, val] of Object.entries(SAMSUNG_MODELS)) {
-                    if (code.startsWith(key)) {
+                    if (code.toUpperCase().startsWith(key)) {
                         model = val;
                         confidence = 0.95;
                         break;
@@ -118,22 +131,22 @@ export function detectDevice(): DetectedDevice {
                     break;
                 }
             }
-            // Extraction modèle Android: (Linux; Android X; DEVICE_MODEL) ou ; DEVICE_MODEL)
+            // Extraction modèle Android: (Linux; Android X; DEVICE_MODEL) ou DEVICE_MODEL Build/...
             const parts = ua.split(';');
             if (parts.length > 2) {
-                const modelPart = parts[2].split(')')[0].trim();
-                if (modelPart && !modelPart.toLowerCase().includes('build') && modelPart.length > 2 && modelPart.length < 35) {
-                    model = modelPart;
-                    confidence = 0.8;
+                const raw = parts[2].replace(/\s+Build\/.*/i, '').split(')')[0].trim();
+                if (raw && raw.length > 2 && raw.length < 50) {
+                    model = raw;
+                    confidence = Math.max(confidence, 0.8);
                 }
             }
             // Fallback: chercher un code type SM-xxx, M20xx, RMXxxxx, CPHxxxx dans tout le UA
             if (model === 'Modèle inconnu') {
-                const smMatch = ua.match(/SM-[A-Z0-9]+/);
+                const smMatch = ua.match(/SM-[A-Z0-9]+/i);
                 if (smMatch) {
                     const code = smMatch[0];
                     for (const [key, val] of Object.entries(SAMSUNG_MODELS)) {
-                        if (code.startsWith(key)) {
+                        if (code.toUpperCase().startsWith(key)) {
                             model = val;
                             brand = 'Samsung';
                             confidence = 0.85;
@@ -146,18 +159,14 @@ export function detectDevice(): DetectedDevice {
                     }
                 }
             }
+            if (brand !== 'Inconnu' && model === 'Modèle inconnu') confidence = Math.max(confidence, 0.65);
         }
     }
-    // 2. iPhone / iPad uniquement via chaînes explicites (jamais "Apple" seul)
+    // 2. iPhone / iPad — le UA ne contient jamais "iPhone 15" (toujours "iPhone"), on garde "iPhone" sauf Client Hints
     else if (ua.includes('iPhone')) {
         brand = 'Apple';
         type = 'mobile';
-        if (ua.includes('iPhone 15')) model = 'iPhone 15';
-        else if (ua.includes('iPhone 14')) model = 'iPhone 14';
-        else if (ua.includes('iPhone 13')) model = 'iPhone 13';
-        else if (ua.includes('iPhone 12')) model = 'iPhone 12';
-        else if (ua.includes('iPhone 11')) model = 'iPhone 11';
-        else model = 'iPhone';
+        model = 'iPhone';
         confidence = 0.8;
     }
     else if (ua.includes('iPad')) {
@@ -175,6 +184,16 @@ export function detectDevice(): DetectedDevice {
     }
 
     return { brand, model, confidence, type };
+}
+
+/** Si le navigateur expose le modèle via Client Hints (Chrome), le retourne. Sinon null. */
+export function getDeviceModelFromClientHints(): Promise<string | null> {
+    const nav = typeof navigator !== 'undefined' ? navigator : null;
+    const uaData = nav && (nav as any).userAgentData;
+    if (!uaData || typeof uaData.getHighEntropyValues !== 'function') return Promise.resolve(null);
+    return (uaData as any).getHighEntropyValues(['model'])
+        .then((v: { model?: string }) => (v?.model && v.model.length > 0 ? v.model : null))
+        .catch(() => null);
 }
 
 /**
