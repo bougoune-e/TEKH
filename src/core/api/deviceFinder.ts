@@ -99,100 +99,75 @@ export function detectDevice(): DetectedDevice {
     if (import.meta.env.DEV) {
         console.debug('[deviceFinder] userAgent:', ua);
     }
-    let brand = 'Inconnu';
-    let model = 'Modèle inconnu';
-    let confidence = 0.5;
+
     let type: 'mobile' | 'tablet' | 'desktop' | 'unknown' = 'unknown';
 
-    // ——— 1. ANDROID EN PREMIER (obligatoire : sinon AppleWebKit fait matcher "Apple") ———
+    // ——— 1. PRIORITÉ ANDROID (retours précoces : aucun code "apple" jamais exécuté ici) ———
     if (uaLower.includes('android')) {
-        type = 'mobile';
-        // Samsung : "Samsung" ou "sm-" ou "sm_" (tous les UA Samsung)
-        const isSamsungUA = uaLower.includes('samsung') || uaLower.includes('sm-') || uaLower.includes('sm_');
-        if (isSamsungUA) {
-            brand = 'Samsung';
-            const modelMatch = ua.match(/SM[-_][A-Z0-9]+/i);
-            if (modelMatch) {
-                const code = modelMatch[0];
-                const codeUpper = code.toUpperCase().replace('_', '-');
-                for (const [key, val] of Object.entries(SAMSUNG_MODELS)) {
-                    if (codeUpper.startsWith(key)) {
-                        model = val;
-                        confidence = 0.95;
-                        break;
-                    }
-                }
-                if (model === 'Modèle inconnu') {
-                    model = code;
-                    confidence = 0.7;
-                }
-            }
-        } else {
-            // Autres marques Android : ne JAMAIS tester "apple" (AppleWebKit = faux positif)
-            const brands = Object.keys(BRAND_MAPPING).filter(b => b !== 'apple');
-            for (const b of brands) {
-                if (uaLower.includes(b)) {
-                    brand = BRAND_MAPPING[b];
-                    confidence = 0.7;
+        const typeMobile: 'mobile' | 'tablet' = uaLower.includes('mobile') ? 'mobile' : 'tablet';
+
+        // Samsung : SM- ou SM_ dans le UA → retour immédiat (jamais Apple)
+        const samsungMatch = ua.match(/SM[-_][A-Z0-9]+/i);
+        if (samsungMatch) {
+            const code = samsungMatch[0];
+            const codeUpper = code.toUpperCase().replace('_', '-');
+            let modelVal = 'Modèle inconnu';
+            let conf = 0.9;
+            for (const [key, val] of Object.entries(SAMSUNG_MODELS)) {
+                if (codeUpper.startsWith(key)) {
+                    modelVal = val;
+                    conf = 0.95;
                     break;
                 }
             }
-            // Extraction modèle : (Linux; Android X; DEVICE_MODEL) ou DEVICE_MODEL Build/...
-            const parts = ua.split(';');
-            if (parts.length > 2) {
-                const raw = parts[2].replace(/\s+Build\/.*/i, '').split(')')[0].trim();
-                if (raw && raw.length > 2 && raw.length < 50) {
-                    model = raw;
-                    confidence = Math.max(confidence, 0.8);
-                }
+            if (modelVal === 'Modèle inconnu') {
+                modelVal = code;
+                conf = 0.7;
             }
-            // Fallback : code SM- quelque part dans le UA → Samsung
-            if (model === 'Modèle inconnu') {
-                const smMatch = ua.match(/SM-[A-Z0-9]+/i);
-                if (smMatch) {
-                    const code = smMatch[0];
-                    const codeUpper = code.toUpperCase().replace('_', '-');
-                    for (const [key, val] of Object.entries(SAMSUNG_MODELS)) {
-                        if (codeUpper.startsWith(key)) {
-                            model = val;
-                            brand = 'Samsung';
-                            confidence = 0.85;
-                            break;
-                        }
-                    }
-                    if (model === 'Modèle inconnu') {
-                        model = code;
-                        confidence = 0.65;
-                    }
-                }
-            }
-            if (brand !== 'Inconnu' && model === 'Modèle inconnu') confidence = Math.max(confidence, 0.65);
+            if (import.meta.env.DEV) console.log('[deviceFinder] Brand before return (Android Samsung):', 'Samsung');
+            return { brand: 'Samsung', model: modelVal, confidence: conf, type: typeMobile };
         }
-        // Garde finale : on est dans Android, la marque ne doit jamais être Apple
-        if (brand === 'Apple') brand = 'Inconnu';
-    }
-    // ——— 2. APPLE UNIQUEMENT VIA iPhone / iPad (jamais via "Apple" ou "AppleWebKit") ———
-    else if (uaLower.includes('iphone')) {
-        brand = 'Apple';
-        type = 'mobile';
-        model = 'iPhone';
-        confidence = 0.8;
-    }
-    else if (uaLower.includes('ipad')) {
-        brand = 'Apple';
-        type = 'tablet';
-        model = 'iPad';
-        confidence = 0.8;
+
+        // Autres Android : marques sans "apple", puis extraction modèle
+        let brandAndroid = 'Inconnu';
+        let modelAndroid = 'Modèle inconnu';
+        let confAndroid = 0.5;
+        const brands = Object.keys(BRAND_MAPPING).filter(b => b !== 'apple');
+        for (const b of brands) {
+            if (uaLower.includes(b)) {
+                brandAndroid = BRAND_MAPPING[b];
+                confAndroid = 0.7;
+                break;
+            }
+        }
+        const parts = ua.split(';');
+        if (parts.length > 2) {
+            const raw = parts[2].replace(/\s+Build\/.*/i, '').split(')')[0].trim();
+            if (raw && raw.length > 2 && raw.length < 50) {
+                modelAndroid = raw;
+                confAndroid = Math.max(confAndroid, 0.8);
+            }
+        }
+        if (import.meta.env.DEV) console.log('[deviceFinder] Brand before return (Android other):', brandAndroid);
+        return { brand: brandAndroid, model: modelAndroid, confidence: confAndroid, type: typeMobile };
     }
 
-    // Tablet / Desktop
-    if (uaLower.includes('ipad') || (uaLower.includes('android') && !uaLower.includes('mobile'))) {
-        type = 'tablet';
-    } else if (!uaLower.includes('mobile') && (uaLower.includes('windows') || uaLower.includes('macintosh') || uaLower.includes('linux'))) {
-        type = 'desktop';
+    // ——— 2. APPLE UNIQUEMENT VIA "iphone" / "ipad" (jamais "apple") ———
+    if (uaLower.includes('iphone')) {
+        if (import.meta.env.DEV) console.log('[deviceFinder] Brand before return (iPhone):', 'Apple');
+        return { brand: 'Apple', model: 'iPhone', confidence: 0.8, type: 'mobile' };
+    }
+    if (uaLower.includes('ipad')) {
+        if (import.meta.env.DEV) console.log('[deviceFinder] Brand before return (iPad):', 'Apple');
+        return { brand: 'Apple', model: 'iPad', confidence: 0.8, type: 'tablet' };
     }
 
-    return { brand, model, confidence, type };
+    // ——— 3. DEFAUT ———
+    type = !uaLower.includes('mobile') && (uaLower.includes('windows') || uaLower.includes('macintosh') || uaLower.includes('linux'))
+        ? 'desktop'
+        : 'unknown';
+    if (import.meta.env.DEV) console.log('[deviceFinder] Brand before return (default):', 'Inconnu');
+    return { brand: 'Inconnu', model: 'Modèle inconnu', confidence: 0.5, type };
 }
 
 /** Si le navigateur expose le modèle via Client Hints (Chrome), le retourne. Sinon null. */
