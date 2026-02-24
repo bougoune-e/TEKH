@@ -107,13 +107,14 @@ export function detectDevice(): DetectedDevice {
     // ——— 1. ANDROID EN PREMIER (obligatoire : sinon AppleWebKit fait matcher "Apple") ———
     if (uaLower.includes('android')) {
         type = 'mobile';
-        // Samsung : "Samsung" ou "sm-" (certains UA ont le modèle en minuscules)
-        if (uaLower.includes('samsung') || uaLower.includes('sm-')) {
+        // Samsung : "Samsung" ou "sm-" ou "sm_" (tous les UA Samsung)
+        const isSamsungUA = uaLower.includes('samsung') || uaLower.includes('sm-') || uaLower.includes('sm_');
+        if (isSamsungUA) {
             brand = 'Samsung';
-            const modelMatch = ua.match(/SM-[A-Z0-9]+/i);
+            const modelMatch = ua.match(/SM[-_][A-Z0-9]+/i);
             if (modelMatch) {
                 const code = modelMatch[0];
-                const codeUpper = code.toUpperCase();
+                const codeUpper = code.toUpperCase().replace('_', '-');
                 for (const [key, val] of Object.entries(SAMSUNG_MODELS)) {
                     if (codeUpper.startsWith(key)) {
                         model = val;
@@ -150,7 +151,7 @@ export function detectDevice(): DetectedDevice {
                 const smMatch = ua.match(/SM-[A-Z0-9]+/i);
                 if (smMatch) {
                     const code = smMatch[0];
-                    const codeUpper = code.toUpperCase();
+                    const codeUpper = code.toUpperCase().replace('_', '-');
                     for (const [key, val] of Object.entries(SAMSUNG_MODELS)) {
                         if (codeUpper.startsWith(key)) {
                             model = val;

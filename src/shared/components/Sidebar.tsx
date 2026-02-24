@@ -1,11 +1,9 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Home, Compass, LayoutGrid, Settings } from 'lucide-react';
+import { Home, Compass, LayoutGrid, Settings, User } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/ui/tooltip';
 import { useAuth } from '@/features/auth/auth.context';
 import logo from '@/assets/logos/robott.jpeg';
-import UserAvatar from "@/shared/components/UserAvatar";
 import { useTranslation } from 'react-i18next';
-import ProfileIcon from "@/shared/components/ProfileIcon";
 
 const Sidebar = () => {
   const { t } = useTranslation();
@@ -91,21 +89,23 @@ const Sidebar = () => {
           <TooltipContent side="right">{t('nav.settings')}</TooltipContent>
         </Tooltip>
 
-        {/* 👤 Profil User */}
+        {/* 👤 Profil — même style icône que les autres (Lucide User) */}
         <Tooltip>
           <TooltipTrigger asChild>
             <button
               onClick={handleProfileClick}
-              className={`relative transition-all duration-300 hover:scale-110 ${isActive('/profile')
-                ? 'scale-110'
-                : 'text-black dark:text-slate-500 opacity-100 hover:opacity-100'
-                }`}
+              className={`relative transition-all duration-300 hover:scale-110 ${isActive('/profile') || isActive('/login')
+                ? 'text-[#064e3b] dark:text-primary scale-110'
+                : 'text-black dark:text-slate-500 hover:text-[#064e3b] dark:hover:text-primary'}`}
               aria-label={t('nav.profile')}
             >
-              <div className={`h-8 w-8 flex items-center justify-center transition-all ${isActive('/profile') ? 'ring-2 ring-[#064e3b] dark:ring-primary shadow-lg shadow-[#064e3b]/20 rounded-full' : ''}`}>
-                <ProfileIcon size="32px" className="text-current" />
-              </div>
-              {isActive('/profile') && (
+              <User
+                className="h-8 w-8 nav-icon"
+                strokeWidth={isActive('/profile') || isActive('/login') ? 3 : 2}
+                fill={isActive('/profile') || isActive('/login') ? 'currentColor' : 'none'}
+                fillOpacity={isActive('/profile') || isActive('/login') ? 0.2 : 1}
+              />
+              {(isActive('/profile') || isActive('/login')) && (
                 <span className="absolute -left-4 top-1/2 -translate-y-1/2 h-8 w-1 bg-[#064e3b] dark:bg-primary rounded-r-full shadow-[0_0_15px_rgba(6,78,59,0.5)] dark:shadow-[0_0_15px_rgba(0,255,65,0.6)]" />
               )}
             </button>

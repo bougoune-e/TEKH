@@ -1,91 +1,138 @@
-import React from 'react';
-import { RefreshCcw, Wrench, GraduationCap, Code } from 'lucide-react';
-import { usePWA } from '@/shared/hooks/usePWA';
+import React from "react";
+import { Link } from "react-router-dom";
+import { RefreshCcw, Wrench, GraduationCap, Code, ArrowRight } from "lucide-react";
+import { usePWA } from "@/shared/hooks/usePWA";
 
 const services = [
-    {
-        title: "Trade-In & Échange",
-        desc: "Mettez à niveau vos appareils avec notre système d'évaluation intelligente.",
-        icon: <RefreshCcw className="w-8 h-8 text-white" />,
-        color: "bg-blue-600"
-    },
-    {
-        title: "Maintenance IT",
-        desc: "Réparations professionnelles et support technique certifié.",
-        icon: <Wrench className="w-8 h-8 text-white" />,
-        color: "bg-blue-600"
-    },
-    {
-        title: "Formation Tech",
-        desc: "Apprenez le coding, Excel, les outils IA et bien plus.",
-        icon: <GraduationCap className="w-8 h-8 text-white" />,
-        color: "bg-blue-600"
-    },
-    {
-        title: "Développement Web & Mobile",
-        desc: "Solutions sur mesure pour entreprises et entrepreneurs.",
-        icon: <Code className="w-8 h-8 text-white" />,
-        color: "bg-blue-600"
-    }
+  {
+    id: "trade-in",
+    title: "Trade-In & Échange",
+    shortDesc: "Échangez votre ancien appareil contre un reconditionné ou neuf.",
+    longDesc: "Mettez à niveau vos appareils avec notre système d'évaluation intelligente. Estimation instantanée, valeur équitable et récupération à domicile.",
+    icon: RefreshCcw,
+    emoji: "📱",
+    color: "bg-[#064e3b]",
+    borderColor: "border-[#0a1628]",
+  },
+  {
+    id: "maintenance",
+    title: "Maintenance IT",
+    shortDesc: "Réparations et support technique certifié.",
+    longDesc: "Réparations professionnelles et support technique certifié. Diagnostic, réparation smartphone/PC et garantie sur les interventions.",
+    icon: Wrench,
+    emoji: "🔧",
+    color: "bg-[#0a1628]",
+    borderColor: "border-[#064e3b]",
+  },
+  {
+    id: "formation",
+    title: "Formation Tech",
+    shortDesc: "Coding, Excel, outils IA et compétences numériques.",
+    longDesc: "Apprenez le coding, Excel, les outils IA et bien plus. Formations adaptées aux entrepreneurs et aux particuliers pour monter en compétence.",
+    icon: GraduationCap,
+    emoji: "🎓",
+    color: "bg-[#064e3b]",
+    borderColor: "border-[#0a1628]",
+  },
+  {
+    id: "dev",
+    title: "Développement Web & Mobile",
+    shortDesc: "Sites, applis et solutions sur mesure.",
+    longDesc: "Solutions sur mesure pour entreprises et entrepreneurs : sites web, applications mobiles et PWA pour développer votre présence digitale.",
+    icon: Code,
+    emoji: "💻",
+    color: "bg-[#0a1628]",
+    borderColor: "border-[#064e3b]",
+  },
 ];
 
+export const servicesForAPropos = services;
+
 const ServicesSection = () => {
-    const isPWA = usePWA();
-    const iconColor = isPWA ? "bg-[#00FF41]" : "bg-blue-600";
-    const textColor = isPWA ? "text-black" : "text-white";
+  const isPWA = usePWA();
+  const green = isPWA ? "#00FF41" : "#064e3b";
+  const blueDark = "#0a1628";
 
-    return (
-        <section className="py-16 bg-slate-50 dark:bg-zinc-900/30">
-            <div className="container mx-auto px-6">
-                <div className="text-center mb-12">
-                    <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white mb-4">Nos Services</h2>
-                    <p className="text-slate-500 dark:text-slate-400 font-bold max-w-2xl mx-auto">
-                        Des solutions complètes pour tous vos besoins technologiques.
-                    </p>
+  return (
+    <section className="py-16 md:py-20 bg-[#f0f9f4] dark:bg-[#0a1628]/40">
+      <div className="container mx-auto px-6">
+        <div className="text-center mb-14">
+          <h2 className="text-3xl md:text-5xl font-black text-[#0a0a0a] dark:text-white mb-4 tracking-tighter">
+            Nos Services
+          </h2>
+          <p className="text-[#404040] dark:text-zinc-400 font-bold max-w-2xl mx-auto">
+            Des solutions complètes pour tous vos besoins technologiques.
+          </p>
+        </div>
+
+        {isPWA ? (
+          <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
+            {services.map((s, idx) => (
+              <div
+                key={s.id}
+                className="bg-white dark:bg-zinc-900/40 p-6 rounded-[28px] border-2 border-slate-100 dark:border-white/5 shadow-sm flex flex-col items-center text-center"
+              >
+                <span className="text-4xl mb-3">{s.emoji}</span>
+                <div className={`w-14 h-14 rounded-full flex items-center justify-center mb-3 ${s.color}`}>
+                  <s.icon className="w-7 h-7 text-white" />
                 </div>
+                <span className="text-xs font-black text-[#0a0a0a] dark:text-white uppercase tracking-widest">
+                  {s.title}
+                </span>
+                <p className="text-[10px] font-bold text-[#404040] dark:text-zinc-400 mt-1 line-clamp-2">
+                  {s.shortDesc}
+                </p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {services.map((s) => (
+              <div
+                key={s.id}
+                className={`rounded-2xl border-2 ${s.borderColor} bg-white dark:bg-zinc-900 p-8 shadow-lg hover:shadow-xl transition-all duration-300 group`}
+              >
+                <div className="flex items-center gap-4 mb-6">
+                  <span className="text-4xl" aria-hidden>{s.emoji}</span>
+                  <div className={`w-14 h-14 rounded-xl flex items-center justify-center ${s.color} text-white`}>
+                    <s.icon className="w-7 h-7" />
+                  </div>
+                </div>
+                <h3 className="text-xl font-black text-[#0a0a0a] dark:text-white mb-3 tracking-tight">
+                  {s.title}
+                </h3>
+                <p className="text-[#404040] dark:text-zinc-400 font-bold leading-relaxed text-sm mb-6">
+                  {s.shortDesc}
+                </p>
+                <p className="text-[#404040] dark:text-zinc-500 font-semibold text-xs leading-relaxed mb-6">
+                  {s.longDesc}
+                </p>
+                <Link
+                  to="/a-propos#services"
+                  className="inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest text-[#064e3b] dark:text-[#00FF41] hover:underline"
+                >
+                  En savoir plus
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+            ))}
+          </div>
+        )}
 
-                {isPWA ? (
-                    <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
-                        {services.map((service, idx) => (
-                            <button
-                                key={idx}
-                                className="bg-white dark:bg-zinc-900/40 p-6 rounded-[28px] border border-slate-100 dark:border-white/5 shadow-sm active:scale-95 transition-all group flex flex-col items-center text-center backdrop-blur-sm"
-                            >
-                                <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-primary/15 dark:bg-primary/10 group-hover:scale-110 transition-transform shadow-inner">
-                                    {React.cloneElement(service.icon as React.ReactElement, {
-                                        className: "w-8 h-8 text-primary",
-                                        strokeWidth: 2.5
-                                    })}
-                                </div>
-                                <span className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest opacity-80 group-hover:opacity-100">
-                                    {service.title}
-                                </span>
-                            </button>
-                        ))}
-                    </div>
-                ) : (
-                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {services.map((service, idx) => (
-                            <div
-                                key={idx}
-                                className="bg-white dark:bg-zinc-900 p-8 rounded-2xl border border-slate-100 dark:border-white/5 shadow-sm hover:shadow-md transition-all group"
-                            >
-                                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-6 bg-blue-600 group-hover:scale-110 transition-transform`}>
-                                    {service.icon}
-                                </div>
-                                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">
-                                    {service.title}
-                                </h3>
-                                <p className="text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
-                                    {service.desc}
-                                </p>
-                            </div>
-                        ))}
-                    </div>
-                )}
-            </div>
-        </section>
-    );
+        {!isPWA && (
+          <div className="text-center mt-12">
+            <Link
+              to="/a-propos#services"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#064e3b] dark:bg-[#00FF41] text-white dark:text-black font-black text-sm uppercase tracking-widest hover:opacity-90 transition-opacity"
+            >
+              Voir toutes les descriptions
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+          </div>
+        )}
+      </div>
+    </section>
+  );
 };
 
 export default ServicesSection;

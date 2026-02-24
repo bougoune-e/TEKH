@@ -123,17 +123,8 @@
     });
   </script>
   <script>
-    // Unregister any existing service workers that might be causing cache conflicts
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations().then(function (registrations) {
-        for (let registration of registrations) {
-          registration.unregister();
-          console.log('Service Worker unregistered');
-        }
-      }).catch(function (err) {
-        console.log('Service Worker unregistration failed: ', err);
-      });
-    }
+    // Ne plus désenregistrer le SW : en PWA le SW doit servir index.html pour toutes les routes
+    // (évite 404 au rafraîchissement sur /deals, /simulateur, etc.)
   </script>
 </body>
 
