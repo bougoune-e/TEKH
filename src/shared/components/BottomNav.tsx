@@ -3,8 +3,6 @@ import { Home, Compass, Search, Calculator, User, Zap, LayoutGrid, Settings } fr
 import { useAuth } from "@/features/auth/auth.context";
 import { usePWA } from "@/shared/hooks/usePWA";
 
-import UserAvatar from "@/shared/components/UserAvatar";
-import ProfileIcon from "@/shared/components/ProfileIcon";
 
 export default function BottomNav() {
   const { pathname } = useLocation();
@@ -74,7 +72,7 @@ export default function BottomNav() {
           );
         })}
 
-        {/* 👤 Account */}
+        {/* 👤 Compte — même icône Lucide User que les autres */}
         <button
           onClick={() => navigate(profilePath)}
           className={`flex flex-col items-center justify-center gap-1 transition-all duration-300 h-full ${isPWA
@@ -82,22 +80,11 @@ export default function BottomNav() {
             : `flex-1 active:scale-90 ${profileActive ? "text-primary" : "text-black dark:text-foreground/60"}`
             }`}
         >
-          {isPWA ? (
-            <User
-              className={`h-6 w-6 transition-transform duration-300 ${profileActive ? "scale-110" : ""}`}
-              strokeWidth={profileActive ? 3 : 2}
-            />
-          ) : (
-            <div className={`h-[22px] w-[22px] flex items-center justify-center transition-transform duration-300 ${profileActive ? "scale-110" : ""}`}>
-              {user ? (
-                <ProfileIcon size="22px" className="text-current" />
-              ) : (
-                <UserAvatar user={user} size="sm" className="h-[22px] w-[22px] rounded-full" />
-              )}
-            </div>
-          )}
-          <span className={`font-bold tracking-tight ${isPWA ? "text-[10px]" : "text-[11px] font-medium"
-            } ${profileActive ? "opacity-100" : "opacity-60"}`}>
+          <User
+            className={`transition-transform duration-300 ${isPWA ? "h-6 w-6" : "h-[22px] w-[22px]"} ${profileActive ? "scale-110" : ""}`}
+            strokeWidth={isPWA ? (profileActive ? 3 : 2) : (profileActive ? 2.5 : 2)}
+          />
+          <span className={`font-bold tracking-tight ${isPWA ? "text-[10px]" : "text-[11px] font-medium"} ${profileActive ? "opacity-100" : "opacity-60"}`}>
             Compte
           </span>
         </button>
