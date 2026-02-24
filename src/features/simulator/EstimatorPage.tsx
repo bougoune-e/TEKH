@@ -201,11 +201,12 @@ export default function EstimatorPage() {
               if (hintModel) finalModel = hintModel;
             } catch (_) { /* ignore */ }
 
-            if (detection.confidence > 0.6) {
-              setDetectedBrand(detection.brand);
-              setDetectedModel(finalModel);
-              if (import.meta.env.DEV) console.log("[TEKH detect] state set → brand:", detection.brand, "model:", finalModel);
+            // Toujours afficher le résultat (jamais couper vers manuel sans montrer ce qu'on a détecté)
+            setDetectedBrand(detection.brand);
+            setDetectedModel(finalModel || detection.model);
+            if (import.meta.env.DEV) console.log("[TEKH detect] state set → brand:", detection.brand, "model:", finalModel, "confidence:", detection.confidence);
 
+            if (detection.confidence > 0.6) {
               const prediction = predictVariants(detection.brand, finalModel);
               try {
                 const variants = await getAvailableVariants(detection.brand, finalModel);
@@ -214,9 +215,6 @@ export default function EstimatorPage() {
                   // gardé pour usage à la confirmation
                 }
               } catch (_) { /* ignore */ }
-            } else {
-              if (import.meta.env.DEV) console.log("[TEKH detect] confidence too low → manual, result was:", detection);
-              setDetectionStep("manual");
             }
             setIsScanning(false);
           }, 1500);
@@ -525,7 +523,7 @@ export default function EstimatorPage() {
                         <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.3em]">Lecture des spécifications hardware</p>
                       </div>
                     </div>
-                  ) : detectedModel ? (
+                  ) : detectedModel && detectedBrand !== "Inconnu" ? (
                     <div className="p-3 sm:p-4 flex flex-col items-center py-3 px-3 space-y-3 animate-in slide-in-from-bottom-8 duration-700">
                       <div className="w-full bg-[#00FF41]/10 border border-[#00FF41]/20 rounded-xl p-3 text-center">
                         <p className="text-[9px] font-black uppercase tracking-widest text-[#00FF41]">Modèle détecté</p>
