@@ -148,41 +148,36 @@ export default function DealsPage() {
   return (
     <section className="py-8 pb-28 md:pb-8 bg-background min-h-dvh">
       <div className="container mx-auto px-4 sm:px-6">
-        {/* Header — titre + tendances + badges (ancienne version: grilles de cartes mockées) */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-          <div>
-            <h1 className="text-3xl font-black tracking-tighter mb-2 text-slate-900 dark:text-white uppercase">{t('nav.deals', 'Explorer')}</h1>
-            <div className="flex items-center gap-2 text-slate-600 dark:text-muted-foreground">
-              <Sparkles className="h-4 w-4 text-primary" />
-              <span className="text-sm font-bold uppercase tracking-widest">{t('deals.trends', 'Tendances du moment')}</span>
-            </div>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {['iPhone 15', 'Samsung S24', 'Budget < 200k', '512 Go'].map((label) => (
-              <Badge
-                key={label}
-                variant="outline"
-                className="rounded-full px-4 py-1.5 bg-card hover:bg-primary hover:text-primary-foreground hover:border-primary cursor-pointer transition-all font-bold"
-                onClick={() => {
-                  if (label === 'Budget < 200k') setFilters((f) => ({ ...f, min: 0, max: 200000 }));
-                  else setFilters((f) => ({ ...f, q: label.includes('iPhone') ? 'iPhone 15' : label.includes('Samsung') ? 'Samsung S24' : f.q }));
-                }}
-              >
-                {label}
-              </Badge>
-            ))}
-          </div>
+        {/* Barre tendances + filtres — pas de titre EXPLORER, hiérarchie sobre */}
+        <div className="flex flex-wrap items-center gap-2 mb-4">
+          <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground mr-1">
+            <Sparkles className="h-3.5 w-3.5 text-primary" />
+            {t('deals.trends', 'Tendances du moment')}
+          </span>
+          {['iPhone 15', 'Samsung S24', 'Budget < 200k', '512 Go'].map((label) => (
+            <Badge
+              key={label}
+              variant="outline"
+              className="rounded-full px-3 py-1 text-[11px] font-medium bg-card hover:bg-primary/10 hover:border-primary/50 border-border/60 cursor-pointer transition-colors"
+              onClick={() => {
+                if (label === 'Budget < 200k') setFilters((f) => ({ ...f, min: 0, max: 200000 }));
+                else setFilters((f) => ({ ...f, q: label.includes('iPhone') ? 'iPhone 15' : label.includes('Samsung') ? 'Samsung S24' : f.q }));
+              }}
+            >
+              {label}
+            </Badge>
+          ))}
         </div>
 
         {/* Filters Bar */}
-        <div className="sticky top-[68px] z-30 bg-background/95 backdrop-blur py-4 mb-6 border-b border-border/40">
+        <div className="sticky top-[68px] z-30 bg-background/95 backdrop-blur py-3 mb-4 border-b border-border/30">
           <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
             <div className="flex-1 w-full md:w-auto relative">
               <Input
                 placeholder={t('deals.search', 'Rechercher un modèle...')}
                 value={filters.q || ''}
                 onChange={(e) => setFilters((f) => ({ ...f, q: e.target.value }))}
-                className="pl-4 rounded-full bg-muted/50 border-0 focus-visible:ring-1 ring-primary/50"
+                className="pl-4 h-10 text-sm rounded-xl bg-muted/40 dark:bg-muted/20 border-0 focus-visible:ring-1 ring-primary/30"
               />
             </div>
             <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 no-scrollbar">
@@ -213,8 +208,8 @@ export default function DealsPage() {
         </div>
 
 
-        {/* Grille 2 colonnes, cartes compactes */}
-        <div className="grid grid-cols-2 gap-3 sm:gap-4">
+        {/* Grille 2 colonnes — densité type marketplace */}
+        <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
           {list.map((d) => {
             const { tag, badges, extraLine } = computeExtra(d, targetValue, desired, maxAddition);
             const canDelete = userId && d.ownerId && userId === d.ownerId;
