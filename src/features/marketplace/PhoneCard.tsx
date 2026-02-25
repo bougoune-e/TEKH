@@ -18,7 +18,6 @@ function formatPublishedAgo(dateStr: string | undefined): string {
   if (diffDays < 365) return `${Math.floor(diffDays / 30)} mois`;
   return `${Math.floor(diffDays / 365)} an`;
 }
-import { usePWA } from "@/shared/hooks/usePWA";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "@/features/marketplace/cart.context";
 import { toast } from "sonner";
@@ -88,7 +87,6 @@ const PhoneCard = ({
   const mainImage = image || images?.[0];
   const imageCount = images?.length ?? (image ? 1 : 0);
   const navigate = useNavigate();
-  const isPWA = usePWA();
   const { addToCart } = useCart();
 
   const handleCartClick = (e: React.MouseEvent) => {
@@ -110,8 +108,7 @@ const PhoneCard = ({
       onClick={() => { if (id) navigate(`/deal/${id}`); }}
       className={cn(
         "group overflow-hidden transition-all duration-200 cursor-pointer h-full flex flex-col hover:shadow-md",
-        compact ? "rounded-[18px] border border-border/40 dark:border-white/[0.06] bg-card dark:bg-zinc-900/80" : "rounded-2xl hover:border-primary/20",
-        !compact && (isPWA ? "phone-card" : "border-slate-200/60 dark:border-white/5 bg-white dark:bg-zinc-950")
+        compact ? "rounded-[18px] border border-border/40 dark:border-white/[0.06] bg-card dark:bg-zinc-900/80" : "rounded-2xl border-slate-200/60 dark:border-white/5 bg-white dark:bg-zinc-950 hover:border-primary/20"
       )}
     >
       <div className={cn("relative overflow-hidden bg-muted/30 dark:bg-zinc-800/50", compact ? "aspect-[4/3] max-h-[92px]" : "aspect-[4/3]")}>
@@ -192,7 +189,7 @@ const PhoneCard = ({
       <CardFooter className={cn(
         "mt-auto border-t border-border/30 dark:border-white/[0.06]",
         compact ? "px-2.5 py-1.5 pt-1" : "p-4 pt-0",
-        !compact && !isPWA && "bg-muted/20 dark:bg-transparent"
+        !compact && "bg-muted/20 dark:bg-transparent"
       )}>
         <div className={cn("flex items-center justify-between w-full", compact ? "gap-1" : "pt-3 gap-2")}>
           <div className="flex flex-col min-w-0">
