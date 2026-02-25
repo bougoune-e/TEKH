@@ -1,13 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import PhoneCard from "@/features/marketplace/PhoneCard";
-import { Input } from "@/shared/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/ui/select";
-import { Slider } from "@/shared/ui/slider";
-import { Badge } from "@/shared/ui/badge";
-import { Card } from "@/shared/ui/card";
 import { useDeals } from "@/features/marketplace/deals.context";
 import type { DealPost } from "@/shared/data/dealsData";
-import { Flame, Star, MessageSquare, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { deleteDealById, getCurrentUser, fetchDeals } from "@/core/api/supabaseApi";
 import { isSupabaseConfigured } from "@/core/api/supabaseClient";
 import { toast } from "@/shared/hooks/use-toast";
@@ -146,69 +141,9 @@ export default function DealsPage() {
   const maxAddition = matchRequest?.maxAddition;
 
   return (
-    <section className="py-8 pb-28 md:pb-8 bg-background min-h-dvh">
-      <div className="container mx-auto px-4 sm:px-6">
-        {/* Barre tendances + filtres — pas de titre EXPLORER, hiérarchie sobre */}
-        <div className="flex flex-wrap items-center gap-2 mb-4">
-          <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground mr-1">
-            <Sparkles className="h-3.5 w-3.5 text-primary" />
-            {t('deals.trends', 'Tendances du moment')}
-          </span>
-          {['iPhone 15', 'Samsung S24', 'Budget < 200k', '512 Go'].map((label) => (
-            <Badge
-              key={label}
-              variant="outline"
-              className="rounded-full px-3 py-1 text-[11px] font-medium bg-card hover:bg-primary/10 hover:border-primary/50 border-border/60 cursor-pointer transition-colors"
-              onClick={() => {
-                if (label === 'Budget < 200k') setFilters((f) => ({ ...f, min: 0, max: 200000 }));
-                else setFilters((f) => ({ ...f, q: label.includes('iPhone') ? 'iPhone 15' : label.includes('Samsung') ? 'Samsung S24' : f.q }));
-              }}
-            >
-              {label}
-            </Badge>
-          ))}
-        </div>
-
-        {/* Filters Bar */}
-        <div className="sticky top-[68px] z-30 bg-background/95 backdrop-blur py-3 mb-4 border-b border-border/30">
-          <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
-            <div className="flex-1 w-full md:w-auto relative">
-              <Input
-                placeholder={t('deals.search', 'Rechercher un modèle...')}
-                value={filters.q || ''}
-                onChange={(e) => setFilters((f) => ({ ...f, q: e.target.value }))}
-                className="pl-4 h-10 text-sm rounded-xl bg-muted/40 dark:bg-muted/20 border-0 focus-visible:ring-1 ring-primary/30"
-              />
-            </div>
-            <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 no-scrollbar">
-              <Select value={filters.brand} onValueChange={(v) => setFilters((f) => ({ ...f, brand: v }))}>
-                <SelectTrigger className="w-[120px] rounded-full border-zinc-200 dark:border-border/60 bg-zinc-50 dark:bg-card text-black dark:text-white font-bold h-10"><SelectValue placeholder={t('simulator.brand')} /></SelectTrigger>
-                <SelectContent>
-                  {BRANDS.map((b) => <SelectItem key={b} value={b}>{b}</SelectItem>)}
-                </SelectContent>
-              </Select>
-              <Select value={(filters.condition || '') as any} onValueChange={(v) => setFilters((f) => ({ ...f, condition: v as any }))}>
-                <SelectTrigger className="w-[120px] rounded-full border-zinc-200 dark:border-border/60 bg-zinc-50 dark:bg-card text-black dark:text-white font-bold h-10"><SelectValue placeholder={t('deals.condition', 'État')} /></SelectTrigger>
-                <SelectContent>
-                  {CONDITIONS.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
-                </SelectContent>
-              </Select>
-
-              <div className="hidden md:flex items-center gap-2 px-2 min-w-[200px]">
-                <span className="text-xs text-muted-foreground whitespace-nowrap">{t('deals.budget', 'Budget')}</span>
-                <Slider
-                  value={[filters.min || 0, filters.max || 800000]}
-                  min={0} max={1000000} step={10000}
-                  onValueChange={([min, max]) => setFilters((f) => ({ ...f, min, max }))}
-                  className="w-full"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        {/* Grille 2 colonnes — densité type marketplace */}
+    <section className="pt-4 pb-28 md:pb-8 bg-background min-h-dvh">
+      <div className="container mx-auto px-3 sm:px-4">
+        {/* Grille de deals uniquement — style CoinAfrique, rien au-dessus des cartes */}
         <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
           {list.map((d) => {
             const { tag, badges, extraLine } = computeExtra(d, targetValue, desired, maxAddition);
