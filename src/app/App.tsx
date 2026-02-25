@@ -53,6 +53,10 @@ const DiagnosePage = lazy(() => import("@/features/simulator/Diagnose"));
 const AdminPage = lazy(() => import("@/features/misc/AdminPage"));
 const DealboxCatalog = lazy(() => import("@/features/marketplace/DealboxCatalog"));
 const NotificationsPage = lazy(() => import("@/features/notifications/Notifications"));
+const PanierPage = lazy(() => import("@/features/marketplace/Panier"));
+const MaintenanceIT = lazy(() => import("@/features/services/MaintenanceIT"));
+const FormationTech = lazy(() => import("@/features/services/FormationTech"));
+const DevWebMobile = lazy(() => import("@/features/services/DevWebMobile"));
 
 const queryClient = new QueryClient();
 
@@ -123,6 +127,10 @@ const NavigationWrapper = () => {
                 <Route path="/messages" element={<PageTransition navType={navType}><Index /></PageTransition>} />
                 <Route path="/settings" element={<PageTransition navType={navType}><SettingsPage /></PageTransition>} />
                 <Route path="/notifications" element={<PageTransition navType={navType}><NotificationsPage /></PageTransition>} />
+                <Route path="/panier" element={<PageTransition navType={navType}><PanierPage /></PageTransition>} />
+                <Route path="/maintenance" element={<PageTransition navType={navType}><MaintenanceIT /></PageTransition>} />
+                <Route path="/formation" element={<PageTransition navType={navType}><FormationTech /></PageTransition>} />
+                <Route path="/dev-web" element={<PageTransition navType={navType}><DevWebMobile /></PageTransition>} />
               </Route>
 
               {/* Route Admin Exclusive */}

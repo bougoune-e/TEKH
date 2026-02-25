@@ -28,7 +28,7 @@ export default function Login() {
       setError("Connexion Google indisponible: configuration Supabase manquante.");
       return;
     }
-    const { error } = await supabase.auth.signInWithOAuth({ provider: "google", options: { redirectTo: `${window.location.origin}/deals` } as any });
+    const { error } = await supabase.auth.signInWithOAuth({ provider: "google", options: { redirectTo: `${window.location.origin}/profile` } as any });
     if (error) setError(error.message);
   };
 
@@ -42,8 +42,6 @@ export default function Login() {
       password,
     });
 
-    setLoading(true);
-
     if (error) {
       setError("Connexion échouée : " + error.message);
       setLoading(false);
@@ -51,7 +49,9 @@ export default function Login() {
     }
 
     if (data?.user) {
-      navigate("/deals");
+      navigate("/profile");
+    } else {
+      setLoading(false);
     }
   };
 
