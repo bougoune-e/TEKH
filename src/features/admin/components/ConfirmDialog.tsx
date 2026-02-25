@@ -8,26 +8,25 @@ type Props = {
   confirmLabel?: string;
   cancelLabel?: string;
   onConfirm: () => void | Promise<void>;
-  children: React.ReactNode; // trigger
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  children?: React.ReactNode;
 };
 
-const ConfirmDialog = ({ title, description, confirmLabel = "Confirmer", cancelLabel = "Annuler", onConfirm, children }: Props) => {
+const ConfirmDialog = ({ title, description, confirmLabel = "Confirmer", cancelLabel = "Annuler", onConfirm, open, onOpenChange, children }: Props) => {
   const [loading, setLoading] = useState(false);
   const handleConfirm = async () => {
     try {
       setLoading(true);
       await onConfirm();
+      onOpenChange?.(false);
     } finally {
       setLoading(false);
     }
   };
 
-  return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
-        {children}
-      </AlertDialogTrigger>
-      <AlertDialogContent>
+  const content = (
+    <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>
           {description ? <AlertDialogDescription>{description}</AlertDialogDescription> : null}
@@ -40,7 +39,13 @@ const ConfirmDialog = ({ title, description, confirmLabel = "Confirmer", cancelL
             </Button>
           </AlertDialogAction>
         </AlertDialogFooter>
-      </AlertDialogContent>
+    </AlertDialogContent>
+  );
+
+  return (
+    <AlertDialog open={open} onOpenChange={onOpenChange}>
+      {children != null ? <AlertDialogTrigger asChild>{children}</AlertDialogTrigger> : null}
+      {content}
     </AlertDialog>
   );
 };

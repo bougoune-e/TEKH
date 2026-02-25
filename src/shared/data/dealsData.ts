@@ -1,5 +1,7 @@
 export type ConditionLabel = "Neuf" | "Très bon" | "Bon" | "Moyen";
 
+export type DealStatus = "draft" | "published" | "archived";
+
 export type DealPost = {
   id: string;
   title: string;
@@ -19,11 +21,13 @@ export type DealPost = {
   createdAt?: string;
   location?: string;
   ownerId?: string; // propriétaire de l'annonce
-  // Informations vendeur / contact (optionnelles)
   sellerName?: string;
   contactPhone?: string;
   contactWhatsapp?: string;
   contactEmail?: string;
+  /** Admin: draft | published | archived */
+  status?: DealStatus;
+  publishedAt?: string;
 };
 
 export const dealsData: DealPost[] = [

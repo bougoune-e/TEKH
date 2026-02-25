@@ -449,19 +449,87 @@ export async function countDealsByOwner(ownerId: string) {
   return count || 0;
 }
 
+function mapAnnonceRow(row: any) {
+  return {
+    ...row,
+    createdAt: row.created_at,
+    ownerId: row.owner_id,
+    sellerName: row.seller_name,
+    contactPhone: row.contact_phone,
+    contactWhatsapp: row.contact_whatsapp,
+    contactEmail: row.contact_email,
+    publishedAt: row.published_at,
+  };
+}
+
+/** App publique : uniquement les deals publiés */
 export async function fetchDeals() {
+  if (!realClient) return [];
+  let data: any[] = [];
+  let error: any = null;
+  try {
+    const r = await realClient.from("annonces").select("*").eq("status", "published").order("created_at", { ascending: false });
+    data = r.data || [];
+    error = r.error;
+  } catch {
+    const r = await realClient.from("annonces").select("*").order("created_at", { ascending: false });
+    data = (r.data || []).filter((row: any) => row.status !== "draft" && row.status !== "archived");
+    error = r.error;
+  }
+  if (error) throw error;
+  return data.map(mapAnnonceRow);
+}
+
+/** Admin : tous les deals (tous statuts) */
+export async function fetchAllDealsForAdmin() {
   if (!realClient) return [];
   const { data, error } = await realClient.from("annonces").select("*").order("created_at", { ascending: false });
   if (error) throw error;
-  return (data || []).map((row: any) => ({ ...row, createdAt: row.created_at, ownerId: row.owner_id, sellerName: row.seller_name, contactPhone: row.contact_phone, contactWhatsapp: row.contact_whatsapp, contactEmail: row.contact_email }));
+  return (data || []).map(mapAnnonceRow);
+}
+
+/** Admin : un deal par id */
+export async function fetchDealById(id: string) {
+  if (!realClient) return null;
+  const { data, error } = await realClient.from("annonces").select("*").eq("id", id).maybeSingle();
+  if (error) throw error;
+  return data ? mapAnnonceRow(data) : null;
 }
 
 export async function insertDeal(deal: any) {
   if (!realClient) return deal;
-  const row = { ...deal, created_at: deal.createdAt ?? new Date().toISOString(), owner_id: deal.ownerId, seller_name: deal.sellerName, contact_phone: deal.contactPhone, contact_whatsapp: deal.contactWhatsapp, contact_email: deal.contactEmail };
+  const row = {
+    ...deal,
+    created_at: deal.createdAt ?? new Date().toISOString(),
+    owner_id: deal.ownerId,
+    seller_name: deal.sellerName,
+    contact_phone: deal.contactPhone,
+    contact_whatsapp: deal.contactWhatsapp,
+    contact_email: deal.contactEmail,
+    status: deal.status ?? "draft",
+    published_at: deal.publishedAt ?? (deal.status === "published" ? new Date().toISOString() : null),
+  };
   const { data, error } = await realClient.from("annonces").insert(row).select().single();
   if (error) throw error;
-  return { ...data, createdAt: data.created_at, ownerId: data.owner_id };
+  return mapAnnonceRow(data);
+}
+
+export async function updateDeal(id: string, updates: any) {
+  if (!realClient) return null;
+  const map: Record<string, string> = {
+    ownerId: "owner_id", sellerName: "seller_name", contactPhone: "contact_phone",
+    contactWhatsapp: "contact_whatsapp", contactEmail: "contact_email",
+    createdAt: "created_at", publishedAt: "published_at",
+  };
+  const row: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(updates)) {
+    if (v === undefined) continue;
+    row[map[k] || k] = v;
+  }
+  if (updates.status === "published" && row.published_at == null) row.published_at = new Date().toISOString();
+  const { data, error } = await realClient.from("annonces").update(row).eq("id", id).select().single();
+  if (error) throw error;
+  return data ? mapAnnonceRow(data) : null;
 }
 
 export async function deleteDealById(id: string) {

@@ -53,10 +53,15 @@ export default function SettingsPage() {
         setSavingBio(true);
         try {
             const { supabase } = await import("@/core/api/supabaseApi");
-            await supabase.auth.updateUser({ data: { ...(user as any).user_metadata, bio: passionBio } } as any);
+            const meta = { ...((user as any).user_metadata || {}), bio: passionBio };
+            const { error } = await supabase.auth.updateUser({ data: meta } as any);
+            if (error) throw error;
             await refreshUser();
-        } catch (e) {
-            console.error("Save bio failed", e);
+            const { toast } = await import("sonner");
+            toast.success("Enregistré", { description: "Votre passion TEKH a été mise à jour." });
+        } catch (e: any) {
+            const { toast } = await import("sonner");
+            toast.error("Erreur", { description: e?.message || "Impossible d'enregistrer." });
         } finally {
             setSavingBio(false);
         }
@@ -284,12 +289,14 @@ export default function SettingsPage() {
                             <div className="space-y-2">
                                 <Label className="text-[10px] font-black uppercase text-slate-500 dark:text-slate-400">Bio / Description</Label>
                                 <Input
+                                    value={passionBio}
+                                    onChange={(e) => setPassionBio(e.target.value)}
                                     placeholder="Décrivez votre passion tech..."
                                     className="bg-white dark:bg-black border-2 border-black dark:border-white rounded-2xl h-14 font-black focus:ring-0 text-black dark:text-white"
                                 />
                             </div>
-                            <Button className="w-full bg-black dark:bg-white text-white dark:text-black hover:opacity-90 rounded-2xl h-14 font-black shadow-xl transition-all border-0">
-                                Enregistrer les modifications
+                            <Button onClick={savePassionBio} disabled={savingBio} className="w-full bg-[#064e3b] dark:bg-[#059669] text-white hover:opacity-90 rounded-2xl h-14 font-black shadow-xl transition-all border-0">
+                                {savingBio ? "Enregistrement…" : "Enregistrer les modifications"}
                             </Button>
                         </div>
                     </div>

@@ -10,7 +10,7 @@ export interface Diagnostics {
     camera_hs: boolean;
     etat_moyen: boolean;
     // UI mapping
-    screenState?: "intact" | "cracked" | "burned" | "dead";
+    screenState?: "intact" | "cracked" | "scratched" | "burned" | "dead";
     batteryState?: "good" | "low" | "replace";
     biometricsState?: "ok" | "nok" | "na";
     cameraState?: "ok" | "degraded" | "nok";
@@ -56,6 +56,7 @@ function getCoefficientAge(releaseYear: number | null): number {
 function getCoefficientEtat(diag: Diagnostics): number {
     // Priority: Critical (Screen/Biometrics)
     if (diag.screenState === "dead" || diag.screenState === "burned" || diag.screenState === "cracked") return 0.25; // Critique
+    if (diag.screenState === "scratched") return 0.50; // Rayé (dégradé)
     if (diag.biometricsState === "nok") return 0.25; // Critique
 
     // Physical state

@@ -40,7 +40,8 @@ export const DiagnosticStep = ({
                         </SelectTrigger>
                         <SelectContent className="rounded-xl bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
                             <SelectItem value="intact">Intact / Aucun défaut</SelectItem>
-                            <SelectItem value="cracked">Fissuré / Rayé</SelectItem>
+                            <SelectItem value="cracked">Fissure</SelectItem>
+                            <SelectItem value="scratched">Rayé</SelectItem>
                             <SelectItem value="burned">Brûlé / Taches LCD</SelectItem>
                             <SelectItem value="dead">Non fonctionnel / Noir</SelectItem>
                         </SelectContent>

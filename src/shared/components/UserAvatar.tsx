@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/core/api/supabaseApi";
 import { cn } from "@/core/api/utils";
-import ProfileIcon from "@/shared/components/ProfileIcon";
 
 type Size = "sm" | "md" | "lg" | "xl";
 
@@ -21,6 +20,16 @@ const sizeToClass: Record<Size, string> = {
   xl: "h-24 w-24",
 };
 
+/** Première lettre pour le fallback (nom ou email) */
+function getInitial(user: any): string {
+  const m = (user as any)?.user_metadata || {};
+  const name = m.full_name || m.name || "";
+  if (name && name.trim()) return name.trim().charAt(0).toUpperCase();
+  const email = (user as any)?.email || "";
+  if (email) return email.charAt(0).toUpperCase();
+  return "?";
+}
+
 export default function UserAvatar({ user, src, path, size = "md", className = "", alt }: Props) {
   const [imgSrc, setImgSrc] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -29,9 +38,10 @@ export default function UserAvatar({ user, src, path, size = "md", className = "
 
   const metaUrl = useMemo(() => {
     const m = (user as any)?.user_metadata || {};
-    return (m.avatar_url || m.picture || (user as any)?.avatar_url || null) as string | null;
+    return (m.avatar_url || m.picture || m.photo_url || (user as any)?.avatar_url || null) as string | null;
   }, [user]);
 
+  const initial = useMemo(() => getInitial(user), [user]);
   const altText = alt || (user?.email || "Avatar utilisateur");
 
   useEffect(() => {
@@ -76,30 +86,35 @@ export default function UserAvatar({ user, src, path, size = "md", className = "
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [src, path, metaUrl]);
 
+  const baseSize = sizeToClass[size];
   const wrapperCls = cn(
-    sizeToClass[size],
-    "rounded-xl aspect-square overflow-hidden border-2 border-zinc-100 dark:border-white/5 shadow-sm relative bg-white dark:bg-zinc-900 transition-all duration-500",
+    "aspect-square overflow-hidden rounded-full border-2 border-zinc-100 dark:border-white/5 shadow-sm relative bg-muted/30 transition-all duration-300",
+    baseSize,
     className
   );
 
   if (loading) {
-    return <div className={cn(wrapperCls, "animate-pulse bg-muted-foreground/10")} />;
+    return <div className={cn(wrapperCls, "animate-pulse")} aria-hidden />;
   }
 
   if (!imgSrc || errored) {
     return (
-      <div className={cn(wrapperCls, "grid place-items-center group")}>
-        <ProfileIcon size="100%" className="text-black/20 dark:text-white/20 group-hover:scale-110 transition-transform" />
+      <div
+        className={cn(wrapperCls, "flex items-center justify-center text-foreground/80 font-black select-none")}
+        style={{ fontSize: "40%" }}
+        aria-label={altText}
+      >
+        {initial}
       </div>
     );
   }
 
   return (
-    <div className="relative inline-block group">
+    <div className={cn("relative inline-block rounded-full overflow-hidden", baseSize, className)}>
       <img
         src={imgSrc}
         alt={altText}
-        className={cn(wrapperCls, "object-cover group-hover:rotate-3 group-hover:scale-105 transition-all duration-500")}
+        className="w-full h-full min-w-0 min-h-0 object-cover transition-transform duration-300 hover:scale-105"
         loading="lazy"
         decoding="async"
         referrerPolicy="no-referrer"
