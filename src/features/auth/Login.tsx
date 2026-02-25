@@ -28,8 +28,29 @@ export default function Login() {
       setError("Connexion Google indisponible: configuration Supabase manquante.");
       return;
     }
-    const { error } = await supabase.auth.signInWithOAuth({ provider: "google", options: { redirectTo: `${window.location.origin}/profile` } as any });
-    if (error) setError(error.message);
+    setLoading(true);
+    try {
+      // En prod/PWA/APK: utiliser VITE_APP_URL (ex: https://tekh-1.onrender.com) pour que la redirection
+      // revienne bien vers ton site. Doit être dans Supabase → Auth → URL Configuration → Redirect URLs.
+      const baseUrl = (import.meta.env.VITE_APP_URL as string) || window.location.origin;
+      const redirectTo = `${baseUrl.replace(/\/$/, "")}/profile`;
+      const { error: oauthError } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo,
+          queryParams: { access_type: "offline", prompt: "consent" },
+        } as any,
+      });
+      if (oauthError) {
+        setError(oauthError.message);
+        setLoading(false);
+        return;
+      }
+      // Redirection en cours (page peut quitter) — pas de setLoading(false)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Erreur inattendue");
+      setLoading(false);
+    }
   };
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -68,13 +89,17 @@ export default function Login() {
         <CardContent className="p-0 space-y-8">
           {/* Priority 1: Google Login (Spotify Style) */}
           <button
+            type="button"
             onClick={loginWithGoogle}
-            className="flex items-center gap-4 bg-black hover:bg-zinc-900 transition-all duration-300 p-2 pr-8 rounded-full border border-transparent hover:scale-105 active:scale-95 group w-full shadow-xl"
+            disabled={loading}
+            className="flex items-center gap-4 bg-black hover:bg-zinc-900 transition-all duration-300 p-2 pr-8 rounded-full border border-transparent hover:scale-105 active:scale-95 group w-full shadow-xl disabled:opacity-70"
           >
             <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg">
               <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="h-5 w-5" />
             </div>
-            <span className="text-base font-bold tracking-tight text-white font-sans">{t('auth.google')}</span>
+            <span className="text-base font-bold tracking-tight text-white font-sans">
+              {loading ? t('auth.loading') : t('auth.google')}
+            </span>
           </button>
 
           {/* Separator */}

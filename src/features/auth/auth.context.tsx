@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "@/core/api/supabaseApi";
+import { isSupabaseConfigured } from "@/core/api/supabaseClient";
 
 interface AuthValue {
   user: any | null;
@@ -23,16 +24,32 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
+    if (!supabase?.auth?.getSession) {
+      setLoading(false);
+      return;
+    }
     let unsub: (() => void) | undefined;
     supabase.auth.getSession().then(({ data }) => {
       setUser(data.session?.user ?? null);
       setLoading(false);
     });
+    // Après OAuth redirect, les tokens arrivent dans le hash ; un 2e getSession après un court délai
+    // aide sur mobile/WebView où le hash est parfois traité après le premier rendu.
+    const t = isSupabaseConfigured
+      ? window.setTimeout(() => {
+          supabase.auth.getSession().then(({ data }) => {
+            if (data.session?.user) setUser(data.session.user);
+          });
+        }, 800)
+      : 0;
     const { data } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
     });
     unsub = () => data?.subscription?.unsubscribe?.();
-    return () => { if (unsub) unsub(); };
+    return () => {
+      if (t) window.clearTimeout(t);
+      if (unsub) unsub();
+    };
   }, []);
 
   return (
