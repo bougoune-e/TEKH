@@ -34,12 +34,33 @@ export default function SettingsPage() {
     const [lang, setLang] = useState(i18n.language || "fr");
     const [isPWA, setIsPWA] = useState(false);
     const [uploading, setUploading] = useState(false);
+    const [passionBio, setPassionBio] = useState("");
+    const [savingBio, setSavingBio] = useState(false);
 
     useEffect(() => {
         if (window.matchMedia('(display-mode: standalone)').matches) {
             setIsPWA(true);
         }
     }, []);
+
+    useEffect(() => {
+        const bio = (user as any)?.user_metadata?.bio ?? "";
+        setPassionBio(bio);
+    }, [user]);
+
+    const savePassionBio = async () => {
+        if (!user?.id) return;
+        setSavingBio(true);
+        try {
+            const { supabase } = await import("@/core/api/supabaseApi");
+            await supabase.auth.updateUser({ data: { ...(user as any).user_metadata, bio: passionBio } } as any);
+            await refreshUser();
+        } catch (e) {
+            console.error("Save bio failed", e);
+        } finally {
+            setSavingBio(false);
+        }
+    };
 
     const handleProfileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -89,15 +110,7 @@ export default function SettingsPage() {
     if (isPWA) {
         return (
             <div className="min-h-dvh bg-background pb-32 pt-safe transition-colors">
-                <div className="max-w-xl mx-auto space-y-8 text-foreground">
-
-                    {/* Header - Pure & Centered */}
-                    <div className="pt-8 pb-4 px-5 text-center">
-                        <h1 className="text-2xl font-black tracking-tighter uppercase italic">
-                            Mon <span className="text-primary">Compte</span>
-                        </h1>
-                    </div>
-
+                <div className="max-w-xl mx-auto space-y-8 text-foreground pt-6">
                     {/* Profile Section - List Style */}
                     <section className="space-y-1">
                         <div className="flex items-center gap-4 px-5 py-6 bg-muted/30 border-y border-border/10 active:bg-muted/50 transition-colors">
@@ -116,6 +129,23 @@ export default function SettingsPage() {
                             </div>
                         </div>
                     </section>
+
+                    {/* Décrivez votre passion TEKH */}
+                    <div className="space-y-1">
+                        <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground px-5 mb-2">TEKH+</h3>
+                        <div className="bg-muted/30 border-y border-border/10 px-5 py-4">
+                            <Label className="text-[10px] font-black uppercase text-muted-foreground">Décrivez votre passion TEKH</Label>
+                            <textarea
+                                value={passionBio}
+                                onChange={(e) => setPassionBio(e.target.value)}
+                                placeholder="Décrivez votre passion tech..."
+                                className="mt-2 w-full min-h-[100px] rounded-xl bg-background border border-border/50 px-4 py-3 text-foreground font-medium text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+                            />
+                            <Button onClick={savePassionBio} disabled={savingBio} className="mt-3 w-full bg-[#064e3b] dark:bg-[#059669] hover:opacity-90 text-white rounded-xl h-11 font-bold">
+                                {savingBio ? "Enregistrement…" : "Enregistrer"}
+                            </Button>
+                        </div>
+                    </div>
 
                     {/* Dynamic Sections - Grouped Lists */}
                     {sections.map((section) => (

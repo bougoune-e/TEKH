@@ -41,15 +41,15 @@ const Layout = () => {
             <div className="flex items-center gap-3">
               <Link
                 to={isPWA ? "/settings" : "/"}
-                className="md:hidden shrink-0 active:scale-95 transition-transform"
+                className="md:hidden shrink-0 p-2 hover:bg-white/5 rounded-full transition-all group/settings active:scale-95"
               >
-                <div className="h-10 w-10 rounded-xl overflow-hidden border border-border/10 flex items-center justify-center bg-zinc-900 border-white/5">
-                  {isPWA ? (
-                    <SettingsIcon className="h-6 w-6 text-primary" />
-                  ) : (
+                {isPWA ? (
+                  <SettingsIcon className="h-6 w-6 text-foreground group-hover/settings:text-primary" strokeWidth={2} />
+                ) : (
+                  <div className="h-10 w-10 rounded-xl overflow-hidden border border-border/10 flex items-center justify-center">
                     <img src={logo} alt="TΞKΗ+" className="h-full w-full object-cover" />
-                  )}
-                </div>
+                  </div>
+                )}
               </Link>
             </div>
 
@@ -66,7 +66,10 @@ const Layout = () => {
               >
                 <Bot className="h-[24px] w-[24px] text-foreground group-hover/bot:text-primary" />
               </button>
-              <button className="relative p-2 hover:bg-white/5 rounded-full transition-all group/bell active:scale-90">
+              <button
+                onClick={() => navigate("/notifications")}
+                className="relative p-2 hover:bg-white/5 rounded-full transition-all group/bell active:scale-90"
+              >
                 <Bell className="h-[24px] w-[24px] text-foreground group-hover/bell:text-primary" strokeWidth={2} />
                 <span className="absolute top-2.5 right-2.5 h-2 w-2 bg-rose-500 rounded-full border-2 border-background" />
               </button>

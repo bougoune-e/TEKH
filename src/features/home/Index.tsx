@@ -16,9 +16,9 @@ const QuickActions = () => {
   const navigate = useNavigate();
   const isPWA = usePWA();
   const actions = [
-    { label: "Estimer", icon: <Zap className="w-6 h-6" />, path: "/simulateur", color: isPWA ? "bg-[#00FF41]" : "bg-[#064e3b]" },
-    { label: "Explorer", icon: <Search className="w-6 h-6" />, path: "/deals", color: isPWA ? "bg-[#00FF41]" : "bg-[#0a1628]" },
-    { label: "Certifié", icon: <ShieldCheck className="w-6 h-6" />, path: "/charte-qualite", color: isPWA ? "bg-[#00FF41]" : "bg-[#064e3b]" },
+    { label: "Estimer", icon: <Zap className="w-6 h-6" />, path: "/simulateur", color: "bg-[#064e3b]" },
+    { label: "Explorer", icon: <Search className="w-6 h-6" />, path: "/deals", color: "bg-[#064e3b]" },
+    { label: "Certifié", icon: <ShieldCheck className="w-6 h-6" />, path: "/charte-qualite", color: "bg-[#064e3b]" },
   ];
 
   return (

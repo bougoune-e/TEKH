@@ -16,6 +16,7 @@ import Stats from "@/features/admin/pages/Stats";
 import Settings from "@/features/admin/pages/Settings";
 import PageLoader from "@/shared/components/PageLoader";
 import { DealsProvider } from "@/features/marketplace/deals.context";
+import { CartProvider } from "@/features/marketplace/cart.context";
 import { AuthProvider } from "@/features/auth/auth.context";
 import { ThemeProvider } from "@/core/theme/ThemeProvider";
 import Layout from "@/shared/components/Layout";
@@ -51,6 +52,7 @@ const CharteDuSwap = lazy(() => import("@/features/legal/CharteDuSwap"));
 const DiagnosePage = lazy(() => import("@/features/simulator/Diagnose"));
 const AdminPage = lazy(() => import("@/features/misc/AdminPage"));
 const DealboxCatalog = lazy(() => import("@/features/marketplace/DealboxCatalog"));
+const NotificationsPage = lazy(() => import("@/features/notifications/Notifications"));
 
 const queryClient = new QueryClient();
 
@@ -87,6 +89,7 @@ const NavigationWrapper = () => {
       <ScrollRestorer />
       <AuthProvider>
         <DealsProvider>
+          <CartProvider>
           <Suspense fallback={<PageLoader />}>
             <Routes>
               {/* Routes principales avec Layout */}
@@ -119,6 +122,7 @@ const NavigationWrapper = () => {
                 <Route path="/communities" element={<PageTransition navType={navType}><Index /></PageTransition>} />
                 <Route path="/messages" element={<PageTransition navType={navType}><Index /></PageTransition>} />
                 <Route path="/settings" element={<PageTransition navType={navType}><SettingsPage /></PageTransition>} />
+                <Route path="/notifications" element={<PageTransition navType={navType}><NotificationsPage /></PageTransition>} />
               </Route>
 
               {/* Route Admin Exclusive */}
@@ -144,6 +148,7 @@ const NavigationWrapper = () => {
               <Route path="*" element={<PageTransition navType={navType}><NotFound /></PageTransition>} />
             </Routes>
           </Suspense>
+        </CartProvider>
         </DealsProvider>
       </AuthProvider>
     </>

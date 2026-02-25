@@ -117,7 +117,7 @@ export default function Login() {
               </div>
             )}
 
-            <Button type="submit" className="w-full h-14 rounded-full bg-black dark:bg-primary text-white dark:text-black font-black text-lg hover:scale-[1.05] active:scale-95 transition-all shadow-xl font-sans" disabled={loading}>
+            <Button type="submit" className="w-full h-14 rounded-full bg-[#064e3b] dark:bg-[#059669] text-white font-black text-lg hover:opacity-90 hover:scale-[1.02] active:scale-95 transition-all shadow-xl font-sans" disabled={loading}>
               {loading ? t('auth.loading') : t('auth.signIn')}
             </Button>
           </form>

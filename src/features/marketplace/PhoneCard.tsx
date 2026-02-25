@@ -5,6 +5,8 @@ import { Smartphone, MapPin, ShoppingCart } from "lucide-react";
 import { cn } from "@/core/api/utils";
 import { usePWA } from "@/shared/hooks/usePWA";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "@/features/marketplace/cart.context";
+import { toast } from "@/shared/hooks/use-toast";
 
 function tagClasses(t?: string) {
   if (!t) return "bg-primary text-primary-foreground";
@@ -63,6 +65,15 @@ const PhoneCard = ({
 }: PhoneCardProps) => {
   const navigate = useNavigate();
   const isPWA = usePWA();
+  const { addToCart } = useCart();
+
+  const handleCartClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!id) return;
+    addToCart({ id, brand, model, price, image });
+    toast({ title: "Ajouté au panier", description: brand && model ? `${brand} ${model}` : "Article ajouté." });
+  };
 
   return (
     <Card
@@ -148,11 +159,16 @@ const PhoneCard = ({
               </span>
             )}
           </div>
-          <Button size="icon" className={cn(
-            "rounded-xl shadow-lg shrink-0",
-            compact ? "w-8 h-8" : "w-10 h-10",
-            isPWA ? "bg-zinc-800 hover:bg-zinc-700 text-white" : "bg-blue-600 hover:bg-blue-700 text-white"
-          )}>
+          <Button
+            type="button"
+            size="icon"
+            onClick={handleCartClick}
+            className={cn(
+              "rounded-xl shadow-lg shrink-0",
+              compact ? "w-8 h-8" : "w-10 h-10",
+              isPWA ? "bg-[#064e3b] hover:bg-[#065f46] text-white" : "bg-[#064e3b] hover:bg-[#065f46] text-white dark:bg-[#059669] dark:hover:bg-[#10b981]"
+            )}
+          >
             <ShoppingCart className={compact ? "w-4 h-4" : "w-5 h-5"} />
           </Button>
         </div>

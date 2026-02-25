@@ -1,7 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RefreshCcw, Wrench, GraduationCap, Code, ArrowRight } from "lucide-react";
 import { usePWA } from "@/shared/hooks/usePWA";
+
+const servicePaths: Record<string, string> = {
+  "trade-in": "/simulateur",
+  "maintenance": "/a-propos#services",
+  "formation": "/a-propos#services",
+  "dev": "/a-propos#services",
+};
 
 const services = [
   {
@@ -50,8 +57,7 @@ export const servicesForAPropos = services;
 
 const ServicesSection = () => {
   const isPWA = usePWA();
-  const green = isPWA ? "#00FF41" : "#064e3b";
-  const blueDark = "#0a1628";
+  const navigate = useNavigate();
 
   return (
     <section className="py-16 md:py-20 bg-[#f0f9f4] dark:bg-[#0a1628]/40">
@@ -67,10 +73,12 @@ const ServicesSection = () => {
 
         {isPWA ? (
           <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
-            {services.map((s, idx) => (
-              <div
+            {services.map((s) => (
+              <button
                 key={s.id}
-                className="bg-white dark:bg-zinc-900/40 p-6 rounded-[28px] border-2 border-slate-100 dark:border-white/5 shadow-sm flex flex-col items-center text-center"
+                type="button"
+                onClick={() => navigate(servicePaths[s.id] || "/a-propos#services")}
+                className="bg-white dark:bg-zinc-900/40 p-6 rounded-[28px] border-2 border-slate-100 dark:border-white/5 shadow-sm flex flex-col items-center text-center active:scale-[0.98] hover:shadow-md transition-all"
               >
                 <span className="text-4xl mb-3">{s.emoji}</span>
                 <div className={`w-14 h-14 rounded-full flex items-center justify-center mb-3 ${s.color}`}>
@@ -82,15 +90,16 @@ const ServicesSection = () => {
                 <p className="text-[10px] font-bold text-[#404040] dark:text-zinc-400 mt-1 line-clamp-2">
                   {s.shortDesc}
                 </p>
-              </div>
+              </button>
             ))}
           </div>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {services.map((s) => (
-              <div
+              <Link
                 key={s.id}
-                className={`rounded-2xl border-2 ${s.borderColor} bg-white dark:bg-zinc-900 p-8 shadow-lg hover:shadow-xl transition-all duration-300 group`}
+                to={servicePaths[s.id] || "/a-propos#services"}
+                className={`rounded-2xl border-2 ${s.borderColor} bg-white dark:bg-zinc-900 p-8 shadow-lg hover:shadow-xl transition-all duration-300 group block text-left`}
               >
                 <div className="flex items-center gap-4 mb-6">
                   <span className="text-4xl" aria-hidden>{s.emoji}</span>
@@ -107,14 +116,11 @@ const ServicesSection = () => {
                 <p className="text-[#404040] dark:text-zinc-500 font-semibold text-xs leading-relaxed mb-6">
                   {s.longDesc}
                 </p>
-                <Link
-                  to="/a-propos#services"
-                  className="inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest text-[#064e3b] dark:text-[#00FF41] hover:underline"
-                >
+                <span className="inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest text-[#064e3b] dark:text-[#059669] hover:underline">
                   En savoir plus
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </div>
+                </span>
+              </Link>
             ))}
           </div>
         )}
