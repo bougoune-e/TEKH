@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/shared/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/shared/ui/card";
 import { Input } from "@/shared/ui/input";
@@ -9,9 +10,11 @@ import { Dialog, DialogContent, DialogTrigger } from "@/shared/ui/dialog";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/shared/ui/select";
 
 export default function SwapGapWidget({ dealPrice, dealId }: { dealPrice: number; dealId: string }) {
+    const navigate = useNavigate();
     const { lastSimulation } = useDeals();
     const [userValue, setUserValue] = useState<number>(0);
     const [gapData, setGapData] = useState<{ gap: number; isPositive: boolean; formatted: string } | null>(null);
+    const [simulatorDialogOpen, setSimulatorDialogOpen] = useState(false);
 
     useEffect(() => {
         // If we have a simulation from the homepage, use it as default
@@ -26,9 +29,9 @@ export default function SwapGapWidget({ dealPrice, dealId }: { dealPrice: number
     }, [userValue, dealPrice]);
 
     return (
-        <Card className="bg-primary/5 border-primary/20 shadow-none rounded-2xl">
+        <Card className="bg-[#064e3b]/5 dark:bg-[#17633D]/10 border-[#064e3b]/20 dark:border-[#17633D]/30 shadow-none rounded-2xl">
             <CardHeader className="pb-2">
-                <CardTitle className="text-base font-semibold flex items-center gap-2 text-primary">
+                <CardTitle className="text-base font-semibold flex items-center gap-2 text-[#064e3b] dark:text-[#059669]">
                     <ArrowRightLeft className="h-4 w-4" />
                     Simulateur de Swap
                 </CardTitle>
@@ -47,16 +50,21 @@ export default function SwapGapWidget({ dealPrice, dealId }: { dealPrice: number
                                 className="pl-9 bg-background"
                             />
                         </div>
-                        <Dialog>
+                        <Dialog open={simulatorDialogOpen} onOpenChange={setSimulatorDialogOpen}>
                             <DialogTrigger asChild>
                                 <Button variant="outline" size="icon" className="shrink-0" title="Estimer mon téléphone"><Calculator className="h-4 w-4" /></Button>
                             </DialogTrigger>
                             <DialogContent>
                                 <div className="p-4 text-center">
-                                    <Sparkles className="h-10 w-10 text-primary mx-auto mb-2" />
+                                    <Sparkles className="h-10 w-10 text-[#064e3b] dark:text-[#059669] mx-auto mb-2" />
                                     <h3 className="font-semibold text-lg">Estimation Rapide</h3>
                                     <p className="text-muted-foreground text-sm mb-4">Utilisez notre simulateur complet pour une valeur précise.</p>
-                                    <Button onClick={() => window.location.href = '/#simulateur'}>Aller au simulateur</Button>
+                                    <Button
+                                        onClick={() => { setSimulatorDialogOpen(false); navigate("/simulateur"); }}
+                                        className="bg-[#064e3b] hover:bg-[#065f46] dark:bg-[#059669] dark:hover:bg-[#10b981] text-white"
+                                    >
+                                        Aller au simulateur
+                                    </Button>
                                 </div>
                             </DialogContent>
                         </Dialog>
@@ -81,23 +89,23 @@ export default function SwapGapWidget({ dealPrice, dealId }: { dealPrice: number
                             </div>
                         </div>
 
-                        <div className={`rounded-[32px] p-6 border-2 shadow-xl ${gapData.isPositive ? 'bg-zinc-900 border-[hsl(var(--tekh-green))]/40 text-white dark:bg-zinc-900' : 'bg-[hsl(var(--tekh-green))] border-[hsl(var(--tekh-green))]/80 text-white'}`}>
+                        <div className={`rounded-[32px] p-6 border-2 shadow-xl ${gapData.isPositive ? 'bg-zinc-900 border-[#064e3b]/40 dark:border-[#059669]/40 text-white' : 'bg-[#064e3b] dark:bg-[#17633D] border-[#064e3b]/80 dark:border-[#17633D]/80 text-white'}`}>
                             <div className="flex justify-between items-center mb-1">
-                                <span className="text-xs font-black uppercase tracking-widest opacity-90">{gapData.isPositive ? 'Votre Budget Gap' : 'Crédit TΞKΗ+'}</span>
-                                <span className="text-2xl font-black italic">
+                                <span className="text-xs font-black uppercase tracking-widest text-white">{gapData.isPositive ? 'Votre Budget Gap' : 'Crédit TΞKΗ+'}</span>
+                                <span className="text-2xl font-black italic text-white">
                                     {gapData.formatted}
                                 </span>
                             </div>
-                            <div className="h-1.5 w-full bg-black/10 rounded-full overflow-hidden mt-2">
+                            <div className="h-1.5 w-full bg-black/15 rounded-full overflow-hidden mt-2">
                                 <div
                                     className={`h-full ${gapData.isPositive ? 'bg-orange-500' : 'bg-white/90'}`}
                                     style={{ width: `${Math.min(100, (Math.abs(gapData.gap) / dealPrice) * 100)}%` }}
                                 />
                             </div>
-                            <p className="text-[10px] text-muted-foreground mt-2 text-center">
+                            <p className="text-[11px] mt-2 text-center text-white/85 font-medium">
                                 Estimation indicative hors frais de service éventuels.
                             </p>
-                            <Button className="w-full mt-4 font-black rounded-full h-12 uppercase tracking-tighter bg-primary text-primary-foreground hover:scale-105 transition-transform" variant="default">
+                            <Button className="w-full mt-4 font-black rounded-full h-12 uppercase tracking-tighter bg-white text-[#064e3b] dark:text-[#17633D] hover:bg-white/95 border-0 shadow-lg" variant="default">
                                 Demander un Swap Certifié
                             </Button>
                         </div>

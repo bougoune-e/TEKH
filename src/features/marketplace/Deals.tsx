@@ -146,7 +146,7 @@ export default function DealsPage() {
   const maxAddition = matchRequest?.maxAddition;
 
   return (
-    <section className="py-8 bg-background min-h-dvh">
+    <section className="py-8 pb-28 md:pb-8 bg-background min-h-dvh">
       <div className="container mx-auto px-4 sm:px-6">
         {/* Header — titre + tendances + badges (ancienne version: grilles de cartes mockées) */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">

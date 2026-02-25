@@ -143,6 +143,9 @@ const PhoneCard = ({
         </div>
         {(publishedDate || location) && !compact && (
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-slate-500 dark:text-slate-400 text-[11px] font-medium">
+            <span className="inline-flex items-center gap-1 text-amber-600 dark:text-amber-400 font-semibold">
+              Valable 72h
+            </span>
             {publishedDate && (
               <span className="inline-flex items-center gap-1">
                 <Calendar className="h-3 w-3" />
