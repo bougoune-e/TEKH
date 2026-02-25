@@ -498,6 +498,17 @@ export default function EstimatorPage() {
           </div>
         </div>
 
+        {returnToDealId && (
+          <div className="mb-4 p-3 rounded-xl bg-[#064e3b]/10 dark:bg-[#059669]/15 border border-[#064e3b]/30 dark:border-[#059669]/40 text-center">
+            <p className="text-xs font-bold text-[#064e3b] dark:text-[#059669] uppercase tracking-wider">
+              Vous avez sélectionné un deal dans l’explorateur
+            </p>
+            <p className="text-[11px] text-muted-foreground mt-1">
+              Estimez votre téléphone actuel ci-dessous, puis cliquez sur <strong>« Retour au deal avec cette estimation »</strong> pour reprendre votre achat.
+            </p>
+          </div>
+        )}
+
         {renderProgress()}
 
         <Card className="bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/5 shadow-sm rounded-xl overflow-hidden border">
@@ -647,16 +658,36 @@ export default function EstimatorPage() {
                             </div>
                           </div>
 
-                          <Button
-                            disabled={!isStep1Complete}
-                            onClick={() => {
-                              setStep("satisfaction");
-                              window.scrollTo({ top: 0, behavior: "smooth" });
-                            }}
-                            className="w-full h-14 rounded-2xl bg-[#00FF41] text-black font-black text-sm uppercase tracking-tight hover:scale-[1.01] active:scale-95 disabled:opacity-30 disabled:grayscale transition-all shadow-lg shadow-[#00FF41]/20"
-                          >
-                            Continuer l'estimation
-                          </Button>
+                          <div className="flex flex-col sm:flex-row gap-3 w-full">
+                            {returnToDealId && isStep1Complete && finalPrice != null && (
+                              <Button
+                                onClick={() => {
+                                  const condition = aestheticState === "very_good" ? "like_new" as const : aestheticState === "visible" ? "good" as const : aestheticState === "damaged" ? "damaged" as const : "average" as const;
+                                  setLastSimulation({
+                                    model: `${brand} ${model}`,
+                                    condition,
+                                    storage: storage ?? undefined,
+                                    battery: batteryState === "good" ? "good" : batteryState === "low" ? "medium" : "low",
+                                    estimated: finalPrice,
+                                  });
+                                  navigate(`/deal/${returnToDealId}`, { replace: true });
+                                }}
+                                className="w-full h-14 rounded-2xl bg-[#064e3b] dark:bg-[#059669] text-white font-black text-sm uppercase tracking-tight hover:scale-[1.01] active:scale-95 transition-all shadow-lg flex items-center justify-center gap-2"
+                              >
+                                <ArrowLeft className="h-5 w-5" /> Retour au deal avec cette estimation
+                              </Button>
+                            )}
+                            <Button
+                              disabled={!isStep1Complete}
+                              onClick={() => {
+                                setStep("satisfaction");
+                                window.scrollTo({ top: 0, behavior: "smooth" });
+                              }}
+                              className="w-full h-14 rounded-2xl bg-[#00FF41] text-black font-black text-sm uppercase tracking-tight hover:scale-[1.01] active:scale-95 disabled:opacity-30 disabled:grayscale transition-all shadow-lg shadow-[#00FF41]/20"
+                            >
+                              Continuer l'estimation
+                            </Button>
+                          </div>
                         </div>
                       </div>
                     )}

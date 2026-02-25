@@ -147,7 +147,7 @@ export default function DealDetails() {
           {/* Colonne droite : simulateur + contact */}
           <div className="space-y-5 lg:sticky lg:top-24">
 
-            <SwapGapWidget dealPrice={deal.price} dealId={deal.id} />
+            <SwapGapWidget dealPrice={deal.price} dealId={deal.id} dealTitle={deal.title} contactWhatsapp={deal.contactWhatsapp || deal.contactPhone} />
 
             <Card className="p-6 rounded-2xl border border-border/60 bg-card shadow-lg ring-0">
               <CardHeader className="p-0 mb-4">
