@@ -1,8 +1,23 @@
 import { Button } from "@/shared/ui/button";
 import { Badge } from "@/shared/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader } from "@/shared/ui/card";
-import { Smartphone, MapPin, ShoppingCart, Calendar } from "lucide-react";
+import { Smartphone, MapPin, ShoppingCart, Calendar, Clock } from "lucide-react";
 import { cn } from "@/core/api/utils";
+
+/** Format date de publication en relatif : "2 j", "20 jours", "1 mois", "1 an" */
+function formatPublishedAgo(dateStr: string | undefined): string {
+  if (!dateStr) return "";
+  const d = new Date(dateStr);
+  const now = new Date();
+  const diffMs = now.getTime() - d.getTime();
+  const diffDays = Math.floor(diffMs / (24 * 60 * 60 * 1000));
+  if (diffDays < 1) return "Aujourd'hui";
+  if (diffDays === 1) return "1 jour";
+  if (diffDays < 7) return `${diffDays} jours`;
+  if (diffDays < 30) return `${Math.floor(diffDays / 7)} sem`;
+  if (diffDays < 365) return `${Math.floor(diffDays / 30)} mois`;
+  return `${Math.floor(diffDays / 365)} an`;
+}
 import { usePWA } from "@/shared/hooks/usePWA";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "@/features/marketplace/cart.context";
@@ -111,6 +126,13 @@ const PhoneCard = ({
             <Smartphone className={cn("text-muted-foreground/50", compact ? "w-7 h-7" : "w-12 h-12")} />
           </div>
         )}
+        {/* Date de publication — style CoinAfrique (badge en bas à gauche sur l'image) */}
+        {compact && publishedDate && (
+          <span className="absolute bottom-1 left-1 inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-black/60 text-white text-[9px] font-medium">
+            <Clock className="h-2.5 w-2.5" />
+            {formatPublishedAgo(publishedDate)}
+          </span>
+        )}
         {imageCount > 1 && (
           <span className="absolute bottom-1 right-1 px-1.5 py-0.5 rounded-md bg-black/50 text-white text-[9px] font-medium">
             {imageCount}
@@ -126,12 +148,12 @@ const PhoneCard = ({
       <CardHeader className={compact ? "px-2.5 pt-1.5 pb-0" : "p-4 pb-2"}>
         <div className="flex justify-between items-start gap-1">
           <div className="min-w-0 flex-1">
-            <p className={cn("text-[10px] font-medium text-primary dark:text-primary uppercase tracking-wide truncate", compact ? "mb-0.5" : "mb-1 text-xs")}>
+            <p className={cn("text-[9px] font-medium text-muted-foreground uppercase tracking-wide truncate", compact ? "mb-0.5" : "mb-1 text-xs")}>
               {brand}
             </p>
             <h3 className={cn(
-              "font-semibold text-foreground leading-tight group-hover:text-primary/90 transition-colors",
-              compact ? "text-[11px] leading-snug line-clamp-2" : "text-sm line-clamp-1"
+              "text-foreground leading-tight group-hover:text-foreground/90 transition-colors",
+              compact ? "text-[10px] font-medium leading-snug line-clamp-2" : "text-sm font-semibold line-clamp-1"
             )}>
               {model}
             </h3>
