@@ -64,7 +64,7 @@ export default function EstimatorPage() {
   const [storage, setStorage] = useState<number | null>(null);
   const [ram, setRam] = useState<number | null>(null);
 
-  const [screenState, setScreenState] = useState<"intact" | "cracked" | "burned" | "dead" | "">("");
+  const [screenState, setScreenState] = useState<"intact" | "cracked" | "scratched" | "burned" | "dead" | "">("");
   const [batteryState, setBatteryState] = useState<"good" | "low" | "replace" | "">("");
   const [biometricsState, setBiometricsState] = useState<"ok" | "nok" | "na" | "">("");
   const [cameraState, setCameraState] = useState<"ok" | "degraded" | "nok" | "">("");
@@ -162,16 +162,8 @@ export default function EstimatorPage() {
   // Phone Finder state
   const [isScanning, setIsScanning] = useState(false);
 
-  // PWA ou mobile (viewport ou User-Agent) : lancer la détection du modèle au chargement.
-  useEffect(() => {
-    const byViewport = typeof window !== "undefined" && window.innerWidth < 1024;
-    const byUA = typeof navigator !== "undefined" && isMobileUserAgent();
-    const shouldDetect = isPWA || byViewport || byUA;
-    if (shouldDetect && detectionStep === "manual") {
-      setDetectionStep("detecting");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isPWA]);
+  // Détection automatique désactivée : sélection manuelle uniquement (à réactiver plus tard si besoin).
+  // useEffect(() => { if (shouldDetect && detectionStep === "manual") setDetectionStep("detecting"); }, [isPWA]);
 
   useEffect(() => {
     (async () => {
@@ -183,8 +175,8 @@ export default function EstimatorPage() {
         // Auto-scroll to top on init
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
-        // Phone Finder (PWA + mobile web) quand on est en phase détection
-        if (detectionStep === "detecting") {
+        // Phone Finder (désactivé : sélection manuelle uniquement)
+        if (false && detectionStep === "detecting") {
           setIsScanning(true);
 
           setTimeout(async () => {

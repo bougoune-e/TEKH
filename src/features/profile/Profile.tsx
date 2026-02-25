@@ -98,10 +98,10 @@ export default function Profile() {
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/5 rounded-full -ml-32 -mb-32 blur-3xl" />
 
           <div className="relative flex flex-col md:flex-row items-center gap-8 md:gap-12">
-            <div className="relative group">
+            <div className="relative flex items-center justify-center">
               <MotionRings className="scale-75 md:scale-100">
-                <div className="h-32 w-32 md:h-40 md:w-40 rounded-full overflow-hidden border-4 border-background shadow-2xl transition-transform duration-500 group-hover:scale-105 group-hover:rotate-3 relative z-20 bg-card">
-                  <UserAvatar user={user} src={avatar || undefined} size="xl" className="h-full w-full object-cover" />
+                <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-background shadow-2xl relative z-20 bg-card aspect-square shrink-0">
+                  <UserAvatar user={user} src={avatar || undefined} size="xl" className="!h-full !w-full" />
                 </div>
               </MotionRings>
               <button

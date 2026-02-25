@@ -5,11 +5,13 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useNavigationType } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import ProtectedRoute from "@/features/auth/ProtectedRoute";
+import AdminRoute from "@/features/auth/AdminRoute";
 import AdminLayout from "@/features/admin/layout/AdminLayout";
 import Dashboard from "@/features/admin/pages/Dashboard";
 import Users from "@/features/admin/pages/Users";
 import Annonces from "@/features/admin/pages/Annonces";
-import Deals from "@/features/admin/pages/Deals";
+import AdminDeals from "@/features/admin/pages/AdminDeals";
+import AdminDealForm from "@/features/admin/pages/AdminDealForm";
 import DealBox from "@/features/admin/pages/DealBox";
 import Categories from "@/features/admin/pages/Categories";
 import Stats from "@/features/admin/pages/Stats";
@@ -61,11 +63,11 @@ const DevWebMobile = lazy(() => import("@/features/services/DevWebMobile"));
 const queryClient = new QueryClient();
 
 const PageTransition = ({ children, navType }: { children: React.ReactNode, navType?: string }) => {
-  // Désactive l'animation si on fait un retour arrière (POP)
+  // Retour arrière (POP) : pas d'animation pour revenir exactement à la section précédente.
   if (navType === "POP") return <div className="w-full h-full">{children}</div>;
-
+  // Transition courte pour limiter l'effet "logo / flash" avant la page.
   return (
-    <div className="animate-in fade-in slide-in-from-bottom-2 duration-500 w-full h-full">
+    <div className="animate-in fade-in duration-200 w-full h-full">
       {children}
     </div>
   );
@@ -136,16 +138,20 @@ const NavigationWrapper = () => {
               {/* Route Admin Exclusive */}
               <Route path="/admin-tekh-control" element={<AdminPage />} />
 
-              {/* Routes d'administration */}
+              {/* Routes d'administration (réservées aux utilisateurs ADMIN) */}
               <Route path="/admin" element={
                 <ProtectedRoute>
-                  <AdminLayout />
+                  <AdminRoute>
+                    <AdminLayout />
+                  </AdminRoute>
                 </ProtectedRoute>
               }>
                 <Route index element={<Dashboard />} />
                 <Route path="users" element={<Users />} />
                 <Route path="annonces" element={<Annonces />} />
-                <Route path="deals" element={<Deals />} />
+                <Route path="deals" element={<AdminDeals />} />
+                <Route path="deals/new" element={<AdminDealForm />} />
+                <Route path="deals/:id/edit" element={<AdminDealForm />} />
                 <Route path="dealbox" element={<DealBox />} />
                 <Route path="categories" element={<Categories />} />
                 <Route path="stats" element={<Stats />} />
