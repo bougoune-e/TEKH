@@ -6,7 +6,7 @@ import { cn } from "@/core/api/utils";
 import { usePWA } from "@/shared/hooks/usePWA";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "@/features/marketplace/cart.context";
-import { toast } from "@/shared/hooks/use-toast";
+import { toast } from "sonner";
 
 function tagClasses(t?: string) {
   if (!t) return "bg-primary text-primary-foreground";
@@ -72,7 +72,13 @@ const PhoneCard = ({
     e.stopPropagation();
     if (!id) return;
     addToCart({ id, brand, model, price, image });
-    toast({ title: "Ajouté au panier", description: brand && model ? `${brand} ${model}` : "Article ajouté." });
+    toast.success("Ajouté au panier", {
+      description: brand && model ? `${brand} ${model}` : "Article ajouté.",
+      action: {
+        label: "Voir le panier",
+        onClick: () => navigate("/panier"),
+      },
+    });
   };
 
   return (

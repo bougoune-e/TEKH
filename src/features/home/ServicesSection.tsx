@@ -5,9 +5,9 @@ import { usePWA } from "@/shared/hooks/usePWA";
 
 const servicePaths: Record<string, string> = {
   "trade-in": "/simulateur",
-  "maintenance": "/a-propos#services",
-  "formation": "/a-propos#services",
-  "dev": "/a-propos#services",
+  "maintenance": "/maintenance",
+  "formation": "/formation",
+  "dev": "/dev-web",
 };
 
 const services = [

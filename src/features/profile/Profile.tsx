@@ -9,14 +9,17 @@ import { useAuth } from "@/features/auth/auth.context";
 import { getCurrentUser, uploadAvatar, upsertProfile, supabase, ensureProfileForUser, countDealsByOwner } from "@/core/api/supabaseApi";
 import { isSupabaseConfigured } from "@/core/api/supabaseClient";
 import UserAvatar from "@/shared/components/UserAvatar";
-import { LogOut, Camera, Package, ShieldCheck, Heart, Settings } from "lucide-react";
+import { LogOut, Camera, Package, ShieldCheck, Heart, Settings, ShoppingCart, ChevronRight } from "lucide-react";
 import { toast } from "@/shared/hooks/use-toast";
 import MotionRings from "@/shared/components/MotionRings";
+import { useCart } from "@/features/marketplace/cart.context";
+import { Link } from "react-router-dom";
 
 export default function Profile() {
   const { t } = useTranslation();
   const { user, refreshUser } = useAuth();
   const { deals } = useDeals();
+  const { items: cartItems } = useCart();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [avatar, setAvatar] = useState<string | null>(null);
@@ -137,6 +140,54 @@ export default function Profile() {
                 <div className="px-4 py-2 bg-background border border-border/40 rounded-full flex items-center gap-2">
                   <ShieldCheck className="h-4 w-4 text-blue-500" />
                   <span className="text-xs font-black uppercase tracking-wider text-blue-500">{t('profile.verified')}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Espace personnel : Mon panier, Mes commandes, Favoris */}
+        <section className="space-y-3">
+          <h2 className="text-xs font-black uppercase tracking-widest text-muted-foreground px-1">Espace personnel</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <Link
+              to="/panier"
+              className="flex items-center justify-between p-5 bg-card border border-border/60 rounded-2xl hover:shadow-md transition-all group"
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-[#064e3b]/10 dark:bg-[#059669]/20 flex items-center justify-center">
+                  <ShoppingCart className="h-6 w-6 text-[#064e3b] dark:text-[#059669]" />
+                </div>
+                <div>
+                  <p className="font-black text-foreground">Mon panier</p>
+                  <p className="text-xs text-muted-foreground font-bold">{cartItems.length} article{cartItems.length !== 1 ? "s" : ""}</p>
+                </div>
+              </div>
+              <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-[#064e3b]" />
+            </Link>
+            <Link
+              to="/mes-publications"
+              className="flex items-center justify-between p-5 bg-card border border-border/60 rounded-2xl hover:shadow-md transition-all group"
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-[#064e3b]/10 dark:bg-[#059669]/20 flex items-center justify-center">
+                  <Package className="h-6 w-6 text-[#064e3b] dark:text-[#059669]" />
+                </div>
+                <div>
+                  <p className="font-black text-foreground">Mes annonces</p>
+                  <p className="text-xs text-muted-foreground font-bold">{dbCount ?? myCount} publication{(dbCount ?? myCount) !== 1 ? "s" : ""}</p>
+                </div>
+              </div>
+              <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-[#064e3b]" />
+            </Link>
+            <div className="flex items-center justify-between p-5 bg-card border border-border/60 rounded-2xl">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-rose-500/10 flex items-center justify-center">
+                  <Heart className="h-6 w-6 text-rose-500" />
+                </div>
+                <div>
+                  <p className="font-black text-foreground">Favoris</p>
+                  <p className="text-xs text-muted-foreground font-bold">Bientôt disponible</p>
                 </div>
               </div>
             </div>
