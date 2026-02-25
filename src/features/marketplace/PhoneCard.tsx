@@ -94,100 +94,94 @@ const PhoneCard = ({
     <Card
       onClick={() => { if (id) navigate(`/deal/${id}`); }}
       className={cn(
-        "group overflow-hidden transition-all duration-300 cursor-pointer h-full flex flex-col hover:shadow-lg rounded-2xl",
-        compact && "rounded-xl",
-        isPWA
-          ? "phone-card"
-          : "border-slate-200/60 dark:border-white/5 hover:border-blue-500/30 bg-white dark:bg-zinc-950"
+        "group overflow-hidden transition-all duration-200 cursor-pointer h-full flex flex-col hover:shadow-md",
+        compact ? "rounded-[18px] border border-border/40 dark:border-white/[0.06] bg-card dark:bg-zinc-900/80" : "rounded-2xl hover:border-primary/20",
+        !compact && (isPWA ? "phone-card" : "border-slate-200/60 dark:border-white/5 bg-white dark:bg-zinc-950")
       )}
     >
-      <div className={cn("relative overflow-hidden bg-slate-50 dark:bg-zinc-900/50", compact ? "aspect-[4/3] max-h-[100px]" : "aspect-[4/3]")}>
+      <div className={cn("relative overflow-hidden bg-muted/30 dark:bg-zinc-800/50", compact ? "aspect-[4/3] max-h-[92px]" : "aspect-[4/3]")}>
         {mainImage ? (
           <img
             src={mainImage}
             alt={model}
-            className={cn("h-full w-full object-contain transition-transform duration-500 group-hover:scale-105", compact ? "p-1.5" : "p-4")}
+            className={cn("h-full w-full object-contain transition-transform duration-300 group-hover:scale-[1.02]", compact ? "p-1" : "p-4")}
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
-            <Smartphone className={cn("text-slate-200", compact ? "w-8 h-8" : "w-12 h-12")} />
+            <Smartphone className={cn("text-muted-foreground/50", compact ? "w-7 h-7" : "w-12 h-12")} />
           </div>
         )}
         {imageCount > 1 && (
-          <span className="absolute bottom-1 right-1 px-1.5 py-0.5 rounded bg-black/60 text-white text-[10px] font-bold">
-            {imageCount} photos
+          <span className="absolute bottom-1 right-1 px-1.5 py-0.5 rounded-md bg-black/50 text-white text-[9px] font-medium">
+            {imageCount}
           </span>
         )}
         {tag && (
-          <Badge className={cn("absolute top-2 left-2 z-10 font-bold border-none shadow-sm", compact ? "text-[9px] px-1.5 py-0" : "top-3 left-3", tagClasses(tag))}>
+          <Badge className={cn("absolute top-1.5 left-1.5 z-10 font-medium border-none shadow-sm", compact ? "text-[8px] px-1.5 py-0" : "top-3 left-3 text-[9px]", tagClasses(tag))}>
             {tag}
           </Badge>
         )}
       </div>
 
-      <CardHeader className={compact ? "p-2 pb-0" : "p-4 pb-2"}>
-        <div className="flex justify-between items-start gap-2">
-          <div>
-            <p className={cn("font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider mb-1", compact ? "text-[9px]" : "text-xs")}>
+      <CardHeader className={compact ? "px-2.5 pt-1.5 pb-0" : "p-4 pb-2"}>
+        <div className="flex justify-between items-start gap-1">
+          <div className="min-w-0 flex-1">
+            <p className={cn("text-[10px] font-medium text-primary dark:text-primary uppercase tracking-wide truncate", compact ? "mb-0.5" : "mb-1 text-xs")}>
               {brand}
             </p>
-            <h3 className={cn("font-bold text-slate-900 dark:text-white line-clamp-1 group-hover:text-blue-600 transition-colors", compact ? "text-xs" : "")}>
+            <h3 className={cn(
+              "font-semibold text-foreground leading-tight group-hover:text-primary/90 transition-colors",
+              compact ? "text-[11px] leading-snug line-clamp-2" : "text-sm line-clamp-1"
+            )}>
               {model}
             </h3>
           </div>
         </div>
       </CardHeader>
 
-      <CardContent className={cn("flex-1", compact ? "p-2 pt-0 min-h-0" : "p-4 pt-0")}>
-        <div className={cn("flex flex-wrap gap-1.5", compact ? "mb-1" : "mb-3")}>
+      <CardContent className={cn("flex-1 min-h-0", compact ? "px-2.5 py-0" : "p-4 pt-0")}>
+        <div className={cn("flex flex-wrap gap-1", compact ? "mb-0" : "mb-3 gap-1.5")}>
           {badges.map((badge, idx) => (
-            <Badge key={idx} variant="secondary" className={cn("border-none font-medium", compact ? "text-[8px] px-1.5 py-0 hidden" : "text-[10px] px-2 py-0", badgeClasses(badge))}>
+            <Badge key={idx} variant="secondary" className={cn("border-none font-medium", compact ? "hidden" : "text-[10px] px-2 py-0", badgeClasses(badge))}>
               {badge}
             </Badge>
           ))}
           {condition && (
-            <Badge variant="outline" className={cn("border-slate-200 text-slate-600 font-medium", compact ? "text-[8px] px-1.5 py-0" : "text-[10px] px-2 py-0")}>
+            <Badge variant="outline" className={cn("border-border/60 text-muted-foreground font-medium", compact ? "text-[8px] px-1.5 py-0 h-4" : "text-[10px] px-2 py-0", "dark:border-white/10")}>
               {condition}
             </Badge>
           )}
         </div>
         {(publishedDate || location) && !compact && (
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-slate-500 dark:text-slate-400 text-[11px] font-medium">
-            <span className="inline-flex items-center gap-1 text-amber-600 dark:text-amber-400 font-semibold">
-              Valable 72h
-            </span>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-muted-foreground text-[11px] font-medium">
+            <span className="inline-flex items-center gap-1 text-amber-600 dark:text-amber-400 font-semibold">Valable 72h</span>
             {publishedDate && (
               <span className="inline-flex items-center gap-1">
-                <Calendar className="h-3 w-3" />
-                Publié le {new Date(publishedDate).toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" })}
+                <Calendar className="h-3 w-3" /> Publié le {new Date(publishedDate).toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" })}
               </span>
             )}
             {location && (
-              <span className="inline-flex items-center gap-1">
-                <MapPin className="h-3 w-3" />
-                {location}
-              </span>
+              <span className="inline-flex items-center gap-1"><MapPin className="h-3 w-3" /> {location}</span>
             )}
           </div>
         )}
       </CardContent>
 
       <CardFooter className={cn(
-        "pt-0 mt-auto",
-        compact ? "p-2" : "p-4 pt-0",
-        !isPWA && "border-t border-slate-50 dark:border-white/5 bg-slate-50/30 dark:bg-transparent"
+        "mt-auto border-t border-border/30 dark:border-white/[0.06]",
+        compact ? "px-2.5 py-1.5 pt-1" : "p-4 pt-0",
+        !compact && !isPWA && "bg-muted/20 dark:bg-transparent"
       )}>
-        <div className={cn("flex items-center justify-between w-full", compact ? "pt-1" : "pt-3")}>
-          <div className="flex flex-col">
+        <div className={cn("flex items-center justify-between w-full", compact ? "gap-1" : "pt-3 gap-2")}>
+          <div className="flex flex-col min-w-0">
             <span className={cn(
-              "font-black tracking-tighter",
-              compact ? "text-base" : "text-2xl",
-              isPWA ? "text-[#00FF41]" : "text-slate-900 dark:text-white"
+              "font-bold tracking-tight text-primary dark:text-[#059669]",
+              compact ? "text-[13px]" : "text-xl"
             )}>
-              {price.toLocaleString()} <span className={cn("text-slate-400 font-bold", compact ? "text-[8px]" : "text-[10px]")}>FCFA</span>
+              {price.toLocaleString()} <span className={cn("text-muted-foreground font-medium", compact ? "text-[9px]" : "text-[10px]")}>FCFA</span>
             </span>
             {originalPrice && (
-              <span className={cn("text-slate-400 line-through opacity-70", compact ? "text-[9px]" : "text-xs")}>
+              <span className={cn("text-muted-foreground line-through opacity-80", compact ? "text-[8px]" : "text-xs")}>
                 {originalPrice.toLocaleString()}
               </span>
             )}
@@ -197,12 +191,12 @@ const PhoneCard = ({
             size="icon"
             onClick={handleCartClick}
             className={cn(
-              "rounded-xl shadow-lg shrink-0",
-              compact ? "w-8 h-8" : "w-10 h-10",
-              isPWA ? "bg-[#064e3b] hover:bg-[#065f46] text-white" : "bg-[#064e3b] hover:bg-[#065f46] text-white dark:bg-[#059669] dark:hover:bg-[#10b981]"
+              "shrink-0 rounded-xl",
+              compact ? "w-7 h-7" : "w-10 h-10",
+              "bg-[#064e3b] hover:bg-[#065f46] dark:bg-[#059669] dark:hover:bg-[#10b981] text-white border-0 shadow-sm"
             )}
           >
-            <ShoppingCart className={compact ? "w-4 h-4" : "w-5 h-5"} />
+            <ShoppingCart className={compact ? "w-3.5 h-3.5" : "w-5 h-5"} />
           </Button>
         </div>
       </CardFooter>
