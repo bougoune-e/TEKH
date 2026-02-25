@@ -364,9 +364,16 @@ export function getCachedSimulation(specs: any): number | null {
   return typeof map[key] === "number" ? map[key] : null;
 }
 
+/** Génère une clé Storage sûre (ASCII uniquement) pour éviter "Invalid key" avec noms de fichier non-ASCII. */
+function safeStorageKey(file: File): string {
+  const ext = (file.name.split(".").pop() || "jpg").toLowerCase().replace(/[^a-z0-9]/g, "");
+  const safeExt = ext || "jpg";
+  return `${Date.now()}_${Math.random().toString(36).slice(2, 10)}.${safeExt}`;
+}
+
 export async function uploadImage(file: File) {
   if (!realClient) throw new Error("Supabase non configuré");
-  const fileName = `${Date.now()}_${file.name}`;
+  const fileName = safeStorageKey(file);
   const { error } = await realClient.storage.from("phones").upload(fileName, file);
   if (error) throw error;
   const { data: pub } = realClient.storage.from("phones").getPublicUrl(fileName);
@@ -410,7 +417,7 @@ export async function getCurrentUser() {
 
 export async function uploadAvatar(file: File) {
   if (!realClient) throw new Error("Supabase non configuré");
-  const fileName = `avatar_${Date.now()}_${file.name}`;
+  const fileName = `avatar_${safeStorageKey(file)}`;
   const { error } = await realClient.storage.from("avatars").upload(fileName, file, { upsert: true });
   if (error) throw error;
   const { data: pub } = realClient.storage.from("avatars").getPublicUrl(fileName);
@@ -462,7 +469,10 @@ function mapAnnonceRow(row: any) {
   };
 }
 
-/** App publique : uniquement les deals publiés */
+/** Délai d’expiration des annonces en heures (après publication). */
+const DEAL_EXPIRATION_HOURS = 72;
+
+/** App publique : uniquement les deals publiés et non expirés (72h après publication). */
 export async function fetchDeals() {
   if (!realClient) return [];
   let data: any[] = [];
@@ -477,7 +487,12 @@ export async function fetchDeals() {
     error = r.error;
   }
   if (error) throw error;
-  return data.map(mapAnnonceRow);
+  const cutoff = new Date(Date.now() - DEAL_EXPIRATION_HOURS * 60 * 60 * 1000);
+  const notExpired = (row: any) => {
+    const t = row.published_at || row.created_at;
+    return t && new Date(t) >= cutoff;
+  };
+  return data.filter(notExpired).map(mapAnnonceRow);
 }
 
 /** Admin : tous les deals (tous statuts) */
@@ -498,15 +513,26 @@ export async function fetchDealById(id: string) {
 
 export async function insertDeal(deal: any) {
   if (!realClient) return deal;
-  const row = {
-    ...deal,
-    created_at: deal.createdAt ?? new Date().toISOString(),
-    owner_id: deal.ownerId,
-    seller_name: deal.sellerName,
-    contact_phone: deal.contactPhone,
-    contact_whatsapp: deal.contactWhatsapp,
-    contact_email: deal.contactEmail,
+  const row: Record<string, unknown> = {
+    ...(deal.id && { id: deal.id }),
+    title: deal.title,
+    brand: deal.brand,
+    model: deal.model,
+    condition: deal.condition,
+    description: deal.description,
+    price: deal.price ?? 0,
+    images: deal.images ?? [],
+    storage: deal.storage ?? null,
+    ram: deal.ram ?? null,
+    color: deal.color ?? null,
+    location: deal.location ?? null,
     status: deal.status ?? "draft",
+    created_at: deal.createdAt ?? new Date().toISOString(),
+    owner_id: deal.ownerId ?? null,
+    seller_name: deal.sellerName ?? null,
+    contact_phone: deal.contactPhone ?? null,
+    contact_whatsapp: deal.contactWhatsapp ?? null,
+    contact_email: deal.contactEmail ?? null,
     published_at: deal.publishedAt ?? (deal.status === "published" ? new Date().toISOString() : null),
   };
   const { data, error } = await realClient.from("annonces").insert(row).select().single();

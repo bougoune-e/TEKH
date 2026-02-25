@@ -26,7 +26,7 @@ export default function SwapGapWidget({ dealPrice, dealId }: { dealPrice: number
     }, [userValue, dealPrice]);
 
     return (
-        <Card className="bg-primary/5 border-primary/20 shadow-none">
+        <Card className="bg-primary/5 border-primary/20 shadow-none rounded-2xl">
             <CardHeader className="pb-2">
                 <CardTitle className="text-base font-semibold flex items-center gap-2 text-primary">
                     <ArrowRightLeft className="h-4 w-4" />
@@ -81,16 +81,16 @@ export default function SwapGapWidget({ dealPrice, dealId }: { dealPrice: number
                             </div>
                         </div>
 
-                        <div className={`rounded-[32px] p-6 border-2 shadow-xl ${gapData.isPositive ? 'bg-zinc-900 border-primary/40 text-white' : 'bg-emerald-600 border-emerald-400 text-white'}`}>
+                        <div className={`rounded-[32px] p-6 border-2 shadow-xl ${gapData.isPositive ? 'bg-zinc-900 border-[hsl(var(--tekh-green))]/40 text-white dark:bg-zinc-900' : 'bg-[hsl(var(--tekh-green))] border-[hsl(var(--tekh-green))]/80 text-white'}`}>
                             <div className="flex justify-between items-center mb-1">
-                                <span className="text-xs font-black uppercase tracking-widest opacity-80">{gapData.isPositive ? 'Votre Budget Gap' : 'Crédit TΞKΗ+'}</span>
+                                <span className="text-xs font-black uppercase tracking-widest opacity-90">{gapData.isPositive ? 'Votre Budget Gap' : 'Crédit TΞKΗ+'}</span>
                                 <span className="text-2xl font-black italic">
                                     {gapData.formatted}
                                 </span>
                             </div>
-                            <div className="h-1.5 w-full bg-black/5 dark:bg-white/5 rounded-full overflow-hidden mt-2">
+                            <div className="h-1.5 w-full bg-black/10 rounded-full overflow-hidden mt-2">
                                 <div
-                                    className={`h-full ${gapData.isPositive ? 'bg-orange-500' : 'bg-emerald-500'}`}
+                                    className={`h-full ${gapData.isPositive ? 'bg-orange-500' : 'bg-white/90'}`}
                                     style={{ width: `${Math.min(100, (Math.abs(gapData.gap) / dealPrice) * 100)}%` }}
                                 />
                             </div>

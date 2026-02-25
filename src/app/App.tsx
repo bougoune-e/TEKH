@@ -12,6 +12,7 @@ import Users from "@/features/admin/pages/Users";
 import Annonces from "@/features/admin/pages/Annonces";
 import AdminDeals from "@/features/admin/pages/AdminDeals";
 import AdminDealForm from "@/features/admin/pages/AdminDealForm";
+import AdminDenied from "@/features/admin/pages/AdminDenied";
 import DealBox from "@/features/admin/pages/DealBox";
 import Categories from "@/features/admin/pages/Categories";
 import Stats from "@/features/admin/pages/Stats";
@@ -138,6 +139,12 @@ const NavigationWrapper = () => {
               {/* Route Admin Exclusive */}
               <Route path="/admin-tekh-control" element={<AdminPage />} />
 
+              {/* Page "accès admin refusé" (affiche l'email connecté pour configurer VITE_ADMIN_EMAILS) */}
+              <Route path="/admin-denied" element={
+                <ProtectedRoute>
+                  <AdminDenied />
+                </ProtectedRoute>
+              } />
               {/* Routes d'administration (réservées aux utilisateurs ADMIN) */}
               <Route path="/admin" element={
                 <ProtectedRoute>

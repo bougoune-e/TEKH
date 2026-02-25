@@ -53,6 +53,7 @@ const MyPosts = () => {
                   image={d.images?.[0]}
                   location={d.location}
                   createdAt={d.createdAt}
+                  publishedAt={d.publishedAt}
                   onDelete={onDelete}
                   variant="compact"
                 />
