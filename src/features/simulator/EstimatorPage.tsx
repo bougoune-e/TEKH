@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Card, CardContent } from "@/shared/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/ui/select";
 import { Label } from "@/shared/ui/label";
@@ -41,13 +41,17 @@ import { TargetSelectionStep } from "./components/TargetSelectionStep";
 import { ComparisonStep } from "./components/ComparisonStep";
 import { PhotoStep } from "./components/PhotoStep";
 import { usePWA } from "@/shared/hooks/usePWA";
-import { Search, RotateCcw, Loader2 } from "lucide-react";
+import { Search, RotateCcw, Loader2, ArrowLeft } from "lucide-react";
 import { detectDevice, predictVariants, isMobileUserAgent, getDeviceModelFromClientHints } from "@/core/api/deviceFinder";
+import { useDeals } from "@/features/marketplace/deals.context";
 
 export default function EstimatorPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const location = useLocation();
+  const { setLastSimulation } = useDeals();
   const isPWA = usePWA();
+  const returnToDealId = (location.state as { returnToDealId?: string } | null)?.returnToDealId;
 
   // Auto-detection states
   // Default to manual; we will switch to "detecting" via effect only for real PWA context.

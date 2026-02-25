@@ -51,6 +51,7 @@ const MyPosts = () => {
                   condition={d.condition}
                   price={d.price}
                   image={d.images?.[0]}
+                  images={d.images}
                   location={d.location}
                   createdAt={d.createdAt}
                   publishedAt={d.publishedAt}

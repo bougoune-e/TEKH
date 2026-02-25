@@ -39,6 +39,8 @@ interface PhoneCardProps {
   price: number;
   originalPrice?: number;
   image?: string;
+  /** Plusieurs URLs d’images (la première est affichée, un badge indique le nombre) */
+  images?: string[];
   rating?: number;
   tag?: string;
   badges?: string[];
@@ -47,7 +49,7 @@ interface PhoneCardProps {
   createdAt?: string;
   publishedAt?: string;
   onDelete?: (() => void) | null;
-  /** En PWA : rend la carte plus petite pour faciliter le scroll */
+  /** En PWA / Explorer : carte compacte (grille 2 colonnes) */
   compact?: boolean;
 }
 
@@ -59,6 +61,7 @@ const PhoneCard = ({
   price,
   originalPrice,
   image,
+  images,
   tag,
   badges = [],
   location,
@@ -67,6 +70,8 @@ const PhoneCard = ({
   compact = false,
 }: PhoneCardProps) => {
   const publishedDate = publishedAt || createdAt;
+  const mainImage = image || images?.[0];
+  const imageCount = images?.length ?? (image ? 1 : 0);
   const navigate = useNavigate();
   const isPWA = usePWA();
   const { addToCart } = useCart();
@@ -75,7 +80,7 @@ const PhoneCard = ({
     e.preventDefault();
     e.stopPropagation();
     if (!id) return;
-    addToCart({ id, brand, model, price, image });
+    addToCart({ id, brand, model, price, image: mainImage });
     toast.success("Ajouté au panier", {
       description: brand && model ? `${brand} ${model}` : "Article ajouté.",
       action: {
@@ -96,17 +101,22 @@ const PhoneCard = ({
           : "border-slate-200/60 dark:border-white/5 hover:border-blue-500/30 bg-white dark:bg-zinc-950"
       )}
     >
-      <div className={cn("relative overflow-hidden bg-slate-50 dark:bg-zinc-900/50", compact ? "aspect-[4/3] max-h-[120px]" : "aspect-[4/3]")}>
-        {image ? (
+      <div className={cn("relative overflow-hidden bg-slate-50 dark:bg-zinc-900/50", compact ? "aspect-[4/3] max-h-[100px]" : "aspect-[4/3]")}>
+        {mainImage ? (
           <img
-            src={image}
+            src={mainImage}
             alt={model}
-            className={cn("h-full w-full object-contain transition-transform duration-500 group-hover:scale-105", compact ? "p-2" : "p-4")}
+            className={cn("h-full w-full object-contain transition-transform duration-500 group-hover:scale-105", compact ? "p-1.5" : "p-4")}
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
             <Smartphone className={cn("text-slate-200", compact ? "w-8 h-8" : "w-12 h-12")} />
           </div>
+        )}
+        {imageCount > 1 && (
+          <span className="absolute bottom-1 right-1 px-1.5 py-0.5 rounded bg-black/60 text-white text-[10px] font-bold">
+            {imageCount} photos
+          </span>
         )}
         {tag && (
           <Badge className={cn("absolute top-2 left-2 z-10 font-bold border-none shadow-sm", compact ? "text-[9px] px-1.5 py-0" : "top-3 left-3", tagClasses(tag))}>

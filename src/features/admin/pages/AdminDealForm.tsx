@@ -85,9 +85,18 @@ export default function AdminDealForm() {
   const handleFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
-    const picked = Array.from(files).slice(0, 6);
-    setImageFiles((prev) => [...prev, ...picked].slice(0, 8));
-    setImages((prev) => [...prev, ...picked.map((f) => URL.createObjectURL(f))].slice(0, 8));
+    const picked = Array.from(files).slice(0, 8);
+    const currentCount = imageFiles.length;
+    const toAdd = Math.min(picked.length, 8 - currentCount);
+    if (toAdd <= 0) return;
+    setImageFiles((prev) => [...prev, ...picked.slice(0, toAdd)].slice(0, 8));
+    setImages((prev) => [...prev, ...picked.slice(0, toAdd).map((f) => URL.createObjectURL(f))].slice(0, 8));
+    e.target.value = "";
+  };
+
+  const removeImage = (index: number) => {
+    setImages((prev) => prev.filter((_, i) => i !== index));
+    setImageFiles((prev) => prev.filter((_, i) => i !== index));
   };
 
   const submit = async () => {
@@ -103,7 +112,7 @@ export default function AdminDealForm() {
       let finalImages = existingUrls;
       if (isSupabaseConfigured && imageFiles.length > 0) {
         const uploaded = await Promise.all(
-          imageFiles.slice(0, 6).map(async (f) => (await uploadImage(f)).publicUrl)
+          imageFiles.slice(0, 8).map(async (f) => (await uploadImage(f)).publicUrl)
         );
         finalImages = [...existingUrls, ...uploaded.filter(Boolean)].slice(0, 8);
       }
@@ -214,15 +223,28 @@ export default function AdminDealForm() {
             <Textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Description" rows={3} />
           </div>
           <div className="space-y-2">
-            <Label>Images</Label>
+            <Label>Images (sélection multiple, max 8)</Label>
+            <p className="text-xs text-muted-foreground">Cliquez sur + pour ajouter plusieurs photos. Cliquez sur × pour retirer.</p>
             <div className="flex flex-wrap gap-2">
               {images.map((src, i) => (
-                <img key={i} src={src} alt="" className="w-20 h-20 object-cover rounded-lg border" />
+                <div key={i} className="relative group">
+                  <img src={src} alt="" className="w-20 h-20 object-cover rounded-lg border" />
+                  <button
+                    type="button"
+                    onClick={() => removeImage(i)}
+                    className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-destructive text-destructive-foreground text-xs font-bold flex items-center justify-center opacity-90 hover:opacity-100 shadow"
+                    aria-label="Retirer la photo"
+                  >
+                    ×
+                  </button>
+                </div>
               ))}
-              <label className="w-20 h-20 border border-dashed rounded-lg flex items-center justify-center cursor-pointer">
-                <Camera className="h-6 w-6 text-muted-foreground" />
-                <input type="file" className="hidden" accept="image/*" multiple onChange={handleFiles} />
-              </label>
+              {images.length < 8 && (
+                <label className="w-20 h-20 border border-dashed rounded-lg flex items-center justify-center cursor-pointer hover:bg-muted/50 transition-colors">
+                  <Camera className="h-6 w-6 text-muted-foreground" />
+                  <input type="file" className="hidden" accept="image/*" multiple onChange={handleFiles} />
+                </label>
+              )}
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

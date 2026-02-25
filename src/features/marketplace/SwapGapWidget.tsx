@@ -60,7 +60,10 @@ export default function SwapGapWidget({ dealPrice, dealId }: { dealPrice: number
                                     <h3 className="font-semibold text-lg">Estimation Rapide</h3>
                                     <p className="text-muted-foreground text-sm mb-4">Utilisez notre simulateur complet pour une valeur précise.</p>
                                     <Button
-                                        onClick={() => { setSimulatorDialogOpen(false); navigate("/simulateur"); }}
+                                        onClick={() => {
+                                          setSimulatorDialogOpen(false);
+                                          navigate("/simulateur", { state: { returnToDealId: dealId } });
+                                        }}
                                         className="bg-[#064e3b] hover:bg-[#065f46] dark:bg-[#059669] dark:hover:bg-[#10b981] text-white"
                                     >
                                         Aller au simulateur

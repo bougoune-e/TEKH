@@ -213,8 +213,8 @@ export default function DealsPage() {
         </div>
 
 
-        {/* Responsive Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Grille 2 colonnes, cartes compactes */}
+        <div className="grid grid-cols-2 gap-3 sm:gap-4">
           {list.map((d) => {
             const { tag, badges, extraLine } = computeExtra(d, targetValue, desired, maxAddition);
             const canDelete = userId && d.ownerId && userId === d.ownerId;
@@ -240,6 +240,7 @@ export default function DealsPage() {
                 condition={d.condition}
                 price={d.price}
                 image={d.images?.[0]}
+                images={d.images}
                 tag={tag}
                 badges={badges}
                 extraLine={extraLine}
@@ -247,6 +248,7 @@ export default function DealsPage() {
                 createdAt={d.createdAt}
                 publishedAt={d.publishedAt}
                 onDelete={onDelete}
+                compact
               />
             );
           })}
