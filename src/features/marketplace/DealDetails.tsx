@@ -4,15 +4,19 @@ import { useDeals } from "@/features/marketplace/deals.context";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/card";
 import { Button } from "@/shared/ui/button";
 import { Badge } from "@/shared/ui/badge";
-import { Phone as PhoneIcon, MessageCircle, Mail, ChevronLeft, MapPin, ShieldCheck, Smartphone, Facebook, Twitter, Calendar } from "lucide-react";
+import { Phone as PhoneIcon, MessageCircle, Mail, ChevronLeft, MapPin, ShieldCheck, Smartphone, Facebook, Twitter, Calendar, ChevronRight, ChevronLeft as ChevronLeftIcon } from "lucide-react";
 import SwapGapWidget from "@/features/marketplace/SwapGapWidget";
 import { CertificationDetails } from "@/features/marketplace/DealboxComponents";
+import { cn } from "@/core/api/utils";
 
 export default function DealDetails() {
   const { id } = useParams<{ id: string }>();
   const { deals } = useDeals();
   const deal = useMemo(() => deals.find((d) => d.id === id), [deals, id]);
   const [showPhone, setShowPhone] = useState(false);
+  const [imageIndex, setImageIndex] = useState(0);
+  const images = deal?.images?.filter(Boolean) ?? [];
+  const hasMultipleImages = images.length > 1;
 
   if (!deal) {
     return (
@@ -49,11 +53,42 @@ export default function DealDetails() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
           {/* Media + infos principales */}
           <Card className="lg:col-span-2 overflow-hidden rounded-2xl border border-border/60 bg-card shadow-lg ring-0">
-            <div className="aspect-[4/3] bg-muted/30 w-full flex items-center justify-center p-4">
-              {deal.images?.[0] ? (
-                <img src={deal.images[0]} alt={`${deal.brand} ${deal.model}`} className="w-full h-full object-contain rounded-lg" />
+            <div className="relative aspect-[4/3] bg-muted/30 w-full flex items-center justify-center p-4">
+              {images[imageIndex] ? (
+                <img src={images[imageIndex]} alt={`${deal.brand} ${deal.model} ${imageIndex + 1}`} className="w-full h-full object-contain rounded-lg" />
               ) : (
                 <Smartphone className="h-20 w-20 text-muted-foreground" />
+              )}
+              {hasMultipleImages && (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => setImageIndex((i) => (i - 1 + images.length) % images.length)}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center"
+                    aria-label="Photo précédente"
+                  >
+                    <ChevronLeftIcon className="h-5 w-5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setImageIndex((i) => (i + 1) % images.length)}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center"
+                    aria-label="Photo suivante"
+                  >
+                    <ChevronRight className="h-5 w-5" />
+                  </button>
+                  <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1.5">
+                    {images.map((_, i) => (
+                      <button
+                        key={i}
+                        type="button"
+                        onClick={() => setImageIndex(i)}
+                        className={cn("w-2 h-2 rounded-full transition-colors", i === imageIndex ? "bg-primary" : "bg-white/60 hover:bg-white/80")}
+                        aria-label={`Photo ${i + 1}`}
+                      />
+                    ))}
+                  </div>
+                </>
               )}
             </div>
             <CardContent className="p-6 sm:p-8 space-y-6">
