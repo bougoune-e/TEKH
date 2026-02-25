@@ -4,7 +4,7 @@ import { useDeals } from "@/features/marketplace/deals.context";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/card";
 import { Button } from "@/shared/ui/button";
 import { Badge } from "@/shared/ui/badge";
-import { Phone as PhoneIcon, MessageCircle, Mail, ChevronLeft, MapPin, ShieldCheck, Smartphone, Facebook, Twitter } from "lucide-react";
+import { Phone as PhoneIcon, MessageCircle, Mail, ChevronLeft, MapPin, ShieldCheck, Smartphone, Facebook, Twitter, Calendar } from "lucide-react";
 import SwapGapWidget from "@/features/marketplace/SwapGapWidget";
 import { CertificationDetails } from "@/features/marketplace/DealboxComponents";
 
@@ -46,39 +46,45 @@ export default function DealDetails() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
-          {/* Media */}
-          <Card className="lg:col-span-2 overflow-hidden rounded-2xl border border-border/60 bg-card shadow-card">
-            <div className="aspect-[4/3] bg-muted/40 w-full flex items-center justify-center">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+          {/* Media + infos principales */}
+          <Card className="lg:col-span-2 overflow-hidden rounded-2xl border border-border/60 bg-card shadow-lg ring-0">
+            <div className="aspect-[4/3] bg-muted/30 w-full flex items-center justify-center p-4">
               {deal.images?.[0] ? (
-                <img src={deal.images[0]} alt={`${deal.brand} ${deal.model}`} className="w-full h-full object-contain" />
+                <img src={deal.images[0]} alt={`${deal.brand} ${deal.model}`} className="w-full h-full object-contain rounded-lg" />
               ) : (
                 <Smartphone className="h-20 w-20 text-muted-foreground" />
               )}
             </div>
-            <CardContent className="p-6 space-y-5">
-              <div className="space-y-1">
-                <div className="text-xs uppercase tracking-wide text-muted-foreground">{deal.brand}</div>
-                <h1 className="text-2xl font-bold text-foreground">{deal.title || `${deal.brand} ${deal.model}`}</h1>
+            <CardContent className="p-6 sm:p-8 space-y-6">
+              <div className="space-y-2">
+                <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{deal.brand}</div>
+                <h1 className="text-2xl sm:text-3xl font-bold text-foreground leading-tight">{deal.title || `${deal.brand} ${deal.model}`}</h1>
                 <div className="flex flex-wrap items-center gap-2 mt-1">
                   <Badge variant="secondary">{deal.condition}</Badge>
                   {deal.verified && <Badge className="inline-flex items-center gap-1"><ShieldCheck className="h-4 w-4" /> Vérifié</Badge>}
+                  {(deal.publishedAt || deal.createdAt) && (
+                    <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+                      <Calendar className="h-3.5 w-3.5" />
+                      Publié le {new Date(deal.publishedAt || deal.createdAt).toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" })}
+                    </span>
+                  )}
                   {deal.location && (
                     <span className="inline-flex items-center gap-1 text-sm text-muted-foreground"><MapPin className="h-4 w-4" /> {deal.location}</span>
                   )}
                 </div>
               </div>
 
-              <div className="flex items-baseline gap-3">
-                <div className="text-3xl font-bold text-primary">{deal.price.toLocaleString()} FCFA</div>
+              <div className="flex flex-wrap items-baseline gap-3 pt-1">
+                <div className="text-3xl font-black tracking-tight text-[hsl(var(--tekh-green))]">{deal.price.toLocaleString()} <span className="text-lg font-bold text-muted-foreground">FCFA</span></div>
                 {deal.estimatedValue && (
                   <div className="text-sm text-muted-foreground">Valeur estimée: {deal.estimatedValue.toLocaleString()} FCFA</div>
                 )}
               </div>
 
-              <div className="mt-4 space-y-1">
-                <div className="font-semibold">Détails du produit</div>
-                <ul className="text-sm text-muted-foreground space-y-1">
+              <div className="pt-4 border-t border-border/60 space-y-2">
+                <div className="font-semibold text-foreground">Détails du produit</div>
+                <ul className="text-sm text-muted-foreground space-y-1.5">
                   {deal.model && <li>Modèle: {deal.model}</li>}
                   {deal.storage && <li>Stockage: {deal.storage} Go</li>}
                   {deal.ram && <li>RAM: {deal.ram} Go</li>}
@@ -87,8 +93,8 @@ export default function DealDetails() {
               </div>
 
               {deal.description && (
-                <div className="pt-2">
-                  <div className="font-semibold mb-1">Description</div>
+                <div className="pt-4 border-t border-border/60">
+                  <div className="font-semibold text-foreground mb-2">Description</div>
                   <p className="text-sm text-foreground/90 leading-relaxed whitespace-pre-wrap">{deal.description}</p>
                 </div>
               )}
@@ -102,21 +108,21 @@ export default function DealDetails() {
             </div>
           )}
 
-          {/* Seller / Actions */}
-          <div className="space-y-4 lg:sticky lg:top-24">
+          {/* Colonne droite : simulateur + contact */}
+          <div className="space-y-5 lg:sticky lg:top-24">
 
             <SwapGapWidget dealPrice={deal.price} dealId={deal.id} />
 
-            <Card className="p-6 rounded-2xl border border-border/60 bg-card shadow-card">
+            <Card className="p-6 rounded-2xl border border-border/60 bg-card shadow-lg ring-0">
               <CardHeader className="p-0 mb-4">
-                <CardTitle className="text-lg">{deal.sellerName || "Vendeur"}</CardTitle>
+                <CardTitle className="text-lg font-semibold">{deal.sellerName || "Vendeur"}</CardTitle>
                 <div className="text-sm text-muted-foreground">Contactez le vendeur pour finaliser l'échange</div>
               </CardHeader>
               <div className="space-y-3">
-                <Button size="lg" variant="default" className="w-full justify-center gap-2 h-11 bg-black text-white dark:bg-white dark:text-black" onClick={() => setShowPhone(true)}>
+                <Button size="lg" variant="default" className="w-full justify-center gap-2 h-11 bg-foreground text-background hover:opacity-90" onClick={() => setShowPhone(true)}>
                   <PhoneIcon className="h-4 w-4" /> {showPhone ? (deal.contactPhone || "Non fourni") : "Voir le numéro"}
                 </Button>
-                <Button asChild size="lg" variant="default" className="w-full justify-center gap-2 h-11 bg-green-600 hover:bg-green-700">
+                <Button asChild size="lg" variant="default" className="w-full justify-center gap-2 h-11 bg-[hsl(var(--tekh-green))] hover:bg-[hsl(var(--tekh-green))]/90 text-white">
                   <a href={waHref || "#"} aria-disabled={!waHref} onClick={(e) => { if (!waHref) e.preventDefault(); }} target="_blank" rel="noopener noreferrer">
                     <MessageCircle className="h-4 w-4" /> Whatsapp
                   </a>
@@ -129,8 +135,8 @@ export default function DealDetails() {
               </div>
             </Card>
 
-            <Card className="p-6 rounded-2xl border border-border/60 bg-card shadow-card">
-              <div className="text-sm text-muted-foreground mb-3">Partagez cette annonce avec vos amis</div>
+            <Card className="p-6 rounded-2xl border border-border/60 bg-card shadow-card ring-0">
+              <div className="text-sm text-muted-foreground mb-3">Partagez cette annonce</div>
               <div className="flex flex-wrap gap-2">
                 <Button asChild size="sm" variant="default" className="rounded-full bg-[#25D366] hover:bg-[#1EBE5A] text-white">
                   <a href={waHref || "#"} target="_blank" rel="noopener noreferrer" aria-label="Partager sur Whatsapp">

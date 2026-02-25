@@ -245,6 +245,7 @@ export default function DealsPage() {
                 extraLine={extraLine}
                 location={d.location}
                 createdAt={d.createdAt}
+                publishedAt={d.publishedAt}
                 onDelete={onDelete}
               />
             );

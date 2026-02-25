@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Sidebar from "@/shared/components/Sidebar";
 import Footer from "@/shared/components/Footer";
@@ -14,12 +15,24 @@ import { usePWA } from "@/shared/hooks/usePWA";
 import { Link } from "react-router-dom";
 
 
+const AUTH_REDIRECT_KEY = "auth_redirect";
+
 const Layout = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const isPWA = usePWA();
   const showFooter = location.pathname === "/";
+
+  // Après OAuth, Supabase peut renvoyer vers /profile ou / au lieu de /admin : on corrige ici.
+  useEffect(() => {
+    if (!user) return;
+    const target = sessionStorage.getItem(AUTH_REDIRECT_KEY);
+    if (target === "/admin" && (location.pathname === "/profile" || location.pathname === "/")) {
+      sessionStorage.removeItem(AUTH_REDIRECT_KEY);
+      navigate("/admin", { replace: true });
+    }
+  }, [user, location.pathname, navigate]);
 
   const handleProfileClick = () => {
     if (!user) {

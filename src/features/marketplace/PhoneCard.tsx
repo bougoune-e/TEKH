@@ -1,7 +1,7 @@
 import { Button } from "@/shared/ui/button";
 import { Badge } from "@/shared/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader } from "@/shared/ui/card";
-import { Smartphone, MapPin, ShoppingCart } from "lucide-react";
+import { Smartphone, MapPin, ShoppingCart, Calendar } from "lucide-react";
 import { cn } from "@/core/api/utils";
 import { usePWA } from "@/shared/hooks/usePWA";
 import { useNavigate } from "react-router-dom";
@@ -45,6 +45,7 @@ interface PhoneCardProps {
   extraLine?: string;
   location?: string;
   createdAt?: string;
+  publishedAt?: string;
   onDelete?: (() => void) | null;
   /** En PWA : rend la carte plus petite pour faciliter le scroll */
   compact?: boolean;
@@ -61,8 +62,11 @@ const PhoneCard = ({
   tag,
   badges = [],
   location,
+  createdAt,
+  publishedAt,
   compact = false,
 }: PhoneCardProps) => {
+  const publishedDate = publishedAt || createdAt;
   const navigate = useNavigate();
   const isPWA = usePWA();
   const { addToCart } = useCart();
@@ -137,10 +141,20 @@ const PhoneCard = ({
             </Badge>
           )}
         </div>
-        {location && !compact && (
-          <div className="flex items-center text-slate-400 text-[11px] font-medium">
-            <MapPin className="h-3 w-3 mr-1" />
-            {location}
+        {(publishedDate || location) && !compact && (
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-slate-500 dark:text-slate-400 text-[11px] font-medium">
+            {publishedDate && (
+              <span className="inline-flex items-center gap-1">
+                <Calendar className="h-3 w-3" />
+                Publié le {new Date(publishedDate).toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" })}
+              </span>
+            )}
+            {location && (
+              <span className="inline-flex items-center gap-1">
+                <MapPin className="h-3 w-3" />
+                {location}
+              </span>
+            )}
           </div>
         )}
       </CardContent>

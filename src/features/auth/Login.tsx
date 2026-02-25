@@ -30,10 +30,13 @@ export default function Login() {
     }
     setLoading(true);
     try {
-      // En prod/PWA/APK: utiliser VITE_APP_URL (ex: https://tekh-1.onrender.com) pour que la redirection
-      // revienne bien vers ton site. Doit être dans Supabase → Auth → URL Configuration → Redirect URLs.
-      const baseUrl = (import.meta.env.VITE_APP_URL as string) || window.location.origin;
-      const redirectTo = `${baseUrl.replace(/\/$/, "")}/profile`;
+      // En local: toujours rediriger vers l'origine courante (ex. http://localhost:8084).
+      // En prod: VITE_APP_URL si définie, sinon l’origine. L’URL doit être dans Supabase → Auth → URL Configuration → Redirect URLs.
+      const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+      const baseUrl = isLocal ? window.location.origin : ((import.meta.env.VITE_APP_URL as string) || window.location.origin);
+      const fromAdmin = window.location.search.includes("from=admin") || document.referrer.includes("/admin");
+      if (fromAdmin) sessionStorage.setItem("auth_redirect", "/admin");
+      const redirectTo = `${baseUrl.replace(/\/$/, "")}${fromAdmin ? "/admin" : "/profile"}`;
       const { error: oauthError } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
