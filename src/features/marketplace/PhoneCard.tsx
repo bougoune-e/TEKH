@@ -148,12 +148,16 @@ const PhoneCard = ({
             <p className={cn("text-[9px] font-medium text-muted-foreground uppercase tracking-wide truncate", compact ? "mb-0.5" : "mb-1 text-xs")}>
               {brand}
             </p>
-            <h3 className={cn(
-              "text-foreground leading-tight group-hover:text-foreground/90 transition-colors",
-              compact ? "text-[10px] font-medium leading-snug line-clamp-2" : "text-sm font-semibold line-clamp-1"
-            )}>
+            <span
+              role="heading"
+              aria-level={3}
+              className={cn(
+                "block text-foreground leading-tight group-hover:text-foreground/90 transition-colors",
+                compact ? "text-[10px] font-medium leading-snug line-clamp-2 tracking-normal" : "text-sm font-semibold line-clamp-1"
+              )}
+            >
               {model}
-            </h3>
+            </span>
           </div>
         </div>
       </CardHeader>
