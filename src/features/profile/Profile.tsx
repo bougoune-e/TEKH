@@ -13,11 +13,18 @@ import { LogOut, Camera, Package, ShieldCheck, Heart, Settings, ShoppingCart, Ch
 import { toast } from "@/shared/hooks/use-toast";
 import MotionRings from "@/shared/components/MotionRings";
 import { useCart } from "@/features/marketplace/cart.context";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { isAdmin } from "@/features/auth/AdminRoute";
 
 export default function Profile() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { user, refreshUser } = useAuth();
+
+  useEffect(() => {
+    if (user && isAdmin(user)) navigate("/admin", { replace: true });
+  }, [user, navigate]);
+
   const { deals } = useDeals();
   const { items: cartItems } = useCart();
   const [name, setName] = useState("");
@@ -26,6 +33,10 @@ export default function Profile() {
   const [saving, setSaving] = useState(false);
   const fileRef = useRef<HTMLInputElement | null>(null);
   const [dbCount, setDbCount] = useState<number | null>(null);
+
+  if (user && isAdmin(user)) {
+    return <div className="min-h-dvh flex items-center justify-center bg-background"><p className="text-muted-foreground">Redirection…</p></div>;
+  }
 
   useEffect(() => {
     if (user) {

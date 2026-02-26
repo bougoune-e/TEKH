@@ -1,10 +1,10 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "@/features/auth/auth.context";
 
-const ADMIN_EMAILS = (import.meta.env.VITE_ADMIN_EMAILS as string || "")
-  .split(",")
-  .map((e) => e.trim().toLowerCase())
-  .filter(Boolean);
+const ADMIN_EMAILS = [
+  "tekhswap@gmail.com",
+  ...(import.meta.env.VITE_ADMIN_EMAILS as string || "").split(",").map((e) => e.trim().toLowerCase()).filter(Boolean),
+];
 
 function isAdmin(user: any): boolean {
   if (!user) return false;

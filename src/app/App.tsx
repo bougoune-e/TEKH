@@ -60,6 +60,10 @@ const PanierPage = lazy(() => import("@/features/marketplace/Panier"));
 const MaintenanceIT = lazy(() => import("@/features/services/MaintenanceIT"));
 const FormationTech = lazy(() => import("@/features/services/FormationTech"));
 const DevWebMobile = lazy(() => import("@/features/services/DevWebMobile"));
+const HistoriquePage = lazy(() => import("@/features/settings/Historique"));
+const CommandesPage = lazy(() => import("@/features/settings/Commandes").then((m) => ({ default: m.default })));
+const CommandeDetailPage = lazy(() => import("@/features/settings/Commandes").then((m) => ({ default: m.CommandeDetailPage })));
+const SignupPage = lazy(() => import("@/features/auth/Signup"));
 
 const queryClient = new QueryClient();
 
@@ -116,6 +120,7 @@ const NavigationWrapper = () => {
                 <Route path="/profile" element={<ProtectedRoute><PageTransition navType={navType}><Profile /></PageTransition></ProtectedRoute>} />
                 <Route path="/search" element={<PageTransition navType={navType}><SearchPage /></PageTransition>} />
                 <Route path="/login" element={<PageTransition navType={navType}><Login /></PageTransition>} />
+                <Route path="/signup" element={<PageTransition navType={navType}><SignupPage /></PageTransition>} />
                 <Route path="/a-propos" element={<PageTransition navType={navType}><APropos /></PageTransition>} />
                 <Route path="/aide-et-faq" element={<PageTransition navType={navType}><AideEtFaq /></PageTransition>} />
                 <Route path="/contact" element={<PageTransition navType={navType}><Contact /></PageTransition>} />
@@ -129,6 +134,9 @@ const NavigationWrapper = () => {
                 <Route path="/communities" element={<PageTransition navType={navType}><Index /></PageTransition>} />
                 <Route path="/messages" element={<PageTransition navType={navType}><Index /></PageTransition>} />
                 <Route path="/settings" element={<PageTransition navType={navType}><SettingsPage /></PageTransition>} />
+                <Route path="/historique" element={<ProtectedRoute><PageTransition navType={navType}><HistoriquePage /></PageTransition></ProtectedRoute>} />
+                <Route path="/commandes" element={<ProtectedRoute><PageTransition navType={navType}><CommandesPage /></PageTransition></ProtectedRoute>} />
+                <Route path="/commandes/:id" element={<ProtectedRoute><PageTransition navType={navType}><CommandeDetailPage /></PageTransition></ProtectedRoute>} />
                 <Route path="/notifications" element={<PageTransition navType={navType}><NotificationsPage /></PageTransition>} />
                 <Route path="/panier" element={<PageTransition navType={navType}><PanierPage /></PageTransition>} />
                 <Route path="/maintenance" element={<PageTransition navType={navType}><MaintenanceIT /></PageTransition>} />

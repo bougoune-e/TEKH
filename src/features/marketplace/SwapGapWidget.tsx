@@ -5,34 +5,9 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/shared/ui/card";
 import { Input } from "@/shared/ui/input";
 import { useDeals } from "@/features/marketplace/deals.context";
 import { getSwapGap } from "@/core/api/pricing";
-import { ArrowRightLeft, Calculator, Smartphone, Sparkles, MessageCircle } from "lucide-react";
+import { ArrowRightLeft, Calculator, Smartphone, Sparkles } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger } from "@/shared/ui/dialog";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/shared/ui/select";
-
-/** Bouton "Demander un Swap Certifié" : ouvre WhatsApp vers le vendeur avec un message pré-rempli pour demander un swap certifié (échange de téléphone avec contrôle qualité TEKH). */
-function SwapCertifiedButton({ contactWhatsapp, dealTitle, dealId }: { contactWhatsapp?: string; dealTitle?: string; dealId: string }) {
-    const origin = typeof window !== "undefined" ? window.location.origin : "";
-    const dealLink = `${origin}/deal/${dealId}`;
-    const text = encodeURIComponent(`Bonjour, je souhaite demander un swap certifié pour votre annonce${dealTitle ? ` : ${dealTitle}` : ""}. ${dealLink}`);
-    const waNumber = contactWhatsapp?.replace(/\D/g, "") || "";
-    const href = waNumber ? `https://wa.me/${waNumber}?text=${text}` : undefined;
-    return (
-        <Button
-            asChild={!!href}
-            className="w-full mt-4 font-black rounded-full h-12 uppercase tracking-tighter bg-white text-[#064e3b] dark:text-[#17633D] hover:bg-white/95 border-0 shadow-lg"
-            variant="default"
-            title={href ? "Contacter le vendeur par WhatsApp pour demander un swap certifié (échange avec contrôle qualité TEKH+)" : "Ajoutez un numéro de contact à l’annonce pour contacter le vendeur"}
-        >
-            {href ? (
-                <a href={href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2">
-                    <MessageCircle className="h-5 w-5" /> Demander un Swap Certifié
-                </a>
-            ) : (
-                <span className="inline-flex items-center justify-center gap-2 opacity-90">Demander un Swap Certifié</span>
-            )}
-        </Button>
-    );
-}
 
 export default function SwapGapWidget({ dealPrice, dealId, dealTitle, contactWhatsapp }: { dealPrice: number; dealId: string; dealTitle?: string; contactWhatsapp?: string }) {
     const navigate = useNavigate();
@@ -119,7 +94,7 @@ export default function SwapGapWidget({ dealPrice, dealId, dealTitle, contactWha
 
                         <div className={`rounded-[32px] p-6 border-2 shadow-xl ${gapData.isPositive ? 'bg-zinc-900 border-[#064e3b]/40 dark:border-[#059669]/40 text-white' : 'bg-[#064e3b] dark:bg-[#17633D] border-[#064e3b]/80 dark:border-[#17633D]/80 text-white'}`}>
                             <div className="flex justify-between items-center mb-1">
-                                <span className="text-xs font-black uppercase tracking-widest text-white">{gapData.isPositive ? 'Votre Budget Gap' : 'Crédit TΞKΗ+'}</span>
+                                <span className="text-xs font-black uppercase tracking-widest text-white">{gapData.isPositive ? 'Votre Budget Gap' : 'Avantage swap'}</span>
                                 <span className="text-2xl font-black italic text-white">
                                     {gapData.formatted}
                                 </span>
@@ -133,7 +108,6 @@ export default function SwapGapWidget({ dealPrice, dealId, dealTitle, contactWha
                             <p className="text-[11px] mt-2 text-center text-white/85 font-medium">
                                 Estimation indicative hors frais de service éventuels.
                             </p>
-                            <SwapCertifiedButton contactWhatsapp={contactWhatsapp} dealTitle={dealTitle} dealId={dealId} />
                         </div>
                     </div>
                 )}

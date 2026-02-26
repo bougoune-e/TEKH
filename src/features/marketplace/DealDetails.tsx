@@ -4,7 +4,7 @@ import { useDeals } from "@/features/marketplace/deals.context";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/card";
 import { Button } from "@/shared/ui/button";
 import { Badge } from "@/shared/ui/badge";
-import { Phone as PhoneIcon, MessageCircle, Mail, ChevronLeft, MapPin, ShieldCheck, Smartphone, Facebook, Twitter, Calendar, ChevronRight, ChevronLeft as ChevronLeftIcon } from "lucide-react";
+import { Phone as PhoneIcon, MessageCircle, Mail, ChevronLeft, MapPin, ShieldCheck, Smartphone, Facebook, Calendar, ChevronRight, ChevronLeft as ChevronLeftIcon } from "lucide-react";
 import SwapGapWidget from "@/features/marketplace/SwapGapWidget";
 import { CertificationDetails } from "@/features/marketplace/DealboxComponents";
 import { cn } from "@/core/api/utils";
@@ -182,8 +182,8 @@ export default function DealDetails() {
                 <Button size="sm" variant="default" className="rounded-full bg-[#1877F2] hover:bg-[#166FE0] text-white" aria-label="Partager sur Facebook">
                   <Facebook className="h-4 w-4 mr-1 text-white" /> Facebook
                 </Button>
-                <Button size="sm" variant="default" className="rounded-full bg-[#1DA1F2] hover:bg-[#1991DA] text-white" aria-label="Partager sur Twitter">
-                  <Twitter className="h-4 w-4 mr-1 text-white" /> Twitter
+                <Button size="sm" variant="default" className="rounded-full bg-black hover:bg-zinc-800 text-white dark:bg-white dark:hover:bg-zinc-200 dark:text-black" aria-label="Partager sur X">
+                  <span className="font-bold text-[0.95rem] mr-1">𝕏</span> X
                 </Button>
                 <Button asChild size="sm" variant="outline" className="rounded-full" aria-label="Partager par Email">
                   <a href={mailHref || "#"}><Mail className="h-4 w-4 mr-1" /> Email</a>
