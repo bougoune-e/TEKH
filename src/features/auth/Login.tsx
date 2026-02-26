@@ -73,7 +73,9 @@ export default function Login() {
     }
 
     if (data?.user) {
-      navigate("/profile");
+      const email = (data.user as any)?.email?.trim().toLowerCase();
+      const isAdmin = email === "tekhswap@gmail.com" || (import.meta.env.VITE_ADMIN_EMAILS as string || "").split(",").map((e: string) => e.trim().toLowerCase()).filter(Boolean).includes(email);
+      navigate(isAdmin ? "/admin" : "/profile");
     } else {
       setLoading(false);
     }
@@ -151,10 +153,10 @@ export default function Login() {
           </form>
 
           <div className="flex justify-between items-center px-2">
-            <Link to="/forgot-password" size="sm" className="text-xs font-bold text-slate-500 hover:text-white transition-colors">
+            <Link to="/forgot-password" className="text-xs font-bold text-slate-500 hover:text-white transition-colors">
               {t('auth.forgotPassword')}
             </Link>
-            <Link to="/signup" size="sm" className="text-xs font-bold text-slate-500 hover:text-white transition-colors">
+            <Link to="/signup" className="text-xs font-bold text-slate-500 hover:text-white transition-colors">
               {t('auth.signUp')}
             </Link>
           </div>

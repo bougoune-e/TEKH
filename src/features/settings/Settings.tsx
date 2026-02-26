@@ -21,14 +21,17 @@ import {
 import { useAuth } from "@/features/auth/auth.context";
 import { useTheme } from "@/core/theme/ThemeProvider";
 import UserAvatar from "@/shared/components/UserAvatar";
+import { isPushSupported, getNotificationPermission, subscribeToPush } from "@/features/notifications/pushNotifications";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { Label } from "@/shared/ui/label";
 import { useTranslation } from "react-i18next";
 import i18n from "@/core/config/i18n";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function SettingsPage() {
     const { t } = useTranslation();
+    const navigate = useNavigate();
     const { user, signOut, refreshUser } = useAuth();
     const { theme, setTheme } = useTheme();
     const [lang, setLang] = useState(i18n.language || "fr");
@@ -36,6 +39,7 @@ export default function SettingsPage() {
     const [uploading, setUploading] = useState(false);
     const [passionBio, setPassionBio] = useState("");
     const [savingBio, setSavingBio] = useState(false);
+    const [pushLoading, setPushLoading] = useState(false);
 
     useEffect(() => {
         if (window.matchMedia('(display-mode: standalone)').matches) {
@@ -89,17 +93,17 @@ export default function SettingsPage() {
         {
             title: t('settings.navigate', 'Naviguer'),
             items: [
-                { icon: List, label: t('settings.history', 'Historique'), desc: t('settings.history_desc', 'Transactions passées'), color: "bg-black dark:bg-white text-white dark:text-black" },
-                { icon: Package, label: t('settings.orders', 'Commandes'), desc: t('settings.orders_desc', 'Achats en cours'), color: "bg-black dark:bg-white text-white dark:text-black" },
-                { icon: CreditCard, label: t('settings.payment', 'Paiement'), desc: t('settings.payment_desc', 'Cartes & comptes'), color: "bg-black dark:bg-white text-white dark:text-black" },
-                { icon: MapPin, label: t('settings.addresses', 'Adresses'), desc: t('settings.addresses_desc', 'Lieux de réception'), color: "bg-black dark:bg-white text-white dark:text-black" },
+                { icon: List, label: t('settings.history', 'Historique'), desc: t('settings.history_desc', 'Transactions passées'), path: "/historique", color: "bg-black dark:bg-white text-white dark:text-black" },
+                { icon: Package, label: t('settings.orders', 'Commandes'), desc: t('settings.orders_desc', 'Achats en cours'), path: "/commandes", color: "bg-black dark:bg-white text-white dark:text-black" },
+                { icon: CreditCard, label: t('settings.payment', 'Paiement'), desc: t('settings.payment_desc', 'Cartes & comptes'), path: "/panier", color: "bg-black dark:bg-white text-white dark:text-black" },
+                { icon: MapPin, label: t('settings.addresses', 'Adresses'), desc: t('settings.addresses_desc', 'Lieux de réception'), path: "/profile", color: "bg-black dark:bg-white text-white dark:text-black" },
             ]
         },
         {
             title: t('settings.preferences', 'Préférences'),
             items: [
-                { icon: Bell, label: t('settings.alerts', 'Alertes'), desc: t('settings.alerts_desc', 'Notifications'), color: "bg-black dark:bg-white text-white dark:text-black" },
-                { icon: LifeBuoy, label: t('settings.support', 'Support'), desc: t('settings.support_desc', 'Aide & assistance'), color: "bg-black dark:bg-white text-white dark:text-black" },
+                { icon: Bell, label: t('settings.alerts', 'Alertes'), desc: t('settings.alerts_desc', 'Notifications'), path: "/notifications", color: "bg-black dark:bg-white text-white dark:text-black" },
+                { icon: LifeBuoy, label: t('settings.support', 'Support'), desc: t('settings.support_desc', 'Aide & assistance'), path: "/contact", color: "bg-black dark:bg-white text-white dark:text-black" },
             ]
         }
     ];
@@ -135,20 +139,26 @@ export default function SettingsPage() {
                         </div>
                     </section>
 
-                    {/* Décrivez votre passion TEKH */}
+                    {/* Décrivez votre passion TEKH — masquer le formulaire une fois enregistré */}
                     <div className="space-y-1">
                         <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground px-5 mb-2">TEKH+</h3>
                         <div className="bg-muted/30 border-y border-border/10 px-5 py-4">
                             <Label className="text-[10px] font-black uppercase text-muted-foreground">Décrivez votre passion TEKH</Label>
-                            <textarea
-                                value={passionBio}
-                                onChange={(e) => setPassionBio(e.target.value)}
-                                placeholder="Décrivez votre passion tech..."
-                                className="mt-2 w-full min-h-[100px] rounded-xl bg-background border border-border/50 px-4 py-3 text-foreground font-medium text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary resize-none"
-                            />
-                            <Button onClick={savePassionBio} disabled={savingBio} className="mt-3 w-full bg-[#064e3b] dark:bg-[#059669] hover:opacity-90 text-white rounded-xl h-11 font-bold">
-                                {savingBio ? "Enregistrement…" : "Enregistrer"}
-                            </Button>
+                            {passionBio?.trim() ? (
+                                <p className="mt-2 text-foreground font-medium text-sm">{passionBio}</p>
+                            ) : (
+                                <>
+                                    <textarea
+                                        value={passionBio}
+                                        onChange={(e) => setPassionBio(e.target.value)}
+                                        placeholder="Décrivez votre passion tech..."
+                                        className="mt-2 w-full min-h-[100px] rounded-xl bg-background border border-border/50 px-4 py-3 text-foreground font-medium text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+                                    />
+                                    <Button onClick={savePassionBio} disabled={savingBio} className="mt-3 w-full bg-[#064e3b] dark:bg-[#059669] hover:opacity-90 text-white rounded-xl h-11 font-bold">
+                                        {savingBio ? "Enregistrement…" : "Enregistrer"}
+                                    </Button>
+                                </>
+                            )}
                         </div>
                     </div>
 
@@ -158,8 +168,9 @@ export default function SettingsPage() {
                             <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground px-5 mb-2">{section.title}</h3>
                             <div className="bg-muted/30 border-y border-border/10 divide-y divide-border/10">
                                 {section.items.map((item) => (
-                                    <button
+                                    <Link
                                         key={item.label}
+                                        to={(item as any).path || "#"}
                                         className="w-full flex items-center justify-between h-[58px] px-5 active:bg-muted/50 transition-colors group"
                                     >
                                         <div className="flex items-center gap-4 text-left">
@@ -172,7 +183,7 @@ export default function SettingsPage() {
                                             </div>
                                         </div>
                                         <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-foreground transition-colors" />
-                                    </button>
+                                    </Link>
                                 ))}
                             </div>
                         </div>
@@ -219,9 +230,43 @@ export default function SettingsPage() {
                                 </select>
                             </div>
 
+                            {/* Notifications push (PWA) */}
+                            {isPushSupported() && (
+                                <div className="flex items-center justify-between h-[58px] px-5">
+                                    <div className="flex items-center gap-4">
+                                        <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-background border border-border/10">
+                                            <Bell className="h-4 w-4 text-foreground" strokeWidth={2} />
+                                        </div>
+                                        <div>
+                                            <p className="font-semibold text-[15px] tracking-tight">Notifications</p>
+                                            <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">
+                                                {getNotificationPermission() === "granted" ? "Activées" : "Nouveaux deals"}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <Button
+                                        size="sm"
+                                        variant={getNotificationPermission() === "granted" ? "outline" : "default"}
+                                        disabled={pushLoading}
+                                        className={getNotificationPermission() === "granted" ? "rounded-xl" : "rounded-xl bg-[#064e3b] dark:bg-[#059669] text-white"}
+                                        onClick={async () => {
+                                            setPushLoading(true);
+                                            const toast = (await import("sonner")).toast;
+                                            const err = await subscribeToPush(user?.id ?? null);
+                                            if (err) toast.error(err);
+                                            else toast.success("Notifications activées", { description: "Vous serez alerté des nouveaux deals." });
+                                            setPushLoading(false);
+                                        }}
+                                    >
+                                        {pushLoading ? "…" : getNotificationPermission() === "granted" ? "OK" : "Activer"}
+                                    </Button>
+                                </div>
+                            )}
+
                             {/* Logout - Full List Row */}
                             <button
-                                onClick={() => signOut()}
+                                type="button"
+                                onClick={() => signOut().then(() => navigate("/login"))}
                                 className="w-full h-[58px] px-5 flex items-center gap-4 active:bg-rose-500/10 transition-colors"
                             >
                                 <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-rose-500 shadow-lg shadow-rose-500/20">
@@ -288,16 +333,22 @@ export default function SettingsPage() {
                         <div className="p-6 space-y-6">
                             <div className="space-y-2">
                                 <Label className="text-[10px] font-black uppercase text-slate-500 dark:text-slate-400">Bio / Description</Label>
-                                <Input
-                                    value={passionBio}
-                                    onChange={(e) => setPassionBio(e.target.value)}
-                                    placeholder="Décrivez votre passion tech..."
-                                    className="bg-white dark:bg-black border-2 border-black dark:border-white rounded-2xl h-14 font-black focus:ring-0 text-black dark:text-white"
-                                />
+                                {passionBio?.trim() ? (
+                                    <p className="py-3 text-black dark:text-white font-medium">{passionBio}</p>
+                                ) : (
+                                    <>
+                                        <Input
+                                            value={passionBio}
+                                            onChange={(e) => setPassionBio(e.target.value)}
+                                            placeholder="Décrivez votre passion tech..."
+                                            className="bg-white dark:bg-black border-2 border-black dark:border-white rounded-2xl h-14 font-black focus:ring-0 text-black dark:text-white"
+                                        />
+                                        <Button onClick={savePassionBio} disabled={savingBio} className="w-full bg-[#064e3b] dark:bg-[#059669] text-white hover:opacity-90 rounded-2xl h-14 font-black shadow-xl transition-all border-0">
+                                            {savingBio ? "Enregistrement…" : "Enregistrer les modifications"}
+                                        </Button>
+                                    </>
+                                )}
                             </div>
-                            <Button onClick={savePassionBio} disabled={savingBio} className="w-full bg-[#064e3b] dark:bg-[#059669] text-white hover:opacity-90 rounded-2xl h-14 font-black shadow-xl transition-all border-0">
-                                {savingBio ? "Enregistrement…" : "Enregistrer les modifications"}
-                            </Button>
                         </div>
                     </div>
                 </div>
@@ -308,9 +359,9 @@ export default function SettingsPage() {
                         <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 px-4">{section.title}</h3>
                         <div className="grid gap-4">
                             {section.items.map((item) => (
-                                <button key={item.label} className="w-full flex items-center justify-between p-5 bg-slate-50 dark:bg-zinc-900 rounded-[28px] border-2 border-black dark:border-white hover:scale-[1.02] active:scale-95 transition-all group shadow-lg">
+                                <Link key={item.label} to={(item as any).path || "#"} className="w-full flex items-center justify-between p-5 bg-slate-50 dark:bg-zinc-900 rounded-[28px] border-2 border-black dark:border-white hover:scale-[1.02] active:scale-95 transition-all group shadow-lg">
                                     <div className="flex items-center gap-5">
-                                        <div className={`h-14 w-14 rounded-2xl ${item.color} flex items-center justify-center shadow-lg`}>
+                                        <div className={`h-14 w-14 rounded-2xl ${(item as any).color || "bg-muted"} flex items-center justify-center shadow-lg`}>
                                             <item.icon className="h-7 w-7" strokeWidth={2.5} />
                                         </div>
                                         <div className="text-left">
@@ -319,7 +370,7 @@ export default function SettingsPage() {
                                         </div>
                                     </div>
                                     <ChevronRight className="h-6 w-6 text-black dark:text-white group-hover:translate-x-1 transition-transform" />
-                                </button>
+                                </Link>
                             ))}
                         </div>
                     </div>
@@ -374,7 +425,8 @@ export default function SettingsPage() {
 
                         {/* Déconnexion */}
                         <button
-                            onClick={() => signOut()}
+                            type="button"
+                            onClick={() => signOut().then(() => navigate("/login"))}
                             className="w-full flex items-center justify-between p-5 bg-slate-50 dark:bg-zinc-900 rounded-[28px] border-2 border-black dark:border-white hover:scale-[1.02] active:scale-95 transition-all group shadow-lg"
                         >
                             <div className="flex items-center gap-5">

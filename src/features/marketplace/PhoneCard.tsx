@@ -4,19 +4,20 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/shared/ui/card";
 import { Smartphone, MapPin, ShoppingCart, Calendar, Clock } from "lucide-react";
 import { cn } from "@/core/api/utils";
 
-/** Format date de publication en relatif : "2 j", "20 jours", "1 mois", "1 an" */
+/** Format date de publication en relatif par jour civil (évite "Aujourd'hui" pour un post d'hier). */
 function formatPublishedAgo(dateStr: string | undefined): string {
   if (!dateStr) return "";
   const d = new Date(dateStr);
   const now = new Date();
-  const diffMs = now.getTime() - d.getTime();
-  const diffDays = Math.floor(diffMs / (24 * 60 * 60 * 1000));
-  if (diffDays < 1) return "Aujourd'hui";
-  if (diffDays === 1) return "1 jour";
-  if (diffDays < 7) return `${diffDays} jours`;
-  if (diffDays < 30) return `${Math.floor(diffDays / 7)} sem`;
-  if (diffDays < 365) return `${Math.floor(diffDays / 30)} mois`;
-  return `${Math.floor(diffDays / 365)} an`;
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const pubDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  const diffDays = Math.floor((today.getTime() - pubDate.getTime()) / (24 * 60 * 60 * 1000));
+  if (diffDays === 0) return "Aujourd'hui";
+  if (diffDays === 1) return "Hier";
+  if (diffDays < 7) return `Il y a ${diffDays} j`;
+  if (diffDays < 30) return `Il y a ${Math.floor(diffDays / 7)} sem`;
+  if (diffDays < 365) return `Il y a ${Math.floor(diffDays / 30)} mois`;
+  return `Il y a ${Math.floor(diffDays / 365)} an`;
 }
 import { useNavigate } from "react-router-dom";
 import { useCart } from "@/features/marketplace/cart.context";

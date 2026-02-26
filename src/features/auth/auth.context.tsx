@@ -6,12 +6,14 @@ interface AuthValue {
   user: any | null;
   loading: boolean;
   refreshUser: () => Promise<void>;
+  signOut: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthValue>({
   user: null,
   loading: true,
-  refreshUser: async () => { }
+  refreshUser: async () => { },
+  signOut: async () => { },
 });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -21,6 +23,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const refreshUser = async () => {
     const { data: { user: updatedUser } } = await supabase.auth.getUser();
     setUser(updatedUser);
+  };
+
+  const signOut = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
   };
 
   useEffect(() => {
@@ -53,7 +60,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, refreshUser }}>
+    <AuthContext.Provider value={{ user, loading, refreshUser, signOut }}>
       {children}
     </AuthContext.Provider>
   );
