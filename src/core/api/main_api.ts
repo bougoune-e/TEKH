@@ -54,3 +54,41 @@ export async function updateStock(id: string | number, stock: number) {
   if (!res.ok) throw new Error(`Erreur mise à jour stock`);
   return res.json();
 }
+
+/** Résultat de l'analyse Vision API (état écran suggéré) */
+export type VisionAnalyzeResult = {
+  labels: Array<{ description: string; score: number }>;
+  suggestedCondition: string;
+  message: string;
+};
+
+/**
+ * Envoie une image au backend pour analyse Google Vision (état de l'écran).
+ * MVP Phase 1 – utilisé sur la page de publication après upload des photos.
+ */
+export async function analyzeImageForScreen(file: File): Promise<VisionAnalyzeResult> {
+  const base64 = await new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const dataUrl = reader.result as string;
+      const b64 = dataUrl.split(",")[1];
+      if (b64) resolve(b64);
+      else reject(new Error("Lecture de l'image impossible"));
+    };
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(file);
+  });
+
+  const res = await fetch(`${API_URL}/api/vision/analyze-image`, {
+    ...fetchOpts,
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ imageBase64: base64 }),
+  });
+
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}));
+    throw new Error(data.error || `Analyse impossible (${res.status})`);
+  }
+  return res.json();
+}

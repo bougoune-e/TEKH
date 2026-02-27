@@ -1,0 +1,9 @@
+{
+  "name": "tekh-google-vision-api",
+  "private": true,
+  "type": "module",
+  "description": "Reference script for Google Cloud Vision API (TEKH+ screen analysis)",
+  "dependencies": {
+    "@google-cloud/vision": "^4.0.0"
+  }
+}

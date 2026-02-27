@@ -3,7 +3,7 @@ import fs from "fs";
 import csv from "csv-parser";
 import cors from "cors";
 import path from "path";
-import { fileURLToPath } from "url";
+import { fileURLToPath, pathToFileURL } from "url";
 import { supabase, TABLE_PRODUCTS } from "./supabase.js";
 
 const app = express();
@@ -56,7 +56,7 @@ app.use(cors({
   methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
   credentials: true
 }));
-app.use(express.json());
+app.use(express.json({ limit: "12mb" }));
 
 // Logging simple des requêtes
 app.use((req, _res, next) => {
@@ -198,6 +198,51 @@ app.get("/produits", async (req, res) => {
 app.get("/api/products", (_req, res) => {
   if (!csvLoaded) return res.status(503).json({ error: "Chargement des données en cours" });
   return res.json(produits);
+});
+
+// ──────────────────────────────────────────────────────────────
+// GOOGLE VISION API – Analyse d'images (état écran) pour TEKH+
+// Source : dossier google-vision-api à la racine de TEKH
+// ──────────────────────────────────────────────────────────────
+const VISION_MODULE_PATH = path.join(__dirname, "..", "..", "google-vision-api", "analyzeScreen.js");
+let visionAnalyze;
+try {
+  const visionModule = await import(pathToFileURL(VISION_MODULE_PATH).href);
+  visionAnalyze = visionModule.analyzeImageForScreen;
+  console.log("[API] Vision module loaded from google-vision-api");
+} catch (e) {
+  console.warn("[API] Vision module not loaded (google-vision-api):", e.message);
+  visionAnalyze = null;
+}
+
+app.post("/api/vision/analyze-image", async (req, res) => {
+  if (!visionAnalyze) {
+    return res.status(503).json({
+      error: "Service d'analyse d'images non configuré (Google Vision API).",
+      code: "VISION_NOT_CONFIGURED",
+    });
+  }
+  const { imageBase64, imageUrl } = req.body || {};
+  if (!imageBase64 && !imageUrl) {
+    return res.status(400).json({
+      error: "Fournissez imageBase64 (chaîne base64) ou imageUrl (URL publique).",
+    });
+  }
+  try {
+    const input = imageUrl || (Buffer.from(imageBase64, "base64"));
+    const opts = imageUrl ? { source: "url" } : { source: "buffer" };
+    const result = await visionAnalyze(input, opts);
+    if (!result) {
+      return res.status(503).json({ error: "Analyse indisponible." });
+    }
+    return res.json(result);
+  } catch (err) {
+    console.error("[API] Vision analyze error:", err);
+    return res.status(500).json({
+      error: err.message || "Erreur lors de l'analyse de l'image.",
+      code: "VISION_ERROR",
+    });
+  }
 });
 
 // Route produit par id
