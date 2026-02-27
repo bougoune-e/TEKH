@@ -6,12 +6,13 @@ import { Button } from "@/shared/ui/button";
 import { Label } from "@/shared/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/ui/select";
 import { Badge } from "@/shared/ui/badge";
-import { Cpu, HardDrive, Palette, Hash, Camera, DollarSign, Smartphone, User as UserIcon, Phone as PhoneIcon, MessageCircle, Mail, ShieldCheck } from "lucide-react";
+import { Cpu, HardDrive, Palette, Hash, Camera, DollarSign, Smartphone, User as UserIcon, Phone as PhoneIcon, MessageCircle, Mail, ShieldCheck, ScanLine } from "lucide-react";
 import { useDeals } from "@/features/marketplace/deals.context";
 import { useNavigate } from "react-router-dom";
 import type { DealPost } from "@/shared/data/dealsData";
 import { toast } from "@/shared/hooks/use-toast";
 import { uploadImage, insertDeal, getCurrentUser, fetchBrands, fetchModels, fetchStorages, fetchAllStorages, fetchAllRams, fetchRams } from "@/core/api/supabaseApi";
+import { analyzeImageForScreen, type VisionAnalyzeResult } from "@/core/api/main_api";
 import { isSupabaseConfigured } from "@/core/api/supabaseClient";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/shared/ui/dialog";
 import { supabase } from "@/core/api/supabaseApi";
@@ -52,6 +53,8 @@ export default function PublishPage() {
   const [loginSubmitting, setLoginSubmitting] = useState(false);
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
+  const [visionLoading, setVisionLoading] = useState(false);
+  const [visionResult, setVisionResult] = useState<VisionAnalyzeResult | null>(null);
 
   const desiredOptions = useMemo(() => {
     const options = [
@@ -135,6 +138,33 @@ export default function PublishPage() {
     const urls = picked.map((f) => URL.createObjectURL(f));
     setImageFiles((prev) => [...prev, ...picked].slice(0, 8));
     setImages((prev) => [...prev, ...urls].slice(0, 8));
+    setVisionResult(null);
+  };
+
+  const handleAnalyzeScreen = async () => {
+    const file = imageFiles[0];
+    if (!file) {
+      toast({ title: "Aucune photo", description: "Ajoutez au moins une image pour lancer l'analyse.", variant: "destructive" as any });
+      return;
+    }
+    setVisionLoading(true);
+    setVisionResult(null);
+    try {
+      const result = await analyzeImageForScreen(file);
+      setVisionResult(result);
+      toast({
+        title: "Analyse terminée",
+        description: result.suggestedCondition === "À vérifier" ? "Vérifiez l'état déclaré." : "État suggéré : " + result.suggestedCondition,
+      });
+    } catch (e: any) {
+      toast({
+        title: "Analyse indisponible",
+        description: e?.message || "Le service d'analyse n'est pas configuré ou une erreur s'est produite.",
+        variant: "destructive" as any,
+      });
+    } finally {
+      setVisionLoading(false);
+    }
   };
 
   const publish = async () => {
@@ -240,6 +270,34 @@ export default function PublishPage() {
                 <input type="file" accept="image/*" multiple className="hidden" onChange={(e) => handleFiles(e.target.files)} />
               </label>
             </div>
+            {images.length > 0 && (
+              <div className="px-4 py-3 border-t border-border/50 bg-muted/20 flex flex-wrap items-center gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  className="rounded-xl"
+                  disabled={visionLoading}
+                  onClick={handleAnalyzeScreen}
+                >
+                  <ScanLine className="h-4 w-4 mr-2" />
+                  {visionLoading ? "Analyse en cours…" : "Analyser l'état de l'écran"}
+                </Button>
+                {visionResult && (
+                  <div className="flex-1 min-w-0 flex flex-wrap items-center gap-2">
+                    <Badge variant={visionResult.suggestedCondition === "À vérifier" ? "destructive" : "default"} className="shrink-0">
+                      {visionResult.suggestedCondition}
+                    </Badge>
+                    <span className="text-xs text-muted-foreground">{visionResult.message}</span>
+                    {visionResult.suggestedCondition === "Bon" && !condition && (
+                      <Button type="button" variant="ghost" size="sm" onClick={() => setCondition("Bon")}>
+                        Utiliser comme état
+                      </Button>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
           </CardHeader>
           <CardContent className="p-6 space-y-5">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-card border border-border rounded-2xl p-4">

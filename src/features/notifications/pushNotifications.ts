@@ -43,10 +43,10 @@ export async function subscribeToPush(userId: string | null): Promise<string | n
     applicationServerKey: VAPID_PUBLIC.startsWith("B") ? VAPID_PUBLIC : urlBase64ToUint8Array(VAPID_PUBLIC),
   });
 
+  const subscriptionJson = sub.toJSON();
   const payload = {
     endpoint: sub.endpoint,
-    p256dh: base64Url(sub.getKey("p256dh")!),
-    auth: base64Url(sub.getKey("auth")!),
+    subscription: subscriptionJson as Record<string, unknown>,
     user_id: userId || null,
     user_agent: typeof navigator !== "undefined" ? navigator.userAgent : null,
   };

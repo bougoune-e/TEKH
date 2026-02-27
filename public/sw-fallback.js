@@ -22,3 +22,37 @@ self.addEventListener('fetch', (e) => {
       .catch(() => caches.match(FALLBACK).then((r) => r || caches.match('/')))
   );
 });
+
+// ——— Notifications Push (TEKH+) ———
+self.addEventListener('push', function (e) {
+  var data = {};
+  try {
+    data = e.data ? e.data.json() : {};
+  } catch (_) {}
+  var title = data.title || 'TEKH+';
+  var opts = {
+    body: data.body || 'Nouvelle annonce disponible',
+    icon: data.icon || '/pwa-192x192.png',
+    badge: data.badge || '/pwa-192x192.png',
+    data: { url: data.url || '/deals', dealId: data.dealId || null },
+    tag: data.tag || 'tekh-deal',
+    renotify: true,
+  };
+  e.waitUntil(self.registration.showNotification(title, opts));
+});
+
+self.addEventListener('notificationclick', function (e) {
+  e.notification.close();
+  var url = e.notification.data && e.notification.data.url ? e.notification.data.url : '/deals';
+  e.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(function (clientList) {
+      for (var i = 0; i < clientList.length; i++) {
+        if (clientList[i].url.indexOf(self.location.origin) === 0 && 'focus' in clientList[i]) {
+          clientList[i].navigate(url);
+          return clientList[i].focus();
+        }
+      }
+      if (self.clients.openWindow) return self.clients.openWindow(url);
+    })
+  );
+});
