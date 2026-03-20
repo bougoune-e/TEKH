@@ -3,13 +3,14 @@ const fs = require('fs');
 const csv = require('csv-parser');
 const axios = require('axios');
 const { createClient } = require('@supabase/supabase-js');
+const path = require('path');
 
 // Configuration Supabase
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-const CSV_FILE = 'tab_cleaned.csv';
+const CSV_FILE = path.resolve(__dirname, '..', 'data', 'catalog', 'tab_cleaned.csv');
 const JSON_FILE = 'data.json';
 const SCRAPER_URL = 'http://localhost:3000/api';
 

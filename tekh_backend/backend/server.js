@@ -26,6 +26,7 @@ setInterval(() => {
 // Tableau qui contiendra les données du CSV (JSON)
 let produits = [];
 let csvLoaded = false;
+const CURRENT_YEAR = new Date().getFullYear();
 
 // Middlewares
 const DEFAULT_ORIGINS = [
@@ -68,15 +69,36 @@ app.use((req, _res, next) => {
 function loadCsv() {
   produits = [];
   csvLoaded = false;
-  const fileUrl = new URL("./tab_cleaned.csv", import.meta.url);
-  console.log("Chargement du CSV depuis:", fileUrl.pathname);
-  fs.createReadStream(fileUrl)
+  const csvPath = path.resolve(__dirname, "..", "..", "data", "catalog", "tab_cleaned.csv");
+  console.log("Chargement du CSV depuis:", csvPath);
+  fs.createReadStream(csvPath)
     .on("error", (err) => {
       console.error("Erreur lecture CSV:", err);
     })
     .pipe(csv())
     .on("data", (row) => {
-      produits.push(row);
+      const normalized = { ...row };
+      // Normalisation minimale pour éviter les anomalies de données (ex: année 2064).
+      const yearKey = Object.prototype.hasOwnProperty.call(normalized, "annee_sortie") ? "annee_sortie" : "Annee Sortie";
+      const ramKey = Object.prototype.hasOwnProperty.call(normalized, "ram_gb") ? "ram_gb" : "RAM (GB)";
+      const storageKey = Object.prototype.hasOwnProperty.call(normalized, "stockages_gb") ? "stockages_gb" : "Stockages (GB)";
+
+      const year = Number(normalized[yearKey]);
+      if (Number.isFinite(year) && year > CURRENT_YEAR + 1) {
+        normalized[yearKey] = String(CURRENT_YEAR);
+      }
+
+      const ram = Number(normalized[ramKey]);
+      if (!Number.isFinite(ram) || ram <= 0) {
+        normalized[ramKey] = "";
+      }
+
+      const storage = Number(normalized[storageKey]);
+      if (!Number.isFinite(storage) || storage <= 0) {
+        normalized[storageKey] = "";
+      }
+
+      produits.push(normalized);
     })
     .on("end", () => {
       csvLoaded = true;

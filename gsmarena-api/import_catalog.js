@@ -2,6 +2,7 @@ require('dotenv').config();
 const fs = require('fs');
 const csv = require('csv-parser');
 const { createClient } = require('@supabase/supabase-js');
+const path = require('path');
 
 // Configuration Supabase
 const supabaseUrl = process.env.SUPABASE_URL;
@@ -14,7 +15,7 @@ if (!supabaseUrl || !supabaseKey) {
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-const CSV_FILE = 'tab_cleaned.csv';
+const CSV_FILE = path.resolve(__dirname, '..', 'data', 'catalog', 'tab_cleaned.csv');
 const JSON_FILE = 'data.json';
 const TABLE_NAME = 'models';
 

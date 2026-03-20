@@ -24,8 +24,8 @@ def clean_number(value):
         return ""
     return re.sub(r'[^0-9]', '', value)
 
-input_file = 'src/api/tab.csv'
-output_file = 'src/api/tab_cleaned.csv'
+input_file = '../../data/catalog/tab.csv'
+output_file = '../../data/catalog/tab_cleaned.csv'
 
 # Define columns that should be treated as numeric (indices will be determined dynamically)
 # 'prix_neuf_en_fcfa' needs strict "only digits" cleaning.

@@ -1,9 +1,10 @@
 const fs = require('fs');
 const csv = require('csv-parser');
+const path = require('path');
 
 async function checkMissing() {
     const JSON_FILE = 'data.json';
-    const CSV_FILE = 'tab_cleaned.csv';
+    const CSV_FILE = path.resolve(__dirname, '..', 'data', 'catalog', 'tab_cleaned.csv');
 
     console.log(`Loading ${JSON_FILE}...`);
     const phoneData = JSON.parse(fs.readFileSync(JSON_FILE, 'utf8'));

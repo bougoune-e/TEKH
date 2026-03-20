@@ -78,6 +78,14 @@ Configured in both `tsconfig.app.json` and `vite.config.ts`.
 4. **Never** import from one feature into another — use `@shared` or `@core` as intermediary
 5. **`@app`** → imports from everywhere (it's the composition root)
 
+## Catalogue Source Of Truth
+
+- Source unique catalogue smartphones: `data/catalog/tab_cleaned.csv`
+- Source brute avant nettoyage: `data/catalog/tab.csv`
+- Scripts GSMArena (`gsmarena-api/*.js`, `gsmarena-api/scraper_pricing.py`) lisent désormais ce dossier central.
+- Backend (`tekh_backend/backend/server.js`) lit également le même fichier central pour `/api/products`.
+- Les anciens CSV dupliqués sous `gsmarena-api/` et `tekh_backend/backend/` ont été retirés pour éviter les divergences.
+
 ## Key Design Decisions
 
 - **Feature renamed**: `deals` → `marketplace` for clarity and to avoid naming collisions
