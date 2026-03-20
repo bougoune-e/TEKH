@@ -399,7 +399,7 @@ export default function EstimatorPage() {
       aestheticState
     } as any;
 
-    return calculerEstimation(basePrice, brand, modelInfo?.release_year || 2021, diagnostics);
+    return calculerEstimation(basePrice, brand, modelInfo?.release_year || 2021, diagnostics, model);
   }, [basePrice, brand, modelInfo, screenState, batteryState, biometricsState, cameraState, aestheticState]);
 
   const formatCFA = (n: number) => new Intl.NumberFormat("fr-FR", { style: "currency", currency: "XOF", maximumFractionDigits: 0 }).format(n);

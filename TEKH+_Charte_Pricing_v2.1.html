@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Charte Officielle de Pricing — TEKH+ v2.1</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0c0f;
+    --surface: #13151a;
+    --surface2: #1c1f27;
+    --border: #252830;
+    --gold: #c9993a;
+    --gold-light: #e8b95a;
+    --gold-dim: rgba(201,153,58,0.12);
+    --text: #e8e6e0;
+    --text-dim: #8a8680;
+    --text-muted: #4a4845;
+    --green: #4caf78;
+    --red: #e05555;
+    --blue: #5b8dd9;
+    --orange: #e8954a;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Outfit', sans-serif; font-size: 14px; line-height: 1.6; }
+  .page { max-width: 960px; margin: 0 auto; padding: 60px 40px; }
+
+  /* HEADER */
+  .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--border); padding-bottom: 32px; margin-bottom: 48px; gap: 24px; }
+  .brand-name { font-family: 'Playfair Display', serif; font-size: 38px; font-weight: 700; letter-spacing: -1px; color: #fff; line-height: 1; }
+  .brand-name span { color: var(--gold); }
+  .brand-tagline { font-size: 11px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: var(--text-dim); margin-top: 6px; }
+  .doc-meta { text-align: right; }
+  .doc-badge { display: inline-block; background: var(--gold-dim); border: 1px solid var(--gold); color: var(--gold-light); font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500; letter-spacing: 1.5px; padding: 4px 10px; border-radius: 3px; text-transform: uppercase; margin-bottom: 8px; }
+  .doc-info { font-size: 11px; color: var(--text-dim); line-height: 1.8; }
+  .doc-info strong { color: var(--text); font-weight: 500; }
+
+  /* SECTION */
+  .section { margin-bottom: 48px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+  .section-num { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--gold); letter-spacing: 2px; background: var(--gold-dim); border: 1px solid rgba(201,153,58,0.25); padding: 3px 8px; border-radius: 2px; flex-shrink: 0; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 600; color: #fff; letter-spacing: -0.3px; }
+  .section-line { flex: 1; height: 1px; background: var(--border); }
+
+  /* INTRO CARDS */
+  .intro-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 48px; }
+  .intro-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 18px 16px; }
+  .intro-card-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+  .intro-card-abbr { font-size: 22px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+  .intro-card-desc { font-size: 11.5px; color: var(--text-dim); line-height: 1.5; }
+
+  /* FORMULA */
+  .formula-box { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: 6px; padding: 24px 28px; margin-bottom: 32px; }
+  .formula-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 12px; }
+  .formula-main { font-family: 'DM Mono', monospace; font-size: 14px; color: var(--gold-light); line-height: 2.2; word-break: break-word; }
+  .formula-main .const { color: var(--blue); }
+  .formula-note { margin-top: 14px; font-size: 11.5px; color: var(--text-dim); border-top: 1px solid var(--border); padding-top: 12px; }
+
+  /* TABLE WRAPPER */
+  .coeff-table-wrapper { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-bottom: 20px; }
+  .coeff-table-title { display: flex; align-items: center; justify-content: space-between; padding: 13px 18px; border-bottom: 1px solid var(--border); background: var(--surface2); }
+  .coeff-table-name { font-size: 12px; font-weight: 600; color: var(--text); }
+  .coeff-table-var { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--gold); background: var(--gold-dim); border: 1px solid rgba(201,153,58,0.25); padding: 2px 8px; border-radius: 2px; }
+
+  table { width: 100%; border-collapse: collapse; }
+  th { font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); padding: 10px 16px; text-align: left; background: var(--surface2); border-bottom: 1px solid var(--border); }
+  td { padding: 9px 16px; font-size: 12.5px; color: var(--text); border-bottom: 1px solid rgba(37,40,48,0.6); vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* Tier group header */
+  .tier-group td { background: var(--surface2); font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); padding: 7px 16px; border-bottom: 1px solid var(--border); }
+
+  .coeff-val { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; text-align: right; white-space: nowrap; }
+  .row-note { font-size: 10.5px; color: var(--text-dim); display: block; margin-top: 1px; }
+
+  /* Tier colors */
+  .t1  { color: #6ee89f; }
+  .t2  { color: #8dd98b; }
+  .t3  { color: #b5d98b; }
+  .t4  { color: #d4e07a; }
+  .t5  { color: #e8c84a; }
+  .t6  { color: #e8a84a; }
+  .t7  { color: #e8804a; }
+  .t8  { color: var(--red); }
+
+  /* Tier badge */
+  .tier-pill {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 1px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-left: 6px;
+    vertical-align: middle;
+    font-weight: 600;
+  }
+  .pill-premium { background: rgba(110,232,159,0.1); color: #6ee89f; border: 1px solid rgba(110,232,159,0.25); }
+  .pill-high    { background: rgba(141,217,139,0.1); color: #8dd98b; border: 1px solid rgba(141,217,139,0.25); }
+  .pill-mid     { background: rgba(212,224,122,0.1); color: #d4e07a; border: 1px solid rgba(212,224,122,0.25); }
+  .pill-entry   { background: rgba(232,128,74,0.1);  color: var(--orange); border: 1px solid rgba(232,128,74,0.25); }
+  .pill-low     { background: rgba(224,85,85,0.1);   color: var(--red);    border: 1px solid rgba(224,85,85,0.25); }
+  .pill-new     { background: rgba(91,141,217,0.12); color: var(--blue);   border: 1px solid rgba(91,141,217,0.3); }
+  .pill-corrected { background: rgba(201,153,58,0.1); color: var(--gold); border: 1px solid rgba(201,153,58,0.3); }
+
+  /* Confidence dots */
+  .conf {
+    display: inline-flex;
+    gap: 2px;
+    vertical-align: middle;
+    margin-left: 4px;
+  }
+  .conf span {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .conf-full  { background: var(--green); }
+  .conf-empty { background: var(--border); }
+
+  /* Bar visual */
+  .coeff-bar {
+    width: 80px;
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+    overflow: hidden;
+  }
+  .coeff-bar-fill { height: 100%; border-radius: 2px; }
+
+  /* CONSTANTS */
+  .constants-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .const-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; display: flex; justify-content: space-between; align-items: center; }
+  .const-card-name { font-size: 12px; font-weight: 600; color: var(--text); }
+  .const-card-desc { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+  .const-card-val { font-family: 'DM Mono', monospace; font-size: 20px; font-weight: 500; color: var(--blue); }
+
+  /* BONUS */
+  .bonus-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .bonus-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; }
+  .bonus-val { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 600; color: var(--green); }
+
+  /* CLASSES */
+  .class-tag { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 4px; font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 600; }
+  .class-A { background: rgba(76,175,120,0.15); color: var(--green); border: 1px solid rgba(76,175,120,0.3); }
+  .class-B { background: rgba(91,141,217,0.15); color: var(--blue); border: 1px solid rgba(91,141,217,0.3); }
+  .class-C { background: rgba(212,168,83,0.15); color: var(--gold); border: 1px solid rgba(201,153,58,0.3); }
+  .class-D { background: rgba(232,149,74,0.15); color: #e8954a; border: 1px solid rgba(232,149,74,0.3); }
+  .class-E { background: rgba(224,85,85,0.15); color: var(--red); border: 1px solid rgba(224,85,85,0.3); }
+  .class-F { background: rgba(100,100,100,0.15); color: #666; border: 1px solid rgba(100,100,100,0.3); }
+
+  /* BLOCKERS */
+  .blockers-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+  .blocker-card { background: rgba(224,85,85,0.05); border: 1px solid rgba(224,85,85,0.2); border-radius: 6px; padding: 14px 16px; display: flex; gap: 12px; align-items: flex-start; }
+  .blocker-icon { width: 28px; height: 28px; background: rgba(224,85,85,0.1); border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 14px; }
+  .blocker-title { font-size: 12px; font-weight: 600; color: #f08080; margin-bottom: 3px; }
+  .blocker-desc { font-size: 11px; color: var(--text-dim); line-height: 1.4; }
+
+  /* GUARDRAILS */
+  .guardrail-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 18px 20px; margin-bottom: 12px; display: flex; gap: 16px; align-items: flex-start; }
+  .guardrail-num { font-family: 'DM Mono', monospace; font-size: 20px; font-weight: 500; color: var(--text-muted); flex-shrink: 0; line-height: 1.2; width: 24px; text-align: right; }
+  .guardrail-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .guardrail-desc { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
+  .rule-inline { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--gold); background: var(--gold-dim); padding: 1px 6px; border-radius: 2px; }
+
+  /* SOULTE */
+  .soulte-box { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+  .soulte-formula { font-family: 'DM Mono', monospace; font-size: 15px; color: var(--text); }
+  .soulte-formula .hi { color: var(--gold-light); }
+  .soulte-case { font-size: 11px; color: var(--text-dim); }
+  .soulte-case .pos { color: var(--green); font-family: 'DM Mono', monospace; }
+  .soulte-case .neg { color: var(--red); font-family: 'DM Mono', monospace; }
+
+  /* SIM */
+  .sim-box { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+  .sim-header { background: var(--surface2); border-bottom: 1px solid var(--border); padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; }
+  .sim-title { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); }
+  .sim-tag { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--green); background: rgba(76,175,120,0.1); border: 1px solid rgba(76,175,120,0.25); padding: 2px 8px; border-radius: 2px; }
+  .sim-body { padding: 20px 18px; display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: center; }
+  .sim-device { font-size: 12px; color: var(--text-dim); line-height: 1.9; }
+  .sim-device strong { color: var(--text); font-weight: 500; }
+  .sim-arrow { font-size: 22px; color: var(--text-muted); text-align: center; }
+  .sim-vrt-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 4px; }
+  .sim-vrt-val { font-family: 'DM Mono', monospace; font-size: 28px; font-weight: 500; color: var(--green); }
+  .sim-calc { padding: 12px 18px; border-top: 1px solid var(--border); font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-dim); background: rgba(0,0,0,0.2); }
+  .sim-calc .gold { color: var(--gold); }
+
+  /* CHANGELOG */
+  .changelog-row { display: flex; gap: 10px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .changelog-row:last-child { border-bottom: none; }
+  .cl-badge { flex-shrink: 0; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 1px; padding: 2px 7px; border-radius: 3px; margin-top: 1px; }
+  .cl-fix     { background: rgba(232,149,74,0.12); color: var(--orange); border: 1px solid rgba(232,149,74,0.3); }
+  .cl-add     { background: rgba(76,175,120,0.1);  color: var(--green);  border: 1px solid rgba(76,175,120,0.3); }
+  .cl-update  { background: rgba(91,141,217,0.1);  color: var(--blue);   border: 1px solid rgba(91,141,217,0.3); }
+  .cl-text { font-size: 12px; color: var(--text-dim); }
+  .cl-text strong { color: var(--text); font-weight: 600; }
+
+  /* FOOTER */
+  .doc-footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-size: 10.5px; color: var(--text-muted); }
+  .footer-brand { font-family: 'Playfair Display', serif; font-size: 13px; color: var(--text-dim); }
+  .footer-brand span { color: var(--gold); }
+  .confidential { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); border: 1px solid var(--text-muted); padding: 2px 8px; border-radius: 2px; }
+
+  .info-box { font-size: 11.5px; color: var(--text-dim); background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 14px 18px; margin-top: 10px; }
+  .info-box strong { color: var(--text); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div>
+      <div class="brand-name">TEKH<span>+</span></div>
+      <div class="brand-tagline">Technology Exchange &amp; Valorization Hub</div>
+    </div>
+    <div class="doc-meta">
+      <div class="doc-badge">Document Interne Officiel</div>
+      <div class="doc-info">
+        <strong>Charte de Pricing — v2.1</strong><br>
+        Applicable au 01 Avril 2026<br>
+        Remplace v2.0 &amp; v1.0<br>
+        Référentiel : Afrique de l'Ouest + Europe
+      </div>
+    </div>
+  </header>
+
+  <!-- DÉFINITIONS -->
+  <div class="intro-grid">
+    <div class="intro-card">
+      <div class="intro-card-label">Base</div>
+      <div class="intro-card-abbr">PRT</div>
+      <div class="intro-card-desc">Prix de Référence TEKH+. Médiane marché local/international. Non négociable. Révisé tous les 30 jours.</div>
+    </div>
+    <div class="intro-card">
+      <div class="intro-card-label">Résultat</div>
+      <div class="intro-card-abbr">VRT</div>
+      <div class="intro-card-desc">Valeur de Reprise TEKH+. Montant final proposé à l'utilisateur, calculé par la formule ci-dessous.</div>
+    </div>
+    <div class="intro-card">
+      <div class="intro-card-label">Échange</div>
+      <div class="intro-card-abbr">Soulte</div>
+      <div class="intro-card-desc">Différence PRT_cible − VRT_utilisateur. Montant à régler lors d'un swap. Peut être négatif (crédit).</div>
+    </div>
+  </div>
+
+  <!-- SECTION 01 — FORMULE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <div class="section-title">Formule de Calcul VRT</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="formula-box">
+      <div class="formula-label">Formule Principale — Multiplicative (non cumulative)</div>
+      <div class="formula-main">
+        VRT = PRT × C<sub>marque</sub> × C<sub>age</sub> × C<sub>état</sub> × C<sub>batterie</sub> × <span class="const">C<sub>marché</sub></span> × <span class="const">C<sub>sécurité</sub></span> + Bonus
+      </div>
+      <div class="formula-note">
+        <strong style="color:var(--blue)">Bleu</strong> = constantes structurelles fixes (révisables annuellement) ·
+        <strong style="color:var(--text)">Blanc</strong> = coefficients variables par appareil ·
+        <strong>Plancher absolu :</strong> si VRT &lt; 5% du PRT, la reprise est automatiquement refusée.
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 02 — COEFFICIENTS VARIABLES -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">02</div>
+      <div class="section-title">Coefficients Variables</div>
+      <div class="section-line"></div>
+    </div>
+
+    <!-- A. MARQUE — TABLE EXHAUSTIVE -->
+    <div class="coeff-table-wrapper">
+      <div class="coeff-table-title">
+        <div class="coeff-table-name">A. Coefficient Marque — Référentiel Afrique / Europe 2025–2026</div>
+        <div class="coeff-table-var">C_marque</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Marque / Sous-marque</th>
+            <th>Liquidité & Positionnement</th>
+            <th style="text-align:center">Confiance marché</th>
+            <th style="text-align:right">Coefficient</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- TIER 1 -->
+          <tr class="tier-group"><td colspan="4">— TIER 1 · PREMIUM INTERNATIONAL · Haute liquidité, valeur résiduelle forte</td></tr>
+          <tr>
+            <td><strong>Apple (iPhone)</strong></td>
+            <td style="font-size:11.5px;color:var(--text-dim)">Meilleure rétention valeur mondiale. Demande intense en Afrique (iPhone d'occasion = statut)</td>
+            <td style="text-align:center">
+              <div class="conf"><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span></div>
+            </td>
+            <td class="coeff-val t1">0.90</td>
+          </tr>
+          <tr>
+            <td><strong>Samsung</strong> <span style="font-size:10.5px;color:var(--text-dim)">(S / Z series)</span></td>
+            <td style="font-size:11.5px;color:var(--text-dim)">Flagship ultra-premium. 4 ans MàJ OS garantis. Forte demande Afrique de l'Ouest</td>
+            <td style="text-align:center">
+              <div class="conf"><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span></div>
+            </td>
+            <td class="coeff-val t1">0.90</td>
+          </tr>
+          <tr>
+            <td><strong>Google Pixel</strong> <span class="tier-pill pill-new">AJOUTÉ</span></td>
+            <td style="font-size:11.5px;color:var(--text-dim)">7 ans MàJ garantis — meilleur suivi logiciel Android. Adopté par tech-savvy africains. Excellente cote en Europe</td>
+            <td style="text-align:center">
+              <div class="conf"><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span></div>
+            </td>
+            <td class="coeff-val t1">0.86</td>
+          </tr>
+
+          <!-- TIER 2 -->
+          <tr class="tier-group"><td colspan="4">— TIER 2 · MID-PREMIUM · Bonne liquidité, marché secondaire actif</td></tr>
+          <tr>
+            <td><strong>Samsung</strong> <span style="font-size:10.5px;color:var(--text-dim)">(A5x / A7x)</span></td>
+            <td style="font-size:11.5px;color:var(--text-dim)">Mid-premium le plus vendu en Afrique. Volume élevé = liquidité garantie</td>
+            <td style="text-align:center">
+              <div class="conf"><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span><span class="conf-empty"></span></div>
+            </td>
+            <td class="coeff-val t2">0.84</td>
+          </tr>
+          <tr>
+            <td><strong>OnePlus</strong> <span class="tier-pill pill-new">AJOUTÉ</span></td>
+            <td style="font-size:11.5px;color:var(--text-dim)">Haut de gamme specs/prix. Excellente cote en Europe. Communauté fidèle. Montée en Afrique</td>
+            <td style="text-align:center">
+              <div class="conf"><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span><span class="conf-empty"></span></div>
+            </td>
+            <td class="coeff-val t2">0.82</td>
+          </tr>
+          <tr>
+            <td><strong>Sony Xperia</strong> <span class="tier-pill pill-new">AJOUTÉ</span></td>
+            <td style="font-size:11.5px;color:var(--text-dim)">Rare en Afrique mais forte valeur résiduelle en Europe. Niche créative (photo/audio)</td>
+            <td style="text-align:center">
+              <div class="conf"><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span><span class="conf-empty"></span><span class="conf-empty"></span></div>
+            </td>
+            <td class="coeff-val t2">0.80</td>
+          </tr>
+          <tr>
+            <td><strong>Honor</strong></td>
+            <td style="font-size:11.5px;color:var(--text-dim)">Indépendant de Huawei depuis 2020, GMS restaurés. Croissance forte Afrique de l'Ouest</td>
+            <td style="text-align:center">
+              <div class="conf"><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span><span class="conf-empty"></span></div>
+            </td>
+            <td class="coeff-val t2">0.78</td>
+          </tr>
+
+          <!-- TIER 3 -->
+          <tr class="tier-group"><td colspan="4">— TIER 3 · MID-RANGE · Liquidité correcte, reconditionnement rentable</td></tr>
+          <tr>
+            <td><strong>Nothing Phone</strong> <span class="tier-pill pill-new">AJOUTÉ</span></td>
+            <td style="font-size:11.5px;color:var(--text-dim)">Niche premium design. Adopté par jeunes urbains en Afrique. Valeur résiduelle stable en Europe</td>
+            <td style="text-align:center">
+              <div class="conf"><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span><span class="conf-empty"></span><span class="conf-empty"></span></div>
+            </td>
+            <td class="coeff-val t3">0.76</td>
+          </tr>
+          <tr>
+            <td><strong>Xiaomi</strong> <span style="font-size:10.5px;color:var(--text-dim)">(série 12/13/14)</span></td>
+            <td style="font-size:11.5px;color:var(--text-dim)">Flagship killer. Très bonne valeur fonctionnelle. Communauté active. Dépreciation plus rapide</td>
+            <td style="text-align:center">
+              <div class="conf"><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span><span class="conf-empty"></span></div>
+            </td>
+            <td class="coeff-val t3">0.76</td>
+          </tr>
+          <tr>
+            <td><strong>Huawei</strong> <span class="tier-pill pill-corrected">CORRIGÉ ↓</span></td>
+            <td style="font-size:11.5px;color:var(--text-dim)">Sans GMS depuis 2019. AppGallery limité. Valeur résiduelle en chute libre en Europe et Afrique</td>
+            <td style="text-align:center">
+              <div class="conf"><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span><span class="conf-empty"></span><span class="conf-empty"></span></div>
+            </td>
+            <td class="coeff-val t3">0.72</td>
+          </tr>
+          <tr>
+            <td><strong>Motorola</strong></td>
+            <td style="font-size:11.5px;color:var(--text-dim)">Fiabilité et sobriété logicielle. 3 ans MàJ. Forte base en Amérique Latine, croissance Afrique</td>
+            <td style="text-align:center">
+              <div class="conf"><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span><span class="conf-empty"></span></div>
+            </td>
+            <td class="coeff-val t3">0.75</td>
+          </tr>
+          <tr>
+            <td><strong>Oppo</strong> <span class="tier-pill pill-new">AJOUTÉ</span></td>
+            <td style="font-size:11.5px;color:var(--text-dim)">Mid-range solide. Présent en Afrique subsaharienne. Valeur résiduelle correcte mais dépreciation moyenne</td>
+            <td style="text-align:center">
+              <div class="conf"><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span><span class="conf-empty"></span><span class="conf-empty"></span></div>
+            </td>
+            <td class="coeff-val t3">0.74</td>
+          </tr>
+          <tr>
+            <td><strong>Vivo</strong> <span class="tier-pill pill-new">AJOUTÉ</span></td>
+            <td style="font-size:11.5px;color:var(--text-dim)">Popularité croissante en Afrique de l'Est et de l'Ouest. Photo-centric. Liquidité modérée</td>
+            <td style="text-align:center">
+              <div class="conf"><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span><span class="conf-empty"></span><span class="conf-empty"></span></div>
+            </td>
+            <td class="coeff-val t3">0.72</td>
+          </tr>
+
+          <!-- TIER 4 -->
+          <tr class="tier-group"><td colspan="4">— TIER 4 · MID-ENTRY · Volume fort, marge de reconditionnement réduite</td></tr>
+          <tr>
+            <td><strong>Poco</strong> <span style="font-size:10.5px;color:var(--text-dim)">(Xiaomi)</span> <span class="tier-pill pill-new">AJOUTÉ</span></td>
+            <td style="font-size:11.5px;color:var(--text-dim)">Rapport specs/prix agressif. Dépreciation rapide mais demande en Afrique en hausse</td>
+            <td style="text-align:center">
+              <div class="conf"><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span><span class="conf-empty"></span><span class="conf-empty"></span></div>
+            </td>
+            <td class="coeff-val t4">0.70</td>
+          </tr>
+          <tr>
+            <td><strong>Redmi</strong> <span style="font-size:10.5px;color:var(--text-dim)">(Xiaomi)</span></td>
+            <td style="font-size:11.5px;color:var(--text-dim)">Entrée de gamme Xiaomi. Très vendu, reconditionnement simple mais valeur résiduelle faible</td>
+            <td style="text-align:center">
+              <div class="conf"><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span><span class="conf-empty"></span><span class="conf-empty"></span></div>
+            </td>
+            <td class="coeff-val t4">0.68</td>
+          </tr>
+          <tr>
+            <td><strong>Realme</strong> <span class="tier-pill pill-new">AJOUTÉ</span></td>
+            <td style="font-size:11.5px;color:var(--text-dim)">Budget gaming. Croissance rapide en Afrique. Dépreciation agressive</td>
+            <td style="text-align:center">
+              <div class="conf"><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span><span class="conf-empty"></span><span class="conf-empty"></span></div>
+            </td>
+            <td class="coeff-val t4">0.67</td>
+          </tr>
+          <tr>
+            <td><strong>Tecno</strong></td>
+            <td style="font-size:11.5px;color:var(--text-dim)">Dominant en Afrique subsaharienne. Volume très élevé. Liquidité locale garantie mais faible à l'export</td>
+            <td style="text-align:center">
+              <div class="conf"><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span><span class="conf-empty"></span></div>
+            </td>
+            <td class="coeff-val t4">0.70</td>
+          </tr>
+          <tr>
+            <td><strong>Infinix</strong></td>
+            <td style="font-size:11.5px;color:var(--text-dim)">Filiale Transsion. Forte présence Afrique de l'Ouest et Est. Reconditionnement abordable</td>
+            <td style="text-align:center">
+              <div class="conf"><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span><span class="conf-empty"></span></div>
+            </td>
+            <td class="coeff-val t4">0.68</td>
+          </tr>
+          <tr>
+            <td><strong>Nokia / HMD</strong> <span class="tier-pill pill-new">AJOUTÉ</span></td>
+            <td style="font-size:11.5px;color:var(--text-dim)">Android One pur. 3 ans MàJ. Fiable mais peu désirable sur le marché africain secondaire</td>
+            <td style="text-align:center">
+              <div class="conf"><span class="conf-full"></span><span class="conf-full"></span><span class="conf-empty"></span><span class="conf-empty"></span><span class="conf-empty"></span></div>
+            </td>
+            <td class="coeff-val t5">0.65</td>
+          </tr>
+
+          <!-- TIER 5 -->
+          <tr class="tier-group"><td colspan="4">— TIER 5 · BAS DE GAMME · Valeur résiduelle faible — traitement conditionnel</td></tr>
+          <tr>
+            <td><strong>Wiko</strong> <span class="tier-pill pill-new">AJOUTÉ</span></td>
+            <td style="font-size:11.5px;color:var(--text-dim)">Marque française, entrée de gamme Afrique. Très faible valeur résiduelle. Peu demandé à la revente</td>
+            <td style="text-align:center">
+              <div class="conf"><span class="conf-full"></span><span class="conf-full"></span><span class="conf-empty"></span><span class="conf-empty"></span><span class="conf-empty"></span></div>
+            </td>
+            <td class="coeff-val t6">0.58</td>
+          </tr>
+          <tr>
+            <td><strong>Itel</strong></td>
+            <td style="font-size:11.5px;color:var(--text-dim)">Très bas de gamme. Filiale Transsion. Valeur résiduelle quasi nulle. Pièces détachées uniquement</td>
+            <td style="text-align:center">
+              <div class="conf"><span class="conf-full"></span><span class="conf-full"></span><span class="conf-full"></span><span class="conf-empty"></span><span class="conf-empty"></span></div>
+            </td>
+            <td class="coeff-val t6">0.55</td>
+          </tr>
+          <tr>
+            <td><strong>Blackview / Ulefone / Oukitel</strong> <span class="tier-pill pill-new">AJOUTÉ</span></td>
+            <td style="font-size:11.5px;color:var(--text-dim)">Rugged phones / imports directs. Marché de niche. Liquidité imprévisible</td>
+            <td style="text-align:center">
+              <div class="conf"><span class="conf-full"></span><span class="conf-empty"></span><span class="conf-empty"></span><span class="conf-empty"></span><span class="conf-empty"></span></div>
+            </td>
+            <td class="coeff-val t7">0.52</td>
+          </tr>
+          <tr>
+            <td><strong>Autres marques non listées</strong></td>
+            <td style="font-size:11.5px;color:var(--text-dim)">Coefficient conservateur par défaut. Évaluation manuelle recommandée</td>
+            <td style="text-align:center">
+              <div class="conf"><span class="conf-full"></span><span class="conf-empty"></span><span class="conf-empty"></span><span class="conf-empty"></span><span class="conf-empty"></span></div>
+            </td>
+            <td class="coeff-val t7">0.55</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="info-box">
+      <strong>Note sur Huawei (0.72) :</strong> La v1 attribuait 0.80. Correction justifiée car depuis la coupure GMS en 2019, la valeur résiduelle Huawei a chuté de 15–25% sur les marchés européens et africains. AppGallery reste limité pour la plupart des usagers. ·
+      <strong>Note sur Samsung :</strong> Deux coefficients distincts selon la gamme — les S/Z series restent à 0.90, les A5x/A7x à 0.84 reflètent leur marché plus concurrentiel. ·
+      <strong>Confiance marché = ●●●●● :</strong> fréquence de passage en reprise + facilité de revente locale estimée.
+    </div>
+
+    <!-- B. AGE -->
+    <div class="coeff-table-wrapper" style="margin-top:20px">
+      <div class="coeff-table-title">
+        <div class="coeff-table-name">B. Coefficient Ancienneté</div>
+        <div class="coeff-table-var">C_age</div>
+      </div>
+      <table>
+        <thead><tr><th>Âge</th><th>Commentaire</th><th style="text-align:right">Coefficient</th></tr></thead>
+        <tbody>
+          <tr><td>Moins de 1 an</td><td style="color:var(--text-dim);font-size:11.5px">Quasi-neuf. Dépreciation minimale. Peut être vendu Grade A+</td><td class="coeff-val t1">0.95</td></tr>
+          <tr><td>1 à 2 ans</td><td style="color:var(--text-dim);font-size:11.5px">Usure normale. Très demandé sur le marché secondaire africain</td><td class="coeff-val t2">0.85</td></tr>
+          <tr><td>2 à 3 ans</td><td style="color:var(--text-dim);font-size:11.5px">Dépreciation significative. Reconditionnement rentable si état correct</td><td class="coeff-val t3">0.75</td></tr>
+          <tr><td>3 à 4 ans</td><td style="color:var(--text-dim);font-size:11.5px">Valeur résiduelle réduite. MàJ OS souvent arrêtées</td><td class="coeff-val t5">0.62</td></tr>
+          <tr><td>Plus de 4 ans <span class="tier-pill pill-corrected">CORRIGÉ ↓</span></td><td style="color:var(--text-dim);font-size:11.5px">Obsolescence logicielle probable. Support constructeur généralement terminé. Pièces rares</td><td class="coeff-val t8">0.40</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="info-box">
+      <strong>Pourquoi 0.40 et non 0.45/0.50 pour &gt;4 ans ?</strong> En 2024–2025, Android 14+ n'est plus disponible sur la majorité des appareils de 2019–2020. Sur les marchés africains, les acheteurs préfèrent un appareil de 2–3 ans à un appareil de +4 ans même moins cher. BackMarket Europe ne traite plus les appareils Android de plus de 5 ans. 0.40 est la valeur de marché réelle.
+    </div>
+
+    <!-- C. ÉTAT -->
+    <div class="coeff-table-wrapper" style="margin-top:20px">
+      <div class="coeff-table-title">
+        <div class="coeff-table-name">C. Coefficient État Physique</div>
+        <div class="coeff-table-var">C_état</div>
+      </div>
+      <table>
+        <thead><tr><th>Grade</th><th>Description Officielle TEKH+</th><th style="text-align:right">Coefficient</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Excellent</strong></td><td style="color:var(--text-dim);font-size:11.5px">Aucune rayure visible. État neuf. Vendu Grade A+ sans retouche</td><td class="coeff-val t1">0.95</td></tr>
+          <tr><td><strong>Bon</strong></td><td style="color:var(--text-dim);font-size:11.5px">Micro-rayures légères, invisibles écran allumé. Grade A standard</td><td class="coeff-val t2">0.85</td></tr>
+          <tr><td><strong>Correct</strong></td><td style="color:var(--text-dim);font-size:11.5px">Traces d'usure visibles, châssis intact. Grade B — nettoyage requis</td><td class="coeff-val t3">0.70</td></tr>
+          <tr><td><strong>Mauvais</strong></td><td style="color:var(--text-dim);font-size:11.5px">Chocs au châssis, rayures profondes, vitre arrière fissurée. Grade C — reconditionnement coûteux</td><td class="coeff-val t6">0.45</td></tr>
+          <tr><td><strong>Critique</strong></td><td style="color:var(--text-dim);font-size:11.5px">Écran fissuré, Face ID / capteur HS, coque déformée. Valeur pièces détachées uniquement</td><td class="coeff-val t8">0.22</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- D. BATTERIE -->
+    <div class="coeff-table-wrapper" style="margin-top:20px">
+      <div class="coeff-table-title">
+        <div class="coeff-table-name">D. Coefficient Santé Batterie</div>
+        <div class="coeff-table-var">C_batterie</div>
+      </div>
+      <table>
+        <thead><tr><th>Santé Batterie (iOS natif / Android estimé par outil)</th><th style="text-align:right">Coefficient</th></tr></thead>
+        <tbody>
+          <tr><td>≥ 90% <span class="row-note">Comme neuve — aucun remplacement prévu. Argument de revente fort</span></td><td class="coeff-val t1">1.00</td></tr>
+          <tr><td>80 – 89% <span class="row-note">Usure normale — acceptable sans intervention</span></td><td class="coeff-val t2">0.92</td></tr>
+          <tr><td>70 – 79% <span class="row-note">Remplacement recommandé avant revente — coût à déduire de la marge</span></td><td class="coeff-val t5">0.80</td></tr>
+          <tr><td>60 – 69% <span class="row-note">Remplacement obligatoire — intégrer le coût dans la VRT</span></td><td class="coeff-val t7">0.68</td></tr>
+          <tr><td>&lt; 60% ou non mesurable <span class="row-note">Dégradation critique, gonflement possible — traitement manuel obligatoire</span></td><td class="coeff-val t8">0.50</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SECTION 03 — CONSTANTES -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">03</div>
+      <div class="section-title">Constantes Structurelles</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="constants-row">
+      <div class="const-card">
+        <div>
+          <div class="const-card-name">Ajustement Marché <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gold)">C_marché</span></div>
+          <div class="const-card-desc">Volatilité demande locale · risque liquidité · délai revente 15–45 jours</div>
+        </div>
+        <div class="const-card-val">0.90</div>
+      </div>
+      <div class="const-card">
+        <div>
+          <div class="const-card-name">Marge Opérationnelle <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gold)">C_sécurité</span></div>
+          <div class="const-card-desc">Reconditionnement · stockage · garantie 30j · Dealbox packaging</div>
+        </div>
+        <div class="const-card-val">0.85</div>
+      </div>
+    </div>
+    <div class="info-box">
+      Ces deux constantes représentent une décote globale de <strong>23.5%</strong> (1 − 0.90 × 0.85). À titre de comparaison, BackMarket Europe rachète à 60–70% du PRT, ce qui revient à une décote de 30–40%. <strong>TEKH+ est plus généreux</strong>, ce qui constitue un avantage concurrentiel — à surveiller selon les données opérationnelles réelles au bout de 6 mois.
+    </div>
+  </div>
+
+  <!-- SECTION 04 — BONUS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">04</div>
+      <div class="section-title">Bonus (Post-Formule)</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="bonus-grid">
+      <div class="bonus-card"><div><div style="font-size:12px">📦 Boîte originale + accessoires complets</div><div style="font-size:10.5px;color:var(--text-dim);margin-top:2px">Chargeur d'origine, écouteurs, documentation</div></div><div class="bonus-val">+3%</div></div>
+      <div class="bonus-card"><div><div style="font-size:12px">📶 Appareil compatible 5G</div><div style="font-size:10.5px;color:var(--text-dim);margin-top:2px">Premium liquidité — marchés 5G africains en déploiement</div></div><div class="bonus-val">+2%</div></div>
+      <div class="bonus-card"><div><div style="font-size:12px">🔓 Débloqué tous opérateurs</div><div style="font-size:10.5px;color:var(--text-dim);margin-top:2px">Appareil opérateur unique = pas de bonus</div></div><div class="bonus-val">+1.5%</div></div>
+      <div class="bonus-card"><div><div style="font-size:12px">📜 Facture d'achat originale</div><div style="font-size:10.5px;color:var(--text-dim);margin-top:2px">Preuve légale d'authenticité et de provenance</div></div><div class="bonus-val">+1%</div></div>
+    </div>
+    <div class="info-box" style="margin-top:12px">Bonus additifs · plafond <strong>+7.5% du VRT calculé</strong> · un même bonus ne peut être appliqué qu'une seule fois.</div>
+  </div>
+
+  <!-- SECTION 05 — CLASSES -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">05</div>
+      <div class="section-title">Classification des Appareils (Classes A–F)</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="coeff-table-wrapper">
+      <table>
+        <thead><tr><th style="width:55px">Classe</th><th>Catégorie & Seuils</th><th>Exemples Types</th><th>Échanges Autorisés</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="class-tag class-A">A</span></td>
+            <td><strong>Premium Récent</strong><br><span class="row-note">PRT &gt; 400 000 FCFA · Moins de 2 ans</span></td>
+            <td style="font-size:11.5px;color:var(--text-dim)">iPhone 14/15/16, Samsung S23/S24, Google Pixel 8/9</td>
+            <td style="font-size:11.5px;color:var(--text-dim)">A ↔ A · A → B</td>
+          </tr>
+          <tr>
+            <td><span class="class-tag class-B">B</span></td>
+            <td><strong>Mid-Premium</strong><br><span class="row-note">PRT 200–400k FCFA · Moins de 3 ans</span></td>
+            <td style="font-size:11.5px;color:var(--text-dim)">iPhone 12/13, Samsung A54/A55, OnePlus 11, Nothing Phone 2</td>
+            <td style="font-size:11.5px;color:var(--text-dim)">B ↔ B · B → A/C</td>
+          </tr>
+          <tr>
+            <td><span class="class-tag class-C">C</span></td>
+            <td><strong>Mid-Range Courant</strong><br><span class="row-note">PRT 100–200k FCFA · Moins de 4 ans</span></td>
+            <td style="font-size:11.5px;color:var(--text-dim)">Samsung A34, Xiaomi 12, Tecno Phantom V, Honor X8</td>
+            <td style="font-size:11.5px;color:var(--text-dim)">C ↔ C · C → B/D</td>
+          </tr>
+          <tr>
+            <td><span class="class-tag class-D">D</span></td>
+            <td><strong>Entrée de Gamme</strong><br><span class="row-note">PRT 50–100k FCFA</span></td>
+            <td style="font-size:11.5px;color:var(--text-dim)">Infinix Hot 40, Tecno Spark 20, Samsung A14/A15, Redmi 13C</td>
+            <td style="font-size:11.5px;color:var(--text-dim)">D ↔ D · D → C</td>
+          </tr>
+          <tr>
+            <td><span class="class-tag class-E">E</span></td>
+            <td><strong>Bas de Gamme / Vieillissant</strong><br><span class="row-note">PRT &lt; 50k FCFA ou &gt; 4 ans</span></td>
+            <td style="font-size:11.5px;color:var(--text-dim)">Itel A70, Wiko T10, appareils 4G &gt; 4 ans</td>
+            <td style="font-size:11.5px;color:var(--text-dim)">E ↔ E uniquement</td>
+          </tr>
+          <tr>
+            <td><span class="class-tag class-F">F</span></td>
+            <td><strong>Obsolète / Non Reconditionnable</strong><br><span class="row-note">3G · Pièces indisponibles · Hors support</span></td>
+            <td style="font-size:11.5px;color:var(--text-dim)">Appareils 3G uniquement, sans support constructeur actif</td>
+            <td style="font-size:11.5px;color:var(--red)">❌ Aucun échange</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="info-box">Règle cardinale : un échange n'est jamais autorisé si l'écart de classe entre les deux appareils est <strong>supérieur à 2 niveaux</strong>.</div>
+  </div>
+
+  <!-- SECTION 06 — BLOCAGES -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">06</div>
+      <div class="section-title">Blocages Absolus — Refus Automatique</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="blockers-grid">
+      <div class="blocker-card"><div class="blocker-icon">🔒</div><div><div class="blocker-title">iCloud Lock / Activation Lock</div><div class="blocker-desc">Appareil Apple lié à un compte iCloud actif non désactivé. Risque juridique et commercial.</div></div></div>
+      <div class="blocker-card"><div class="blocker-icon">🚫</div><div><div class="blocker-title">IMEI Blacklisté / Opérateur</div><div class="blocker-desc">Appareil signalé volé ou perdu. Vérification IMEI obligatoire avant toute offre.</div></div></div>
+      <div class="blocker-card"><div class="blocker-icon">📉</div><div><div class="blocker-title">VRT &lt; 5% du PRT (Plancher)</div><div class="blocker-desc">Valeur trop faible pour couvrir les frais de traitement. Transaction non viable.</div></div></div>
+      <div class="blocker-card"><div class="blocker-icon">⚠️</div><div><div class="blocker-title">Appareil Classe F</div><div class="blocker-desc">Obsolescence technique confirmée. Aucun échange autorisé, quelle que soit la classe cible.</div></div></div>
+    </div>
+  </div>
+
+  <!-- SECTION 07 — GARDE-FOUS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">07</div>
+      <div class="section-title">Garde-fous de Viabilité</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="guardrail-card">
+      <div class="guardrail-num">1</div>
+      <div><div class="guardrail-title">Règle Anti-Downgrade Trésorerie</div><div class="guardrail-desc">Si <span class="rule-inline">VRT &gt; 1.4 × PRT_cible</span>, le swap est bloqué. TEKH+ ne rachète pas un appareil significativement plus cher que l'appareil proposé en échange.</div></div>
+    </div>
+    <div class="guardrail-card">
+      <div class="guardrail-num">2</div>
+      <div><div class="guardrail-title">Cohérence de Gamme</div><div class="guardrail-desc">Aucun échange si écart de classe &gt; 2 niveaux. Un utilisateur souhaitant un upgrade important règle la soulte au prix standard.</div></div>
+    </div>
+    <div class="guardrail-card">
+      <div class="guardrail-num">3</div>
+      <div><div class="guardrail-title">Révision Périodique des PRT</div><div class="guardrail-desc">Révision mensuelle obligatoire. Si un PRT baisse de plus de <span class="rule-inline">15%</span> entre deux cycles, réévaluation automatique de toutes les offres en cours pour ce modèle.</div></div>
+    </div>
+  </div>
+
+  <!-- SECTION 08 — SOULTE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">08</div>
+      <div class="section-title">Calcul de la Soulte (Swap Gap)</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="soulte-box">
+      <div>
+        <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--text-dim);letter-spacing:2px;margin-bottom:10px">FORMULE SOULTE</div>
+        <div class="soulte-formula"><span class="hi">Soulte</span> = PRT<sub>cible</sub> − VRT<sub>utilisateur</sub></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;text-align:right">
+        <div class="soulte-case"><span class="pos">Soulte &gt; 0</span> → Utilisateur paie la différence à TEKH+</div>
+        <div class="soulte-case"><span class="neg">Soulte &lt; 0</span> → TEKH+ crédite l'utilisateur (sous conditions)</div>
+        <div class="soulte-case" style="margin-top:4px">Soulte = 0 → Échange à valeur égale (swap parfait)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 09 — SIMULATION -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">09</div>
+      <div class="section-title">Simulation — Exemple Concret</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="sim-box">
+      <div class="sim-header">
+        <div class="sim-title">Samsung A13 (état Bon, 2 ans, batterie 82%) → Samsung A34</div>
+        <div class="sim-tag">EXEMPLE ILLUSTRATIF</div>
+      </div>
+      <div class="sim-body">
+        <div class="sim-device">
+          <strong>Appareil remis</strong><br>
+          Modèle : Samsung A13<br>
+          PRT estimé : 80 000 FCFA<br>
+          C_marque Samsung A : <span style="color:var(--gold)">0.84</span><br>
+          C_age (2 ans) : <span style="color:var(--gold)">0.85</span><br>
+          C_état (Bon) : <span style="color:var(--gold)">0.85</span><br>
+          C_batterie (82%) : <span style="color:var(--gold)">0.92</span><br>
+          C_marché : <span style="color:var(--blue)">0.90</span><br>
+          C_sécurité : <span style="color:var(--blue)">0.85</span>
+        </div>
+        <div class="sim-arrow">→</div>
+        <div class="sim-result">
+          <div class="sim-vrt-label">VRT Calculé</div>
+          <div class="sim-vrt-val">~34 400</div>
+          <div style="font-size:11px;color:var(--text-dim);margin-top:4px">FCFA offerts à l'utilisateur</div>
+          <div style="margin-top:16px;font-size:11px;color:var(--text-dim)">PRT cible (A34) : ~130 000 FCFA</div>
+          <div style="font-family:'DM Mono',monospace;font-size:14px;color:var(--gold);margin-top:4px">Soulte : ~95 600 FCFA</div>
+        </div>
+      </div>
+      <div class="sim-calc">
+        80 000 × <span class="gold">0.84</span> × <span class="gold">0.85</span> × <span class="gold">0.85</span> × <span class="gold">0.92</span> × <span class="gold">0.90</span> × <span class="gold">0.85</span> ≈ <strong style="color:var(--text)">34 430 FCFA</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 10 — CHANGELOG -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">10</div>
+      <div class="section-title">Journal des Modifications — v1.0 → v2.1</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="coeff-table-wrapper" style="padding:16px 20px">
+      <div class="changelog-row"><div class="cl-badge cl-fix">CORRIGÉ</div><div class="cl-text"><strong>Orthographe</strong> — TEHK+ → TEKH+ partout dans le document</div></div>
+      <div class="changelog-row"><div class="cl-badge cl-fix">CORRIGÉ</div><div class="cl-text"><strong>Huawei</strong> — C_marque abaissé de 0.80 → 0.72 (perte GMS 2019, valeur résiduelle en baisse confirmée)</div></div>
+      <div class="changelog-row"><div class="cl-badge cl-fix">CORRIGÉ</div><div class="cl-text"><strong>C_age &gt;4 ans</strong> — abaissé de 0.45/0.50 → 0.40 (cohérence avec données BackMarket Europe)</div></div>
+      <div class="changelog-row"><div class="cl-badge cl-add">AJOUTÉ</div><div class="cl-text"><strong>Google Pixel</strong> (0.86) · <strong>Nothing Phone</strong> (0.76) · <strong>OnePlus</strong> (0.82) · <strong>Sony</strong> (0.80) · <strong>Oppo</strong> (0.74) · <strong>Vivo</strong> (0.72) · <strong>Poco</strong> (0.70) · <strong>Realme</strong> (0.67) · <strong>Nokia/HMD</strong> (0.65) · <strong>Wiko</strong> (0.58) · <strong>Blackview/Ulefone</strong> (0.52)</div></div>
+      <div class="changelog-row"><div class="cl-badge cl-add">AJOUTÉ</div><div class="cl-text"><strong>C_batterie</strong> — nouveau coefficient (0.50–1.00) intégré à la formule principale</div></div>
+      <div class="changelog-row"><div class="cl-badge cl-add">AJOUTÉ</div><div class="cl-text"><strong>Système de Bonus</strong> (+1% à +3%) · <strong>Plancher absolu</strong> 5% PRT · <strong>Blocages absolus</strong> formalisés (IMEI, iCloud)</div></div>
+      <div class="changelog-row"><div class="cl-badge cl-update">MÀJ</div><div class="cl-text"><strong>Samsung</strong> — distingué en deux coefficients : S/Z series (0.90) vs A5x/A7x (0.84)</div></div>
+      <div class="changelog-row"><div class="cl-badge cl-update">MÀJ</div><div class="cl-text"><strong>Classes A–F</strong> — exemples enrichis avec nouvelles marques ajoutées · règle des 2 niveaux max clarifiée</div></div>
+    </div>
+  </div>
+
+  <footer class="doc-footer">
+    <div class="footer-brand">TEKH<span>+</span> — Pricing Charter v2.1</div>
+    <div>Usage interne exclusif · Non communicable sans autorisation</div>
+    <div class="confidential">Confidentiel</div>
+  </footer>
+
+</div>
+</body>
+</html>

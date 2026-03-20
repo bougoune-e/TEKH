@@ -7,8 +7,8 @@ const tests = [
         brand: "Apple",
         year: 2024,
         diag: { screenState: "intact", batteryState: "good", biometricsState: "ok", cameraState: "ok", aestheticState: "very_good" },
-        // C_marque(0.9) * C_age(0.75) * C_etat(0.95) * C_marche(0.9) * C_securite(0.85) = 0.4905...
-        expected: 245278
+        // v2.1 -> C_marque(0.90) * C_age(0.75) * C_etat(0.95) * C_batterie(0.92) * C_marche(0.9) * C_securite(0.85)
+        expected: 225656
     },
     {
         name: "Samsung S23 (2023) - Bon",
@@ -16,8 +16,8 @@ const tests = [
         brand: "Samsung",
         year: 2023,
         diag: { screenState: "intact", batteryState: "good", biometricsState: "ok", cameraState: "ok", aestheticState: "bon" },
-        // C_marque(0.90) * C_age(0.65) * C_etat(0.85) * C_marche(0.9) * C_securite(0.85) = 0.3804...
-        expected: 152159
+        // v2.1 -> Samsung S/Z = 0.90 in charter, but brand-only input falls back conservatively to 0.84
+        expected: 130653
     },
     {
         name: "Infinix (2021) - Critique (Ecran)",
@@ -25,8 +25,8 @@ const tests = [
         brand: "Infinix",
         year: 2021,
         diag: { screenState: "cracked", batteryState: "good", biometricsState: "ok", cameraState: "ok", aestheticState: "very_good" },
-        // C_marque(0.68) * C_age(0.50) * C_etat(0.25) * C_marche(0.9) * C_securite(0.85)
-        expected: 6503
+        // v2.1 floor: if VRT < 5% PRT then refused -> 0
+        expected: 0
     }
 ];
 
