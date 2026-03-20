@@ -16,7 +16,7 @@ $$VRT = PRT \times (C_{marque} \times C_{age} \times C_{état} \times C_{marché
 | Marque | Coefficient |
 | :--- | :--- |
 | Apple (iPhone) | 0.90 |
-| Samsung | 0.85 |
+| Samsung | 0.90 |
 | Huawei | 0.80 |
 | Honor | 0.78 |
 | Motorola | 0.75 |

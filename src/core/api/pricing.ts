@@ -25,7 +25,7 @@ export const MINIMUM_TRADE_FEE = 10000;
 const COEFFICIENTS_MARQUE: Record<string, number> = {
     "apple": 0.90,
     "iphone": 0.90,
-    "samsung": 0.85,
+    "samsung": 0.90,
     "huawei": 0.80,
     "honor": 0.78,
     "motorola": 0.75,

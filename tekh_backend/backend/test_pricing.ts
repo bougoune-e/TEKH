@@ -16,8 +16,8 @@ const tests = [
         brand: "Samsung",
         year: 2023,
         diag: { screenState: "intact", batteryState: "good", biometricsState: "ok", cameraState: "ok", aestheticState: "bon" },
-        // C_marque(0.85) * C_age(0.65) * C_etat(0.85) * C_marche(0.9) * C_securite(0.85) = 0.3592...
-        expected: 143705
+        // C_marque(0.90) * C_age(0.65) * C_etat(0.85) * C_marche(0.9) * C_securite(0.85) = 0.3804...
+        expected: 152159
     },
     {
         name: "Infinix (2021) - Critique (Ecran)",
