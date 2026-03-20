@@ -292,6 +292,9 @@ export default function EstimatorPage() {
     setRams(filteredRams as number[]);
     if (filteredRams.length === 1) {
       setRam(filteredRams[0]);
+    } else if (filteredRams.length === 0) {
+      // Certains modèles n'exposent pas la RAM dans la source CSV/API.
+      setRam(null);
     }
   }, [storage, availableVariants]);
 
@@ -401,7 +404,9 @@ export default function EstimatorPage() {
 
   const formatCFA = (n: number) => new Intl.NumberFormat("fr-FR", { style: "currency", currency: "XOF", maximumFractionDigits: 0 }).format(n);
 
-  const isStep1Complete = brand && model && storage && ram && screenState && batteryState && biometricsState && cameraState && aestheticState &&
+  const isIdentityComplete = Boolean(brand && model && storage && (rams.length === 0 || ram));
+  const isRamSatisfied = rams.length === 0 ? true : Boolean(ram);
+  const isStep1Complete = brand && model && storage && isRamSatisfied && screenState && batteryState && biometricsState && cameraState && aestheticState &&
     (imageSlots.front || imageSlots.back || imageSlots.left || imageSlots.right);
 
   const renderProgress = () => {
@@ -593,7 +598,7 @@ export default function EstimatorPage() {
                      MANUAL OR CONFIRMED FLOW (Shows Identity Step or Diagnostic Step)
                   */
                   <div className="transition-all duration-500">
-                    {(!brand || !model || !storage || !ram || (detectionStep as string) !== "confirmed") ? (
+                    {(!isIdentityComplete || (detectionStep as string) !== "confirmed") ? (
                       <div className="p-4 sm:p-8 space-y-8 animate-in fade-in slide-in-from-top-4">
                         {(isPWA && detectionStep === "confirmed") ? renderDetectedSummary() : (
                           <IdentityStep
@@ -603,7 +608,7 @@ export default function EstimatorPage() {
                             ram={ram} setRam={setRam} rams={rams}
                           />
                         )}
-                        {(brand && model && storage && ram && (detectionStep as string) !== "confirmed") && (
+                        {(isIdentityComplete && (detectionStep as string) !== "confirmed") && (
                           <div className="pt-3 border-t border-slate-100 dark:border-white/5 flex justify-end">
                             <Button
                               onClick={() => {

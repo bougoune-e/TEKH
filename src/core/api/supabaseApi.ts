@@ -11,6 +11,7 @@ const FALLBACK_TABLE = "produits";
 let pendingPhone: string | null = null;
 let localUser: any = null;
 const localListeners: Array<(ev: string, session: any) => void> = [];
+const CURRENT_YEAR = new Date().getFullYear();
 // Cache for products from Railway API
 let cachedProduits: any[] | null = null;
 async function getApiProduits() {
@@ -33,6 +34,48 @@ function emitLocal(ev: string) {
   for (const fn of localListeners) {
     try { fn(ev, session); } catch { }
   }
+}
+
+function normalizeStr(value: any): string {
+  return String(value ?? "").trim();
+}
+
+function normalizeLower(value: any): string {
+  return normalizeStr(value).toLowerCase();
+}
+
+function getBrandName(p: any): string {
+  return normalizeStr(p.marques ?? p.brand ?? p.Marque);
+}
+
+function getModelName(p: any): string {
+  return normalizeStr(p.modele_exact ?? p.model ?? p["Modèle Exact"]);
+}
+
+function toPositiveNumber(value: any): number | null {
+  const n = Number(value);
+  return Number.isFinite(n) && n > 0 ? n : null;
+}
+
+function getStorageGb(p: any): number | null {
+  return toPositiveNumber(p.stockages_gb ?? p.stockage_gb ?? p.storage ?? p["Stockages (GB)"]);
+}
+
+function getRamGb(p: any): number | null {
+  return toPositiveNumber(p.ram_gb ?? p.ram ?? p["RAM (GB)"]);
+}
+
+function getBasePriceFcfa(p: any): number {
+  return Number(p.prix_neuf_en_fcfa ?? p.prix_neuf_fcfa ?? p.price ?? p["Prix neuf en FCFA"] ?? 0) || 0;
+}
+
+function sanitizeReleaseYear(raw: any): number | null {
+  const y = Number(raw);
+  if (!Number.isFinite(y)) return null;
+  if (y < 2000) return null;
+  // Tolère l'année suivante (annonces), bloque les valeurs aberrantes (ex: 2064)
+  if (y > CURRENT_YEAR + 1) return CURRENT_YEAR;
+  return y;
 }
 
 // Metadata functions - LOCAL ONLY to avoid 404s
@@ -84,7 +127,7 @@ export async function fetchBrands(): Promise<string[]> {
     // Fallback: Extract from API
     const products = await getApiProduits();
     if (products && products.length > 0) {
-      const brands = Array.from(new Set(products.map(p => p.marques ?? p.brand ?? p.Marque).filter(Boolean)));
+      const brands = Array.from(new Set(products.map(getBrandName).filter(Boolean)));
       if (brands.length > 0) return (brands as string[]).sort();
     }
   } catch (err) {
@@ -109,9 +152,10 @@ export async function fetchModels(brand: string): Promise<string[]> {
     // Fallback: Extract from API
     const products = await getApiProduits();
     if (products && products.length > 0) {
+      const targetBrand = normalizeLower(brand);
       const models = Array.from(new Set(products
-        .filter(p => (p.marques ?? p.brand ?? p.Marque) === brand)
-        .map(p => p.modele_exact ?? p.model ?? p["Modèle Exact"])
+        .filter(p => normalizeLower(getBrandName(p)) === targetBrand)
+        .map(getModelName)
         .filter(Boolean)));
       if (models.length > 0) return (models as string[]).sort();
     }
@@ -136,6 +180,10 @@ export async function fetchStorages(brand: string, model: string): Promise<numbe
       if (!error && data) {
         return Array.from(new Set(data.map(v => v.storage_gb)));
       }
+    }
+    const variants = await getAvailableVariants(brand, model);
+    if (variants.length > 0) {
+      return Array.from(new Set(variants.map((v) => v.storage_gb).filter((n) => Number.isFinite(n) && n > 0))).sort((a, b) => a - b);
     }
   } catch (err) {
     console.warn("[supabaseApi] fetchStorages failed", brand, model, err);
@@ -181,16 +229,18 @@ export async function getModelInfo(brand: string, model: string, storage: number
     // Fallback: Extract from API
     const products = await getApiProduits();
     if (products && products.length > 0) {
+      const targetBrand = normalizeLower(brand);
+      const targetModel = normalizeLower(model);
       const item = products.find(p =>
-        (p.marques ?? p.brand ?? p.Marque) === brand &&
-        (p.modele_exact ?? p.model ?? p["Modèle Exact"]) === model &&
-        Number(p.stockages_gb ?? p.stockage_gb ?? p.storage ?? p["Stockages (GB)"]) === storage
+        normalizeLower(getBrandName(p)) === targetBrand &&
+        normalizeLower(getModelName(p)) === targetModel &&
+        getStorageGb(p) === storage
       );
 
       if (item) {
         return {
-          base_price_fcfa: Number(item.prix_neuf_en_fcfa ?? item.prix_neuf_fcfa ?? item.price ?? item["Prix neuf en FCFA"] ?? 0),
-          release_year: Number(item.annee_sortie ?? item.annee ?? item.release_year ?? 2022),
+          base_price_fcfa: getBasePriceFcfa(item),
+          release_year: sanitizeReleaseYear(item.annee_sortie ?? item.annee ?? item.release_year ?? 2022),
           equivalence_class: item.classe_equivalence ?? item.equivalence_class ?? item.classe ?? "C"
         };
       }
@@ -228,17 +278,29 @@ export async function getAvailableVariants(brand: string, model: string): Promis
     // Fallback: Extract from API
     const products = await getApiProduits();
     if (products && products.length > 0) {
+      const targetBrand = normalizeLower(brand);
+      const targetModel = normalizeLower(model);
       const filtered = products.filter(p =>
-        (p.marques ?? p.brand ?? p.Marque) === brand &&
-        (p.modele_exact ?? p.model ?? p["Modèle Exact"]) === model
+        normalizeLower(getBrandName(p)) === targetBrand &&
+        normalizeLower(getModelName(p)) === targetModel
       );
 
       if (filtered.length > 0) {
-        return filtered.map(p => ({
-          ram_gb: Number(p.ram_gb ?? p.ram ?? p["RAM (GB)"] ?? 0),
-          storage_gb: Number(p.stockages_gb ?? p.stockage_gb ?? p.storage ?? p["Stockages (GB)"] ?? 0),
-          base_price_fcfa: Number(p.prix_neuf_en_fcfa ?? p.prix_neuf_fcfa ?? p.price ?? p["Prix neuf en FCFA"] ?? 0)
-        })).sort((a, b) => a.storage_gb - b.storage_gb);
+        const variants = filtered
+          .map((p) => ({
+            ram_gb: getRamGb(p),
+            storage_gb: getStorageGb(p),
+            base_price_fcfa: getBasePriceFcfa(p),
+          }))
+          .filter((v) => Number.isFinite(v.storage_gb as number) && (v.storage_gb as number) > 0) as ModelVariant[];
+        const dedup = new Map<string, ModelVariant>();
+        for (const v of variants) {
+          const key = `${v.storage_gb}:${v.ram_gb ?? "na"}`;
+          if (!dedup.has(key) || (dedup.get(key)?.base_price_fcfa || 0) < v.base_price_fcfa) {
+            dedup.set(key, v);
+          }
+        }
+        return Array.from(dedup.values()).sort((a, b) => a.storage_gb - b.storage_gb || (a.ram_gb || 0) - (b.ram_gb || 0));
       }
     }
   } catch (err) {
@@ -264,8 +326,12 @@ export async function fetchRams(brand: string, model: string): Promise<number[]>
         .order("ram_gb");
 
       if (!error && data) {
-        return Array.from(new Set(data.map(v => v.ram_gb).filter(Boolean)));
+        return Array.from(new Set(data.map(v => v.ram_gb).filter((n) => Number.isFinite(n) && n > 0)));
       }
+    }
+    const variants = await getAvailableVariants(brand, model);
+    if (variants.length > 0) {
+      return Array.from(new Set(variants.map((v) => v.ram_gb).filter((n) => Number.isFinite(n as number) && (n as number) > 0) as number[])).sort((a, b) => a - b);
     }
   } catch (err) {
     console.warn("[supabaseApi] fetchRams failed", err);
