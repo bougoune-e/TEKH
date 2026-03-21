@@ -2,6 +2,8 @@
 
 > Feature-based, scalable frontend architecture.
 
+Référentiel **PRT** (médiane eBay × facteur Afrique) : table Supabase `smartphones`, scripts `npm run prt:*`, doc `docs/PRT-EBAY-SETUP.md`.
+
 ## Directory Structure
 
 ```
@@ -19,7 +21,9 @@ src/
 │   │   ├── main_api.ts         # REST API helpers (getProduits, etc.)
 │   │   ├── api.ts              # Generic fetch wrapper
 │   │   ├── auth.ts             # Token management (getToken, setSession)
-│   │   ├── pricing.ts          # Pricing engine (Charte TEKH+ v1.0)
+│   │   ├── pricing.ts          # Moteur VRT / soulte (charte TEKH+)
+│   │   ├── prtResolve.ts       # Fraîcheur cache PRT (table smartphones)
+│   │   ├── smartphonesCatalog.ts  # Lecture prioritaire `smartphones` (PRT)
 │   │   └── endpoints.ts        # API endpoint constants
 │   ├── config/
 │   │   └── i18n.ts             # i18next configuration (fr/en)

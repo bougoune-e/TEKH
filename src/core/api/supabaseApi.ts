@@ -1,6 +1,13 @@
 import { getToken, setSession, clearSession } from "./auth";
 import { supabase as realClient } from "./supabaseClient";
 import { getProduits } from "@/core/api/main_api";
+import {
+  fetchSmartphonesForBrandModel,
+  fetchDistinctModelsFromSmartphones,
+  pickSmartphoneForStorage,
+  smartphoneRowToPrtMeta,
+  type SmartphoneRow,
+} from "@/core/api/smartphonesCatalog";
 
 type Credentials = { email: string; password: string };
 
@@ -146,7 +153,25 @@ export async function fetchModels(brand: string): Promise<string[]> {
         .eq("brands.name", brand)
         .order("name");
 
-      if (!error && data && data.length > 0) return data.map((m: any) => m.name);
+      if (!error && data && data.length > 0) {
+        const fromDb = data.map((m: any) => m.name);
+        const fromSm = await fetchDistinctModelsFromSmartphones(brand);
+        return Array.from(new Set([...fromDb, ...fromSm])).sort((a, b) => a.localeCompare(b, "fr"));
+      }
+    }
+
+    const fromSm = await fetchDistinctModelsFromSmartphones(brand);
+    if (fromSm.length > 0) {
+      const products = await getApiProduits();
+      if (products && products.length > 0) {
+        const targetBrand = normalizeLower(brand);
+        const fromApi = Array.from(new Set(products
+          .filter(p => normalizeLower(getBrandName(p)) === targetBrand)
+          .map(getModelName)
+          .filter(Boolean))) as string[];
+        return Array.from(new Set([...fromSm, ...fromApi])).sort((a, b) => a.localeCompare(b, "fr"));
+      }
+      return fromSm;
     }
 
     // Fallback: Extract from API
@@ -195,10 +220,35 @@ export interface ModelInfo {
   base_price_fcfa: number | null;
   release_year: number | null;
   equivalence_class: string | null;
+  /** PRT issu de la table `smartphones` (prioritaire) */
+  prt_source?: "smartphones" | "variants" | "api";
+  prt_updated_at?: string | null;
+  /** True si prt_updated_at > ~30 jours */
+  prt_stale?: boolean;
+}
+
+function modelInfoFromSmartphoneRow(row: SmartphoneRow): ModelInfo {
+  const meta = smartphoneRowToPrtMeta(row);
+  return {
+    base_price_fcfa: row.prt_fcfa,
+    release_year: row.annee_sortie ?? null,
+    equivalence_class: row.classe_tekh ?? null,
+    prt_source: "smartphones",
+    prt_updated_at: row.prt_updated_at,
+    prt_stale: meta.prt_stale,
+  };
 }
 
 export async function getModelInfo(brand: string, model: string, storage: number): Promise<ModelInfo | null> {
   try {
+    if (realClient) {
+      const smRows = await fetchSmartphonesForBrandModel(brand, model);
+      const sm = pickSmartphoneForStorage(smRows, storage);
+      if (sm && sm.prt_fcfa != null && sm.prt_fcfa > 0) {
+        return modelInfoFromSmartphoneRow(sm);
+      }
+    }
+
     if (realClient) {
       const { data, error } = await realClient
         .from("variants")
@@ -221,7 +271,8 @@ export async function getModelInfo(brand: string, model: string, storage: number
         return {
           base_price_fcfa: item.base_price_fcfa,
           release_year: item.models.release_year,
-          equivalence_class: item.models.equivalence_class
+          equivalence_class: item.models.equivalence_class,
+          prt_source: "variants",
         };
       }
     }
@@ -241,7 +292,8 @@ export async function getModelInfo(brand: string, model: string, storage: number
         return {
           base_price_fcfa: getBasePriceFcfa(item),
           release_year: sanitizeReleaseYear(item.annee_sortie ?? item.annee ?? item.release_year ?? 2022),
-          equivalence_class: item.classe_equivalence ?? item.equivalence_class ?? item.classe ?? "C"
+          equivalence_class: item.classe_equivalence ?? item.equivalence_class ?? item.classe ?? "C",
+          prt_source: "api",
         };
       }
     }
@@ -257,8 +309,38 @@ export interface ModelVariant {
   base_price_fcfa: number;
 }
 
+function variantsFromSmartphoneRows(rows: SmartphoneRow[]): ModelVariant[] {
+  const out: ModelVariant[] = [];
+  for (const row of rows) {
+    if (row.prt_fcfa == null || row.prt_fcfa <= 0) continue;
+    const specs = (row.specs || {}) as Record<string, unknown>;
+    const ram = Number(specs.ram_gb ?? specs.ram ?? specs["RAM (GB)"]) || null;
+    let storageGb: number | null = null;
+    const v = (row.variante || "").trim();
+    if (v) {
+      const m = v.match(/(\d+)\s*(GB|Go)/i);
+      if (m) storageGb = parseInt(m[1], 10);
+    }
+    if (storageGb == null) {
+      const g = Number(specs.stockage_gb ?? specs.storage_gb ?? specs["Stockages (GB)"]);
+      if (Number.isFinite(g) && g > 0) storageGb = g;
+    }
+    if (storageGb == null || !Number.isFinite(storageGb)) continue;
+    out.push({
+      ram_gb: ram,
+      storage_gb: storageGb,
+      base_price_fcfa: row.prt_fcfa,
+    });
+  }
+  return out.sort((a, b) => a.storage_gb - b.storage_gb || (a.ram_gb || 0) - (b.ram_gb || 0));
+}
+
 export async function getAvailableVariants(brand: string, model: string): Promise<ModelVariant[]> {
   try {
+    const smRows = await fetchSmartphonesForBrandModel(brand, model);
+    const fromSm = variantsFromSmartphoneRows(smRows);
+    if (fromSm.length > 0) return fromSm;
+
     if (realClient) {
       const { data, error } = await realClient
         .from("variants")
@@ -520,6 +602,39 @@ export async function countDealsByOwner(ownerId: string) {
   const { count, error } = await realClient.from("deals").select("id", { count: 'exact', head: true }).eq("owner_id", ownerId);
   if (error) return 0;
   return count || 0;
+}
+
+/** Solde TekhPoints (crédits actifs non expirés) — table `tekh_point_credits`. */
+export type TekhPointsSummary = {
+  balanceFcfa: number;
+  nextExpiry: string | null;
+  activeLines: number;
+};
+
+export async function fetchTekhPointsSummary(userId: string): Promise<TekhPointsSummary> {
+  if (!realClient) return { balanceFcfa: 0, nextExpiry: null, activeLines: 0 };
+  const now = new Date().toISOString();
+  const { data, error } = await realClient
+    .from("tekh_point_credits")
+    .select("amount_fcfa, expires_at")
+    .eq("user_id", userId)
+    .eq("status", "active")
+    .gt("expires_at", now);
+
+  if (error || !data?.length) {
+    if (import.meta.env.DEV && error) console.warn("[tekh_points]", error.message);
+    return { balanceFcfa: 0, nextExpiry: null, activeLines: 0 };
+  }
+
+  const balanceFcfa = data.reduce((s, r) => s + (Number(r.amount_fcfa) || 0), 0);
+  const sorted = [...data].sort(
+    (a, b) => new Date(a.expires_at).getTime() - new Date(b.expires_at).getTime()
+  );
+  return {
+    balanceFcfa,
+    nextExpiry: sorted[0]?.expires_at ?? null,
+    activeLines: data.length,
+  };
 }
 
 function mapAnnonceRow(row: any) {

@@ -6,10 +6,10 @@ import { Label } from "@/shared/ui/label";
 import { useTranslation } from "react-i18next";
 import { useDeals } from "@/features/marketplace/deals.context";
 import { useAuth } from "@/features/auth/auth.context";
-import { getCurrentUser, uploadAvatar, upsertProfile, supabase, ensureProfileForUser, countDealsByOwner } from "@/core/api/supabaseApi";
+import { getCurrentUser, uploadAvatar, upsertProfile, supabase, ensureProfileForUser, countDealsByOwner, fetchTekhPointsSummary } from "@/core/api/supabaseApi";
 import { isSupabaseConfigured } from "@/core/api/supabaseClient";
 import UserAvatar from "@/shared/components/UserAvatar";
-import { LogOut, Camera, Package, ShieldCheck, Heart, Settings, ShoppingCart, ChevronRight } from "lucide-react";
+import { LogOut, Camera, Package, ShieldCheck, Heart, Settings, ShoppingCart, ChevronRight, Coins } from "lucide-react";
 import { toast } from "@/shared/hooks/use-toast";
 import MotionRings from "@/shared/components/MotionRings";
 import { useCart } from "@/features/marketplace/cart.context";
@@ -33,6 +33,7 @@ export default function Profile() {
   const [saving, setSaving] = useState(false);
   const fileRef = useRef<HTMLInputElement | null>(null);
   const [dbCount, setDbCount] = useState<number | null>(null);
+  const [tekhPoints, setTekhPoints] = useState<{ balanceFcfa: number; nextExpiry: string | null } | null>(null);
 
   if (user && isAdmin(user)) {
     return <div className="min-h-dvh flex items-center justify-center bg-background"><p className="text-muted-foreground">Redirection…</p></div>;
@@ -49,6 +50,9 @@ export default function Profile() {
       if (isSupabaseConfigured && user?.id) {
         ensureProfileForUser(user).catch(() => { });
         countDealsByOwner(user.id).then(setDbCount).catch(() => { });
+        fetchTekhPointsSummary(user.id)
+          .then((s) => setTekhPoints({ balanceFcfa: s.balanceFcfa, nextExpiry: s.nextExpiry }))
+          .catch(() => setTekhPoints({ balanceFcfa: 0, nextExpiry: null }));
       }
     }
   }, [user]);
@@ -155,6 +159,38 @@ export default function Profile() {
               </div>
             </div>
           </div>
+        </section>
+
+        {/* TekhPoints */}
+        <section className="space-y-3">
+          <h2 className="text-xs font-black uppercase tracking-widest text-muted-foreground px-1">TekhPoints</h2>
+          <Link
+            to="/politique-echange-tekhpoints"
+            className="flex items-center justify-between p-5 bg-gradient-to-br from-[#064e3b]/10 to-[#059669]/5 dark:from-[#059669]/20 dark:to-transparent border border-[#064e3b]/20 dark:border-[#059669]/30 rounded-2xl hover:shadow-md transition-all group"
+          >
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl bg-[#064e3b]/15 dark:bg-[#059669]/25 flex items-center justify-center">
+                <Coins className="h-6 w-6 text-[#064e3b] dark:text-[#34d399]" />
+              </div>
+              <div>
+                <p className="font-black text-foreground">Solde TekhPoints</p>
+                <p className="text-lg font-black text-[#064e3b] dark:text-[#34d399]">
+                  {(tekhPoints?.balanceFcfa ?? 0).toLocaleString("fr-FR")}{" "}
+                  <span className="text-xs font-bold text-muted-foreground">FCFA</span>
+                </p>
+                {tekhPoints?.nextExpiry && (
+                  <p className="text-[10px] text-muted-foreground font-semibold mt-0.5">
+                    Prochaine échéance :{" "}
+                    {new Date(tekhPoints.nextExpiry).toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" })}
+                  </p>
+                )}
+                {!tekhPoints?.nextExpiry && (tekhPoints?.balanceFcfa ?? 0) === 0 && (
+                  <p className="text-[10px] text-muted-foreground font-medium mt-0.5">Aucun crédit actif — voir la politique d&apos;échange.</p>
+                )}
+              </div>
+            </div>
+            <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-[#064e3b] shrink-0" />
+          </Link>
         </section>
 
         {/* Espace personnel : Mon panier, Mes commandes, Favoris */}

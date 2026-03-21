@@ -168,6 +168,13 @@ Jusqu’à ce que l’une de ces options soit en place, les utilisateurs pourron
   - [ ] Clé privée VAPID stockée de façon sécurisée (backend ou Supabase secrets)  
   - [ ] Implémentation de l’envoi des push (Edge Function + webhook sur `annonces`, ou route backend après publication)
 
+- [ ] **PRT eBay & référentiel `smartphones`**  
+  - [ ] Appliquer la migration `supabase/migrations/20250321120000_smartphones_tekh_points.sql`  
+  - [ ] Créer une app **Production** sur [eBay Developers](https://developer.ebay.com/) et renseigner **`EBAY_CLIENT_ID`** / **`EBAY_CLIENT_SECRET`** (voir `docs/PRT-EBAY-SETUP.md` et `.env.example`)  
+  - [ ] **`SUPABASE_SERVICE_ROLE_KEY`** uniquement pour les scripts serveur / CI (jamais dans le frontend)  
+  - [ ] `npm run prt:seed` puis `npm run prt:sync-prices` puis `npm run prt:assign-classes`  
+  - [ ] Planifier un **cron mensuel** (sync prix + classes) sur l’hôte qui exécute Node  
+
 - [ ] **Environnement**  
   - [ ] `.env` frontend : `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_API_URL` (prod), optionnellement `VITE_VAPID_PUBLIC_KEY` et `VITE_ADMIN_EMAILS`  
   - [ ] Backend : variables Vision + CORS + Supabase si besoin  

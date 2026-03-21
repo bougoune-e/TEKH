@@ -51,6 +51,7 @@ const PolitiqueConfidentialite = lazy(() => import("@/features/legal/PolitiqueCo
 const Apk = lazy(() => import("@/features/apk/Apk"));
 const SettingsPage = lazy(() => import("@/features/settings/Settings"));
 const CharteDuSwap = lazy(() => import("@/features/legal/CharteDuSwap"));
+const PolitiqueEchangeTekhPoints = lazy(() => import("@/features/legal/PolitiqueEchangeTekhPoints"));
 
 const DiagnosePage = lazy(() => import("@/features/simulator/Diagnose"));
 const AdminPage = lazy(() => import("@/features/misc/AdminPage"));
@@ -114,6 +115,7 @@ const NavigationWrapper = () => {
                 <Route path="/deals-found" element={<PageTransition navType={navType}><DealsFound /></PageTransition>} />
                 <Route path="/charte" element={<PageTransition navType={navType}><ChartePage /></PageTransition>} />
                 <Route path="/charte-du-swap" element={<PageTransition navType={navType}><CharteDuSwap /></PageTransition>} />
+                <Route path="/politique-echange-tekhpoints" element={<PageTransition navType={navType}><PolitiqueEchangeTekhPoints /></PageTransition>} />
                 <Route path="/charte-qualite" element={<PageTransition navType={navType}><CharteQualitePage /></PageTransition>} />
                 <Route path="/post" element={<PageTransition navType={navType}><SimulatorPage /></PageTransition>} />
                 <Route path="/mes-publications" element={<PageTransition navType={navType}><MyPosts /></PageTransition>} />

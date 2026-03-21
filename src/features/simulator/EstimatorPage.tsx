@@ -11,7 +11,7 @@ import {
   getModelInfo,
   getAvailableVariants
 } from "@/core/api/supabaseApi";
-import { calculerEstimation } from "@/core/api/pricing";
+import { calculerEstimation, type BatterieTekh, type ChassisTekh, type EcranTekh } from "@/core/api/pricing";
 import { cn } from "@/core/api/utils";
 import {
   Zap,
@@ -68,11 +68,9 @@ export default function EstimatorPage() {
   const [storage, setStorage] = useState<number | null>(null);
   const [ram, setRam] = useState<number | null>(null);
 
-  const [screenState, setScreenState] = useState<"intact" | "cracked" | "scratched" | "burned" | "dead" | "">("");
-  const [batteryState, setBatteryState] = useState<"good" | "low" | "replace" | "">("");
-  const [biometricsState, setBiometricsState] = useState<"ok" | "nok" | "na" | "">("");
-  const [cameraState, setCameraState] = useState<"ok" | "degraded" | "nok" | "">("");
-  const [aestheticState, setAestheticState] = useState<"very_good" | "visible" | "damaged" | "">("");
+  const [ecranState, setEcranState] = useState<EcranTekh | "">("");
+  const [chassisState, setChassisState] = useState<ChassisTekh | "">("");
+  const [batterieState, setBatterieState] = useState<BatterieTekh | "">("");
 
   const [loadingBrands, setLoadingBrands] = useState(false);
   const [loadingModels, setLoadingModels] = useState(false);
@@ -384,30 +382,25 @@ export default function EstimatorPage() {
   }, [targetBrand, targetModel]);
 
   const finalPrice = useMemo(() => {
-    if (!basePrice || !screenState || !batteryState || !biometricsState || !cameraState || !aestheticState) return null;
+    if (!basePrice || !ecranState || !chassisState || !batterieState) return null;
 
     const diagnostics = {
-      ecran_casse: screenState !== "intact",
-      batterie_faible: batteryState === "low" || batteryState === "replace",
-      face_id_hs: biometricsState === "nok",
-      camera_hs: cameraState === "nok" || cameraState === "degraded",
-      etat_moyen: aestheticState === "visible" || aestheticState === "damaged",
-      screenState,
-      batteryState,
-      biometricsState,
-      cameraState,
-      aestheticState
-    } as any;
+      ecran: ecranState,
+      chassis: chassisState,
+      batterie: batterieState,
+    };
 
     return calculerEstimation(basePrice, brand, modelInfo?.release_year || 2021, diagnostics, model);
-  }, [basePrice, brand, modelInfo, screenState, batteryState, biometricsState, cameraState, aestheticState]);
+  }, [basePrice, brand, modelInfo, ecranState, chassisState, batterieState]);
 
   const formatCFA = (n: number) => new Intl.NumberFormat("fr-FR", { style: "currency", currency: "XOF", maximumFractionDigits: 0 }).format(n);
 
   const isIdentityComplete = Boolean(brand && model && storage && (rams.length === 0 || ram));
   const isRamSatisfied = rams.length === 0 ? true : Boolean(ram);
-  const isStep1Complete = brand && model && storage && isRamSatisfied && screenState && batteryState && biometricsState && cameraState && aestheticState &&
-    (imageSlots.front || imageSlots.back || imageSlots.left || imageSlots.right);
+  const isStep1Complete = Boolean(
+    brand && model && storage && isRamSatisfied && ecranState && chassisState && batterieState &&
+    (imageSlots.front || imageSlots.back || imageSlots.left || imageSlots.right)
+  );
 
   const renderProgress = () => {
     const steps = [
@@ -626,11 +619,9 @@ export default function EstimatorPage() {
                       <div className="p-4 sm:p-8 space-y-12 animate-in fade-in slide-in-from-bottom-4">
                         {renderDetectedSummary()}
                         <DiagnosticStep
-                          screenState={screenState} setScreenState={setScreenState}
-                          batteryState={batteryState} setBatteryState={setBatteryState}
-                          biometricsState={biometricsState} setBiometricsState={setBiometricsState}
-                          cameraState={cameraState} setCameraState={setCameraState}
-                          aestheticState={aestheticState} setAestheticState={setAestheticState}
+                          ecranState={ecranState} setEcranState={setEcranState}
+                          chassisState={chassisState} setChassisState={setChassisState}
+                          batterieState={batterieState} setBatterieState={setBatterieState}
                         />
                         <PhotoStep
                           imageSlots={imageSlots}
@@ -661,18 +652,35 @@ export default function EstimatorPage() {
                               <ShieldCheck className="w-3 h-3 text-blue-600 dark:text-[#00FF41]" />
                               <span className="text-[8px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Charte TEKH+</span>
                             </div>
+                            {modelInfo?.prt_source === "smartphones" && (
+                              <p className={`text-[9px] font-bold mt-2 px-2 text-center max-w-sm mx-auto leading-snug ${modelInfo.prt_stale ? "text-amber-600 dark:text-amber-400" : "text-emerald-700 dark:text-emerald-400"}`}>
+                                {modelInfo.prt_stale
+                                  ? "PRT catalogue — index daté de plus de 30 j. (indicatif, resync automatique côté serveur)."
+                                  : "PRT catalogue TEKH+ (médiane eBay × facteur Afrique)."}
+                              </p>
+                            )}
                           </div>
 
                           <div className="flex flex-col sm:flex-row gap-3 w-full">
                             {returnToDealId && isStep1Complete && finalPrice != null && (
                               <Button
                                 onClick={() => {
-                                  const condition = aestheticState === "very_good" ? "like_new" as const : aestheticState === "visible" ? "good" as const : aestheticState === "damaged" ? "damaged" as const : "average" as const;
+                                  const condition =
+                                    ecranState === "parfait" && chassisState === "intact"
+                                      ? ("like_new" as const)
+                                      : ecranState === "casse"
+                                        ? ("damaged" as const)
+                                        : ("good" as const);
                                   setLastSimulation({
                                     model: `${brand} ${model}`,
                                     condition,
                                     storage: storage ?? undefined,
-                                    battery: batteryState === "good" ? "good" : batteryState === "low" ? "medium" : "low",
+                                    battery:
+                                      batterieState === "gte90" || batterieState === "gte80_89"
+                                        ? "good"
+                                        : batterieState === "gte70_79" || batterieState === "gte60_69"
+                                          ? "medium"
+                                          : "low",
                                     estimated: finalPrice,
                                   });
                                   navigate(`/deal/${returnToDealId}`, { replace: true });
@@ -735,7 +743,8 @@ export default function EstimatorPage() {
                 targetModel={targetModel}
                 targetModelInfo={targetModelInfo}
                 storage={storage}
-                aestheticState={aestheticState}
+                ecranState={ecranState}
+                chassisState={chassisState}
                 targetStorage={targetStorage}
                 formatCFA={formatCFA}
                 isPWA={isPWA}

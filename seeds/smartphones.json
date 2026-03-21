@@ -1,0 +1,602 @@
+[
+  {
+    "marque": "Tecno",
+    "modele": "Spark 30 Pro",
+    "variante": "256GB",
+    "annee_sortie": 2025,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 256
+    }
+  },
+  {
+    "marque": "Tecno",
+    "modele": "Camon 30 Premier",
+    "variante": "512GB",
+    "annee_sortie": 2026,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 512
+    }
+  },
+  {
+    "marque": "Infinix",
+    "modele": "Zero 40",
+    "variante": "256GB",
+    "annee_sortie": 2025,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 256
+    }
+  },
+  {
+    "marque": "Infinix",
+    "modele": "Note 40 Pro",
+    "variante": "128GB",
+    "annee_sortie": 2026,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 128
+    }
+  },
+  {
+    "marque": "Samsung",
+    "modele": "Galaxy A55",
+    "variante": "128GB",
+    "annee_sortie": 2025,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 128
+    }
+  },
+  {
+    "marque": "Samsung",
+    "modele": "Galaxy S24",
+    "variante": "256GB",
+    "annee_sortie": 2026,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 256
+    }
+  },
+  {
+    "marque": "Samsung",
+    "modele": "Galaxy Z Flip5",
+    "variante": "256GB",
+    "annee_sortie": 2025,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 256
+    }
+  },
+  {
+    "marque": "Samsung",
+    "modele": "Galaxy A35",
+    "variante": "128GB",
+    "annee_sortie": 2026,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 128
+    }
+  },
+  {
+    "marque": "Apple",
+    "modele": "iPhone 16",
+    "variante": "128GB",
+    "annee_sortie": 2025,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 128
+    }
+  },
+  {
+    "marque": "Apple",
+    "modele": "iPhone 15 Pro",
+    "variante": "256GB",
+    "annee_sortie": 2026,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 256
+    }
+  },
+  {
+    "marque": "Apple",
+    "modele": "iPhone 14",
+    "variante": "128GB",
+    "annee_sortie": 2025,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 128
+    }
+  },
+  {
+    "marque": "Google",
+    "modele": "Pixel 9",
+    "variante": "128GB",
+    "annee_sortie": 2026,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 128
+    }
+  },
+  {
+    "marque": "Google",
+    "modele": "Pixel 8a",
+    "variante": "128GB",
+    "annee_sortie": 2025,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 128
+    }
+  },
+  {
+    "marque": "Xiaomi",
+    "modele": "14T Pro",
+    "variante": "512GB",
+    "annee_sortie": 2026,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 512
+    }
+  },
+  {
+    "marque": "Redmi",
+    "modele": "Note 14 Pro",
+    "variante": "256GB",
+    "annee_sortie": 2025,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 256
+    }
+  },
+  {
+    "marque": "Poco",
+    "modele": "X7 Pro",
+    "variante": "256GB",
+    "annee_sortie": 2026,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 256
+    }
+  },
+  {
+    "marque": "Honor",
+    "modele": "Magic6 Pro",
+    "variante": "512GB",
+    "annee_sortie": 2025,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 512
+    }
+  },
+  {
+    "marque": "OnePlus",
+    "modele": "12",
+    "variante": "256GB",
+    "annee_sortie": 2026,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 256
+    }
+  },
+  {
+    "marque": "Oppo",
+    "modele": "Reno12",
+    "variante": "256GB",
+    "annee_sortie": 2025,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 256
+    }
+  },
+  {
+    "marque": "Vivo",
+    "modele": "V40",
+    "variante": "256GB",
+    "annee_sortie": 2026,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 256
+    }
+  },
+  {
+    "marque": "Motorola",
+    "modele": "Edge 50 Pro",
+    "variante": "256GB",
+    "annee_sortie": 2025,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 256
+    }
+  },
+  {
+    "marque": "Realme",
+    "modele": "GT 6",
+    "variante": "256GB",
+    "annee_sortie": 2026,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 256
+    }
+  },
+  {
+    "marque": "Nokia",
+    "modele": "X30",
+    "variante": "128GB",
+    "annee_sortie": 2025,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 128
+    }
+  },
+  {
+    "marque": "Huawei",
+    "modele": "Pura 70",
+    "variante": "256GB",
+    "annee_sortie": 2026,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 256
+    }
+  },
+  {
+    "marque": "Tecno",
+    "modele": "Pova 6 Pro",
+    "variante": "256GB",
+    "annee_sortie": 2025,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 256
+    }
+  },
+  {
+    "marque": "Infinix",
+    "modele": "Hot 50 Pro",
+    "variante": "128GB",
+    "annee_sortie": 2026,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 128
+    }
+  },
+  {
+    "marque": "Samsung",
+    "modele": "Galaxy A25",
+    "variante": "128GB",
+    "annee_sortie": 2025,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 128
+    }
+  },
+  {
+    "marque": "Samsung",
+    "modele": "Galaxy S23 FE",
+    "variante": "256GB",
+    "annee_sortie": 2026,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 256
+    }
+  },
+  {
+    "marque": "Tecno",
+    "modele": "Phantom X2 Pro",
+    "variante": "256GB",
+    "annee_sortie": 2025,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 256
+    }
+  },
+  {
+    "marque": "Infinix",
+    "modele": "GT 20 Pro",
+    "variante": "256GB",
+    "annee_sortie": 2026,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 256
+    }
+  },
+  {
+    "marque": "Xiaomi",
+    "modele": "Redmi 13",
+    "variante": "128GB",
+    "annee_sortie": 2025,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 128
+    }
+  },
+  {
+    "marque": "Poco",
+    "modele": "M6 Pro",
+    "variante": "256GB",
+    "annee_sortie": 2026,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 256
+    }
+  },
+  {
+    "marque": "Honor",
+    "modele": "200 Pro",
+    "variante": "512GB",
+    "annee_sortie": 2025,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 512
+    }
+  },
+  {
+    "marque": "OnePlus",
+    "modele": "Nord 4",
+    "variante": "256GB",
+    "annee_sortie": 2026,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 256
+    }
+  },
+  {
+    "marque": "Oppo",
+    "modele": "A3 Pro",
+    "variante": "256GB",
+    "annee_sortie": 2025,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 256
+    }
+  },
+  {
+    "marque": "Vivo",
+    "modele": "Y200",
+    "variante": "128GB",
+    "annee_sortie": 2026,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 128
+    }
+  },
+  {
+    "marque": "Motorola",
+    "modele": "G84",
+    "variante": "256GB",
+    "annee_sortie": 2025,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 256
+    }
+  },
+  {
+    "marque": "Realme",
+    "modele": "12 Pro+",
+    "variante": "256GB",
+    "annee_sortie": 2026,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 256
+    }
+  },
+  {
+    "marque": "Tecno",
+    "modele": "Pop 9",
+    "variante": "128GB",
+    "annee_sortie": 2025,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 128
+    }
+  },
+  {
+    "marque": "Infinix",
+    "modele": "Smart 9",
+    "variante": "64GB",
+    "annee_sortie": 2026,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 64
+    }
+  },
+  {
+    "marque": "Samsung",
+    "modele": "Galaxy M55",
+    "variante": "256GB",
+    "annee_sortie": 2025,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 256
+    }
+  },
+  {
+    "marque": "Tecno",
+    "modele": "Spark 20",
+    "variante": "128GB",
+    "annee_sortie": 2026,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 128
+    }
+  },
+  {
+    "marque": "Infinix",
+    "modele": "Hot 40i",
+    "variante": "128GB",
+    "annee_sortie": 2025,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 128
+    }
+  },
+  {
+    "marque": "Samsung",
+    "modele": "Galaxy A15",
+    "variante": "128GB",
+    "annee_sortie": 2026,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 128
+    }
+  },
+  {
+    "marque": "Samsung",
+    "modele": "Galaxy A05s",
+    "variante": "128GB",
+    "annee_sortie": 2025,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 128
+    }
+  },
+  {
+    "marque": "Samsung",
+    "modele": "Galaxy S24 Ultra",
+    "variante": "512GB",
+    "annee_sortie": 2026,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 512
+    }
+  },
+  {
+    "marque": "Apple",
+    "modele": "iPhone 16 Pro Max",
+    "variante": "256GB",
+    "annee_sortie": 2025,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 256
+    }
+  },
+  {
+    "marque": "Google",
+    "modele": "Pixel 9 Pro XL",
+    "variante": "256GB",
+    "annee_sortie": 2026,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 256
+    }
+  },
+  {
+    "marque": "Xiaomi",
+    "modele": "14 Ultra",
+    "variante": "512GB",
+    "annee_sortie": 2025,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 512
+    }
+  },
+  {
+    "marque": "Honor",
+    "modele": "Magic V2",
+    "variante": "512GB",
+    "annee_sortie": 2026,
+    "statut": "disponible",
+    "specs": {
+      "reseau": "5G",
+      "5g": true,
+      "stockage_gb": 512
+    }
+  }
+]

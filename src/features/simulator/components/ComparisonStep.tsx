@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { ShieldCheck, Smartphone, ArrowRightLeft, Zap } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/core/api/utils";
+import type { ChassisTekh, EcranTekh } from "@/core/api/pricing";
 
 interface ComparisonStepProps {
     brand: string;
@@ -11,7 +12,8 @@ interface ComparisonStepProps {
     targetModel: string;
     targetModelInfo: any;
     storage: number | null;
-    aestheticState: string;
+    ecranState: EcranTekh | "";
+    chassisState: ChassisTekh | "";
     targetStorage: number | null;
     formatCFA: (n: number) => string;
     isPWA?: boolean;
@@ -20,7 +22,7 @@ interface ComparisonStepProps {
 export const ComparisonStep = ({
     brand, model, finalPrice,
     targetBrand, targetModel, targetModelInfo,
-    storage, aestheticState, targetStorage,
+    storage, ecranState, chassisState, targetStorage,
     formatCFA, isPWA = false
 }: ComparisonStepProps) => {
     const { t } = useTranslation();
@@ -66,7 +68,7 @@ export const ComparisonStep = ({
                         <div className="p-3 border-t border-zinc-100 dark:border-white/5 bg-white dark:bg-white/5">
                             <p className="text-[8px] sm:text-[9px] font-black text-slate-500 dark:text-zinc-400 uppercase tracking-widest">{t('simulator.possession')}</p>
                             <p className="text-xs sm:text-sm font-black text-black dark:text-white truncate mt-0.5">{model}</p>
-                            <p className="text-[10px] font-bold text-slate-500 dark:text-zinc-400 mt-1">{storage || '—'} Go · {aestheticState === 'very_good' || aestheticState === 'Premium' ? 'Premium' : 'Standard'}</p>
+                            <p className="text-[10px] font-bold text-slate-500 dark:text-zinc-400 mt-1">{storage || '—'} Go · {ecranState === 'parfait' && chassisState === 'intact' ? 'Premium' : 'Standard'}</p>
                             <p className="text-sm sm:text-base font-black text-blue-700 dark:text-primary mt-1">{formatCFA(safeFinalPrice)}</p>
                         </div>
                     </div>

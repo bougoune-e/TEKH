@@ -4,16 +4,15 @@ import { Button } from "@/shared/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/shared/ui/card";
 import { Input } from "@/shared/ui/input";
 import { useDeals } from "@/features/marketplace/deals.context";
-import { getSwapGap } from "@/core/api/pricing";
+import { getSwapGap, type SwapGapResult } from "@/core/api/pricing";
 import { ArrowRightLeft, Calculator, Smartphone, Sparkles } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger } from "@/shared/ui/dialog";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/shared/ui/select";
 
 export default function SwapGapWidget({ dealPrice, dealId, dealTitle, contactWhatsapp }: { dealPrice: number; dealId: string; dealTitle?: string; contactWhatsapp?: string }) {
     const navigate = useNavigate();
     const { lastSimulation } = useDeals();
     const [userValue, setUserValue] = useState<number>(0);
-    const [gapData, setGapData] = useState<{ gap: number; isPositive: boolean; formatted: string } | null>(null);
+    const [gapData, setGapData] = useState<SwapGapResult | null>(null);
     const [simulatorDialogOpen, setSimulatorDialogOpen] = useState(false);
 
     useEffect(() => {
@@ -24,7 +23,7 @@ export default function SwapGapWidget({ dealPrice, dealId, dealTitle, contactWha
     }, [lastSimulation]);
 
     useEffect(() => {
-        const data = getSwapGap(userValue, dealPrice);
+        const data = getSwapGap(userValue, dealPrice, "B", "B");
         setGapData(data);
     }, [userValue, dealPrice]);
 
@@ -74,42 +73,50 @@ export default function SwapGapWidget({ dealPrice, dealId, dealTitle, contactWha
                     </div>
                 </div>
 
-                {gapData && (
+                {gapData && !gapData.blocked && (
                     <div className="space-y-4">
                         <div className="flex flex-col items-center justify-center p-4 bg-muted/30 rounded-[28px] border-2 border-dashed border-border/60">
                             <div className="flex items-center gap-3 text-sm font-black tracking-tighter uppercase opacity-60">
                                 <span>Apport</span>
                                 <span>+</span>
-                                <span>Reste à payer</span>
+                                <span>{gapData.isUpgrade ? "Reste à payer" : "Complément"}</span>
                             </div>
                             <div className="flex items-center gap-4 mt-2">
                                 <span className="text-xl font-bold text-foreground">{(userValue || 0).toLocaleString()} <span className="text-[10px]">F</span></span>
                                 <span className="text-primary font-black">+</span>
-                                <span className="text-2xl font-black text-primary">{(gapData.gap > 0 ? gapData.gap : 0).toLocaleString()} <span className="text-[10px]">FCFA</span></span>
+                                <span className="text-2xl font-black text-primary">{(gapData.isUpgrade ? gapData.amountToPay : 0).toLocaleString()} <span className="text-[10px]">FCFA</span></span>
                             </div>
                             <div className="mt-2 text-[10px] font-bold text-muted-foreground uppercase tracking-widest px-3 py-1 bg-white dark:bg-zinc-900 rounded-full border border-border shadow-sm">
                                 = Valeur de cette Dealbox
                             </div>
                         </div>
 
-                        <div className={`rounded-[32px] p-6 border-2 shadow-xl ${gapData.isPositive ? 'bg-zinc-900 border-[#064e3b]/40 dark:border-[#059669]/40 text-white' : 'bg-[#064e3b] dark:bg-[#17633D] border-[#064e3b]/80 dark:border-[#17633D]/80 text-white'}`}>
+                        <div className={`rounded-[32px] p-6 border-2 shadow-xl ${gapData.isUpgrade ? 'bg-zinc-900 border-[#064e3b]/40 dark:border-[#059669]/40 text-white' : 'bg-[#064e3b] dark:bg-[#17633D] border-[#064e3b]/80 dark:border-[#17633D]/80 text-white'}`}>
                             <div className="flex justify-between items-center mb-1">
-                                <span className="text-xs font-black uppercase tracking-widest text-white">{gapData.isPositive ? 'Votre Budget Gap' : 'Avantage swap'}</span>
+                                <span className="text-xs font-black uppercase tracking-widest text-white">
+                                    {gapData.isUpgrade ? "Reste à payer (upgrade)" : gapData.downgradeAbsorbed ? "Downgrade — différence absorbée" : "TekhPoints (reliquat)"}
+                                </span>
                                 <span className="text-2xl font-black italic text-white">
                                     {gapData.formatted}
                                 </span>
                             </div>
+                            {!gapData.isUpgrade && gapData.tekhPointsCredited > 0 && (
+                                <p className="text-[10px] text-white/80 mt-1">Aucun remboursement en espèces — crédit TekhPoints uniquement.</p>
+                            )}
                             <div className="h-1.5 w-full bg-black/15 rounded-full overflow-hidden mt-2">
                                 <div
-                                    className={`h-full ${gapData.isPositive ? 'bg-orange-500' : 'bg-white/90'}`}
-                                    style={{ width: `${Math.min(100, (Math.abs(gapData.gap) / dealPrice) * 100)}%` }}
+                                    className={`h-full ${gapData.isUpgrade ? 'bg-orange-500' : 'bg-white/90'}`}
+                                    style={{ width: `${Math.min(100, dealPrice > 0 ? (Math.abs(gapData.gap) / dealPrice) * 100 : 0)}%` }}
                                 />
                             </div>
                             <p className="text-[11px] mt-2 text-center text-white/85 font-medium">
-                                Estimation indicative hors frais de service éventuels.
+                                Estimation indicative — politique TekhPoints applicable aux downgrades.
                             </p>
                         </div>
                     </div>
+                )}
+                {gapData?.blocked && (
+                    <p className="text-sm text-destructive font-medium">{gapData.reason}</p>
                 )}
             </CardContent>
         </Card>

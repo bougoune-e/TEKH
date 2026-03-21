@@ -12,7 +12,12 @@
     "start": "npx serve -s dist",
     "catalog:validate": "node scripts/catalog/validate_catalog.mjs",
     "catalog:report": "node scripts/catalog/validate_catalog.mjs || true",
-    "catalog:normalize": "node scripts/catalog/normalize_catalog.mjs"
+    "catalog:normalize": "node scripts/catalog/normalize_catalog.mjs",
+    "prt:generate-seed": "node scripts/prt/generate-seed-json.mjs",
+    "prt:seed": "node scripts/prt/seed-smartphones.mjs",
+    "prt:sync-prices": "node scripts/prt/sync-prices.mjs",
+    "prt:assign-classes": "node scripts/prt/assign-classes.mjs",
+    "prt:test-ebay": "node scripts/prt/test-ebay.mjs"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
@@ -84,6 +89,7 @@
     "@vitejs/plugin-react-swc": "^3.11.0",
     "autoprefixer": "^10.4.21",
     "baseline-browser-mapping": "^2.9.17",
+    "dotenv": "^16.6.1",
     "eslint": "^9.32.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
