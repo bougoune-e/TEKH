@@ -182,8 +182,10 @@ export default function DealDetails() {
                 <Button size="sm" variant="default" className="rounded-full bg-[#1877F2] hover:bg-[#166FE0] text-white" aria-label="Partager sur Facebook">
                   <Facebook className="h-4 w-4 mr-1 text-white" /> Facebook
                 </Button>
-                <Button size="sm" variant="default" className="rounded-full bg-black hover:bg-zinc-800 text-white dark:bg-white dark:hover:bg-zinc-200 dark:text-black" aria-label="Partager sur X">
-                  <span className="font-bold text-[0.95rem] mr-1">𝕏</span> X
+                <Button size="sm" variant="default" className="rounded-full bg-black hover:bg-zinc-800 text-white dark:bg-white dark:hover:bg-zinc-200 dark:text-black gap-1.5" asChild aria-label="Partager sur X (anciennement Twitter)">
+                  <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`${deal.title || deal.brand + " " + deal.model} sur TEKH+`)}`} target="_blank" rel="noopener noreferrer">
+                    <span className="font-bold text-lg leading-none" aria-hidden>𝕏</span>
+                  </a>
                 </Button>
                 <Button asChild size="sm" variant="outline" className="rounded-full" aria-label="Partager par Email">
                   <a href={mailHref || "#"}><Mail className="h-4 w-4 mr-1" /> Email</a>

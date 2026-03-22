@@ -22,7 +22,7 @@ Optionnel :
 - `EBAY_DEBUG=1` — logs (marché, filtre, `total` renvoyé par l’API).
 - `PRT_SYNC_DELAY_MS` — pause entre appels eBay (défaut 500 ms).
 - `PRT_MAX_AGE_DAYS` — rafraîchir les PRT plus vieux que N jours (défaut 30).
-- `PRT_SYNC_LIMIT` — nombre max de lignes traitées par exécution (défaut 200).
+- `PRT_SYNC_LIMIT` — nombre max de lignes **lues** pour le rafraîchissement incrémental (défaut **2500**, couvre ~1520 modèles). Mettre **0** pour tout le catalogue.
 
 ### Dépannage : `medianEur` / `prtFcfa` à `null`, `sampleSize: 0`
 
@@ -36,13 +36,16 @@ Optionnel :
 
 | Script | Rôle |
 |--------|------|
-| `npm run prt:generate-seed` | Régénère `seeds/smartphones.json` (50 lignes). |
+| `npm run prt:generate-seed` | Régénère `seeds/smartphones.json` (50 lignes de démo). |
+| `npm run prt:generate-seed-gsmarena` | Régénère `seeds/smartphones.json` depuis `gsmarena-api/data.json` (**~1520** smartphones par défaut, `SEED_MAX_ROWS`). |
 | `npm run prt:seed` | Upsert du seed dans `public.smartphones` (clé service). |
 | `npm run prt:test-ebay` | Test OAuth + médiane sans DB (`Samsung Galaxy A54 128GB` par défaut). |
-| `npm run prt:sync-prices` | Met à jour `prt_fcfa` / `prix_ebay_eur` / `prt_updated_at` via Browse API. |
+| `npm run prt:sync-prices` | Met à jour `prt_fcfa` / `prix_ebay_eur` / `prt_updated_at` via Browse API (lignes « périmées » ou toutes selon script). |
+| `npm run prt:resync-all-ebay` | **Recalcul massif** : sauvegarde les prix actuels, remet `facteur_afrique` à **1**, vide les PRT puis réécrit depuis eBay ; si aucune donnée eBay → restaure l’ancien prix ou `reference_prt_fcfa` dans `seeds/smartphones.json`. |
 | `npm run prt:assign-classes` | Recalcule `classe_tekh` (A–F) à partir du PRT et des specs. |
 
-Ordre conseillé une première fois : migration → `prt:seed` → `prt:sync-prices` → `prt:assign-classes`.
+Ordre conseillé une première fois : migration → `prt:generate-seed-gsmarena` (ou seed démo) → `prt:seed` → `prt:resync-all-ebay` (ou `prt:sync-prices`) → `prt:assign-classes`.  
+L’application utilise **uniquement les colonnes en base** pour le PRT, pas l’API eBay en direct.
 
 ## 4. Intégration app (simulateur & profil)
 
@@ -56,7 +59,7 @@ Ordre conseillé une première fois : migration → `prt:seed` → `prt:sync-pri
 Implémentée dans `tekh_backend/backend/lib/ebay.mjs` :
 
 - Médiane des prix **USED** (filtre `conditions:{USED}`, replis marché / `conditionIds` si besoin) sur les résultats Browse.
-- **PRT_FCFA** = médiane_EUR × `facteur_afrique` (défaut **0,90** par ligne) × **655,957** (EUR → FCFA).
+- **PRT_FCFA** = médiane_EUR × `facteur_afrique` (défaut **1** par ligne) × **655,957** (EUR → FCFA).
 
 > L’API **Browse** renvoie des annonces en cours, pas des ventes conclues. Pour une médiane type « sold », il faudra une autre source ou un post-traitement métier.
 

@@ -73,6 +73,16 @@ export default function SwapGapWidget({ dealPrice, dealId, dealTitle, contactWha
                     </div>
                 </div>
 
+                <div className="rounded-lg border border-[#064e3b]/15 dark:border-[#059669]/25 bg-background/80 px-3 py-2.5 text-[11px] leading-snug text-muted-foreground space-y-1.5">
+                    <p className="font-semibold text-[#064e3b] dark:text-[#059669] text-xs">PRT &amp; VRT — rappel</p>
+                    <p>
+                        <strong className="text-foreground">PRT</strong> (Prix de Référence TEKH) : valeur catalogue du modèle dans notre référentiel.
+                        {" "}
+                        <strong className="text-foreground">VRT</strong> (Valeur Réelle de Transaction) : valeur après diagnostic (état, batterie, écran, âge…).
+                        Le simulateur complet calcule la <strong className="text-foreground">VRT</strong> de votre téléphone ; le prix affiché sur l&apos;annonce sert de référence pour l&apos;écart de swap.
+                    </p>
+                </div>
+
                 {gapData && !gapData.blocked && (
                     <div className="space-y-4">
                         <div className="flex flex-col items-center justify-center p-4 bg-muted/30 rounded-[28px] border-2 border-dashed border-border/60">

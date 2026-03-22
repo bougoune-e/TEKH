@@ -1,11 +1,11 @@
 /**
- * PRT — logique de cache & fraîcheur (charte : refresh ~30 jours).
- * La résolution complète (DB locale → eBay async → jamais d’erreur bloquante utilisateur)
- * sera branchée sur la table `smartphones` + Edge Function ou route backend.
+ * PRT — cache **persistant** en base (`smartphones.prt_fcfa`, `prix_ebay_eur`).
+ * L’app lit uniquement Supabase : **aucun appel eBay** à chaque requête utilisateur.
+ * Les scripts `prt:sync-prices` / `prt:resync-all-ebay` alimentent ce cache (charte : refresh ~30 j.).
  */
 
-/** Aligné sur `tekh_backend/backend/lib/ebay.mjs` (Facteur Afrique appliqué à la médiane EUR). */
-export const DEFAULT_FACTEUR_AFRIQUE = 0.9;
+/** Aligné sur `tekh_backend/backend/lib/ebay.mjs` (1 = médiane eBay convertie en FCFA). */
+export const DEFAULT_FACTEUR_AFRIQUE = 1;
 
 export const PRT_CACHE_TTL_DAYS = 30;
 

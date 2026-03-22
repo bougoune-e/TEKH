@@ -72,22 +72,22 @@ const ServicesSection = () => {
         </div>
 
         {isPWA ? (
-          <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-2xl mx-auto">
             {services.map((s) => (
               <button
                 key={s.id}
                 type="button"
                 onClick={() => navigate(servicePaths[s.id] || "/a-propos#services")}
-                className="bg-white dark:bg-zinc-900/40 p-6 rounded-[28px] border-2 border-slate-100 dark:border-white/5 shadow-sm flex flex-col items-center text-center active:scale-[0.98] hover:shadow-md transition-all"
+                className="bg-white dark:bg-zinc-900/40 p-3 sm:p-5 rounded-[24px] sm:rounded-[28px] border-2 border-slate-100 dark:border-white/5 shadow-sm flex flex-col items-center text-center active:scale-[0.98] hover:shadow-md transition-all min-h-0 min-w-0"
               >
-                <span className="text-4xl mb-3">{s.emoji}</span>
-                <div className={`w-14 h-14 rounded-full flex items-center justify-center mb-3 ${s.color}`}>
-                  <s.icon className="w-7 h-7 text-white" />
+                <span className="text-3xl sm:text-4xl mb-2 sm:mb-3 shrink-0">{s.emoji}</span>
+                <div className={`w-11 h-11 sm:w-14 sm:h-14 rounded-full flex items-center justify-center mb-2 sm:mb-3 shrink-0 ${s.color}`}>
+                  <s.icon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
                 </div>
-                <span className="text-xs font-black text-[#0a0a0a] dark:text-white uppercase tracking-widest">
+                <span className="text-[10px] sm:text-xs font-black text-[#0a0a0a] dark:text-white uppercase tracking-tight sm:tracking-widest leading-tight line-clamp-3 break-words px-0.5">
                   {s.title}
                 </span>
-                <p className="text-[10px] font-bold text-[#404040] dark:text-zinc-400 mt-1 line-clamp-2">
+                <p className="text-[9px] sm:text-[10px] font-bold text-[#404040] dark:text-zinc-400 mt-1 line-clamp-2 leading-snug">
                   {s.shortDesc}
                 </p>
               </button>

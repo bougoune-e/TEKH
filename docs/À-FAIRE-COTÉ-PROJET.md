@@ -172,7 +172,7 @@ Jusqu’à ce que l’une de ces options soit en place, les utilisateurs pourron
   - [ ] Appliquer la migration `supabase/migrations/20250321120000_smartphones_tekh_points.sql`  
   - [ ] Créer une app **Production** sur [eBay Developers](https://developer.ebay.com/) et renseigner **`EBAY_CLIENT_ID`** / **`EBAY_CLIENT_SECRET`** (voir `docs/PRT-EBAY-SETUP.md` et `.env.example`)  
   - [ ] **`SUPABASE_SERVICE_ROLE_KEY`** uniquement pour les scripts serveur / CI (jamais dans le frontend)  
-  - [ ] `npm run prt:seed` puis `npm run prt:sync-prices` puis `npm run prt:assign-classes`  
+  - [ ] `npm run prt:seed` puis `npm run prt:sync-prices` puis `npm run prt:assign-classes` (ou **`prt:resync-all-ebay`** pour recalcul massif eBay + facteur **1**, puis `prt:assign-classes`)  
   - [ ] Planifier un **cron mensuel** (sync prix + classes) sur l’hôte qui exécute Node  
 
 - [ ] **Environnement**  

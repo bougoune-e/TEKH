@@ -29,7 +29,8 @@ function endUserCtxForMarketplace(marketplaceId) {
 }
 /** Taux indicatif EUR → FCFA (charte projet) */
 export const EUR_TO_FCFA = 655.957;
-export const DEFAULT_FACTEUR_AFRIQUE = 0.9;
+/** 1 = PRT = médiane eBay (EUR) × EUR→FCFA, sans décote supplémentaire. */
+export const DEFAULT_FACTEUR_AFRIQUE = 1;
 
 let cachedToken = null;
 let cachedTokenExpiresAt = 0;

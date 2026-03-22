@@ -2,6 +2,7 @@
 /**
  * Met à jour prt_fcfa / prix_ebay_eur via eBay Browse API pour les lignes
  * dont prt_updated_at est NULL ou > PRT_MAX_AGE_DAYS (défaut 30).
+ * Les valeurs sont **persistées en base** : l’app ne rappelle pas eBay à chaque visite.
  * Usage : depuis la racine TEKH — npm run prt:sync-prices
  */
 import { createClient } from "@supabase/supabase-js";
@@ -14,7 +15,13 @@ const SUPABASE_URL = process.env.SUPABASE_URL;
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const DELAY_MS = Number(process.env.PRT_SYNC_DELAY_MS) || 500;
 const MAX_AGE_DAYS = Number(process.env.PRT_MAX_AGE_DAYS) || 30;
-const LIMIT = Number(process.env.PRT_SYNC_LIMIT) || 200;
+/** 0 = illimité (tout le catalogue). Défaut 2500 pour couvrir ~1520+ modèles sans variable d’env. */
+const LIMIT = (() => {
+  const v = process.env.PRT_SYNC_LIMIT;
+  if (v === "" || v == null) return 2500;
+  const n = Number(v);
+  return Number.isFinite(n) ? n : 2500;
+})();
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
@@ -32,6 +39,32 @@ function buildSearchQuery(row) {
   return `${row.marque} ${row.modele}${v}`.trim();
 }
 
+/** Lecture paginée (PostgREST limite souvent ~1000 lignes par requête). */
+async function fetchRowsOrderedByStale(supabase) {
+  const pageSize = 1000;
+  const rows = [];
+  let from = 0;
+  for (;;) {
+    const to = from + pageSize - 1;
+    const { data, error } = await supabase
+      .from("smartphones")
+      .select("id, marque, modele, variante, facteur_afrique, prt_updated_at")
+      .order("prt_updated_at", { ascending: true, nullsFirst: true })
+      .range(from, to);
+
+    if (error) {
+      console.error("[sync-prices] lecture DB:", error.message);
+      process.exit(1);
+    }
+    if (!data?.length) break;
+    rows.push(...data);
+    if (LIMIT !== 0 && rows.length >= LIMIT) break;
+    if (data.length < pageSize) break;
+    from += pageSize;
+  }
+  return LIMIT === 0 ? rows : rows.slice(0, LIMIT);
+}
+
 async function main() {
   if (!SUPABASE_URL || !SERVICE_KEY) {
     console.error("Définissez SUPABASE_URL et SUPABASE_SERVICE_ROLE_KEY (clé service, scripts serveur).");
@@ -39,16 +72,7 @@ async function main() {
   }
 
   const supabase = createClient(SUPABASE_URL, SERVICE_KEY);
-  const { data: rows, error } = await supabase
-    .from("smartphones")
-    .select("id, marque, modele, variante, facteur_afrique, prt_updated_at")
-    .order("prt_updated_at", { ascending: true, nullsFirst: true })
-    .limit(LIMIT);
-
-  if (error) {
-    console.error("[sync-prices] lecture DB:", error.message);
-    process.exit(1);
-  }
+  const rows = await fetchRowsOrderedByStale(supabase);
 
   const todo = (rows || []).filter(needsRefresh);
   console.log(`[sync-prices] ${todo.length} ligne(s) à rafraîchir (sur ${rows?.length || 0} lues).`);
@@ -59,7 +83,7 @@ async function main() {
 
   for (const row of todo) {
     const q = buildSearchQuery(row);
-    const facteur = row.facteur_afrique != null ? Number(row.facteur_afrique) : 0.9;
+    const facteur = row.facteur_afrique != null ? Number(row.facteur_afrique) : 1;
 
     try {
       const result = await fetchPrtForModel(q, facteur);

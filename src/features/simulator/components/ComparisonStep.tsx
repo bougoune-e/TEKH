@@ -3,6 +3,8 @@ import { ShieldCheck, Smartphone, ArrowRightLeft, Zap } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/core/api/utils";
 import type { ChassisTekh, EcranTekh } from "@/core/api/pricing";
+import { buildWhatsAppUrl } from "@/core/utils/whatsapp";
+import { toast } from "@/shared/hooks/use-toast";
 
 interface ComparisonStepProps {
     brand: string;
@@ -10,7 +12,7 @@ interface ComparisonStepProps {
     finalPrice: number | null;
     targetBrand: string;
     targetModel: string;
-    targetModelInfo: any;
+    targetModelInfo: { base_price_fcfa?: number } | null;
     storage: number | null;
     ecranState: EcranTekh | "";
     chassisState: ChassisTekh | "";
@@ -128,9 +130,33 @@ export const ComparisonStep = ({
             {/* CTA — style minimal comme "Estimer mon téléphone" */}
             <div className="pt-6">
                 <button
+                    type="button"
                     onClick={() => {
-                        alert("VOTRE DEMANDE DE SWAP EST ENREGISTRÉE ! UN AGENT VA VOUS CONTACTER SUR WHATSAPP.");
-                        window.location.href = "/";
+                        const lines = [
+                            "Bonjour TEKH+,",
+                            "",
+                            "Je souhaite un échange (simulateur TEKH+) :",
+                            `• Mon appareil : ${brand} ${model} (${storage ?? "—"} Go) — VRT estimée : ${formatCFA(safeFinalPrice)}`,
+                            `• Modèle visé : ${targetBrand} ${targetModel} (${targetStorage ?? "—"} Go) — PRT cible : ${formatCFA(safeTargetPrice)}`,
+                            `• Écart affiché : ${formatCFA(difference)}`,
+                            "",
+                            "Merci de me confirmer la suite et le point de swap.",
+                        ];
+                        const url = buildWhatsAppUrl(lines.join("\n"));
+                        if (url) {
+                            window.open(url, "_blank", "noopener,noreferrer");
+                            toast({
+                                title: "WhatsApp",
+                                description: "Message récapitulatif prérempli — envoyez-le pour confirmer votre demande.",
+                            });
+                        } else {
+                            toast({
+                                title: "Configuration requise",
+                                description:
+                                    "Ajoutez VITE_WHATSAPP_BUSINESS (numéro international sans +) dans les variables du site, ou utilisez la page Contact.",
+                                variant: "destructive",
+                            });
+                        }
                     }}
                     className={cn(
                         "w-full h-12 sm:h-14 rounded-2xl font-black text-sm sm:text-base uppercase tracking-tight hover:scale-[1.01] active:scale-95 transition-all shadow-lg flex items-center justify-center gap-2",
@@ -138,9 +164,11 @@ export const ComparisonStep = ({
                     )}
                 >
                     <ShieldCheck className="w-5 h-5" />
-                    <span>Confirmer l'échange</span>
+                    <span>Confirmer l&apos;échange (WhatsApp)</span>
                 </button>
-                <p className="text-center text-[9px] font-bold text-slate-400 dark:text-zinc-600 uppercase tracking-wider mt-3">En cliquant, vous acceptez les CG du programme TEKH+</p>
+                <p className="text-center text-[9px] font-bold text-slate-400 dark:text-zinc-600 uppercase tracking-wider mt-3 max-w-md mx-auto leading-relaxed">
+                    En cliquant, un message récapitulatif s&apos;ouvre vers notre WhatsApp professionnel (à configurer côté site). Vous acceptez les conditions du programme TEKH+.
+                </p>
             </div>
         </div>
     );

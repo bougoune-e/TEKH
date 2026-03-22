@@ -72,13 +72,15 @@ export const TargetSelectionStep = ({
                 </button>
             </div>
 
-            {/* Explication TEKH+ des modes Upgrade / Downgrade */}
-            <div className="max-w-3xl mx-auto mt-3 text-xs sm:text-sm text-slate-600 dark:text-zinc-400 space-y-1">
-                <p className="font-semibold">
-                    <span className="font-black text-[#064e3b] dark:text-primary">UPGRADE</span> : vous utilisez la valeur de votre téléphone actuel comme apport pour viser un modèle plus performant (même gamme ou au-dessus).
+            {/* Explication TEKH+ des modes Upgrade / Downgrade (alignée politique TekhPoints) */}
+            <div className="max-w-3xl mx-auto mt-3 text-xs sm:text-sm text-slate-600 dark:text-zinc-400 space-y-2 rounded-xl border border-slate-200/80 dark:border-white/10 bg-slate-50/80 dark:bg-white/[0.02] p-4">
+                <p className="font-semibold leading-relaxed">
+                    <span className="font-black text-[#064e3b] dark:text-primary">Upgrade</span> : vous utilisez la{' '}
+                    <abbr title="Valeur Réelle de Transaction" className="no-underline border-b border-dotted border-current">VRT</abbr> de votre téléphone comme apport pour obtenir un modèle plus performant ; vous réglez la différence (somme à payer) selon le bilan affiché à l&apos;étape suivante.
                 </p>
-                <p className="font-semibold">
-                    <span className="font-black text-amber-500">DOWNGRADE</span> : vous choisissez un modèle plus simple afin de récupérer un maximum de liquidités en retour.
+                <p className="font-semibold leading-relaxed">
+                    <span className="font-black text-amber-600 dark:text-amber-400">Downgrade</span> : vous visez un appareil moins cher que votre apport. L&apos;écart n&apos;est pas versé en espèces : au-delà du seuil absorbé par TEKH+ (voir politique TekhPoints), le reliquat est crédité en{' '}
+                    <strong>TekhPoints</strong> (usage ultérieur, plafond 30 % par transaction, validité 6 mois).
                 </p>
             </div>
 
@@ -88,8 +90,8 @@ export const TargetSelectionStep = ({
                         <div className="space-y-1.5 text-left">
                             <Label className="text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-zinc-400 ml-1">Marque cible</Label>
                             <Select value={targetBrand || ""} onValueChange={(v) => { setTargetBrand(v); setTargetModel(""); setTargetStorage(null); }}>
-                                <SelectTrigger className="h-12 rounded-xl border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white">
-                                    <SelectValue placeholder="SÉLECTIONNER BRAND" />
+                                <SelectTrigger className="h-12 rounded-xl border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-semibold text-sm text-slate-900 dark:text-white">
+                                    <SelectValue placeholder="Choisir une marque" />
                                 </SelectTrigger>
                                 <SelectContent className="rounded-xl bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
                                     {brands.map((b) => <SelectItem key={b} value={b}>{b}</SelectItem>)}
@@ -100,8 +102,8 @@ export const TargetSelectionStep = ({
                         <div className="space-y-1.5 text-left">
                             <Label className="text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-zinc-400 ml-1">Modèle cible</Label>
                             <Select value={targetModel || ""} onValueChange={(v) => { setTargetModel(v); setTargetStorage(null); }} disabled={!targetBrand || loadingTargetModels}>
-                                <SelectTrigger className="h-12 rounded-xl border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white disabled:opacity-30">
-                                    <SelectValue placeholder={loadingTargetModels ? "..." : "SÉLECTIONNER MODEL"} />
+                                <SelectTrigger className="h-12 rounded-xl border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-semibold text-sm text-slate-900 dark:text-white disabled:opacity-30">
+                                    <SelectValue placeholder={loadingTargetModels ? "Chargement…" : "Choisir le modèle souhaité"} />
                                 </SelectTrigger>
                                 <SelectContent className="rounded-xl bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
                                     {targetModels.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}
@@ -134,13 +136,15 @@ export const TargetSelectionStep = ({
 
                     {targetStorage && (
                         <button
+                            type="button"
                             onClick={() => {
                                 setStep("comparison");
                                 window.scrollTo({ top: 0, behavior: "smooth" });
                             }}
-                            className="w-full h-16 rounded-full bg-black dark:bg-white text-white dark:text-black font-black text-xl uppercase italic tracking-[0.2em] shadow-2xl hover:scale-[1.02] active:scale-95 transition-all mt-8"
+                            className="w-full max-w-md mx-auto mt-6 flex items-center justify-center gap-2.5 h-12 px-5 rounded-xl border-2 border-slate-900 dark:border-white bg-slate-900 dark:bg-white text-white dark:text-black font-black text-sm uppercase tracking-wide shadow-md hover:opacity-95 active:scale-[0.99] transition-all"
                         >
-                            Calculer le Deal <ArrowRightLeft className="w-6 h-6 ml-4" />
+                            <ArrowRightLeft className="w-4 h-4 shrink-0" aria-hidden />
+                            <span className="truncate">Calculer le deal</span>
                         </button>
                     )}
                 </div>

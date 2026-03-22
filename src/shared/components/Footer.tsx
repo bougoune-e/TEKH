@@ -1,6 +1,7 @@
 import { Mail, Facebook, Instagram } from "lucide-react";
 import { Link } from "react-router-dom";
 import logo from "@/assets/logos/robott.jpeg";
+import { buildWhatsAppUrl } from "@/core/utils/whatsapp";
 
 const TikTokIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor" {...props}>
@@ -16,6 +17,7 @@ const WhatsAppIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const waHref = buildWhatsAppUrl("Bonjour TEKH+, je vous contacte depuis le site.") || "https://wa.me/";
 
   return (
     <footer className="bg-background border-t border-border/50 relative overflow-hidden">
@@ -72,7 +74,7 @@ const Footer = () => {
               <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="h-9 w-9 inline-flex items-center justify-center rounded-lg border border-border hover:bg-accent transition-smooth">
                 <Instagram className="h-4 w-4 text-[#E4405F]" />
               </a>
-              <a href="https://wa.me/" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="h-9 w-9 inline-flex items-center justify-center rounded-lg border border-border hover:bg-accent transition-smooth">
+              <a href={waHref} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="h-9 w-9 inline-flex items-center justify-center rounded-lg border border-border hover:bg-accent transition-smooth">
                 <WhatsAppIcon className="h-4 w-4 text-[#25D366]" />
               </a>
             </div>

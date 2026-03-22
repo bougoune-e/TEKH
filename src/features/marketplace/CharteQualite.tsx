@@ -37,7 +37,7 @@ const CharteQualite = () => {
     ];
 
     return (
-        <div className="min-h-dvh bg-white dark:bg-black text-black dark:text-white pt-24 pb-16">
+        <div className="min-h-dvh bg-white dark:bg-black text-black dark:text-white pt-20 sm:pt-24 pb-32 md:pb-20 scroll-pt-24">
             <div className="container mx-auto px-4 max-w-5xl">
                 <Link to="/" className="inline-flex items-center gap-2 text-primary font-black mb-8 hover:-translate-x-1 transition-transform">
                     <ChevronLeft className="h-5 w-5" />
@@ -75,13 +75,24 @@ const CharteQualite = () => {
                     </div>
                 </section>
 
-                <div className="p-12 bg-black dark:bg-white text-white dark:text-black rounded-[40px] shadow-2xl text-center">
-                    <h3 className="text-3xl font-black mb-4 uppercase">Un standard inaltérable</h3>
-                    <p className="text-xl opacity-80 mb-8">Nous mettons à jour nos protocoles tous les trimestres pour intégrer les nouvelles technologies.</p>
-                    <Link to="/contact" className="inline-block px-10 py-4 bg-primary text-black rounded-2xl font-black hover:scale-105 transition-transform">
+                <section
+                    id="question-technique"
+                    className="scroll-mt-28 p-8 sm:p-12 rounded-[32px] shadow-xl text-center border border-emerald-900/20 dark:border-emerald-500/30 bg-gradient-to-br from-emerald-950 via-zinc-900 to-zinc-950 text-white mb-4"
+                >
+                    <h3 className="text-2xl sm:text-3xl font-black mb-3 uppercase tracking-tight text-white">
+                        Un standard inaltérable
+                    </h3>
+                    <p className="text-base sm:text-lg text-emerald-100/95 mb-6 max-w-2xl mx-auto leading-relaxed">
+                        Nous mettons à jour nos protocoles tous les trimestres pour intégrer les nouvelles technologies.
+                        Une question sur la qualité ou un diagnostic ? Écrivez-nous.
+                    </p>
+                    <Link
+                        to="/contact"
+                        className="inline-flex items-center justify-center px-8 py-3.5 bg-primary text-primary-foreground rounded-2xl font-black hover:opacity-95 transition-opacity shadow-lg"
+                    >
                         Question technique ?
                     </Link>
-                </div>
+                </section>
             </div>
         </div>
     );

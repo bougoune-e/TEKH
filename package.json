@@ -14,10 +14,13 @@
     "catalog:report": "node scripts/catalog/validate_catalog.mjs || true",
     "catalog:normalize": "node scripts/catalog/normalize_catalog.mjs",
     "prt:generate-seed": "node scripts/prt/generate-seed-json.mjs",
+    "prt:generate-seed-gsmarena": "node scripts/prt/generate-seed-from-gsmarena.mjs",
     "prt:seed": "node scripts/prt/seed-smartphones.mjs",
     "prt:sync-prices": "node scripts/prt/sync-prices.mjs",
+    "prt:resync-all-ebay": "node scripts/prt/resync-all-ebay.mjs",
     "prt:assign-classes": "node scripts/prt/assign-classes.mjs",
-    "prt:test-ebay": "node scripts/prt/test-ebay.mjs"
+    "prt:test-ebay": "node scripts/prt/test-ebay.mjs",
+    "prt:fill-from-tab-csv": "node scripts/prt/fill-prt-from-tab-csv.mjs"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",

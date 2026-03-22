@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS public.smartphones (
   specs JSONB NOT NULL DEFAULT '{}'::jsonb,
   prt_fcfa INTEGER CHECK (prt_fcfa IS NULL OR prt_fcfa >= 0),
   prix_ebay_eur NUMERIC(12, 2),
-  facteur_afrique NUMERIC(6, 4) NOT NULL DEFAULT 0.9000,
+  facteur_afrique NUMERIC(6, 4) NOT NULL DEFAULT 1.0000,
   prt_updated_at TIMESTAMPTZ,
   specs_updated_at TIMESTAMPTZ,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),

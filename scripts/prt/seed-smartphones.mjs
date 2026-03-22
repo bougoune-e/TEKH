@@ -36,22 +36,26 @@ async function main() {
     annee_sortie: r.annee_sortie != null ? Number(r.annee_sortie) : null,
     statut: r.statut || "disponible",
     specs: r.specs && typeof r.specs === "object" ? r.specs : {},
-    facteur_afrique: r.facteur_afrique != null ? Number(r.facteur_afrique) : 0.9,
+    facteur_afrique: r.facteur_afrique != null ? Number(r.facteur_afrique) : 1,
     classe_tekh: r.classe_tekh || null,
     prt_fcfa: r.prt_fcfa != null ? Number(r.prt_fcfa) : null,
     prix_ebay_eur: r.prix_ebay_eur != null ? Number(r.prix_ebay_eur) : null,
   }));
 
-  const { error } = await supabase.from("smartphones").upsert(batch, {
-    onConflict: "marque,modele,variante",
-  });
-
-  if (error) {
-    console.error("[seed] erreur upsert:", error.message);
-    process.exit(1);
+  const CHUNK = 150;
+  for (let i = 0; i < batch.length; i += CHUNK) {
+    const slice = batch.slice(i, i + CHUNK);
+    const { error } = await supabase.from("smartphones").upsert(slice, {
+      onConflict: "marque,modele,variante",
+    });
+    if (error) {
+      console.error("[seed] erreur upsert:", error.message);
+      process.exit(1);
+    }
+    console.log(`[seed] ${Math.min(i + CHUNK, batch.length)}/${batch.length}…`);
   }
 
-  console.log(`[seed] ${batch.length} ligne(s) importées (upsert).`);
+  console.log(`[seed] ${batch.length} ligne(s) importées (upsert par lots).`);
 }
 
 main().catch((e) => {
