@@ -131,6 +131,8 @@ const STATIC_MODELS: Record<string, string[]> = {
   "Huawei": ["Pura 70 Ultra", "Pura 70 Pro", "Mate 60 Pro", "P60 Pro", "Mate 50 Pro", "Nova 12", "Nova 11"],
   "Nothing": ["Phone (2a) Plus", "Phone (2a)", "Phone (2)", "Phone (1)"],
   "Motorola": ["Edge 50 Ultra", "Edge 50 Pro", "Edge 50 Fusion", "Razr 50 Ultra", "Razr 50", "Moto G85", "Moto G54", "Moto G34", "ThinkPhone"],
+  "Sony": ["Xperia 1 VII", "Xperia 1 VI", "Xperia 10 VII", "Xperia 5 VI", "Xperia Pro 2"],
+  "Vivo": ["X300 Ultra", "X200 Pro", "X200", "V70 FE", "V60", "V40", "Y300 Pro", "T5x", "X Fold 5", "iQOO Neo 10"],
 };
 
 export async function fetchBrands(): Promise<string[]> {

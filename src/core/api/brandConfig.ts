@@ -7,7 +7,7 @@
  * - Helper functions for brand validation and grouping
  */
 
-/** The 15 approved brands for TEKH+ */
+/** The 17 approved brands for TEKH+ */
 export const ALLOWED_BRANDS = [
     "Apple",
     "Google",
@@ -23,7 +23,9 @@ export const ALLOWED_BRANDS = [
     "Realme",
     "Redmi",
     "Samsung",
+    "Sony",
     "Tecno",
+    "Vivo",
 ] as const;
 
 export type AllowedBrand = (typeof ALLOWED_BRANDS)[number];
