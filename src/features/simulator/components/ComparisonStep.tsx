@@ -100,26 +100,26 @@ export const ComparisonStep = ({
             </div>
 
             {/* Financial Balance Section */}
-            <div className="bg-slate-900 dark:bg-black rounded-[32px] p-6 sm:p-8 md:p-10 space-y-8 relative shadow-2xl text-white max-w-4xl mx-auto mt-6">
+            <div className="bg-slate-900 dark:bg-black rounded-[32px] p-5 sm:p-8 md:p-10 space-y-8 relative shadow-2xl text-white max-w-4xl mx-auto mt-6 overflow-hidden">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-600 dark:bg-primary px-6 py-2 rounded-full shadow-lg">
                     <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white">BILAN FINANCIER</span>
                 </div>
 
-                <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+                <div className="flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8">
                     <div className="space-y-4 flex-1 w-full max-w-xs">
                         <div className="flex items-center justify-between border-b border-white/10 pb-2">
                             <span className="text-white text-[10px] font-black uppercase tracking-widest">Apport</span>
-                            <span className="text-white text-lg font-black italic">{formatCFA(safeFinalPrice)}</span>
+                            <span className="text-white text-base sm:text-lg font-black italic">{formatCFA(safeFinalPrice)}</span>
                         </div>
                         <div className="flex items-center justify-between border-b border-white/10 pb-2">
                             <span className="text-white text-[10px] font-black uppercase tracking-widest">Cible</span>
-                            <span className="text-white text-lg font-black italic">{formatCFA(safeTargetPrice)}</span>
+                            <span className="text-white text-base sm:text-lg font-black italic">{formatCFA(safeTargetPrice)}</span>
                         </div>
                     </div>
 
-                    <div className="flex flex-col items-center md:items-end justify-center md:border-l border-white/10 md:pl-10 flex-1">
+                    <div className="flex flex-col items-center md:items-end justify-center md:border-l border-white/10 md:pl-10 flex-1 min-w-0 w-full">
                         <div className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-400 dark:text-primary mb-2 italic">DIFFÉRENCE</div>
-                        <div className="text-5xl sm:text-6xl font-black text-white italic tracking-tighter leading-none mb-3">
+                        <div className="text-3xl sm:text-5xl md:text-6xl font-black text-white italic tracking-tighter leading-none mb-3 w-full text-center md:text-right truncate">
                             {formatCFA(difference)}
                         </div>
                         <p className="text-[9px] text-zinc-500 font-bold uppercase tracking-[0.2em] text-center md:text-right">RÈGLEMENT EN AGENCE TEKH+</p>
@@ -165,9 +165,6 @@ export const ComparisonStep = ({
                     <ShieldCheck className="w-5 h-5" />
                     <span>Confirmer l&apos;échange (WhatsApp)</span>
                 </button>
-                <p className="text-center text-[9px] font-bold text-slate-400 dark:text-zinc-600 uppercase tracking-wider mt-3 max-w-md mx-auto leading-relaxed">
-                    En cliquant, un message récapitulatif s&apos;ouvre vers notre WhatsApp professionnel (à configurer côté site). Vous acceptez les conditions du programme TEKH+.
-                </p>
             </div>
         </div>
     );
