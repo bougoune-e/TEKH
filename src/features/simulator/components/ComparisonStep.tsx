@@ -100,9 +100,9 @@ export const ComparisonStep = ({
             </div>
 
             {/* Financial Balance Section */}
-            <div className="bg-slate-900 dark:bg-black rounded-[32px] p-5 sm:p-8 md:p-10 space-y-8 relative shadow-2xl text-white max-w-4xl mx-auto mt-6 overflow-hidden">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-600 dark:bg-primary px-6 py-2 rounded-full shadow-lg">
-                    <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white">BILAN FINANCIER</span>
+            <div className="bg-slate-900 dark:bg-black rounded-[32px] p-5 pt-8 sm:p-8 sm:pt-10 md:p-10 md:pt-12 space-y-8 relative shadow-2xl text-white max-w-4xl mx-auto mt-6 overflow-x-hidden">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-600 dark:bg-primary px-6 py-2 rounded-full shadow-lg z-10">
+                    <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white whitespace-nowrap">BILAN FINANCIER</span>
                 </div>
 
                 <div className="flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8">
