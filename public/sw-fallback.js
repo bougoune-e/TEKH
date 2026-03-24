@@ -1,5 +1,5 @@
 /* TEKH+ PWA: évite 404 au rafraîchissement sur les routes SPA */
-const CACHE = 'tekh-fallback-1';
+const CACHE = 'tekh-fallback-2'; // bumped 2025-03-24
 const FALLBACK = '/index.html';
 
 self.addEventListener('install', (e) => {
