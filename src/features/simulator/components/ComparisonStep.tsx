@@ -100,9 +100,11 @@ export const ComparisonStep = ({
             </div>
 
             {/* Financial Balance Section */}
-            <div className="bg-slate-900 dark:bg-black rounded-[32px] p-5 pt-8 sm:p-8 sm:pt-10 md:p-10 md:pt-12 space-y-8 relative shadow-2xl text-white max-w-4xl mx-auto mt-6 overflow-x-hidden">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-600 dark:bg-primary px-6 py-2 rounded-full shadow-lg z-10">
-                    <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white whitespace-nowrap">BILAN FINANCIER</span>
+            <div className="bg-slate-900 dark:bg-black rounded-[32px] p-5 sm:p-8 md:p-10 space-y-8 relative shadow-2xl text-white max-w-4xl mx-auto mt-8">
+                <div className="flex justify-center -mt-9 sm:-mt-12 md:-mt-14 mb-2">
+                    <div className="bg-blue-600 dark:bg-primary px-6 py-2 rounded-full shadow-lg">
+                        <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white whitespace-nowrap">BILAN FINANCIER</span>
+                    </div>
                 </div>
 
                 <div className="flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8">
@@ -118,7 +120,7 @@ export const ComparisonStep = ({
                     </div>
 
                     <div className="flex flex-col items-center md:items-end justify-center md:border-l border-white/10 md:pl-10 flex-1 min-w-0 w-full">
-                        <div className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-400 dark:text-primary mb-2 italic">DIFFÉRENCE</div>
+                        <div className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-400 dark:text-primary mb-2 italic">SOMME À COMPLÉTER</div>
                         <div className="text-3xl sm:text-5xl md:text-6xl font-black text-white italic tracking-tighter leading-none mb-3 w-full text-center md:text-right truncate">
                             {formatCFA(difference)}
                         </div>
@@ -133,12 +135,12 @@ export const ComparisonStep = ({
                     type="button"
                     onClick={() => {
                         const lines = [
-                            "Bonjour TEKH+,",
+                            "Bonjour TEKH+, je souhaite faire un deal.",
                             "",
-                            "Je souhaite un échange (simulateur TEKH+) :",
+                            "Voici le récapitulatif de mon échange :",
                             `• Mon appareil : ${brand} ${model} (${storage ?? "—"} Go) — VRT estimée : ${formatCFA(safeFinalPrice)}`,
                             `• Modèle visé : ${targetBrand} ${targetModel} (${targetStorage ?? "—"} Go) — PRT cible : ${formatCFA(safeTargetPrice)}`,
-                            `• Écart affiché : ${formatCFA(difference)}`,
+                            `• Somme à compléter : ${formatCFA(difference)}`,
                             "",
                             "Merci de me confirmer la suite et le point de swap.",
                         ];
