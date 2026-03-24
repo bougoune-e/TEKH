@@ -617,6 +617,14 @@ export async function countDealsByOwner(ownerId: string) {
   return count || 0;
 }
 
+/** Compte le nombre de profils enregistrés (utilisateurs ayant un profil). */
+export async function countProfiles(): Promise<number> {
+  if (!realClient) return 0;
+  const { count, error } = await realClient.from("profiles").select("id", { count: 'exact', head: true });
+  if (error) return 0;
+  return count || 0;
+}
+
 /** Solde TekhPoints (crédits actifs non expirés) — table `tekh_point_credits`. */
 export type TekhPointsSummary = {
   balanceFcfa: number;
