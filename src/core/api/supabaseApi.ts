@@ -625,6 +625,24 @@ export async function countProfiles(): Promise<number> {
   return count || 0;
 }
 
+/** Admin : liste tous les profils utilisateurs. */
+export async function fetchAllProfiles() {
+  if (!realClient) return [];
+  const { data, error } = await realClient
+    .from("profiles")
+    .select("id, full_name, avatar_url, updated_at")
+    .order("updated_at", { ascending: false });
+  if (error) throw error;
+  return data || [];
+}
+
+/** Admin : supprime un profil utilisateur (sans toucher à auth.users). */
+export async function deleteProfile(id: string) {
+  if (!realClient) return;
+  const { error } = await realClient.from("profiles").delete().eq("id", id);
+  if (error) throw error;
+}
+
 /** Solde TekhPoints (crédits actifs non expirés) — table `tekh_point_credits`. */
 export type TekhPointsSummary = {
   balanceFcfa: number;
