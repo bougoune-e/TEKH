@@ -46,7 +46,7 @@ const Layout = () => {
     <div className={`flex min-h-[100dvh] bg-background text-foreground transition-colors overflow-x-hidden ${isPWA ? 'mode-pwa' : ''} pt-safe pb-safe`}>
       <Sidebar />
       <PWAInstallBanner />
-      <div className="flex-1 flex flex-col md:pl-16 relative min-w-0">
+      <div className="flex-1 flex flex-col md:pl-16 relative min-w-0 pb-20 md:pb-0">
         {/* Header pleine largeur — prend bien l'écran */}
         <header className="sticky top-0 z-40 w-full border-b border-border/5 bg-background/95 backdrop-blur-xl transition-all pt-safe shrink-0">
           <div className="w-full px-4 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between gap-3">

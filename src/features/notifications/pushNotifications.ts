@@ -1,9 +1,7 @@
 /**
- * Web Push – TEKH+ PWA
- * Demande la permission, abonne l’utilisateur au push, enregistre l’abonnement en base.
- * L’envoi des notifications se fait côté backend quand l’admin publie un deal.
+ * Web Push – TEKH+
+ * Enregistrement via RPC Supabase (upsert_push_subscription) pour éviter les blocages RLS.
  */
-
 import { supabase } from "@/core/api/supabaseApi";
 
 const VAPID_PUBLIC = import.meta.env.VITE_VAPID_PUBLIC_KEY as string | undefined;
@@ -29,10 +27,10 @@ export function getNotificationPermission(): NotificationPermission | "unsupport
   return Notification.permission;
 }
 
-/** Demande la permission et abonne au push ; enregistre l’abonnement en base. Retourne un message d’erreur ou null si OK. */
-export async function subscribeToPush(userId: string | null): Promise<string | null> {
+/** Abonnement push + enregistrement base (RPC prioritaire). */
+export async function subscribeToPush(_userId: string | null): Promise<string | null> {
   if (!isPushSupported()) return "Les notifications push ne sont pas supportées sur ce navigateur.";
-  if (!VAPID_PUBLIC) return "Configuration push manquante (VAPID).";
+  if (!VAPID_PUBLIC) return "Configuration push manquante (VAPID : VITE_VAPID_PUBLIC_KEY).";
 
   const perm = await Notification.requestPermission();
   if (perm !== "granted") return perm === "denied" ? "Notifications refusées." : "Permission non accordée.";
@@ -43,30 +41,46 @@ export async function subscribeToPush(userId: string | null): Promise<string | n
     applicationServerKey: VAPID_PUBLIC.startsWith("B") ? VAPID_PUBLIC : urlBase64ToUint8Array(VAPID_PUBLIC),
   });
 
-  const subscriptionJson = sub.toJSON();
-  const payload = {
-    endpoint: sub.endpoint,
-    subscription: subscriptionJson as Record<string, unknown>,
-    user_id: userId || null,
-    user_agent: typeof navigator !== "undefined" ? navigator.userAgent : null,
+  const subscriptionJson = sub.toJSON() as Record<string, unknown>;
+  const payloadRpc = {
+    p_endpoint: sub.endpoint,
+    p_subscription: subscriptionJson,
+    p_user_agent: typeof navigator !== "undefined" ? navigator.userAgent : null,
   };
 
-  const { error } = await supabase.from("push_subscriptions").upsert(payload, {
+  const { error: rpcErr } = await supabase.rpc("upsert_push_subscription", payloadRpc);
+  if (!rpcErr) return null;
+
+  /* Repli historique si la migration RPC n’est pas encore appliquée sur Supabase */
+  const payloadTable = {
+    endpoint: sub.endpoint,
+    subscription: subscriptionJson,
+    user_id: _userId || null,
+    user_agent: payloadRpc.p_user_agent,
+  };
+  const { error: upErr } = await supabase.from("push_subscriptions").upsert(payloadTable, {
     onConflict: "endpoint",
   });
-
-  if (error) return error.message || "Échec de l’enregistrement.";
+  if (upErr) return upErr.message || rpcErr.message || "Échec de l’enregistrement.";
   return null;
 }
 
-/** Désabonner (supprimer l’entrée en base pour l’endpoint actuel). */
 export async function unsubscribeFromPush(): Promise<string | null> {
   if (!isPushSupported()) return null;
   const reg = await navigator.serviceWorker.ready;
   const sub = await reg.pushManager.getSubscription();
   if (!sub) return null;
-  const { error } = await supabase.from("push_subscriptions").delete().eq("endpoint", sub.endpoint);
-  if (error) return error.message;
+
+  const { error: rpcErr } = await supabase.rpc("delete_push_subscription", {
+    p_endpoint: sub.endpoint,
+  });
+  if (!rpcErr) {
+    await sub.unsubscribe();
+    return null;
+  }
+
+  const { error: delErr } = await supabase.from("push_subscriptions").delete().eq("endpoint", sub.endpoint);
+  if (delErr) return delErr.message;
   await sub.unsubscribe();
   return null;
 }

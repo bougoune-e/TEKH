@@ -1,5 +1,6 @@
-import { createContext, useContext, useMemo, useState, ReactNode } from "react";
+import { createContext, useContext, useMemo, useState, useEffect, ReactNode } from "react";
 import type { DealPost } from "@/shared/data/dealsData";
+import { loadJson, saveJson } from "@/core/pwa/tekhSession";
 
 type BatteryHealth = "low" | "medium" | "good";
 type SimpleCondition = "like_new" | "good" | "average" | "damaged";
@@ -39,8 +40,20 @@ const DealsContext = createContext<DealsContextValue | undefined>(undefined);
 
 export function DealsProvider({ children }: { children: ReactNode }) {
   const [deals, setDeals] = useState<DealPost[]>([]);
-  const [lastSimulation, setLastSimulation] = useState<LastSimulation | null>(null);
-  const [matchRequest, setMatchRequest] = useState<MatchRequest | null>(null);
+  const [lastSimulation, setLastSimulation] = useState<LastSimulation | null>(() =>
+    loadJson<LastSimulation>("lastSimulation", true)
+  );
+  const [matchRequest, setMatchRequest] = useState<MatchRequest | null>(() =>
+    loadJson<MatchRequest>("matchRequest", true)
+  );
+
+  useEffect(() => {
+    saveJson("lastSimulation", lastSimulation, true);
+  }, [lastSimulation]);
+
+  useEffect(() => {
+    saveJson("matchRequest", matchRequest, true);
+  }, [matchRequest]);
 
   const value = useMemo<DealsContextValue>(
     () => ({

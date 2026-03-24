@@ -3,7 +3,7 @@ import { ShieldCheck, Smartphone, ArrowRightLeft, Zap } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/core/api/utils";
 import type { ChassisTekh, EcranTekh } from "@/core/api/pricing";
-import { buildWhatsAppUrl } from "@/core/utils/whatsapp";
+import { openWhatsApp } from "@/core/utils/whatsapp";
 import { toast } from "@/shared/hooks/use-toast";
 
 interface ComparisonStepProps {
@@ -142,18 +142,17 @@ export const ComparisonStep = ({
                             "",
                             "Merci de me confirmer la suite et le point de swap.",
                         ];
-                        const url = buildWhatsAppUrl(lines.join("\n"));
-                        if (url) {
-                            window.open(url, "_blank", "noopener,noreferrer");
+                        const ok = openWhatsApp(lines.join("\n"));
+                        if (ok) {
                             toast({
                                 title: "WhatsApp",
-                                description: "Message récapitulatif prérempli — envoyez-le pour confirmer votre demande.",
+                                description: "Si rien ne s’ouvre, autorisez les pop-ups ou réessayez : le message est prêt.",
                             });
                         } else {
                             toast({
-                                title: "Configuration requise",
+                                title: "Numéro WhatsApp manquant",
                                 description:
-                                    "Ajoutez VITE_WHATSAPP_BUSINESS (numéro international sans +) dans les variables du site, ou utilisez la page Contact.",
+                                    "Ajoutez VITE_WHATSAPP_BUSINESS sur le serveur de build (ex. Render) puis redéployez. Ex. 228XXXXXXXX sans +.",
                                 variant: "destructive",
                             });
                         }

@@ -1,15 +1,51 @@
 /**
- * Liens WhatsApp (échange, contact pro) — numéro au format international sans + (ex. 22890123456).
- * Définir VITE_WHATSAPP_BUSINESS dans .env (frontend).
+ * Liens WhatsApp Business — numéro au format international sans + (ex. 22890123456).
+ * Variable Vite : VITE_WHATSAPP_BUSINESS (injectée au **build** ; définir aussi sur Render / CI).
  */
-export function getWhatsAppBusinessDigits(): string {
-  const raw = (import.meta.env.VITE_WHATSAPP_BUSINESS as string | undefined)?.trim() || "";
-  return raw.replace(/\D/g, "");
+export function normalizeWhatsAppDigits(input: string | undefined | null): string {
+  if (!input) return "";
+  let s = String(input).trim();
+  if (s.startsWith("+")) s = s.slice(1);
+  return s.replace(/\D/g, "");
 }
 
+export function getWhatsAppBusinessDigits(): string {
+  const raw = (import.meta.env.VITE_WHATSAPP_BUSINESS as string | undefined)?.trim() || "";
+  const d = normalizeWhatsAppDigits(raw);
+  if (import.meta.env.DEV && !d) {
+    console.warn("[TEKH] VITE_WHATSAPP_BUSINESS manquant ou invalide — liens WhatsApp désactivés.");
+  }
+  return d;
+}
+
+/**
+ * Liens possibles : wa.me (universel) et api.whatsapp.com (certains navigateurs / in-app).
+ */
 export function buildWhatsAppUrl(message: string, phoneDigits?: string): string | null {
-  const digits = phoneDigits?.replace(/\D/g, "") || getWhatsAppBusinessDigits();
-  if (!digits) return null;
+  const digits = phoneDigits ? normalizeWhatsAppDigits(phoneDigits) : getWhatsAppBusinessDigits();
+  if (!digits || digits.length < 8) return null;
   const text = encodeURIComponent(message);
   return `https://wa.me/${digits}?text=${text}`;
+}
+
+export function buildWhatsAppUrlAlt(message: string, phoneDigits?: string): string | null {
+  const digits = phoneDigits ? normalizeWhatsAppDigits(phoneDigits) : getWhatsAppBusinessDigits();
+  if (!digits || digits.length < 8) return null;
+  const text = encodeURIComponent(message);
+  return `https://api.whatsapp.com/send?phone=${digits}&text=${text}`;
+}
+
+/** Ouvre WhatsApp (wa.me puis api.whatsapp.com ; si pop-up bloquée → navigation même onglet, typique PWA). */
+export function openWhatsApp(message: string, phoneDigits?: string): boolean {
+  const u = buildWhatsAppUrl(message, phoneDigits) || buildWhatsAppUrlAlt(message, phoneDigits);
+  if (!u) return false;
+  try {
+    const w = window.open(u, "_blank", "noopener,noreferrer");
+    if (!w || (typeof w.closed !== "undefined" && w.closed)) {
+      window.location.assign(u);
+    }
+  } catch {
+    window.location.assign(u);
+  }
+  return true;
 }

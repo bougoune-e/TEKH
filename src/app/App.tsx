@@ -3,7 +3,7 @@ import { Toaster as Sonner } from "@/shared/ui/sonner";
 import { TooltipProvider } from "@/shared/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useNavigationType } from "react-router-dom";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import ProtectedRoute from "@/features/auth/ProtectedRoute";
 import AdminRoute from "@/features/auth/AdminRoute";
 import AdminLayout from "@/features/admin/layout/AdminLayout";
@@ -24,6 +24,8 @@ import { AuthProvider } from "@/features/auth/auth.context";
 import { ThemeProvider } from "@/core/theme/ThemeProvider";
 import Layout from "@/shared/components/Layout";
 import ScrollRestorer from "@/shared/components/ScrollToTop";
+import { usePWA } from "@/shared/hooks/usePWA";
+import { installPWAHistoryGuard } from "@/core/pwa/pwaHistoryGuard";
 
 const Index = lazy(() => import("@/features/home/Index"));
 const NotFound = lazy(() => import("@/features/misc/NotFound"));
@@ -95,6 +97,10 @@ const App = () => (
 
 const NavigationWrapper = () => {
   const navType = useNavigationType();
+  const isPWA = usePWA();
+  useEffect(() => {
+    installPWAHistoryGuard(isPWA);
+  }, [isPWA]);
 
   return (
     <>

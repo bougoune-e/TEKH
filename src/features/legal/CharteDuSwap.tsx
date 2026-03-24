@@ -60,7 +60,7 @@ const CharteDuSwap = () => {
                         </ol>
                     </section>
 
-                    <section className="p-8 bg-black dark:bg-white text-white dark:text-black rounded-[40px] shadow-2xl">
+                    <section className="not-prose p-8 bg-black dark:bg-white text-white dark:text-black rounded-[40px] shadow-2xl">
                         <h2 className="text-2xl font-black mb-4 uppercase">Un impact Durable</h2>
                         <p className="opacity-90">
                             Chaque SWAP réalisé réduit les déchets technologiques et prolonge la durée de vie des appareils.

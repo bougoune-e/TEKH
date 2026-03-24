@@ -1,7 +1,7 @@
 import { Mail, Facebook, Instagram } from "lucide-react";
 import { Link } from "react-router-dom";
 import logo from "@/assets/logos/robott.jpeg";
-import { buildWhatsAppUrl } from "@/core/utils/whatsapp";
+import { buildWhatsAppUrl, buildWhatsAppUrlAlt } from "@/core/utils/whatsapp";
 
 const TikTokIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor" {...props}>
@@ -17,7 +17,10 @@ const WhatsAppIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const waHref = buildWhatsAppUrl("Bonjour TEKH+, je vous contacte depuis le site.") || "https://wa.me/";
+  const waHref =
+    buildWhatsAppUrl("Bonjour TEKH+, je vous contacte depuis le site.") ||
+    buildWhatsAppUrlAlt("Bonjour TEKH+, je vous contacte depuis le site.") ||
+    "/contact";
 
   return (
     <footer className="bg-background border-t border-border/50 relative overflow-hidden">

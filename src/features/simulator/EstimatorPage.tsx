@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, useRef } from "react";
+import { useEffect, useLayoutEffect, useMemo, useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Card, CardContent } from "@/shared/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/ui/select";
@@ -44,6 +44,27 @@ import { usePWA } from "@/shared/hooks/usePWA";
 import { Search, RotateCcw, Loader2, ArrowLeft } from "lucide-react";
 import { detectDevice, predictVariants, isMobileUserAgent, getDeviceModelFromClientHints } from "@/core/api/deviceFinder";
 import { useDeals } from "@/features/marketplace/deals.context";
+import { loadJson, saveJson } from "@/core/pwa/tekhSession";
+
+/** Reprise session simulateur (onglet / retour app) — photos non persistées. */
+interface EstimatorSessionV1 {
+  v: 1;
+  step: "estimation" | "satisfaction" | "target_selection" | "comparison";
+  brand: string;
+  model: string;
+  storage: number | null;
+  ram: number | null;
+  ecranState: string;
+  chassisState: string;
+  batterieState: string;
+  exchangeType: "upgrade" | "downgrade" | "";
+  targetBrand: string;
+  targetModel: string;
+  targetStorage: number | null;
+  isSatisfied: boolean | null;
+  proposedPrice: string;
+  detectionStep: "detecting" | "manual" | "confirmed";
+}
 
 export default function EstimatorPage() {
   const { t } = useTranslation();
@@ -163,6 +184,71 @@ export default function EstimatorPage() {
 
   // Phone Finder state
   const [isScanning, setIsScanning] = useState(false);
+
+  const estimatorRestoredRef = useRef(false);
+
+  useLayoutEffect(() => {
+    if (estimatorRestoredRef.current) return;
+    const s = loadJson<EstimatorSessionV1>("estimator-v1", false);
+    if (!s || s.v !== 1) return;
+    estimatorRestoredRef.current = true;
+    setStep(s.step);
+    if (s.brand) setBrand(s.brand);
+    if (s.model) setModel(s.model);
+    if (s.storage != null) setStorage(s.storage);
+    if (s.ram != null) setRam(s.ram);
+    if (s.ecranState) setEcranState(s.ecranState as EcranTekh);
+    if (s.chassisState) setChassisState(s.chassisState as ChassisTekh);
+    if (s.batterieState) setBatterieState(s.batterieState as BatterieTekh);
+    if (s.exchangeType !== undefined) setExchangeType(s.exchangeType);
+    if (s.targetBrand) setTargetBrand(s.targetBrand);
+    if (s.targetModel) setTargetModel(s.targetModel);
+    if (s.targetStorage != null) setTargetStorage(s.targetStorage);
+    if (s.isSatisfied !== undefined) setIsSatisfied(s.isSatisfied);
+    if (s.proposedPrice !== undefined) setProposedPrice(s.proposedPrice);
+    if (s.detectionStep) setDetectionStep(s.detectionStep);
+  }, []);
+
+  useEffect(() => {
+    const t = window.setTimeout(() => {
+      const payload: EstimatorSessionV1 = {
+        v: 1,
+        step,
+        brand,
+        model,
+        storage,
+        ram,
+        ecranState: ecranState || "",
+        chassisState: chassisState || "",
+        batterieState: batterieState || "",
+        exchangeType,
+        targetBrand,
+        targetModel,
+        targetStorage,
+        isSatisfied,
+        proposedPrice,
+        detectionStep,
+      };
+      saveJson("estimator-v1", payload, false);
+    }, 700);
+    return () => clearTimeout(t);
+  }, [
+    step,
+    brand,
+    model,
+    storage,
+    ram,
+    ecranState,
+    chassisState,
+    batterieState,
+    exchangeType,
+    targetBrand,
+    targetModel,
+    targetStorage,
+    isSatisfied,
+    proposedPrice,
+    detectionStep,
+  ]);
 
   // Détection automatique désactivée : sélection manuelle uniquement (à réactiver plus tard si besoin).
   // useEffect(() => { if (shouldDetect && detectionStep === "manual") setDetectionStep("detecting"); }, [isPWA]);
