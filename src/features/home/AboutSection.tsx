@@ -74,23 +74,23 @@ const AboutSection = () => {
               </p>
             </section>
 
-            <section className="space-y-4 p-10 bg-black dark:bg-white text-white dark:text-black rounded-[40px] shadow-2xl">
-              <h3 className="text-3xl font-black">L'Impact de l'Échange</h3>
-              <p className="opacity-80">
-                Chaque SWAP réalisé via TΞKΗ+ évite la production d'un nouvel appareil, économise des ressources naturelles critiques (Lithium, Cobalt, Terres rares) et réduit massivement l'empreinte carbone. L'échange n'est pas seulement intelligent — il est <strong>responsable</strong>.
+            <section className="space-y-4 p-10 bg-black dark:bg-white rounded-[40px] shadow-2xl">
+              <h3 className="text-3xl font-black text-white dark:text-black">L'Impact de l'Échange</h3>
+              <p className="opacity-80 text-white dark:text-black">
+                Chaque SWAP réalisé via TΞKΗ+ évite la production d'un nouvel appareil, économise des ressources naturelles critiques (Lithium, Cobalt, Terres rares) et réduit massivement l'empreinte carbone. L'échange n'est pas seulement intelligent — il est <strong className="text-white dark:text-black">responsable</strong>.
               </p>
               <div className="flex gap-8 mt-6">
                 <div>
-                  <span className="block text-4xl font-black">80kg</span>
-                  <span className="text-xs uppercase font-black opacity-60">CO2 Économisés / échange</span>
+                  <span className="block text-4xl font-black text-white dark:text-black">80kg</span>
+                  <span className="text-xs uppercase font-black opacity-60 text-white dark:text-black">CO2 Économisés / échange</span>
                 </div>
                 <div>
-                  <span className="block text-4xl font-black">200g</span>
-                  <span className="text-xs uppercase font-black opacity-60">Déchets Minerais en moins</span>
+                  <span className="block text-4xl font-black text-white dark:text-black">200g</span>
+                  <span className="text-xs uppercase font-black opacity-60 text-white dark:text-black">Déchets Minerais en moins</span>
                 </div>
                 <div>
-                  <span className="block text-4xl font-black">0</span>
-                  <span className="text-xs uppercase font-black opacity-60">Ventes sans échange</span>
+                  <span className="block text-4xl font-black text-white dark:text-black">0</span>
+                  <span className="text-xs uppercase font-black opacity-60 text-white dark:text-black">Ventes sans échange</span>
                 </div>
               </div>
             </section>
