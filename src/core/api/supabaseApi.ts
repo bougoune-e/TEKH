@@ -8,6 +8,7 @@ import {
   smartphoneRowToPrtMeta,
   type SmartphoneRow,
 } from "@/core/api/smartphonesCatalog";
+import { ALLOWED_BRANDS, isAllowedBrand } from "@/core/api/brandConfig";
 
 type Credentials = { email: string; password: string };
 
@@ -115,26 +116,36 @@ export async function fetchAllRams(): Promise<number[]> {
 }
 
 const STATIC_MODELS: Record<string, string[]> = {
-  "Apple": ["iPhone 15 Pro Max", "iPhone 15 Pro", "iPhone 15 Plus", "iPhone 15", "iPhone 14 Pro Max", "iPhone 14 Pro", "iPhone 14", "iPhone 13 Pro Max", "iPhone 13", "iPhone 12", "iPhone 11", "iPhone XR"],
-  "Samsung": ["Galaxy S24 Ultra", "Galaxy S24+", "Galaxy S24", "Galaxy S23 Ultra", "Galaxy S23", "Galaxy S22 Ultra", "Galaxy S22", "Galaxy A54", "Galaxy A34", "Galaxy A14", "Galaxy Note 20 Ultra"],
-  "Xiaomi": ["Redmi Note 13 Pro+", "Redmi Note 13", "Xiaomi 14", "Xiaomi 13T Pro", "Poco F5", "Poco X6 Pro"],
-  "Tecno": ["Camon 30 Premier", "Camon 30 Pro", "Camon 20 Premier", "Phantom V Flip", "Phantom X2 Pro", "Spark 20 Pro+"],
-  "Infinix": ["Zero 30 5G", "Note 40 Pro", "Note 30 VIP", "Hot 40 Pro", "GT 10 Pro"],
-  "Google": ["Pixel 8 Pro", "Pixel 8", "Pixel 7 Pro", "Pixel 7", "Pixel 6a"],
-  "Huawei": ["P60 Pro", "Mate 50 Pro", "Nova 11", "P40 Pro"]
+  "Apple": ["iPhone 16 Pro Max", "iPhone 16 Pro", "iPhone 16 Plus", "iPhone 16", "iPhone 15 Pro Max", "iPhone 15 Pro", "iPhone 15 Plus", "iPhone 15", "iPhone 14 Pro Max", "iPhone 14 Pro", "iPhone 14", "iPhone 13 Pro Max", "iPhone 13", "iPhone 12", "iPhone 11", "iPhone XR", "iPhone SE (2022)"],
+  "Samsung": ["Galaxy S25 Ultra", "Galaxy S25+", "Galaxy S25", "Galaxy S24 Ultra", "Galaxy S24+", "Galaxy S24", "Galaxy S23 Ultra", "Galaxy S23", "Galaxy S22 Ultra", "Galaxy S22", "Galaxy Z Fold6", "Galaxy Z Flip6", "Galaxy A55", "Galaxy A54", "Galaxy A35", "Galaxy A34", "Galaxy A25", "Galaxy A15", "Galaxy A14"],
+  "Tecno": ["Pova Slim", "Pova 6 Pro 5G", "Pova 6 Neo", "Pova 5 Pro", "Pova 5", "Camon 30 Premier", "Camon 30 Pro", "Camon 30", "Camon 20 Premier", "Phantom V Fold2", "Phantom V Flip2", "Phantom X2 Pro", "Spark 30 Pro", "Spark 30", "Spark 20 Pro+", "Spark 20 Pro", "Spark Go 2025"],
+  "Infinix": ["Zero 40 5G", "Zero 30 5G", "Note 40 Pro", "Note 40", "Note 30 VIP", "Hot 50 Pro+", "Hot 50 Pro", "Hot 40 Pro", "Hot 40i", "GT 20 Pro", "GT 10 Pro", "Smart 9"],
+  "Itel": ["P55 5G", "P55+", "P55", "S24", "S23+", "A70", "A60s"],
+  "Redmi": ["Note 14 Pro+ 5G", "Note 14 Pro", "Note 14", "Note 13 Pro+ 5G", "Note 13 Pro", "Note 13", "Note 12 Pro", "14C", "13C", "A3", "A2+"],
+  "Poco": ["X7 Pro", "X7", "X6 Pro", "X6", "F6 Pro", "F6", "F5", "M6 Pro", "M6", "C65"],
+  "Realme": ["GT 7 Pro", "GT 6", "GT Neo 6 SE", "13 Pro+", "13 Pro", "12 Pro+", "12 Pro", "C67", "C55", "Narzo 70 Pro"],
+  "Oppo": ["Find X8 Pro", "Find X7 Ultra", "Reno 12 Pro", "Reno 12", "Reno 11 Pro", "Reno 11", "A3 Pro", "A2", "A98"],
+  "OnePlus": ["13", "12", "12R", "Nord 4", "Nord CE4", "Nord CE 3 Lite", "Open"],
+  "Google": ["Pixel 9 Pro XL", "Pixel 9 Pro", "Pixel 9", "Pixel 8 Pro", "Pixel 8", "Pixel 8a", "Pixel 7 Pro", "Pixel 7", "Pixel 7a", "Pixel 6a"],
+  "Honor": ["Magic7 Pro", "Magic6 Pro", "Magic V3", "200 Pro", "200", "90", "X9b", "X8b"],
+  "Huawei": ["Pura 70 Ultra", "Pura 70 Pro", "Mate 60 Pro", "P60 Pro", "Mate 50 Pro", "Nova 12", "Nova 11"],
+  "Nothing": ["Phone (2a) Plus", "Phone (2a)", "Phone (2)", "Phone (1)"],
+  "Motorola": ["Edge 50 Ultra", "Edge 50 Pro", "Edge 50 Fusion", "Razr 50 Ultra", "Razr 50", "Moto G85", "Moto G54", "Moto G34", "ThinkPhone"],
 };
 
 export async function fetchBrands(): Promise<string[]> {
   try {
     if (realClient) {
       const { data, error } = await realClient.from("brands").select("name").order("name");
-      if (!error && data && data.length > 0) return data.map(b => b.name);
+      if (!error && data && data.length > 0) {
+        return data.map(b => b.name).filter(isAllowedBrand);
+      }
     }
 
     // Fallback: Extract from API
     const products = await getApiProduits();
     if (products && products.length > 0) {
-      const brands = Array.from(new Set(products.map(getBrandName).filter(Boolean)));
+      const brands = Array.from(new Set(products.map(getBrandName).filter(Boolean).filter(isAllowedBrand)));
       if (brands.length > 0) return (brands as string[]).sort();
     }
   } catch (err) {
