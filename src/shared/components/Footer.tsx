@@ -71,7 +71,7 @@ const Footer = () => {
               <a href="https://www.facebook.com/desmond.kizerbo/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="h-9 w-9 inline-flex items-center justify-center rounded-lg border border-border hover:bg-accent transition-smooth">
                 <Facebook className="h-4 w-4 text-[#1877F2]" />
               </a>
-              <a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="h-9 w-9 p-1.5 inline-flex items-center justify-center rounded-lg border border-border hover:bg-accent dark:bg-white dark:hover:bg-white transition-smooth">
+              <a href="https://www.tiktok.com/@tekh228?_r=1&_t=ZS-94xayuFa6LN" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="h-9 w-9 p-1.5 inline-flex items-center justify-center rounded-lg border border-border hover:bg-accent dark:bg-white dark:hover:bg-white transition-smooth">
                 <TikTokIcon className="h-4 w-4 text-black" />
               </a>
               <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="h-9 w-9 inline-flex items-center justify-center rounded-lg border border-border hover:bg-accent transition-smooth">

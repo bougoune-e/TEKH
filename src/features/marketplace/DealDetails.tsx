@@ -38,7 +38,10 @@ export default function DealDetails() {
   }
 
   const phoneDigits = (deal.contactWhatsapp || deal.contactPhone || "").replace(/\D/g, "");
-  const waHref = phoneDigits ? `https://wa.me/${phoneDigits}` : undefined;
+  const dealInfoMsg = `Bonjour, je suis intéressé(e) par votre annonce sur TEKH+ :\n• ${deal.brand} ${deal.model}${deal.storage ? " " + deal.storage + " Go" : ""}\n• Prix : ${deal.price.toLocaleString()} FCFA\n• Condition : ${deal.condition}\n\nEst-il toujours disponible ?`;
+  const waHref = phoneDigits ? `https://wa.me/${phoneDigits}?text=${encodeURIComponent(dealInfoMsg)}` : undefined;
+  const shareMsg = `Regarde cette annonce sur TEKH+ : ${deal.title || deal.brand + " " + deal.model} — ${deal.price.toLocaleString()} FCFA\n${window.location.href}`;
+  const waShareHref = phoneDigits ? `https://wa.me/?text=${encodeURIComponent(shareMsg)}` : `https://wa.me/?text=${encodeURIComponent(shareMsg)}`;
   const mailHref = deal.contactEmail ? `mailto:${deal.contactEmail}` : undefined;
 
   return (
@@ -175,7 +178,7 @@ export default function DealDetails() {
               <div className="text-sm text-muted-foreground mb-3">Partagez cette annonce</div>
               <div className="flex flex-wrap gap-2">
                 <Button asChild size="sm" variant="default" className="rounded-full bg-[#25D366] hover:bg-[#1EBE5A] text-white">
-                  <a href={waHref || "#"} target="_blank" rel="noopener noreferrer" aria-label="Partager sur Whatsapp">
+                  <a href={waShareHref} target="_blank" rel="noopener noreferrer" aria-label="Partager sur Whatsapp">
                     <MessageCircle className="h-4 w-4 mr-1 text-white" /> Whatsapp
                   </a>
                 </Button>

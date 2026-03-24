@@ -1,4 +1,5 @@
 import { MessageSquare, Paperclip, History, ShieldAlert } from "lucide-react";
+import { buildWhatsAppUrl, buildWhatsAppUrlAlt } from "@/core/utils/whatsapp";
 
 const features = [
   { icon: MessageSquare, title: "Chat instantané", desc: "Discutez en temps réel avec l'autre partie, notifications incluses." },
@@ -44,7 +45,7 @@ const MessagingSection = () => {
                 Négociez et finalisez vos deals en toute simplicité.
               </p>
               <a
-                href="https://wa.me/yournumber"
+                href={buildWhatsAppUrl("Bonjour TEKH+, je souhaite discuter d'un échange via votre messagerie WhatsApp.") || buildWhatsAppUrlAlt("Bonjour TEKH+, je souhaite discuter d'un échange via votre messagerie WhatsApp.") || "#"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center w-full py-4 px-6 rounded-xl bg-black dark:bg-white text-white dark:text-black font-black hover:scale-[1.02] active:scale-95 transition-all shadow-xl"
