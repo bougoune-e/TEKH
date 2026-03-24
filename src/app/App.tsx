@@ -25,7 +25,12 @@ import { ThemeProvider } from "@/core/theme/ThemeProvider";
 import Layout from "@/shared/components/Layout";
 import ScrollRestorer from "@/shared/components/ScrollToTop";
 import { usePWA } from "@/shared/hooks/usePWA";
-import { installPWAHistoryGuard } from "@/core/pwa/pwaHistoryGuard";
+import {
+  NavigationProvider,
+  useBackNavigation,
+  useAppLifecycle,
+  useExitConfirmation,
+} from "@/core/navigation";
 
 const Index = lazy(() => import("@/features/home/Index"));
 const NotFound = lazy(() => import("@/features/misc/NotFound"));
@@ -95,99 +100,132 @@ const App = () => (
   </QueryClientProvider>
 );
 
+/**
+ * NavigationShell — wires back navigation, exit confirmation, and app lifecycle.
+ * Must be rendered INSIDE <NavigationProvider>.
+ */
+const NavigationShell: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { handleExitAttempt, cleanup } = useExitConfirmation();
+
+  // Wire back button: on root screen → exit confirmation
+  useBackNavigation({
+    onRootBack: () => {
+      handleExitAttempt();
+    },
+  });
+
+  // Wire app lifecycle: persist/restore on background/foreground
+  useAppLifecycle({
+    getSnapshot: () => ({
+      stack: [],     // Provider handles the actual stack; this is a fallback
+      activeIndex: 0,
+      savedAt: Date.now(),
+    }),
+    onExpired: () => {
+      // Session expired — no action needed, provider will start fresh
+    },
+  });
+
+  // Cleanup exit confirmation timer on unmount
+  useEffect(() => cleanup, [cleanup]);
+
+  return <>{children}</>;
+};
+
 const NavigationWrapper = () => {
   const navType = useNavigationType();
   const isPWA = usePWA();
-  useEffect(() => {
-    installPWAHistoryGuard(isPWA);
-  }, [isPWA]);
 
   return (
     <>
-      <ScrollRestorer />
-      <AuthProvider>
-        <DealsProvider>
-          <CartProvider>
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
-              {/* Routes principales avec Layout */}
-              <Route element={<Layout />}>
-                <Route index element={<PageTransition navType={navType}><Index /></PageTransition>} />
-                <Route path="/deals" element={<PageTransition navType={navType}><DealsPage /></PageTransition>} />
-                <Route path="/deal/:id" element={<PageTransition navType={navType}><DealDetails /></PageTransition>} />
-                <Route path="/diagnose" element={<PageTransition navType={navType}><DiagnosePage /></PageTransition>} />
-                <Route path="/simulateur" element={<PageTransition navType={navType}><SimulatorPage /></PageTransition>} />
-                <Route path="/estimer" element={<PageTransition navType={navType}><SimulatorPage /></PageTransition>} />
-                <Route path="/deals-found" element={<PageTransition navType={navType}><DealsFound /></PageTransition>} />
-                <Route path="/charte" element={<PageTransition navType={navType}><ChartePage /></PageTransition>} />
-                <Route path="/charte-du-swap" element={<PageTransition navType={navType}><CharteDuSwap /></PageTransition>} />
-                <Route path="/politique-echange-tekhpoints" element={<PageTransition navType={navType}><PolitiqueEchangeTekhPoints /></PageTransition>} />
-                <Route path="/charte-qualite" element={<PageTransition navType={navType}><CharteQualitePage /></PageTransition>} />
-                <Route path="/post" element={<PageTransition navType={navType}><SimulatorPage /></PageTransition>} />
-                <Route path="/mes-publications" element={<PageTransition navType={navType}><MyPosts /></PageTransition>} />
-                <Route path="/profile" element={<ProtectedRoute><PageTransition navType={navType}><Profile /></PageTransition></ProtectedRoute>} />
-                <Route path="/search" element={<PageTransition navType={navType}><SearchPage /></PageTransition>} />
-                <Route path="/login" element={<PageTransition navType={navType}><Login /></PageTransition>} />
-                <Route path="/signup" element={<PageTransition navType={navType}><SignupPage /></PageTransition>} />
-                <Route path="/a-propos" element={<PageTransition navType={navType}><APropos /></PageTransition>} />
-                <Route path="/aide-et-faq" element={<PageTransition navType={navType}><AideEtFaq /></PageTransition>} />
-                <Route path="/contact" element={<PageTransition navType={navType}><Contact /></PageTransition>} />
-                <Route path="/blog" element={<PageTransition navType={navType}><Blog /></PageTransition>} />
-                <Route path="/mentions-legales" element={<PageTransition navType={navType}><MentionsLegales /></PageTransition>} />
-                <Route path="/cgv" element={<PageTransition navType={navType}><CGV /></PageTransition>} />
-                <Route path="/cgu" element={<PageTransition navType={navType}><CGU /></PageTransition>} />
-                <Route path="/politique-confidentialite" element={<PageTransition navType={navType}><PolitiqueConfidentialite /></PageTransition>} />
-                <Route path="/apk" element={<PageTransition navType={navType}><Apk /></PageTransition>} />
-                <Route path="/dealboxes" element={<PageTransition navType={navType}><DealboxCatalog /></PageTransition>} />
-                <Route path="/communities" element={<PageTransition navType={navType}><Index /></PageTransition>} />
-                <Route path="/messages" element={<PageTransition navType={navType}><Index /></PageTransition>} />
-                <Route path="/settings" element={<PageTransition navType={navType}><SettingsPage /></PageTransition>} />
-                <Route path="/historique" element={<ProtectedRoute><PageTransition navType={navType}><HistoriquePage /></PageTransition></ProtectedRoute>} />
-                <Route path="/commandes" element={<ProtectedRoute><PageTransition navType={navType}><CommandesPage /></PageTransition></ProtectedRoute>} />
-                <Route path="/commandes/:id" element={<ProtectedRoute><PageTransition navType={navType}><CommandeDetailPage /></PageTransition></ProtectedRoute>} />
-                <Route path="/notifications" element={<PageTransition navType={navType}><NotificationsPage /></PageTransition>} />
-                <Route path="/panier" element={<PageTransition navType={navType}><PanierPage /></PageTransition>} />
-                <Route path="/maintenance" element={<PageTransition navType={navType}><MaintenanceIT /></PageTransition>} />
-                <Route path="/formation" element={<PageTransition navType={navType}><FormationTech /></PageTransition>} />
-                <Route path="/dev-web" element={<PageTransition navType={navType}><DevWebMobile /></PageTransition>} />
-              </Route>
+      <NavigationProvider>
+        <NavigationShell>
+          <ScrollRestorer />
+          <AuthProvider>
+            <DealsProvider>
+              <CartProvider>
+                <Suspense fallback={<PageLoader />}>
+                  <Routes>
+                    {/* Routes principales avec Layout */}
+                    <Route element={<Layout />}>
+                      <Route index element={<PageTransition navType={navType}><Index /></PageTransition>} />
+                      <Route path="/deals" element={<PageTransition navType={navType}><DealsPage /></PageTransition>} />
+                      <Route path="/deal/:id" element={<PageTransition navType={navType}><DealDetails /></PageTransition>} />
+                      <Route path="/diagnose" element={<PageTransition navType={navType}><DiagnosePage /></PageTransition>} />
+                      <Route path="/simulateur" element={<PageTransition navType={navType}><SimulatorPage /></PageTransition>} />
+                      <Route path="/estimer" element={<PageTransition navType={navType}><SimulatorPage /></PageTransition>} />
+                      <Route path="/deals-found" element={<PageTransition navType={navType}><DealsFound /></PageTransition>} />
+                      <Route path="/charte" element={<PageTransition navType={navType}><ChartePage /></PageTransition>} />
+                      <Route path="/charte-du-swap" element={<PageTransition navType={navType}><CharteDuSwap /></PageTransition>} />
+                      <Route path="/politique-echange-tekhpoints" element={<PageTransition navType={navType}><PolitiqueEchangeTekhPoints /></PageTransition>} />
+                      <Route path="/charte-qualite" element={<PageTransition navType={navType}><CharteQualitePage /></PageTransition>} />
+                      <Route path="/post" element={<PageTransition navType={navType}><SimulatorPage /></PageTransition>} />
+                      <Route path="/mes-publications" element={<PageTransition navType={navType}><MyPosts /></PageTransition>} />
+                      <Route path="/profile" element={<ProtectedRoute><PageTransition navType={navType}><Profile /></PageTransition></ProtectedRoute>} />
+                      <Route path="/search" element={<PageTransition navType={navType}><SearchPage /></PageTransition>} />
+                      <Route path="/login" element={<PageTransition navType={navType}><Login /></PageTransition>} />
+                      <Route path="/signup" element={<PageTransition navType={navType}><SignupPage /></PageTransition>} />
+                      <Route path="/a-propos" element={<PageTransition navType={navType}><APropos /></PageTransition>} />
+                      <Route path="/aide-et-faq" element={<PageTransition navType={navType}><AideEtFaq /></PageTransition>} />
+                      <Route path="/contact" element={<PageTransition navType={navType}><Contact /></PageTransition>} />
+                      <Route path="/blog" element={<PageTransition navType={navType}><Blog /></PageTransition>} />
+                      <Route path="/mentions-legales" element={<PageTransition navType={navType}><MentionsLegales /></PageTransition>} />
+                      <Route path="/cgv" element={<PageTransition navType={navType}><CGV /></PageTransition>} />
+                      <Route path="/cgu" element={<PageTransition navType={navType}><CGU /></PageTransition>} />
+                      <Route path="/politique-confidentialite" element={<PageTransition navType={navType}><PolitiqueConfidentialite /></PageTransition>} />
+                      <Route path="/apk" element={<PageTransition navType={navType}><Apk /></PageTransition>} />
+                      <Route path="/dealboxes" element={<PageTransition navType={navType}><DealboxCatalog /></PageTransition>} />
+                      <Route path="/communities" element={<PageTransition navType={navType}><Index /></PageTransition>} />
+                      <Route path="/messages" element={<PageTransition navType={navType}><Index /></PageTransition>} />
+                      <Route path="/settings" element={<PageTransition navType={navType}><SettingsPage /></PageTransition>} />
+                      <Route path="/historique" element={<ProtectedRoute><PageTransition navType={navType}><HistoriquePage /></PageTransition></ProtectedRoute>} />
+                      <Route path="/commandes" element={<ProtectedRoute><PageTransition navType={navType}><CommandesPage /></PageTransition></ProtectedRoute>} />
+                      <Route path="/commandes/:id" element={<ProtectedRoute><PageTransition navType={navType}><CommandeDetailPage /></PageTransition></ProtectedRoute>} />
+                      <Route path="/notifications" element={<PageTransition navType={navType}><NotificationsPage /></PageTransition>} />
+                      <Route path="/panier" element={<PageTransition navType={navType}><PanierPage /></PageTransition>} />
+                      <Route path="/maintenance" element={<PageTransition navType={navType}><MaintenanceIT /></PageTransition>} />
+                      <Route path="/formation" element={<PageTransition navType={navType}><FormationTech /></PageTransition>} />
+                      <Route path="/dev-web" element={<PageTransition navType={navType}><DevWebMobile /></PageTransition>} />
+                    </Route>
 
-              {/* Route Admin Exclusive */}
-              <Route path="/admin-tekh-control" element={<AdminPage />} />
+                    {/* Route Admin Exclusive */}
+                    <Route path="/admin-tekh-control" element={<AdminPage />} />
 
-              {/* Page "accès admin refusé" (affiche l'email connecté pour configurer VITE_ADMIN_EMAILS) */}
-              <Route path="/admin-denied" element={
-                <ProtectedRoute>
-                  <AdminDenied />
-                </ProtectedRoute>
-              } />
-              {/* Routes d'administration (réservées aux utilisateurs ADMIN) */}
-              <Route path="/admin" element={
-                <ProtectedRoute>
-                  <AdminRoute>
-                    <AdminLayout />
-                  </AdminRoute>
-                </ProtectedRoute>
-              }>
-                <Route index element={<Dashboard />} />
-                <Route path="users" element={<Users />} />
-                <Route path="annonces" element={<Annonces />} />
-                <Route path="deals" element={<AdminDeals />} />
-                <Route path="deals/new" element={<AdminDealForm />} />
-                <Route path="deals/:id/edit" element={<AdminDealForm />} />
-                <Route path="dealbox" element={<DealBox />} />
-                <Route path="categories" element={<Categories />} />
-                <Route path="stats" element={<Stats />} />
-                <Route path="settings" element={<Settings />} />
-              </Route>
+                    {/* Page "accès admin refusé" (affiche l'email connecté pour configurer VITE_ADMIN_EMAILS) */}
+                    <Route path="/admin-denied" element={
+                      <ProtectedRoute>
+                        <AdminDenied />
+                      </ProtectedRoute>
+                    } />
+                    {/* Routes d'administration (réservées aux utilisateurs ADMIN) */}
+                    <Route path="/admin" element={
+                      <ProtectedRoute>
+                        <AdminRoute>
+                          <AdminLayout />
+                        </AdminRoute>
+                      </ProtectedRoute>
+                    }>
+                      <Route index element={<Dashboard />} />
+                      <Route path="users" element={<Users />} />
+                      <Route path="annonces" element={<Annonces />} />
+                      <Route path="deals" element={<AdminDeals />} />
+                      <Route path="deals/new" element={<AdminDealForm />} />
+                      <Route path="deals/:id/edit" element={<AdminDealForm />} />
+                      <Route path="dealbox" element={<DealBox />} />
+                      <Route path="categories" element={<Categories />} />
+                      <Route path="stats" element={<Stats />} />
+                      <Route path="settings" element={<Settings />} />
+                    </Route>
 
-              {/* Route 404 - Doit être la dernière */}
-              <Route path="*" element={<PageTransition navType={navType}><NotFound /></PageTransition>} />
-            </Routes>
-          </Suspense>
-        </CartProvider>
-        </DealsProvider>
-      </AuthProvider>
+                    {/* Route 404 - Doit être la dernière */}
+                    <Route path="*" element={<PageTransition navType={navType}><NotFound /></PageTransition>} />
+                  </Routes>
+                </Suspense>
+              </CartProvider>
+            </DealsProvider>
+          </AuthProvider>
+        </NavigationShell>
+      </NavigationProvider>
     </>
   );
 }

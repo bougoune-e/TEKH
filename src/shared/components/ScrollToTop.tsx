@@ -1,49 +1,60 @@
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { useLocation, useNavigationType } from "react-router-dom";
+import { saveJson, loadJson } from "@/core/pwa/tekhSession";
 
 /**
- * ScrollRestorer — Restauration native-level du scroll.
+ * ScrollRestorer — Native-level scroll restoration.
  *
- * Stratégie :
- * - Désactive history.scrollRestoration du navigateur
- * - Sauvegarde scrollY dans sessionStorage en continu (par clé de visite)
- * - Sur POP (retour arrière) : masque le contenu, restaure le scroll, puis révèle
- * - Sur PUSH/REPLACE (nouvelle nav) : remet en haut
+ * Strategy:
+ * - Disables browser-native history.scrollRestoration
+ * - Saves scrollY into sessionStorage (per location key) for in-session restores
+ * - Also mirrors to localStorage (per pathname) for cold-start rehydration
+ * - On POP (back): hides content, restores scroll, then reveals (no flash)
+ * - On PUSH/REPLACE: scrolls to top
  *
- * Cela empêche le "flash" visuel de re-défilement.
+ * The localStorage layer is consumed by the NavigationProvider on cold start
+ * to set the correct scrollY before the first paint.
  */
 const ScrollRestorer = () => {
     const { pathname, key } = useLocation();
     const navType = useNavigationType();
     const isRestoring = useRef(false);
 
-    // Désactive la gestion automatique du navigateur
+    // Disable browser-managed scroll restoration
     useEffect(() => {
         if ("scrollRestoration" in window.history) {
             window.history.scrollRestoration = "manual";
         }
     }, []);
 
-    // useLayoutEffect pour bloquer le paint AVANT le premier rendu visible
+    // useLayoutEffect to block paint BEFORE the first visible render
     useLayoutEffect(() => {
         const scrollKey = `scroll-${key}`;
 
         if (navType === "POP") {
-            const savedPosition = sessionStorage.getItem(scrollKey);
+            // Try sessionStorage first (fastest, tab-scoped)
+            let savedPosition = sessionStorage.getItem(scrollKey);
+
+            // Fallback: localStorage per-path (cold-start case)
+            if (!savedPosition) {
+                const coldY = loadJson<number>(`scroll-path:${pathname}`, true);
+                if (coldY != null) savedPosition = String(coldY);
+            }
+
             if (savedPosition) {
                 const y = parseInt(savedPosition, 10);
                 isRestoring.current = true;
 
-                // Masquer le contenu pour empêcher le flash visuel
+                // Hide content to prevent visual flash
                 const root = document.getElementById("root");
                 if (root) {
                     root.style.visibility = "hidden";
                 }
 
-                // Restaurer la position exacte
+                // Restore exact position
                 window.scrollTo(0, y);
 
-                // Révéler après que le scroll soit appliqué
+                // Reveal after scroll is applied
                 requestAnimationFrame(() => {
                     requestAnimationFrame(() => {
                         if (root) {
@@ -54,24 +65,28 @@ const ScrollRestorer = () => {
                 });
             }
         } else {
-            // Navigation normale : scroll en haut instantanément
+            // Normal navigation: scroll to top
             window.scrollTo(0, 0);
         }
     }, [pathname, key, navType]);
 
-    // Sauvegarde continue de la position
+    // Continuous scroll position tracking
     useEffect(() => {
         const scrollKey = `scroll-${key}`;
 
         const handleScroll = () => {
             if (!isRestoring.current) {
-                sessionStorage.setItem(scrollKey, window.scrollY.toString());
+                const y = window.scrollY;
+                // Fast tab-scoped save
+                sessionStorage.setItem(scrollKey, y.toString());
+                // Durable per-path save for cold-start rehydration
+                saveJson(`scroll-path:${pathname}`, y, true);
             }
         };
 
         window.addEventListener("scroll", handleScroll, { passive: true });
         return () => window.removeEventListener("scroll", handleScroll);
-    }, [key]);
+    }, [key, pathname]);
 
     return null;
 };
