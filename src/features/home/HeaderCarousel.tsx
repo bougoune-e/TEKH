@@ -20,17 +20,17 @@ const trust = [
  */
 const CARD_SLOTS = [
   {
-    transform: "translate(-50%, -50%) rotate(0deg) translateX(0px) translateY(-12px) scale(1.06)",
+    transform: "translate(-50%, -50%) rotate(0deg) translateX(0px) translateY(-10px) scale(1.05)",
     zIndex: 3,
     opacity: 1,
   },
   {
-    transform: "translate(-50%, -50%) rotate(9deg) translateX(62px) translateY(8px) scale(0.9)",
+    transform: "translate(-50%, -50%) rotate(8deg) translateX(52px) translateY(8px) scale(0.88)",
     zIndex: 2,
     opacity: 0.7,
   },
   {
-    transform: "translate(-50%, -50%) rotate(-8deg) translateX(-54px) translateY(16px) scale(0.81)",
+    transform: "translate(-50%, -50%) rotate(-7deg) translateX(-46px) translateY(14px) scale(0.80)",
     zIndex: 1,
     opacity: 0.38,
   },
@@ -67,7 +67,7 @@ export const HeaderCarousel = () => {
       <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-[#064e3b]/10 blur-[100px] pointer-events-none" />
 
       <div className="container mx-auto px-6 lg:px-16 relative z-10 w-full">
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center min-h-dvh py-28 lg:py-0">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-dvh py-20 lg:py-0">
 
           {/* ─── LEFT : content ─── */}
           <div className="space-y-8 max-w-xl">
@@ -125,7 +125,7 @@ export const HeaderCarousel = () => {
 
           {/* ─── RIGHT : deck de cartes animé ─── */}
           <div
-            className="relative h-[380px] md:h-[500px] lg:h-[620px] hidden md:block"
+            className="relative h-[280px] sm:h-[340px] md:h-[500px] lg:h-[620px] block pb-8 lg:pb-0"
             onMouseEnter={() => setPaused(true)}
             onMouseLeave={() => setPaused(false)}
           >
