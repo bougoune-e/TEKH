@@ -65,4 +65,18 @@ if (isReturningUser || !isStandalonePWA) {
   }, 1800);
 }
 
+// ---------------------------------------------------------------------------
+// 3. Service Worker registration
+//    Required for PWA installability (beforeinstallprompt won't fire without SW).
+//    Registers sw-fallback.js which handles SPA routing (404 prevention)
+//    and Web Push notifications.
+// ---------------------------------------------------------------------------
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/sw-fallback.js", { scope: "/" })
+      .catch(() => {/* SW registration failure is non-fatal */});
+  });
+}
+
 createRoot(document.getElementById("root")!).render(<App />);

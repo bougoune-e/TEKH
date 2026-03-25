@@ -14,11 +14,11 @@ const PWAInstallBanner = () => {
         const isStandalone = window.matchMedia("(display-mode: standalone)").matches || (window.navigator as any).standalone;
         if (isStandalone) return;
 
-        // Check if dismissed recently (Reduced to 1 hour for better testing visibility)
+        // Check if dismissed recently (3 days cooldown)
         const dismissedAt = localStorage.getItem("pwa_dismissed_at");
         if (dismissedAt) {
-            const oneHour = 60 * 60 * 1000;
-            if (Date.now() - Number(dismissedAt) < oneHour) return;
+            const threeDays = 3 * 24 * 60 * 60 * 1000;
+            if (Date.now() - Number(dismissedAt) < threeDays) return;
         }
 
         // Detect iOS
