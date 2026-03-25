@@ -41,8 +41,8 @@ const ExchangeProcess = () => {
                     </p>
                 </div>
 
-                {/* Grille 4 colonnes même sur mobile — images très petites */}
-                <div className="grid grid-cols-4 gap-2 md:gap-4 items-start">
+                {/* Grille responsive: 2 colonnes mobile, 4 desktop */}
+                <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4 items-start">
                     {steps.map((step, idx) => (
                         <div key={idx} className="space-y-2 group">
                             <div className="relative h-20 md:h-28 rounded-[14px] overflow-hidden border-2 border-black dark:border-white shadow-md group-hover:scale-[1.03] transition-transform duration-400">

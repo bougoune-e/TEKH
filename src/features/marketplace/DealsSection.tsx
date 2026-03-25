@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import PhoneCard from "@/features/marketplace/PhoneCard";
 import hpImg from "@/assets/illustrations/homepage/smartphones.jpeg";
 import hpImg2 from "@/assets/illustrations/homepage/smartphone.jpeg";
@@ -7,37 +8,72 @@ import pixel from "@/assets/illustrations/homepage/google_pixel.jpeg";
 import huawei from "@/assets/illustrations/homepage/huawei.jpeg";
 import { Button } from "@/shared/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/tabs";
-import { Sparkles, BadgeCheck, Recycle, ArrowRight, ShoppingBag } from "lucide-react";
+import { Sparkles, BadgeCheck, Recycle, ArrowRight } from "lucide-react";
 import { cn } from "@/core/api/utils";
 import { useNavigate } from "react-router-dom";
 import { usePWA } from "@/shared/hooks/usePWA";
+import { fetchDeals } from "@/core/api/supabaseApi";
+
+const STATIC_REFURBISHED = [
+  { brand: "Apple", model: "iPhone 12", condition: "Très bon", price: 250000, originalPrice: 320000, image: iphone, tag: "Populaire" },
+  { brand: "Samsung", model: "Galaxy A35", condition: "Bon", price: 180000, originalPrice: 220000, image: samsung, tag: "Vérifié" },
+  { brand: "Google", model: "Pixel 6", condition: "Très bon", price: 210000, originalPrice: 260000, image: pixel, tag: "Nouveau" },
+  { brand: "Huawei", model: "P40", condition: "Correct", price: 150000, originalPrice: 195000, image: huawei },
+];
+
+const STATIC_NEW = [
+  { brand: "Apple", model: "iPhone 14 (Neuf)", condition: "Neuf", price: 600000, originalPrice: 650000, image: iphone, tag: "Nouveau" },
+];
+
+function mapDealToCard(deal: any) {
+  return {
+    id: deal.id,
+    brand: deal.brand ?? "",
+    model: deal.model ?? deal.title ?? "",
+    condition: deal.condition ?? "",
+    price: deal.price ?? 0,
+    images: Array.isArray(deal.images) ? deal.images : undefined,
+    image: Array.isArray(deal.images) && deal.images.length > 0 ? deal.images[0] : undefined,
+    tag: deal.condition === "Neuf" || deal.condition === "Scellé" ? "Neuf" : undefined,
+  };
+}
 
 const DealsSection = () => {
   const isPWA = usePWA();
-  const deals = [
-    { brand: "Apple", model: "iPhone 12", condition: "Très bon", price: 250000, originalPrice: 320000, image: iphone, tag: "Populaire" },
-    { brand: "Samsung", model: "Galaxy A35", condition: "Bon", price: 180000, originalPrice: 220000, image: samsung, tag: "Vérifié" },
-    { brand: "Google", model: "Pixel 6", condition: "Très bon", price: 210000, originalPrice: 260000, image: pixel, tag: "Nouveau" },
-    { brand: "Huawei", model: "P40", condition: "Correct", price: 150000, originalPrice: 195000, image: huawei },
-  ];
-  const newPhones = [
-    { brand: "Apple", model: "iPhone 14 (Neuf)", condition: "Neuf", price: 600000, originalPrice: 650000, image: iphone, tag: "Nouveau" },
-  ];
-
   const navigate = useNavigate();
+  const [deals, setDeals] = useState<any[]>(STATIC_REFURBISHED);
+  const [newPhones, setNewPhones] = useState<any[]>(STATIC_NEW);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    fetchDeals()
+      .then((rows) => {
+        if (!rows || rows.length === 0) return;
+        const refurb = rows.filter((r: any) => r.condition !== "Neuf" && r.condition !== "Scellé").map(mapDealToCard);
+        const news = rows.filter((r: any) => r.condition === "Neuf" || r.condition === "Scellé").map(mapDealToCard);
+        if (refurb.length > 0) setDeals(refurb);
+        if (news.length > 0) setNewPhones(news);
+        setLoaded(true);
+      })
+      .catch(() => {
+        // Keep static fallback on error
+        setLoaded(true);
+      });
+  }, []);
+
   return (
     <section id="deals" className="py-16 md:py-24 relative">
       <div className="absolute inset-0 bg-gradient-subtle opacity-50" aria-hidden="true" />
 
       <div className={cn("relative z-10", isPWA ? "container mx-auto px-4 sm:px-6" : "container mx-auto px-4")}>
-        {/* WEB: bloc titre + visuels comme avant (ref a1803ad / 3d0e150) */}
+        {/* WEB: bloc titre + visuels */}
         {!isPWA && (
           <div className="text-center space-y-4 mb-12">
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
               Nos meilleurs <span className="text-primary">deals</span>
             </h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              Les meilleurs deals d’échange équitable entre smartphones: marque, modèle et état pris en compte, compensation ajustée, transaction sécurisée.
+              Les meilleurs deals d'échange équitable entre smartphones: marque, modèle et état pris en compte, compensation ajustée, transaction sécurisée.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-2 mt-4">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium bg-primary/10 text-primary border border-primary/20">
@@ -123,7 +159,7 @@ const DealsSection = () => {
             ) : isPWA ? (
               <div className="flex overflow-x-auto no-scrollbar scroll-horizontal pb-4 -mx-4 px-4 gap-4">
                 {deals.map((deal, index) => (
-                  <div key={index} className="min-w-[280px] shrink-0 scroll-snap-center">
+                  <div key={deal.id ?? index} className="min-w-[280px] shrink-0 scroll-snap-center">
                     <PhoneCard {...deal} />
                   </div>
                 ))}
@@ -131,7 +167,7 @@ const DealsSection = () => {
             ) : (
               <div className="deals-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {deals.map((deal, index) => (
-                  <PhoneCard key={index} {...deal} />
+                  <PhoneCard key={deal.id ?? index} {...deal} />
                 ))}
               </div>
             )}
@@ -145,7 +181,7 @@ const DealsSection = () => {
             ) : isPWA ? (
               <div className="flex overflow-x-auto no-scrollbar scroll-horizontal pb-4 -mx-4 px-4 gap-4">
                 {newPhones.map((phone, index) => (
-                  <div key={index} className="min-w-[280px] shrink-0 scroll-snap-center">
+                  <div key={phone.id ?? index} className="min-w-[280px] shrink-0 scroll-snap-center">
                     <PhoneCard {...phone} />
                   </div>
                 ))}
@@ -153,7 +189,7 @@ const DealsSection = () => {
             ) : (
               <div className="deals-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {newPhones.map((phone, index) => (
-                  <PhoneCard key={index} {...phone} />
+                  <PhoneCard key={phone.id ?? index} {...phone} />
                 ))}
               </div>
             )}

@@ -28,7 +28,7 @@ const services = [
     longDesc: "Réparations professionnelles et support technique certifié. Diagnostic, réparation smartphone/PC et garantie sur les interventions.",
     icon: Wrench,
     emoji: "🔧",
-    color: "bg-[#0a1628]",
+    color: "bg-zinc-900",
     borderColor: "border-[#064e3b]",
   },
   {
@@ -39,7 +39,7 @@ const services = [
     icon: GraduationCap,
     emoji: "🎓",
     color: "bg-[#064e3b]",
-    borderColor: "border-[#0a1628]",
+    borderColor: "border-zinc-200 dark:border-zinc-800",
   },
   {
     id: "dev",
@@ -48,7 +48,7 @@ const services = [
     longDesc: "Solutions sur mesure pour entreprises et entrepreneurs : sites web, applications mobiles et PWA pour développer votre présence digitale.",
     icon: Code,
     emoji: "💻",
-    color: "bg-[#0a1628]",
+    color: "bg-zinc-900",
     borderColor: "border-[#064e3b]",
   },
 ];
@@ -60,7 +60,7 @@ const ServicesSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="py-16 md:py-20 bg-[#f0f9f4] dark:bg-[#0a1628]/40">
+    <section className="py-16 md:py-20 bg-[#f0f9f4] dark:bg-zinc-950">
       <div className="container mx-auto px-6">
         <div className="text-center mb-14">
           <h2 className="text-3xl md:text-5xl font-black text-[#0a0a0a] dark:text-white mb-4 tracking-tighter">

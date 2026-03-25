@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Sidebar from "@/shared/components/Sidebar";
 import Footer from "@/shared/components/Footer";
@@ -22,7 +22,14 @@ const Layout = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const isPWA = usePWA();
-  const showFooter = location.pathname === "/";
+  const isHomepage = location.pathname === "/";
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   // Après OAuth, Supabase peut renvoyer vers /profile ou / au lieu de /admin : on corrige ici.
   useEffect(() => {
@@ -60,8 +67,12 @@ const Layout = () => {
       <Sidebar />
       <PWAInstallBanner />
       <div className="flex-1 flex flex-col md:pl-16 relative min-w-0 pb-20 md:pb-0">
-        {/* Header pleine largeur — prend bien l'écran */}
-        <header className="sticky top-0 z-40 w-full border-b border-border/5 bg-background/95 backdrop-blur-xl transition-all pt-safe shrink-0">
+        {/* Header pleine largeur — transparent en haut de la homepage, opaque ailleurs */}
+        <header className={`sticky top-0 z-40 w-full transition-all duration-300 pt-safe shrink-0 ${
+          isHomepage && !scrolled && !isPWA
+            ? "border-transparent bg-transparent"
+            : "border-b border-border/5 bg-background/95 backdrop-blur-xl"
+        }`}>
           <div className="w-full px-4 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between gap-3">
             {/* Branding / Logo Area */}
             <div className="flex items-center gap-3">
@@ -106,7 +117,7 @@ const Layout = () => {
         <main className="flex-1 min-w-0 w-full">
           <Outlet />
         </main>
-        {showFooter && <Footer />}
+        {!isPWA && <Footer />}
       </div>
       <TekhBot />
       <NewVersionBanner />

@@ -9,6 +9,7 @@ import ServicesSection from "@/features/home/ServicesSection";
 import WhyTekh from "@/features/home/WhyTekh";
 import ExchangeProcess from "@/features/home/ExchangeProcess";
 import TrustSection from "@/features/home/TrustSection";
+import CtaSection from "@/features/home/CtaSection";
 import { Zap, Search, ShieldCheck } from "lucide-react";
 import { usePWA } from "@/shared/hooks/usePWA";
 
@@ -64,6 +65,8 @@ const Index = () => {
         /* VUE SITE WEB CLASSIQUE */
         <>
           <HeaderCarousel />
+          {/* Pont dégradé dark → light */}
+          <div className="h-24 bg-gradient-to-b from-black to-[#f0f9f4] dark:to-zinc-950 -mt-1" aria-hidden="true" />
           <ServicesSection />
           <WhyTekh />
           <DealsSection />
@@ -73,6 +76,7 @@ const Index = () => {
             <MessagingSection />
             <RepairSection />
           </div>
+          <CtaSection />
         </>
       )}
     </main>

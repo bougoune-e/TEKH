@@ -48,9 +48,9 @@ export const HeaderCarousel = () => {
   }, [paused]);
 
   return (
-    <section className="relative min-h-dvh bg-[#0a1628] flex items-center overflow-hidden">
+    <section className="relative min-h-dvh bg-black flex items-center overflow-hidden">
       {/* Gradient ambiance */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#064e3b]/25 via-[#0a1628] to-[#0a1628]" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#064e3b]/25 via-black to-black" />
 
       {/* Subtle grid */}
       <div
