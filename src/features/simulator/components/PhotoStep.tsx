@@ -53,7 +53,7 @@ const MiniSlot = ({
             Photo {index + 1}
         </span>
         <div className={cn(
-            "relative aspect-[4/3] rounded-xl border-2 border-dashed overflow-hidden flex items-center justify-center bg-slate-50 dark:bg-white/5 transition-all",
+            "relative aspect-square rounded-xl border-2 border-dashed overflow-hidden flex items-center justify-center bg-slate-50 dark:bg-white/5 transition-all",
             image
                 ? "border-blue-600/40 dark:border-primary/40 border-solid"
                 : "border-slate-200 dark:border-white/10 hover:border-blue-400 dark:hover:border-primary/40 cursor-pointer",
@@ -86,10 +86,10 @@ const MiniSlot = ({
             ) : (
                 <div
                     onClick={() => fileInputRef.current?.click()}
-                    className="flex flex-col items-center gap-2 p-3"
+                    className="flex flex-col items-center gap-1.5 p-2"
                 >
-                    <div className="w-8 h-8 rounded-xl bg-slate-200 dark:bg-white/10 flex items-center justify-center group-hover:bg-blue-600 transition-colors">
-                        <Plus className="w-4 h-4 text-slate-400 dark:text-zinc-500" />
+                    <div className="w-6 h-6 rounded-lg bg-slate-200 dark:bg-white/10 flex items-center justify-center group-hover:bg-blue-600 transition-colors">
+                        <Plus className="w-3 h-3 text-slate-400 dark:text-zinc-500" />
                     </div>
                 </div>
             )}
