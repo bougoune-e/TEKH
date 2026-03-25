@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Zap, ShieldCheck, Clock } from "lucide-react";
 
@@ -14,8 +14,38 @@ const trust = [
   { icon: Clock, value: "50 pts", label: "Contrôles" },
 ];
 
+/**
+ * Positions des 3 cartes selon leur slot.
+ * slot 0 = front, slot 1 = droite-derrière, slot 2 = gauche-fond
+ */
+const CARD_SLOTS = [
+  {
+    transform: "translate(-50%, -50%) rotate(0deg) translateX(0px) translateY(-12px) scale(1.06)",
+    zIndex: 3,
+    opacity: 1,
+  },
+  {
+    transform: "translate(-50%, -50%) rotate(9deg) translateX(62px) translateY(8px) scale(0.9)",
+    zIndex: 2,
+    opacity: 0.7,
+  },
+  {
+    transform: "translate(-50%, -50%) rotate(-8deg) translateX(-54px) translateY(16px) scale(0.81)",
+    zIndex: 1,
+    opacity: 0.38,
+  },
+];
+
 export const HeaderCarousel = () => {
   const navigate = useNavigate();
+  const [front, setFront] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (paused) return;
+    const t = setInterval(() => setFront((f) => (f + 1) % 3), 3800);
+    return () => clearInterval(t);
+  }, [paused]);
 
   return (
     <section className="relative min-h-dvh bg-[#0a1628] flex items-center overflow-hidden">
@@ -32,8 +62,9 @@ export const HeaderCarousel = () => {
         }}
       />
 
-      {/* Green accent glow top-left */}
-      <div className="absolute -top-32 -left-32 w-[600px] h-[600px] rounded-full bg-[#064e3b]/20 blur-[120px] pointer-events-none" />
+      {/* Glow blobs */}
+      <div className="absolute -top-40 -left-40 w-[700px] h-[700px] rounded-full bg-[#064e3b]/18 blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-[#064e3b]/10 blur-[100px] pointer-events-none" />
 
       <div className="container mx-auto px-6 lg:px-16 relative z-10 w-full">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center min-h-dvh py-28 lg:py-0">
@@ -41,29 +72,26 @@ export const HeaderCarousel = () => {
           {/* ─── LEFT : content ─── */}
           <div className="space-y-8 max-w-xl">
 
-            {/* Live badge */}
+            {/* Badge — sans mention géographique */}
             <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-[#00FF41]/10 border border-[#00FF41]/20 backdrop-blur-sm">
               <span className="w-2 h-2 rounded-full bg-[#00FF41] animate-pulse shrink-0" />
               <span className="text-[11px] font-black uppercase tracking-widest text-[#00FF41]">
-                Togo · Lomé · L'échange intelligent
+                Échange · Certifié · Sécurisé
               </span>
             </div>
 
-            {/* Headline */}
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[0.95] tracking-tighter">
               Change ton<br />
               téléphone,<br />
               <span className="italic" style={{ color: "#00FF41" }}>pas ton budget.</span>
             </h1>
 
-            {/* Sub */}
             <p className="text-base md:text-lg text-zinc-400 font-semibold leading-relaxed">
               Échangez votre smartphone cassé contre un modèle reconditionné
               certifié. Estimation instantanée, transaction sécurisée,
               récupération à domicile.
             </p>
 
-            {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-3">
               <button
                 onClick={() => navigate("/simulateur")}
@@ -95,44 +123,72 @@ export const HeaderCarousel = () => {
             </div>
           </div>
 
-          {/* ─── RIGHT : image stack ─── */}
-          <div className="relative h-[380px] md:h-[480px] lg:h-[600px] hidden md:block">
-            {IMAGES.map((src, i) => (
-              <div
-                key={src}
-                className="absolute rounded-[28px] overflow-hidden border border-white/10 shadow-2xl"
-                style={{
-                  width: "62%",
-                  aspectRatio: "3 / 4",
-                  top: "50%",
-                  left: "50%",
-                  transform: `translate(-50%, -50%) rotate(${(i - 1) * 7}deg) translateX(${(i - 1) * 56}px) translateY(${i === 1 ? -16 : 8}px)`,
-                  zIndex: i === 1 ? 3 : i === 2 ? 2 : 1,
-                  transition: "transform 0.4s ease",
-                }}
-              >
-                <img
-                  src={src}
-                  alt=""
-                  className="w-full h-full object-cover"
-                  style={{ opacity: i === 1 ? 0.95 : 0.65 }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-              </div>
-            ))}
+          {/* ─── RIGHT : deck de cartes animé ─── */}
+          <div
+            className="relative h-[380px] md:h-[500px] lg:h-[620px] hidden md:block"
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => setPaused(false)}
+          >
+            {IMAGES.map((src, i) => {
+              const slot = (i - front + 3) % 3;
+              const pos = CARD_SLOTS[slot];
+              return (
+                <div
+                  key={src}
+                  onClick={() => setFront(i)}
+                  className="absolute rounded-[28px] overflow-hidden border border-white/10 cursor-pointer"
+                  style={{
+                    width: "60%",
+                    aspectRatio: "3 / 4",
+                    top: "50%",
+                    left: "50%",
+                    transform: pos.transform,
+                    zIndex: pos.zIndex,
+                    opacity: pos.opacity,
+                    boxShadow: `0 ${20 + slot * 10}px ${40 + slot * 14}px rgba(0,0,0,${0.35 - slot * 0.1})`,
+                    transition: "transform 0.85s cubic-bezier(0.34, 1.1, 0.64, 1), opacity 0.85s ease, box-shadow 0.85s ease",
+                  }}
+                >
+                  <img src={src} alt="" className="w-full h-full object-cover" />
+                  <div
+                    className="absolute inset-0"
+                    style={{ background: `linear-gradient(to top, rgba(0,0,0,${0.15 + slot * 0.12}), transparent 55%)` }}
+                  />
+                </div>
+              );
+            })}
 
-            {/* TEKH+ label on front card */}
-            <div
-              className="absolute z-10 bottom-[12%] left-[20%] px-4 py-2 rounded-full bg-[#00FF41] text-black text-[10px] font-black uppercase tracking-widest shadow-lg"
-            >
-              TΞKΗ+ Certified
+            {/* TEKH+ Certified badge */}
+            <div className="absolute bottom-[14%] left-[16%] z-10 pointer-events-none">
+              <span className="px-4 py-2 rounded-full bg-[#00FF41] text-black text-[10px] font-black uppercase tracking-widest shadow-lg inline-block">
+                TΞKΗ+ Certified
+              </span>
+            </div>
+
+            {/* Dot indicators */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+              {IMAGES.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setFront(i)}
+                  className="transition-all duration-500 p-0 border-none bg-transparent"
+                  style={{
+                    width: front === i ? 24 : 8,
+                    height: 8,
+                    borderRadius: 4,
+                    background: front === i ? "#00FF41" : "rgba(255,255,255,0.25)",
+                    boxShadow: front === i ? "0 0 8px rgba(0,255,65,0.6)" : "none",
+                    cursor: "pointer",
+                  }}
+                />
+              ))}
             </div>
           </div>
         </div>
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-30 pointer-events-none">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-25 pointer-events-none">
         <div className="w-px h-10 bg-white hero-scroll-line" />
         <span className="text-[9px] text-white uppercase tracking-[0.2em] font-black">Scroll</span>
       </div>
@@ -140,12 +196,11 @@ export const HeaderCarousel = () => {
       <style>{`
         .hero-scroll-line {
           animation: heroScroll 2s ease-in-out infinite;
-          transform-origin: top;
         }
         @keyframes heroScroll {
           0%   { transform: scaleY(0); transform-origin: top; opacity: 1; }
           50%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
-          51%  { transform: scaleY(1); transform-origin: bottom; opacity: 1; }
+          51%  { transform: scaleY(1); transform-origin: bottom; }
           100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
         }
       `}</style>

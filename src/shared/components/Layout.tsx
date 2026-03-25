@@ -44,6 +44,19 @@ const Layout = () => {
 
   return (
     <div className={`flex min-h-[100dvh] bg-background text-foreground transition-colors overflow-x-hidden ${isPWA ? 'mode-pwa' : ''} pt-safe pb-safe`}>
+      {/* Background tech ambiance — web uniquement, très subtil */}
+      {!isPWA && (
+        <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
+          <img
+            src="/header/header-2.png"
+            alt=""
+            className="absolute w-full h-full object-cover"
+            style={{ opacity: 0.022, filter: "blur(40px) saturate(1.4)", transform: "scale(1.1)" }}
+          />
+          {/* Gradient overlay pour garder le fond propre */}
+          <div className="absolute inset-0 bg-background/80" />
+        </div>
+      )}
       <Sidebar />
       <PWAInstallBanner />
       <div className="flex-1 flex flex-col md:pl-16 relative min-w-0 pb-20 md:pb-0">
