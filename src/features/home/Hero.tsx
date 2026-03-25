@@ -7,6 +7,9 @@ import mascotVideo from "@/assets/illustrations/simulator/gifrobot.mp4";
 const Hero = () => {
   const navigate = useNavigate();
   const isPWA = usePWA();
+  const [bubble] = React.useState(() =>
+    Math.random() > 0.5 ? "Besoin d'un diagnostic ?" : "Prêt pour un Swap ?"
+  );
   return (
     <section className="pt-24 pb-16 md:pt-32 md:pb-24 bg-background relative overflow-hidden min-h-[85dvh] flex flex-col justify-center">
       <div className="container mx-auto px-6 relative z-10">
@@ -18,7 +21,7 @@ const Hero = () => {
               <div className="relative group perspective-1000">
                 <div className="absolute -top-12 -right-12 z-20 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
                   <div className="bg-white dark:bg-zinc-900 border-2 border-primary text-foreground px-4 py-2 rounded-2xl rounded-bl-none shadow-xl font-bold text-sm whitespace-nowrap animate-float">
-                    {Math.random() > 0.5 ? "Besoin d'un diagnostic ?" : "Prêt pour un Swap ?"}
+                    {bubble}
                   </div>
                 </div>
                 <div className="w-14 h-14 md:w-28 md:h-28 rounded-full overflow-hidden border-4 border-accent/20 shadow-glow animate-levitate bg-black transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3 cursor-pointer">

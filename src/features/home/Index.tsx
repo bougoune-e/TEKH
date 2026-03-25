@@ -5,10 +5,10 @@ import { HeaderCarousel } from "@/features/home/HeaderCarousel";
 import DealsSection from "@/features/marketplace/DealsSection";
 import MessagingSection from "@/features/marketplace/MessagingSection";
 import RepairSection from "@/features/marketplace/RepairSection";
-import Hero from "@/features/home/Hero";
 import ServicesSection from "@/features/home/ServicesSection";
 import WhyTekh from "@/features/home/WhyTekh";
 import ExchangeProcess from "@/features/home/ExchangeProcess";
+import TrustSection from "@/features/home/TrustSection";
 import { Zap, Search, ShieldCheck } from "lucide-react";
 import { usePWA } from "@/shared/hooks/usePWA";
 
@@ -61,14 +61,14 @@ const Index = () => {
           </div>
         </div>
       ) : (
-        /* VUE SITE WEB CLASSIQUE — header photos + contenu */
+        /* VUE SITE WEB CLASSIQUE */
         <>
           <HeaderCarousel />
-          <Hero />
           <ServicesSection />
           <WhyTekh />
           <DealsSection />
           <ExchangeProcess />
+          <TrustSection />
           <div className="container mx-auto px-4 py-8 space-y-12">
             <MessagingSection />
             <RepairSection />

@@ -44,16 +44,20 @@ if (!isReturningUser) {
 
 // ---------------------------------------------------------------------------
 // 2. Splash screen logic
-//    - Returning users (have session or are logged in): hide splash IMMEDIATELY
-//    - First-time users: show the splash for 1.8s then fade out
+//    - PWA standalone only: first-time users see splash 1.8s
+//    - Web browser (non-standalone): skip splash entirely (non-professionnel)
+//    - Returning users: toujours skip
 // ---------------------------------------------------------------------------
-if (isReturningUser) {
-  // Returning user → skip splash entirely
+const isStandalonePWA =
+  window.matchMedia('(display-mode: standalone)').matches ||
+  (window.navigator as any).standalone === true;
+
+if (isReturningUser || !isStandalonePWA) {
   if (typeof (window as any).hideSplashScreen === 'function') {
     (window as any).hideSplashScreen();
   }
 } else {
-  // First-time user → show splash for 1.8s then fade out gracefully
+  // PWA first-time → show splash 1.8s then fade out
   setTimeout(() => {
     if (typeof (window as any).hideSplashScreen === 'function') {
       (window as any).hideSplashScreen();

@@ -6,19 +6,19 @@ const reasons = [
         title: "Vitesse",
         desc: "Estimation instantanée et processus d'échange en quelques minutes.",
         icon: <Zap className="w-8 h-8 text-white" />,
-        color: "bg-blue-600"
+        color: "bg-[#064e3b]"
     },
     {
         title: "Sécurité",
         desc: "Transactions sécurisées et protection des données personnelles.",
         icon: <ShieldCheck className="w-8 h-8 text-white" />,
-        color: "bg-blue-600"
+        color: "bg-[#064e3b]"
     },
     {
         title: "Qualité",
         desc: "Appareils certifiés et testés par nos experts techniques.",
         icon: <Smartphone className="w-8 h-8 text-white" />,
-        color: "bg-blue-600"
+        color: "bg-[#064e3b]"
     }
 ];
 

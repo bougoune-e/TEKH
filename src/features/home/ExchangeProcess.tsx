@@ -53,7 +53,7 @@ const ExchangeProcess = () => {
                             </div>
                             <div>
                                 <h3 className="text-[11px] md:text-sm font-black text-black dark:text-white leading-tight">{step.title}</h3>
-                                <p className="text-[9px] md:text-xs font-bold text-slate-500 dark:text-slate-400 leading-snug hidden md:block">
+                                <p className="text-[9px] md:text-xs font-bold text-slate-500 dark:text-slate-400 leading-snug">
                                     {step.desc}
                                 </p>
                             </div>
@@ -76,7 +76,7 @@ const ExchangeProcess = () => {
                         </div>
                         <div>
                             <h3 className="text-[11px] md:text-sm font-black text-black dark:text-white leading-tight">Deal Validé</h3>
-                            <p className="text-[9px] md:text-xs font-bold text-slate-500 dark:text-slate-400 leading-snug hidden md:block">
+                            <p className="text-[9px] md:text-xs font-bold text-slate-500 dark:text-slate-400 leading-snug">
                                 Échange finalisé, appareil prêt.
                             </p>
                         </div>
