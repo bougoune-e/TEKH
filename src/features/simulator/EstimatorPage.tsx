@@ -304,8 +304,7 @@ export default function EstimatorPage() {
     (async () => {
       try {
         setLoadingStorages(true);
-        const info = await getModelInfo(brand, model);
-        setModelInfoData(info);
+        setModelInfoData(null);
         const variants = await getAvailableVariants(brand, model);
         setAvailableVariants(variants);
         const sList = [...new Set(variants.map(v => v.storage_gb))].sort((a, b) => a - b);
@@ -317,9 +316,23 @@ export default function EstimatorPage() {
     })();
   }, [brand, model]);
 
+  // Load model info (price) once storage is confirmed
+  useEffect(() => {
+    if (!brand || !model || !storage) return;
+    (async () => {
+      const info = await getModelInfo(brand, model, storage);
+      setModelInfoData(info);
+    })();
+  }, [brand, model, storage]);
+
   useEffect(() => {
     if (!storage || availableVariants.length === 0) return;
-    const rList = [...new Set(availableVariants.filter(v => v.storage_gb === storage).map(v => v.ram_gb))].sort((a, b) => a - b);
+    const rList = [...new Set(
+      availableVariants
+        .filter(v => v.storage_gb === storage)
+        .map(v => v.ram_gb)
+        .filter((r): r is number => r !== null && Number.isFinite(r) && r > 0)
+    )].sort((a, b) => a - b);
     setRams(rList);
     if (rList.length === 1) setRam(rList[0]);
   }, [storage, availableVariants]);
@@ -344,7 +357,8 @@ export default function EstimatorPage() {
         setLoadingTargetVariants(true);
         const variants = await getAvailableVariants(targetBrand, targetModel);
         setTargetVariants(variants);
-        const info = await getModelInfo(targetBrand, targetModel);
+        const firstStorage = variants[0]?.storage_gb ?? 0;
+        const info = await getModelInfo(targetBrand, targetModel, firstStorage);
         if (info) {
           setTargetModelInfo(info);
         } else {
@@ -435,7 +449,7 @@ export default function EstimatorPage() {
             <span className="text-[10px] font-black uppercase tracking-tighter">Retour</span>
           </Button>
           <div className="flex flex-col items-center">
-            <h1 className="text-sm font-black tracking-tighter uppercase italic text-slate-900 dark:text-white">Estimateur Express</h1>
+            <h1 className="text-sm font-black tracking-tighter uppercase italic text-slate-900 dark:text-white">Estimateur TEKH+</h1>
             <p className="text-[8px] font-bold text-blue-600 dark:text-primary tracking-widest uppercase">Version 2.0 • IA Intégrée</p>
           </div>
           <Button
@@ -553,11 +567,9 @@ export default function EstimatorPage() {
                               ? ("damaged" as const)
                               : ("good" as const);
                         setLastSimulation({
-                          brand,
                           model,
-                          storage: storage || 0,
-                          ram: ram || 0,
-                          price: finalPriceValue,
+                          storage: storage || undefined,
+                          estimated: finalPriceValue,
                           condition,
                         });
                         navigate(`/marketplace/deal/${returnToDealId}`);
@@ -576,30 +588,49 @@ export default function EstimatorPage() {
 
         {step === "satisfaction" && (
           <SatisfactionStep
+            finalPrice={finalPriceValue}
+            formatCFA={formatCFA}
+            isSatisfied={isSatisfied}
+            setIsSatisfied={setIsSatisfied}
+            setStep={setStep}
             proposedPrice={proposedPrice}
-            onAccept={() => setStep("target_selection")}
-            onDecline={() => navigate("/")}
+            setProposedPrice={setProposedPrice}
+            isPWA={isPWA}
           />
         )}
 
         {step === "target_selection" && (
           <TargetSelectionStep
-            targetBrand={targetBrand} setTargetBrand={setTargetBrand}
-            targetModel={targetModel} setTargetModel={setTargetModel}
-            targetStorage={targetStorage} setTargetStorage={setTargetStorage}
-            brands={brands} models={targetModels} storages={storages}
-            loadingBrands={loadingBrands} loadingModels={loadingTargetModels} loadingStorages={loadingStorages}
-            onBack={() => setStep("satisfaction")}
-            onNext={() => setStep("comparison")}
+            exchangeType={exchangeType}
+            setExchangeType={setExchangeType}
+            targetBrand={targetBrand}
+            setTargetBrand={setTargetBrand}
+            brands={brands}
+            targetModel={targetModel}
+            setTargetModel={setTargetModel}
+            targetModels={targetModels}
+            loadingTargetModels={loadingTargetModels}
+            targetStorage={targetStorage}
+            setTargetStorage={setTargetStorage}
+            targetVariants={targetVariants}
+            setStep={setStep}
           />
         )}
 
         {step === "comparison" && (
           <ComparisonStep
-            brand={brand} model={model} storage={storage} ram={ram} price={parseInt(proposedPrice)}
-            targetBrand={targetBrand} targetModel={targetModel} targetStorage={targetStorage}
+            brand={brand}
+            model={model}
+            finalPrice={finalPriceValue}
+            targetBrand={targetBrand}
+            targetModel={targetModel}
             targetModelInfo={targetModelInfo}
-            onBack={() => setStep("target_selection")}
+            storage={storage}
+            ecranState={ecranState}
+            chassisState={chassisState}
+            targetStorage={targetStorage}
+            formatCFA={formatCFA}
+            isPWA={isPWA}
           />
         )}
       </div>
