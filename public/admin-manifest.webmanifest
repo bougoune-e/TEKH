@@ -3,7 +3,7 @@
   "short_name": "Admin",
   "description": "Panneau d'administration TEKH+.",
   "start_url": "/admin",
-  "scope": "/",
+  "scope": "/admin",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#00FF41",
