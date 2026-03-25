@@ -1,4 +1,4 @@
-import { Camera, Plus, X, Loader2, CheckCircle2, AlertTriangle, ScanLine, Smartphone } from "lucide-react";
+import { Camera, Plus, X, Loader2, CheckCircle2, AlertTriangle, ScanLine, Smartphone, Zap } from "lucide-react";
 import { cn } from "@/core/api/utils";
 import type { PhoneAnalysisResult } from "@/core/api/analyzePhone";
 
@@ -11,6 +11,7 @@ interface PhotoStepProps {
     fileInputRefs: Record<PhotoSlot, React.RefObject<HTMLInputElement>>;
     handleImageUpload: (e: React.ChangeEvent<HTMLInputElement>, slot: PhotoSlot) => void;
     removeImage: (slot: PhotoSlot) => void;
+    performAnalysis: (slot: PhotoSlot) => void;
 }
 
 /** 2 visible sections, each containing 2 internal slots (4 photos total) */
@@ -46,6 +47,7 @@ const MiniSlot = ({
     fileInputRef: React.RefObject<HTMLInputElement>;
     onUpload: (e: React.ChangeEvent<HTMLInputElement>, slot: PhotoSlot) => void;
     onRemove: (slot: PhotoSlot) => void;
+    onAnalyze: (slot: PhotoSlot) => void;
     index: number;
 }) => (
     <div className="flex flex-col gap-1.5 flex-1 min-w-0">
@@ -68,16 +70,28 @@ const MiniSlot = ({
                     >
                         <X className="w-3 h-3" />
                     </button>
+                    {image && !result && !isAnalyzing && (
+                        <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px] flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                            <button
+                                onClick={() => onAnalyze(slot)}
+                                className="bg-blue-600 hover:bg-blue-500 text-white text-[9px] font-black px-3 py-2 rounded-xl shadow-xl flex items-center gap-1.5 transform scale-90 hover:scale-100 transition-all"
+                            >
+                                <Zap className="w-3 h-3 text-amber-400" />
+                                CERTIFIER IA
+                            </button>
+                        </div>
+                    )}
+
                     {result && (
                         <div className={cn(
-                            "absolute bottom-0 left-0 right-0 px-2 py-1 flex items-center gap-1 text-[9px] font-black backdrop-blur-sm",
+                            "absolute bottom-0 left-0 right-0 px-2 py-1.5 flex items-center gap-1.5 text-[9px] font-black backdrop-blur-md",
                             result.isClear && result.isMatch
                                 ? "bg-green-500/90 text-white"
                                 : "bg-amber-500/90 text-white"
                         )}>
                             {result.isClear && result.isMatch
-                                ? <CheckCircle2 className="w-2.5 h-2.5 shrink-0" />
-                                : <AlertTriangle className="w-2.5 h-2.5 shrink-0" />
+                                ? <CheckCircle2 className="w-3 h-3 shrink-0" />
+                                : <AlertTriangle className="w-3 h-3 shrink-0" />
                             }
                             <span className="truncate">{result.verdict}</span>
                         </div>
@@ -118,20 +132,25 @@ const MiniSlot = ({
 
 export const PhotoStep = ({
     imageSlots, analysisResults, analyzingSlots,
-    fileInputRefs, handleImageUpload, removeImage,
+    fileInputRefs, handleImageUpload, removeImage, performAnalysis
 }: PhotoStepProps) => {
     return (
         <div className="space-y-6 pt-6 border-t border-slate-100 dark:border-white/5">
-            <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-blue-600/10 dark:bg-primary/10 text-blue-600 dark:text-primary flex items-center justify-center">
+            <div className="flex items-center gap-3 px-1">
+                <div className="w-10 h-10 rounded-xl bg-blue-600/10 dark:bg-primary/10 text-blue-600 dark:text-primary flex items-center justify-center shrink-0">
                     <Camera className="w-5 h-5" />
                 </div>
                 <div>
-                    <h2 className="text-lg font-black tracking-tighter uppercase font-sans text-black dark:text-white italic">
-                        3. Rapport Photo OBLIGATOIRE
-                    </h2>
-                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-                        4 photos requises — Face et Dos de l'appareil
+                    <div className="flex items-center gap-2 flex-wrap">
+                        <h2 className="text-base font-black tracking-tighter uppercase font-sans text-black dark:text-white italic leading-tight">
+                            4. Photos
+                        </h2>
+                        <span className="text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/10 text-slate-500 dark:text-zinc-500">
+                            Optionnel
+                        </span>
+                    </div>
+                    <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">
+                        Renforcez votre certification — étape facultative
                     </p>
                 </div>
             </div>
@@ -140,13 +159,13 @@ export const PhotoStep = ({
                 {SECTIONS.map(({ label, hint, Icon, slots }) => (
                     <div key={label} className="space-y-3">
                         {/* Section header */}
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 px-1">
                             <div className="w-7 h-7 rounded-lg bg-blue-600/10 dark:bg-primary/10 flex items-center justify-center shrink-0">
                                 <Icon className="w-3.5 h-3.5 text-blue-600 dark:text-primary" />
                             </div>
                             <div>
                                 <p className="text-[10px] font-black uppercase tracking-widest text-slate-700 dark:text-zinc-300 leading-none">{label}</p>
-                                <p className="text-[9px] font-semibold text-slate-400 dark:text-zinc-600 leading-none mt-0.5">{hint}</p>
+                                <p className="text-[9px] font-semibold text-slate-400 dark:text-zinc-600 leading-none mt-1">{hint}</p>
                             </div>
                         </div>
 
@@ -163,6 +182,7 @@ export const PhotoStep = ({
                                     fileInputRef={fileInputRefs[slot]}
                                     onUpload={handleImageUpload}
                                     onRemove={removeImage}
+                                    onAnalyze={performAnalysis}
                                 />
                             ))}
                         </div>
