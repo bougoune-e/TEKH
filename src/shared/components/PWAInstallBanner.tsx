@@ -1,62 +1,47 @@
 import { useState, useEffect } from "react";
 import { Smartphone, X, Share, PlusSquare } from "lucide-react";
-import { useTranslation } from "react-i18next";
-import { capturePWAPrompt } from "@/core/pwa/pwaInstall";
+import {
+  isPWAInstallAvailable,
+  isStandalonePWA,
+  isIOSDevice,
+  onPromptAvailable,
+  triggerPWAInstall,
+} from "@/core/pwa/pwaInstall";
+
+const THREE_DAYS = 3 * 24 * 60 * 60 * 1000;
 
 const PWAInstallBanner = () => {
-    const { t } = useTranslation();
-    const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
     const [isVisible, setIsVisible] = useState(false);
-    const [isIOS, setIsIOS] = useState(false);
+    const ios = isIOSDevice();
 
     useEffect(() => {
-        // Check if already in standalone mode
-        const isStandalone = window.matchMedia("(display-mode: standalone)").matches || (window.navigator as any).standalone;
-        if (isStandalone) return;
+        // Already installed — never show
+        if (isStandalonePWA()) return;
 
-        // Check if dismissed recently (3 days cooldown)
+        // Dismissed recently — respect cooldown
         const dismissedAt = localStorage.getItem("pwa_dismissed_at");
-        if (dismissedAt) {
-            const threeDays = 3 * 24 * 60 * 60 * 1000;
-            if (Date.now() - Number(dismissedAt) < threeDays) return;
+        if (dismissedAt && Date.now() - Number(dismissedAt) < THREE_DAYS) return;
+
+        if (ios) {
+            // iOS: show after 2 seconds (no native prompt available)
+            const t = setTimeout(() => setIsVisible(true), 2000);
+            return () => clearTimeout(t);
         }
 
-        // Detect iOS
-        const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
-        setIsIOS(isIOSDevice);
-
-        const handleBeforeInstallPrompt = (e: any) => {
-            capturePWAPrompt(e); // share globally for Footer & other components
-            setDeferredPrompt(e);
+        // Android/desktop: show when the singleton has captured the prompt
+        if (isPWAInstallAvailable()) {
             setIsVisible(true);
-        };
-
-        window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
-
-        // For iOS, show it after 2 seconds
-        if (isIOSDevice) {
-            const timer = setTimeout(() => setIsVisible(true), 2000);
-            return () => clearTimeout(timer);
+        } else {
+            return onPromptAvailable(() => setIsVisible(true));
         }
-
-        return () => {
-            window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
-        };
-    }, []);
+    }, [ios]);
 
     const handleInstallClick = async () => {
-        if (isIOS) {
-            // iOS users need to be shown instructions (handled in render)
-            return;
-        }
-
-        if (!deferredPrompt) return;
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        if (outcome === 'accepted') {
+        if (ios) return; // iOS: user follows Share icon instructions shown in UI
+        const outcome = await triggerPWAInstall();
+        if (outcome === "accepted" || outcome === "dismissed") {
             setIsVisible(false);
         }
-        setDeferredPrompt(null);
     };
 
     const handleDismiss = () => {
@@ -78,7 +63,7 @@ const PWAInstallBanner = () => {
                             TΞKΗ+ App
                         </p>
                         <p className="text-[9px] font-bold text-white/70 leading-tight uppercase tracking-tight">
-                            {isIOS
+                            {ios
                                 ? "Partagez puis 'Sur l'écran d'accueil'"
                                 : "TΞKΗ+, pour un accès au numérique pour tous."}
                         </p>
@@ -86,7 +71,7 @@ const PWAInstallBanner = () => {
                 </div>
 
                 <div className="flex items-center gap-1 pr-1">
-                    {!isIOS && (
+                    {!ios && (
                         <button
                             onClick={handleInstallClick}
                             className="bg-primary text-black h-8 px-4 rounded-lg text-[9px] font-black uppercase tracking-widest hover:brightness-110 active:scale-95 transition-all whitespace-nowrap"
@@ -94,7 +79,7 @@ const PWAInstallBanner = () => {
                             Installer
                         </button>
                     )}
-                    {isIOS && (
+                    {ios && (
                         <div className="flex items-center gap-1.5 opacity-90 scale-90 py-1.5 px-3 bg-white/5 rounded-lg border border-white/10">
                             <Share className="h-4 w-4" />
                             <span className="text-sm font-light text-white/40">|</span>

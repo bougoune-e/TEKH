@@ -1,44 +1,40 @@
 import { useState, useEffect } from "react";
 import { Download, X, Smartphone } from "lucide-react";
+import {
+  isPWAInstallAvailable,
+  isStandalonePWA,
+  onPromptAvailable,
+  triggerPWAInstall,
+} from "@/core/pwa/pwaInstall";
 
 /**
- * Banière d'installation PWA dédiée à l'admin.
- * - Écoute `beforeinstallprompt` pour afficher une invite native
- * - Masquée si déjà en mode standalone (application installée)
- * - Rejetable via localStorage (ne réapparaît pas pendant 7 jours)
+ * Install banner for the Admin PWA.
+ * Relies on the pwaInstall singleton which auto-captures `beforeinstallprompt`.
+ * When on /admin pages, AdminLayout swaps the manifest to admin-manifest.webmanifest
+ * (scope: "/admin"), so Chrome fires a separate beforeinstallprompt for the admin app.
  */
 const DISMISS_KEY = "tekh:admin-pwa-dismiss";
+const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
 
 export const AdminPWAInstall = () => {
-  const [prompt, setPrompt] = useState<any>(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    // Déjà installé → ne pas afficher
-    if (window.matchMedia("(display-mode: standalone)").matches) return;
+    if (isStandalonePWA()) return;
 
-    // Rejeté récemment → ne pas afficher
     const dismissed = localStorage.getItem(DISMISS_KEY);
-    if (dismissed && Date.now() - Number(dismissed) < 7 * 24 * 60 * 60 * 1000) return;
+    if (dismissed && Date.now() - Number(dismissed) < SEVEN_DAYS) return;
 
-    const handler = (e: Event) => {
-      e.preventDefault();
-      setPrompt(e);
+    if (isPWAInstallAvailable()) {
       setVisible(true);
-    };
-
-    window.addEventListener("beforeinstallprompt", handler as EventListener);
-    return () => window.removeEventListener("beforeinstallprompt", handler as EventListener);
+    } else {
+      return onPromptAvailable(() => setVisible(true));
+    }
   }, []);
 
   const install = async () => {
-    if (!prompt) return;
-    prompt.prompt();
-    const { outcome } = await prompt.userChoice;
-    if (outcome === "accepted") {
-      setVisible(false);
-      setPrompt(null);
-    }
+    const outcome = await triggerPWAInstall();
+    if (outcome === "accepted" || outcome === "dismissed") setVisible(false);
   };
 
   const dismiss = () => {

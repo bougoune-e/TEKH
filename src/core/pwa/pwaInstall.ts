@@ -1,20 +1,21 @@
 /**
  * Module singleton for PWA install prompt.
- * Captures the `beforeinstallprompt` event once and exposes helpers
- * so any component (Footer, banner, etc.) can trigger installation.
+ * Auto-captures `beforeinstallprompt` at module load so any component
+ * (Footer, banner, etc.) can trigger installation at any time,
+ * regardless of UI cooldowns or component mount state.
  */
 
 let _prompt: any = null;
-
-/** Call this when `beforeinstallprompt` fires to save the event. */
-export function capturePWAPrompt(e: Event) {
-  e.preventDefault();
-  _prompt = e;
-  // Notify any registered listeners
-  _listeners.forEach((fn) => fn());
-}
-
 const _listeners: Array<() => void> = [];
+
+// Auto-capture as soon as this module is imported — no UI component required.
+if (typeof window !== "undefined") {
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    _prompt = e;
+    _listeners.forEach((fn) => fn());
+  });
+}
 
 /** Subscribe to prompt availability changes (returns unsubscribe fn). */
 export function onPromptAvailable(fn: () => void) {

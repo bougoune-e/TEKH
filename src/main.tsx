@@ -2,6 +2,7 @@ import { createRoot } from "react-dom/client";
 import App from "@/app/App";
 import "@/app/index.css";
 import "@/core/config/i18n";
+import "@/core/pwa/pwaInstall"; // registers beforeinstallprompt listener at startup
 
 // ---------------------------------------------------------------------------
 // 1. Synchronous path restoration (Anti-Splash Screen)
