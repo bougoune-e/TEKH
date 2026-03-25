@@ -9,10 +9,13 @@ import { supabase } from "@/core/api/supabaseClient";
 import type { EcranTekh, ChassisTekh } from "@/core/api/pricing";
 
 export interface PhoneAnalysisResult {
+  isClear: boolean;
+  isMatch: boolean;
   ecran: EcranTekh;
   chassis: ChassisTekh;
   confiance: number; // 0–100
-  remarques: string;
+  verdict: string;
+  erreur?: string;
 }
 
 /** Convert a browser File to a base64 string (no data-URL prefix). */
@@ -40,7 +43,11 @@ function getMediaType(file: File): "image/jpeg" | "image/png" | "image/gif" | "i
  * Analyse a phone image using Claude (via Supabase Edge Function).
  * Returns detected screen/chassis condition and confidence score.
  */
-export async function analyzePhoneImage(file: File): Promise<PhoneAnalysisResult> {
+export async function analyzePhoneImage(
+  file: File,
+  photoType: "front" | "back" | "side",
+  expectedBrand: string
+): Promise<PhoneAnalysisResult> {
   if (!supabase) throw new Error("Supabase non configuré");
 
   const [imageBase64, mediaType] = await Promise.all([
@@ -49,7 +56,7 @@ export async function analyzePhoneImage(file: File): Promise<PhoneAnalysisResult
   ]);
 
   const { data, error } = await supabase.functions.invoke("analyze-phone", {
-    body: { imageBase64, mediaType },
+    body: { imageBase64, mediaType, photoType, expectedBrand },
   });
 
   if (error) throw error;
