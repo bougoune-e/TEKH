@@ -6,24 +6,18 @@ import { Label } from "@/shared/ui/label";
 import { useTranslation } from "react-i18next";
 import { useDeals } from "@/features/marketplace/deals.context";
 import { useAuth } from "@/features/auth/auth.context";
-import { getCurrentUser, uploadAvatar, upsertProfile, supabase, ensureProfileForUser, countDealsByOwner, fetchTekhPointsSummary } from "@/core/api/supabaseApi";
+import { uploadAvatar, upsertProfile, supabase, ensureProfileForUser, countDealsByOwner, fetchTekhPointsSummary } from "@/core/api/supabaseApi";
 import { isSupabaseConfigured } from "@/core/api/supabaseClient";
 import UserAvatar from "@/shared/components/UserAvatar";
 import { LogOut, Camera, Package, ShieldCheck, Heart, Settings, ShoppingCart, ChevronRight, Coins } from "lucide-react";
 import { toast } from "@/shared/hooks/use-toast";
 import MotionRings from "@/shared/components/MotionRings";
 import { useCart } from "@/features/marketplace/cart.context";
-import { Link, useNavigate } from "react-router-dom";
-import { isAdmin } from "@/features/auth/AdminRoute";
+import { Link } from "react-router-dom";
 
 export default function Profile() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const { user, refreshUser } = useAuth();
-
-  useEffect(() => {
-    if (user && isAdmin(user)) navigate("/admin", { replace: true });
-  }, [user, navigate]);
 
   const { deals } = useDeals();
   const { items: cartItems } = useCart();
@@ -34,10 +28,6 @@ export default function Profile() {
   const fileRef = useRef<HTMLInputElement | null>(null);
   const [dbCount, setDbCount] = useState<number | null>(null);
   const [tekhPoints, setTekhPoints] = useState<{ balanceFcfa: number; nextExpiry: string | null } | null>(null);
-
-  if (user && isAdmin(user)) {
-    return <div className="min-h-dvh flex items-center justify-center bg-background"><p className="text-muted-foreground">Redirection…</p></div>;
-  }
 
   useEffect(() => {
     if (user) {

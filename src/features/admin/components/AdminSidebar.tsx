@@ -5,7 +5,8 @@ import {
   LayoutGrid, Users, Smartphone, Boxes, Tags, BarChart3,
   Settings, Handshake, ChevronRight, X, Menu, LogOut,
 } from "lucide-react";
-import { logout, getRole } from "@/core/api/auth";
+import { getRole } from "@/core/api/auth";
+import { useAuth } from "@/features/auth/auth.context";
 import logo from "@/assets/logos/robott.jpeg";
 
 const items = [
@@ -23,61 +24,77 @@ const items = [
 const PRIMARY = items.slice(0, 4);
 
 /* ── Desktop sidebar ─────────────────────────────── */
-export const AdminDesktopSidebar = () => (
-  <aside className="hidden md:flex w-64 shrink-0 border-r border-border/50 bg-card flex-col h-dvh sticky top-0">
-    {/* Logo */}
-    <div className="flex items-center gap-3 px-5 py-5 border-b border-border/50">
-      <img src={logo} alt="TΞKΗ+ Admin" className="w-8 h-8 rounded-lg object-cover" />
-      <div>
-        <div className="text-sm font-black tracking-tight text-foreground">TΞKΗ+ Admin</div>
-        <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">{getRole()}</div>
+export const AdminDesktopSidebar = () => {
+  const { signOut } = useAuth();
+  const handleLogout = async () => {
+    localStorage.removeItem("tekh:nav-snapshot");
+    await signOut();
+    window.location.href = "/login";
+  };
+
+  return (
+    <aside className="hidden md:flex w-64 shrink-0 border-r border-border/50 bg-card flex-col h-dvh sticky top-0">
+      {/* Logo */}
+      <div className="flex items-center gap-3 px-5 py-5 border-b border-border/50">
+        <img src={logo} alt="TΞKΗ+ Admin" className="w-8 h-8 rounded-lg object-cover" />
+        <div>
+          <div className="text-sm font-black tracking-tight text-foreground">TΞKΗ+ Admin</div>
+          <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">{getRole()}</div>
+        </div>
       </div>
-    </div>
 
-    {/* Nav */}
-    <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-0.5">
-      {items.map(({ to, label, icon: Icon, end }) => (
-        <NavLink
-          key={to}
-          to={to}
-          end={end as boolean | undefined}
-          className={({ isActive }) =>
-            cn(
-              "group flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all",
-              isActive
-                ? "bg-primary/10 text-primary"
-                : "text-muted-foreground hover:bg-muted hover:text-foreground"
-            )
-          }
+      {/* Nav */}
+      <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-0.5">
+        {items.map(({ to, label, icon: Icon, end }) => (
+          <NavLink
+            key={to}
+            to={to}
+            end={end as boolean | undefined}
+            className={({ isActive }) =>
+              cn(
+                "group flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all",
+                isActive
+                  ? "bg-primary/10 text-primary"
+                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
+              )
+            }
+          >
+            {({ isActive }) => (
+              <>
+                <Icon className={cn("h-4 w-4 shrink-0", isActive && "text-primary")} />
+                <span>{label}</span>
+                {isActive && <ChevronRight className="ml-auto h-3 w-3 opacity-50" />}
+              </>
+            )}
+          </NavLink>
+        ))}
+      </nav>
+
+      {/* Logout */}
+      <div className="px-3 py-4 border-t border-border/50">
+        <button
+          onClick={handleLogout}
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-muted-foreground hover:bg-red-500/10 hover:text-red-500 transition-all"
         >
-          {({ isActive }) => (
-            <>
-              <Icon className={cn("h-4 w-4 shrink-0", isActive && "text-primary")} />
-              <span>{label}</span>
-              {isActive && <ChevronRight className="ml-auto h-3 w-3 opacity-50" />}
-            </>
-          )}
-        </NavLink>
-      ))}
-    </nav>
-
-    {/* Logout */}
-    <div className="px-3 py-4 border-t border-border/50">
-      <button
-        onClick={logout}
-        className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-muted-foreground hover:bg-red-500/10 hover:text-red-500 transition-all"
-      >
-        <LogOut className="h-4 w-4 shrink-0" />
-        Déconnexion
-      </button>
-    </div>
-  </aside>
-);
+          <LogOut className="h-4 w-4 shrink-0" />
+          Déconnexion
+        </button>
+      </div>
+    </aside>
+  );
+};
 
 /* ── Mobile bottom bar + slide-over drawer ───────── */
 export const AdminMobileNav = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const navigate = useNavigate();
+  const { signOut } = useAuth();
+  const handleLogout = async () => {
+    setDrawerOpen(false);
+    localStorage.removeItem("tekh:nav-snapshot");
+    await signOut();
+    window.location.href = "/login";
+  };
 
   return (
     <>
@@ -155,7 +172,7 @@ export const AdminMobileNav = () => {
             </div>
 
             <button
-              onClick={() => { logout(); setDrawerOpen(false); }}
+              onClick={handleLogout}
               className="w-full flex items-center justify-center gap-2 p-3 rounded-2xl bg-red-500/10 text-red-500 font-black text-sm"
             >
               <LogOut className="h-4 w-4" />
