@@ -270,7 +270,7 @@ export default function EstimatorPage() {
         setAiAdjustment(0);
       })
       .finally(() => setAiEnrichmentLoading(false));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isStep1Complete, userDescription, JSON.stringify(functionalityIssues)]);
 
   // ─── Session persistence ────────────────────────────────────────────────────
@@ -452,27 +452,33 @@ export default function EstimatorPage() {
   // ─── Render ─────────────────────────────────────────────────────────────────
   return (
     <div className="min-h-screen bg-white dark:bg-[#0A0A0A] font-sans pb-32">
-      {/* Header */}
-      <div className="sticky top-0 z-50 bg-white/80 dark:bg-[#0A0A0A]/80 backdrop-blur-xl border-b border-slate-100 dark:border-white/5">
-        <div className="max-w-xl mx-auto px-4 h-16 flex items-center justify-between">
+      {/* Header Premium — Floating & Detached */}
+      <div className="sticky top-2 md:top-18 z-50 px-4">
+        <div className="max-w-xl mx-auto bg-white/95 dark:bg-black/95 backdrop-blur-xl border border-slate-100 dark:border-white/10 shadow-2xl rounded-3xl h-14 flex items-center justify-between px-4">
           <Button
-            variant="ghost" size="sm"
+            variant="ghost"
+            size="sm"
             onClick={() => step === "estimation" ? navigate("/") : setStep("estimation")}
-            className="rounded-xl hover:bg-slate-100 dark:hover:bg-white/5"
+            className="rounded-2xl hover:bg-slate-100 dark:hover:bg-white/5 h-9"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            <span className="text-[10px] font-black uppercase tracking-tighter">Retour</span>
+            <span className="text-[10px] font-black uppercase tracking-tight">Retour</span>
           </Button>
+
           <div className="flex flex-col items-center">
-            <h1 className="text-sm font-black tracking-tighter uppercase italic text-slate-900 dark:text-white">Estimateur TEKH+</h1>
-            <p className="text-[8px] font-bold text-blue-600 dark:text-primary tracking-widest uppercase">Version 2.0 • IA Intégrée</p>
+            <h1 className="text-sm font-black tracking-tight uppercase italic text-black dark:text-white leading-none">
+              Estimateur <span className="text-blue-600 dark:text-primary">TEKH+</span>
+            </h1>
+            <p className="text-[7px] font-bold text-slate-400 dark:text-zinc-500 tracking-[0.3em] uppercase mt-1">Certification Automatisée</p>
           </div>
+
           <Button
-            variant="ghost" size="sm"
+            variant="ghost"
+            size="sm"
             onClick={() => window.location.reload()}
-            className="rounded-xl hover:bg-slate-100 dark:hover:bg-white/5"
+            className="rounded-2xl hover:bg-slate-100 dark:hover:bg-white/5 h-9 w-9 p-0"
           >
-            <RotateCcw className="w-4 h-4" />
+            <RotateCcw className="w-3.5 h-3.5" />
           </Button>
         </div>
       </div>
@@ -637,6 +643,13 @@ export default function EstimatorPage() {
             proposedPrice={proposedPrice}
             setProposedPrice={setProposedPrice}
             isPWA={isPWA}
+            brand={brand}
+            model={model}
+            storage={storage}
+            ram={ram}
+            ecranState={resolvedCondition.ecran}
+            chassisState={resolvedCondition.chassis}
+            batterieState={resolvedCondition.batterie}
           />
         )}
 

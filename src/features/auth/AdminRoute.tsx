@@ -14,7 +14,12 @@ function isAdmin(user: any): boolean {
   if (userMeta.role === "ADMIN" || userMeta.role === "admin") return true;
   const u = user as any;
   const email = (u?.email || u?.user_metadata?.email || "").trim().toLowerCase();
-  return email ? ADMIN_EMAILS.includes(email) : false;
+
+  const isMatch = email ? ADMIN_EMAILS.includes(email) : false;
+  if (!isMatch) {
+    console.warn("[AdminAuth] Access denied for:", email, "Expected one of:", ADMIN_EMAILS);
+  }
+  return isMatch;
 }
 
 export default function AdminRoute({ children }: { children: React.ReactNode }) {

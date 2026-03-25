@@ -13,11 +13,19 @@ interface SatisfactionStepProps {
     proposedPrice: string;
     setProposedPrice: (v: string) => void;
     isPWA?: boolean;
+    brand?: string;
+    model?: string;
+    storage?: number | null;
+    ram?: number | null;
+    ecranState?: string;
+    chassisState?: string;
+    batterieState?: string;
 }
 
 export const SatisfactionStep = ({
     finalPrice, formatCFA, isSatisfied, setIsSatisfied, setStep,
-    proposedPrice, setProposedPrice, isPWA = false
+    proposedPrice, setProposedPrice, isPWA = false,
+    brand, model, storage, ram, ecranState, chassisState, batterieState
 }: SatisfactionStepProps) => {
     const { t } = useTranslation();
 
@@ -85,7 +93,24 @@ export const SatisfactionStep = ({
                             "w-full h-14 rounded-full font-black text-sm uppercase italic tracking-[0.2em] shadow-xl mt-4 transition-all",
                             isPWA ? "bg-[#00FF41] hover:bg-[#00FF41]/90 text-black" : "bg-slate-900 hover:bg-black dark:bg-white dark:hover:bg-slate-100 text-white dark:text-black"
                         )}
-                        onClick={() => setStep("target_selection")}
+                        onClick={() => {
+                            // WhatsApp Integration
+                            const phone = import.meta.env.VITE_WHATSAPP_BUSINESS || "22897628117";
+                            const msg = `*RÉCAPITULATIF TEKH+*\n` +
+                                `--------------------\n` +
+                                `📱 *Appareil* : ${brand} ${model}\n` +
+                                `💾 *Stockage* : ${storage} Go\n` +
+                                `🔋 *Batterie* : ${batterieState}\n` +
+                                `📺 *Écran* : ${ecranState}\n` +
+                                `🏗️ *Châssis* : ${chassisState}\n\n` +
+                                `💰 *Prix estimé* : ${formatCFA(finalPrice || 0)}\n` +
+                                `✍️ *Mon offre* : ${proposedPrice} FCFA\n\n` +
+                                `_Expertise générée via TEKH+ App._`;
+
+                            const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+                            window.open(url, "_blank");
+                            setStep("target_selection");
+                        }}
                         disabled={!proposedPrice}
                     >
                         SOUMETTRE <ArrowRightLeft className="w-5 h-5 ml-4" />

@@ -29,47 +29,47 @@ export const DiagnosticStep = ({
                 L’écran détermine le coût de remise à neuf (Dealbox). Le châssis est évalué à part.
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div className="space-y-1.5 text-left">
-                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-zinc-400 ml-1">Écran</Label>
+            <div className="grid grid-cols-1 gap-4">
+                <div className="space-y-2 text-left">
+                    <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-zinc-500 ml-1 italic">État de l’Écran</Label>
                     <Select value={ecranState || ""} onValueChange={(v) => setEcranState(v as EcranTekh)}>
-                        <SelectTrigger className="h-12 rounded-xl border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white">
-                            <SelectValue placeholder="ÉTAT DE L’ÉCRAN" />
+                        <SelectTrigger className="h-14 rounded-2xl border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white transition-all focus:border-blue-600/30">
+                            <SelectValue placeholder="SÉLECTIONNER" />
                         </SelectTrigger>
-                        <SelectContent className="rounded-xl bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
-                            <SelectItem value="parfait">Parfait — aucune rayure</SelectItem>
-                            <SelectItem value="raye">Rayé — rayures visibles</SelectItem>
-                            <SelectItem value="casse">Cassé — fissuré ou fragmenté</SelectItem>
+                        <SelectContent className="rounded-2xl bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10">
+                            <SelectItem value="parfait">Parfait — Aucune rayure</SelectItem>
+                            <SelectItem value="raye">Rayé — Rayures visibles</SelectItem>
+                            <SelectItem value="casse">Cassé — Fissuré / Fragmenté</SelectItem>
                         </SelectContent>
                     </Select>
                 </div>
 
-                <div className="space-y-1.5 text-left">
-                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-zinc-400 ml-1">Châssis & dos</Label>
+                <div className="space-y-2 text-left">
+                    <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-zinc-500 ml-1 italic">État du Châssis (Bords & Dos)</Label>
                     <Select value={chassisState || ""} onValueChange={(v) => setChassisState(v as ChassisTekh)}>
-                        <SelectTrigger className="h-12 rounded-xl border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white">
-                            <SelectValue placeholder="CHÂSSIS" />
+                        <SelectTrigger className="h-14 rounded-2xl border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white transition-all focus:border-blue-600/30">
+                            <SelectValue placeholder="SÉLECTIONNER" />
                         </SelectTrigger>
-                        <SelectContent className="rounded-xl bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
-                            <SelectItem value="intact">Intact — pas de choc visible</SelectItem>
-                            <SelectItem value="abime">Abîmé — chocs ou rayures profondes</SelectItem>
+                        <SelectContent className="rounded-2xl bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10">
+                            <SelectItem value="intact">Intact — Pas de choc</SelectItem>
+                            <SelectItem value="abime">Abîmé — Chocs ou rayures</SelectItem>
                         </SelectContent>
                     </Select>
                 </div>
 
-                <div className="space-y-1.5 text-left md:col-span-2">
-                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-zinc-400 ml-1">Santé de la batterie (capacité)</Label>
+                <div className="space-y-2 text-left">
+                    <Label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-zinc-500 ml-1 italic">Santé Batterie (%)</Label>
                     <Select value={batterieState || ""} onValueChange={(v) => setBatterieState(v as BatterieTekh)}>
-                        <SelectTrigger className="h-12 rounded-xl border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white">
-                            <SelectValue placeholder="BATTERIE" />
+                        <SelectTrigger className="h-14 rounded-2xl border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white transition-all focus:border-blue-600/30">
+                            <SelectValue placeholder="SÉLECTIONNER" />
                         </SelectTrigger>
-                        <SelectContent className="rounded-xl bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
-                            <SelectItem value="gte90">≥ 90 %</SelectItem>
+                        <SelectContent className="rounded-2xl bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10">
+                            <SelectItem value="gte90">Capacité ≥ 90 %</SelectItem>
                             <SelectItem value="gte80_89">80 % – 89 %</SelectItem>
                             <SelectItem value="gte70_79">70 % – 79 %</SelectItem>
                             <SelectItem value="gte60_69">60 % – 69 %</SelectItem>
                             <SelectItem value="lt60">&lt; 60 %</SelectItem>
-                            <SelectItem value="unknown">Inconnu / non mesuré</SelectItem>
+                            <SelectItem value="unknown">Inconnu / Non mesuré</SelectItem>
                         </SelectContent>
                     </Select>
                 </div>

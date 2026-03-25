@@ -14,20 +14,12 @@ interface PhotoStepProps {
     performAnalysis: (slot: PhotoSlot) => void;
 }
 
-/** 2 visible sections, each containing 2 internal slots (4 photos total) */
-const SECTIONS = [
-    {
-        label: "FACE — Écran & Boutons",
-        hint: "Photo de face + vue rapprochée de l'écran",
-        Icon: ScanLine,
-        slots: ["front", "side1"] as PhotoSlot[],
-    },
-    {
-        label: "DOS — Coque & Châssis",
-        hint: "Photo du dos + vue des bords/coins",
-        Icon: Smartphone,
-        slots: ["back", "side2"] as PhotoSlot[],
-    },
+/** Simple list of 4 slots to be displayed on one line */
+const SLOTS: { id: PhotoSlot; label: string; Icon: any }[] = [
+    { id: "front", label: "Face", Icon: ScanLine },
+    { id: "back", label: "Dos", Icon: Smartphone },
+    { id: "side1", label: "Côté 1", Icon: Smartphone },
+    { id: "side2", label: "Côté 2", Icon: Smartphone },
 ];
 
 const MiniSlot = ({
@@ -155,37 +147,20 @@ export const PhotoStep = ({
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                {SECTIONS.map(({ label, hint, Icon, slots }) => (
-                    <div key={label} className="space-y-3">
-                        {/* Section header */}
-                        <div className="flex items-center gap-2 px-1">
-                            <div className="w-7 h-7 rounded-lg bg-blue-600/10 dark:bg-primary/10 flex items-center justify-center shrink-0">
-                                <Icon className="w-3.5 h-3.5 text-blue-600 dark:text-primary" />
-                            </div>
-                            <div>
-                                <p className="text-[10px] font-black uppercase tracking-widest text-slate-700 dark:text-zinc-300 leading-none">{label}</p>
-                                <p className="text-[9px] font-semibold text-slate-400 dark:text-zinc-600 leading-none mt-1">{hint}</p>
-                            </div>
-                        </div>
-
-                        {/* 2 photo slots side by side */}
-                        <div className="flex gap-2">
-                            {slots.map((slot, i) => (
-                                <MiniSlot
-                                    key={slot}
-                                    slot={slot}
-                                    index={i}
-                                    image={imageSlots[slot]}
-                                    result={analysisResults[slot]}
-                                    isAnalyzing={analyzingSlots[slot]}
-                                    fileInputRef={fileInputRefs[slot]}
-                                    onUpload={handleImageUpload}
-                                    onRemove={removeImage}
-                                    onAnalyze={performAnalysis}
-                                />
-                            ))}
-                        </div>
+            <div className="flex flex-row overflow-x-auto gap-3 pb-2 snap-x snap-mandatory scrollbar-hide">
+                {SLOTS.map(({ id, label, Icon }, i) => (
+                    <div key={id} className="min-w-[120px] flex-1 snap-start">
+                        <MiniSlot
+                            slot={id}
+                            index={i}
+                            image={imageSlots[id]}
+                            result={analysisResults[id]}
+                            isAnalyzing={analyzingSlots[id]}
+                            fileInputRef={fileInputRefs[id]}
+                            onUpload={handleImageUpload}
+                            onRemove={removeImage}
+                            onAnalyze={performAnalysis}
+                        />
                     </div>
                 ))}
             </div>
