@@ -4,13 +4,11 @@ import Sidebar from "@/shared/components/Sidebar";
 import Footer from "@/shared/components/Footer";
 import SearchBar from "@/shared/components/SearchBar";
 import BottomNav from "@/shared/components/BottomNav";
-import ThemeToggle from "@/shared/components/ThemeToggle";
 import { useAuth } from "@/features/auth/auth.context";
-import { Bell, Bot, Settings as SettingsIcon } from "lucide-react";
+import { Bell, Settings as SettingsIcon } from "lucide-react";
 import logo from "@/assets/logos/robott.jpeg";
 import PWAInstallBanner from "@/shared/components/PWAInstallBanner";
 import NewVersionBanner from "@/shared/components/NewVersionBanner";
-import { TekhBot } from "@/features/chatbot/TekhBot";
 import { usePWA } from "@/shared/hooks/usePWA";
 import { Link } from "react-router-dom";
 
@@ -41,14 +39,6 @@ const Layout = () => {
     }
   }, [user, location.pathname, navigate]);
 
-  const handleProfileClick = () => {
-    if (!user) {
-      navigate("/login");
-    } else {
-      navigate("/profile");
-    }
-  };
-
   return (
     <div className={`flex min-h-[100dvh] bg-background text-foreground transition-colors overflow-x-hidden ${isPWA ? 'mode-pwa' : ''} pt-safe pb-safe`}>
       {/* Background tech ambiance — web uniquement, très subtil */}
@@ -60,14 +50,13 @@ const Layout = () => {
             className="absolute w-full h-full object-cover"
             style={{ opacity: 0.022, filter: "blur(40px) saturate(1.4)", transform: "scale(1.1)" }}
           />
-          {/* Gradient overlay pour garder le fond propre */}
           <div className="absolute inset-0 bg-background/80" />
         </div>
       )}
       <Sidebar />
       <PWAInstallBanner />
       <div className="flex-1 flex flex-col md:pl-16 relative min-w-0 pb-20 md:pb-0">
-        {/* Header pleine largeur — transparent en haut de la homepage, opaque ailleurs */}
+        {/* Header — transparent en haut de la homepage, opaque ailleurs */}
         <header className={`sticky top-0 z-40 w-full transition-all duration-300 pt-safe shrink-0 ${
           isHomepage && !scrolled && !isPWA
             ? "border-transparent bg-transparent"
@@ -95,14 +84,8 @@ const Layout = () => {
               <SearchBar />
             </div>
 
-            {/* Action Group — un seul Settings sur la plateforme (Sidebar/BottomNav en web, logo en PWA) */}
+            {/* Actions */}
             <div className="flex items-center gap-2">
-              <button
-                onClick={() => window.dispatchEvent(new CustomEvent('toggle-tekhbot'))}
-                className="p-2 hover:bg-white/5 rounded-full transition-all group/bot active:scale-90"
-              >
-                <Bot className="h-[24px] w-[24px] text-foreground group-hover/bot:text-primary" />
-              </button>
               <button
                 onClick={() => navigate("/notifications")}
                 className="relative p-2 hover:bg-white/5 rounded-full transition-all group/bell active:scale-90"
@@ -119,7 +102,6 @@ const Layout = () => {
         </main>
         {!isPWA && <Footer />}
       </div>
-      <TekhBot />
       <NewVersionBanner />
       <BottomNav />
     </div>
