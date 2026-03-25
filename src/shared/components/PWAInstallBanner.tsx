@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Smartphone, X, Share, PlusSquare } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { capturePWAPrompt } from "@/core/pwa/pwaInstall";
 
 const PWAInstallBanner = () => {
     const { t } = useTranslation();
@@ -25,7 +26,7 @@ const PWAInstallBanner = () => {
         setIsIOS(isIOSDevice);
 
         const handleBeforeInstallPrompt = (e: any) => {
-            e.preventDefault();
+            capturePWAPrompt(e); // share globally for Footer & other components
             setDeferredPrompt(e);
             setIsVisible(true);
         };

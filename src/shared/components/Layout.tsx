@@ -100,7 +100,8 @@ const Layout = () => {
         <main className="flex-1 min-w-0 w-full">
           <Outlet />
         </main>
-        {!isPWA && <Footer />}
+        {/* Web: footer on all pages. PWA: footer on home page only */}
+        {(!isPWA || isHomepage) && <Footer />}
       </div>
       <NewVersionBanner />
       <BottomNav />
