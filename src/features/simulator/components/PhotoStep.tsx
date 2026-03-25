@@ -1,4 +1,4 @@
-import { Camera, Plus, Image as ImageIcon, X } from "lucide-react";
+import { Camera, Plus, Image as ImageIcon, X, Loader2, CheckCircle2, AlertTriangle } from "lucide-react";
 import { cn } from "@/core/api/utils";
 
 interface PhotoStepProps {
@@ -13,10 +13,19 @@ interface PhotoStepProps {
     };
     handleImageUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
     removeImage: (slot: "front" | "back" | "left" | "right") => void;
+    /** True while the AI is processing the uploaded image */
+    isAnalyzing?: boolean;
+    /** Feedback message from the AI analysis */
+    analysisMessage?: string;
+    /** Confidence score (0–100) from the AI */
+    analysisConfidence?: number;
 }
 
 export const PhotoStep = ({
-    imageSlots, fileInputRefs, handleImageUpload, removeImage
+    imageSlots, fileInputRefs, handleImageUpload, removeImage,
+    isAnalyzing = false,
+    analysisMessage = "",
+    analysisConfidence = 100,
 }: PhotoStepProps) => {
     return (
         <div className="space-y-4 pt-6 border-t border-slate-100 dark:border-white/5">
@@ -30,10 +39,18 @@ export const PhotoStep = ({
             <div className="bg-slate-50 dark:bg-white/5 rounded-2xl p-4 border-2 border-dashed border-slate-200 dark:border-white/10">
                 <div className="flex flex-col items-center gap-2 text-center mb-3">
                     <div
-                        onClick={() => fileInputRefs.front.current?.click()}
-                        className="w-14 h-14 rounded-xl bg-blue-600 dark:bg-primary text-white flex items-center justify-center shadow-lg cursor-pointer hover:scale-105 active:scale-95 transition-transform"
+                        onClick={() => !isAnalyzing && fileInputRefs.front.current?.click()}
+                        className={cn(
+                            "w-14 h-14 rounded-xl text-white flex items-center justify-center shadow-lg transition-transform",
+                            isAnalyzing
+                                ? "bg-blue-400 dark:bg-primary/50 cursor-wait"
+                                : "bg-blue-600 dark:bg-primary cursor-pointer hover:scale-105 active:scale-95"
+                        )}
                     >
-                        <Plus className="w-7 h-7" />
+                        {isAnalyzing
+                            ? <Loader2 className="w-7 h-7 animate-spin" />
+                            : <Plus className="w-7 h-7" />
+                        }
                     </div>
                     <div>
                         <h4 className="font-black text-slate-900 dark:text-white uppercase tracking-tight text-sm">Photos de l'appareil</h4>
@@ -46,7 +63,7 @@ export const PhotoStep = ({
                     {(Object.keys(imageSlots) as Array<keyof typeof imageSlots>).map((slot) => (
                         <div key={slot} className="relative aspect-square">
                             <div
-                                onClick={() => !imageSlots[slot] && fileInputRefs.front.current?.click()}
+                                onClick={() => !imageSlots[slot] && !isAnalyzing && fileInputRefs.front.current?.click()}
                                 className={cn(
                                     "w-full h-full rounded-lg border-2 overflow-hidden transition-all flex items-center justify-center",
                                     imageSlots[slot]
@@ -71,6 +88,29 @@ export const PhotoStep = ({
                         </div>
                     ))}
                 </div>
+
+                {/* AI analysis feedback */}
+                {isAnalyzing && (
+                    <div className="flex items-center gap-2 mt-3 text-[11px] font-bold text-blue-600 dark:text-primary animate-pulse">
+                        <Loader2 className="w-3 h-3 animate-spin shrink-0" />
+                        <span>Analyse IA de l'état de votre appareil…</span>
+                    </div>
+                )}
+
+                {!isAnalyzing && analysisMessage && (
+                    <div className={cn(
+                        "flex items-start gap-2 mt-3 p-2.5 rounded-xl text-[11px] font-bold",
+                        analysisConfidence >= 70
+                            ? "bg-green-500/10 text-green-700 dark:text-green-400 border border-green-500/20"
+                            : "bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20"
+                    )}>
+                        {analysisConfidence >= 70
+                            ? <CheckCircle2 className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+                            : <AlertTriangle className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+                        }
+                        <span>{analysisMessage}</span>
+                    </div>
+                )}
             </div>
         </div>
     );

@@ -45,6 +45,8 @@ import { Search, RotateCcw, Loader2, ArrowLeft } from "lucide-react";
 import { detectDevice, predictVariants, isMobileUserAgent, getDeviceModelFromClientHints } from "@/core/api/deviceFinder";
 import { useDeals } from "@/features/marketplace/deals.context";
 import { loadJson, saveJson } from "@/core/pwa/tekhSession";
+import { analyzePhoneImage } from "@/core/api/analyzePhone";
+import { isSupabaseConfigured } from "@/core/api/supabaseClient";
 
 /** Reprise session simulateur (onglet / retour app) — photos non persistées. */
 interface EstimatorSessionV1 {
@@ -123,6 +125,11 @@ export default function EstimatorPage() {
     right: null
   });
 
+  // AI photo analysis state
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [analysisMessage, setAnalysisMessage] = useState("");
+  const [analysisConfidence, setAnalysisConfidence] = useState(100);
+
   // Workflow steps: estimation -> satisfaction -> target_selection -> comparison
   const [step, setStep] = useState<"estimation" | "satisfaction" | "target_selection" | "comparison">("estimation");
   const [isSatisfied, setIsSatisfied] = useState<boolean | null>(null);
@@ -153,14 +160,14 @@ export default function EstimatorPage() {
     right: useRef<HTMLInputElement>(null),
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
 
+    // Read files synchronously before any await
     const newSlots = { ...imageSlots };
     const newFiles = { ...imageFiles };
-
-    // Fill empty slots sequentially
+    let firstNewFile: File | null = null;
     let fileIdx = 0;
     const slots: Array<keyof typeof imageSlots> = ["front", "back", "left", "right"];
 
@@ -169,12 +176,37 @@ export default function EstimatorPage() {
         const file = files[fileIdx];
         newSlots[slot] = URL.createObjectURL(file);
         newFiles[slot] = file;
+        if (!firstNewFile) firstNewFile = file;
         fileIdx++;
       }
     }
 
     setImageSlots(newSlots);
     setImageFiles(newFiles);
+
+    // Trigger AI analysis on the first new image (Supabase Edge Function → Claude Haiku)
+    if (firstNewFile && isSupabaseConfigured) {
+      setIsAnalyzing(true);
+      setAnalysisMessage("");
+      try {
+        const result = await analyzePhoneImage(firstNewFile);
+        setEcranState(result.ecran);
+        setChassisState(result.chassis);
+        setAnalysisConfidence(result.confiance);
+        if (result.confiance < 70) {
+          setAnalysisMessage(
+            `Photo peu claire — ${result.remarques}. Reprenez la photo avec plus de lumière pour une meilleure analyse. Vous pouvez corriger manuellement ci-dessus.`
+          );
+        } else {
+          setAnalysisMessage(`IA : ${result.remarques} — Vous pouvez corriger si besoin.`);
+        }
+      } catch {
+        setAnalysisMessage("Analyse IA indisponible — sélectionnez l'état manuellement dans le diagnostic ci-dessus.");
+        setAnalysisConfidence(0);
+      } finally {
+        setIsAnalyzing(false);
+      }
+    }
   };
 
   const removeImage = (slot: keyof typeof imageSlots) => {
@@ -714,6 +746,9 @@ export default function EstimatorPage() {
                           fileInputRefs={fileInputRefs}
                           handleImageUpload={handleImageUpload}
                           removeImage={removeImage}
+                          isAnalyzing={isAnalyzing}
+                          analysisMessage={analysisMessage}
+                          analysisConfidence={analysisConfidence}
                         />
                         <div className="pt-4 flex flex-col items-center gap-6">
                           <div id="estimation-result" className={cn(
