@@ -73,9 +73,10 @@ export default function Login() {
     }
 
     if (data?.user) {
-      const email = (data.user as any)?.email?.trim().toLowerCase();
-      const isAdmin = email === "tekhswap@gmail.com" || (import.meta.env.VITE_ADMIN_EMAILS as string || "").split(",").map((e: string) => e.trim().toLowerCase()).filter(Boolean).includes(email);
-      navigate(isAdmin ? "/admin" : "/profile");
+      const userEmail = (data.user as any)?.email?.trim().toLowerCase() ?? "";
+      const adminEmails = (import.meta.env.VITE_ADMIN_EMAILS as string || "")
+        .split(",").map((e: string) => e.trim().toLowerCase()).filter(Boolean);
+      navigate(adminEmails.includes(userEmail) ? "/admin" : "/profile");
     } else {
       setLoading(false);
     }

@@ -1,7 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Search, Bell, Settings, LogOut } from "lucide-react";
 import { useAuth } from "@/features/auth/auth.context";
-import { supabase } from "@/core/api/supabaseApi";
 import ThemeToggle from "@/shared/components/ThemeToggle";
 import ProfileIcon from "@/shared/components/ProfileIcon";
 import { useTranslation } from "react-i18next";
@@ -20,10 +19,14 @@ import {
 
 const Navbar = () => {
     const { t } = useTranslation();
-    const { user } = useAuth();
+    const { user, signOut } = useAuth();
     const isPWA = usePWA();
     const location = useLocation();
-    const handleSignOut = () => supabase.auth.signOut();
+    const handleSignOut = async () => {
+        localStorage.removeItem("tekh:nav-snapshot");
+        await signOut();
+        window.location.href = "/login";
+    };
 
     const isActive = (path: string) => location.pathname === path;
 

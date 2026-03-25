@@ -89,7 +89,10 @@ export default function Profile() {
   };
 
   const logout = async () => {
-    try { await supabase.auth.signOut(); } catch { }
+    try {
+      localStorage.removeItem("tekh:nav-snapshot");
+      await supabase.auth.signOut();
+    } catch { }
     window.location.href = "/login";
   };
 
