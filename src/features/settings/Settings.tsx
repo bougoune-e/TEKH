@@ -299,7 +299,7 @@ export default function SettingsPage() {
                 {/* Profile Title */}
                 <div className="px-4">
                     <h1 className="text-3xl font-black text-black dark:text-white">Paramètres</h1>
-                    <p className="text-slate-500 font-bold">Gérez votre compte et vos préférences</p>
+                    <p className="text-slate-500 dark:text-zinc-400 font-bold">Gérez votre compte et vos préférences</p>
                 </div>
 
                 {/* Profile Card */}
@@ -321,14 +321,14 @@ export default function SettingsPage() {
                             <h2 className="text-2xl font-black text-black dark:text-white">
                                 {(user as any)?.user_metadata?.full_name || "Utilisateur TEKH+"}
                             </h2>
-                            <p className="text-slate-500 font-bold text-sm">{(user as any)?.email}</p>
+                            <p className="text-slate-500 dark:text-zinc-400 font-bold text-sm">{(user as any)?.email}</p>
                         </div>
                     </div>
                 </section>
 
                 {/* Personal Info */}
                 <div className="space-y-4">
-                    <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 px-4">Informations personnelles</h3>
+                    <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 dark:text-zinc-400 px-4">Informations personnelles</h3>
                     <div className="bg-slate-50 dark:bg-zinc-900 rounded-[32px] overflow-hidden border-2 border-black dark:border-white">
                         <div className="p-6 space-y-6">
                             <div className="space-y-2">
@@ -356,7 +356,7 @@ export default function SettingsPage() {
                 {/* Main Navigation Sections */}
                 {sections.map((section) => (
                     <div key={section.title} className="space-y-4">
-                        <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 px-4">{section.title}</h3>
+                        <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 dark:text-zinc-400 px-4">{section.title}</h3>
                         <div className="grid gap-4">
                             {section.items.map((item) => (
                                 <Link key={item.label} to={(item as any).path || "#"} className="w-full flex items-center justify-between p-5 bg-slate-50 dark:bg-zinc-900 rounded-[28px] border-2 border-black dark:border-white hover:scale-[1.02] active:scale-95 transition-all group shadow-lg">
@@ -366,7 +366,7 @@ export default function SettingsPage() {
                                         </div>
                                         <div className="text-left">
                                             <p className="font-black text-black dark:text-white text-lg">{item.label}</p>
-                                            <p className="text-xs text-slate-500 font-bold">{item.desc}</p>
+                                            <p className="text-xs text-slate-500 dark:text-zinc-400 font-bold">{item.desc}</p>
                                         </div>
                                     </div>
                                     <ChevronRight className="h-6 w-6 text-black dark:text-white group-hover:translate-x-1 transition-transform" />
@@ -378,7 +378,7 @@ export default function SettingsPage() {
 
                 {/* App Settings */}
                 <div className="space-y-4">
-                    <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 px-4">Système</h3>
+                    <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 dark:text-zinc-400 px-4">Système</h3>
                     <div className="grid gap-4">
                         {/* Apparence */}
                         <div className="flex items-center justify-between p-5 bg-slate-50 dark:bg-zinc-900 rounded-[28px] border-2 border-black dark:border-white shadow-lg">
@@ -388,7 +388,7 @@ export default function SettingsPage() {
                                 </div>
                                 <div className="text-left">
                                     <p className="font-black text-black dark:text-white text-lg">Apparence</p>
-                                    <p className="text-xs text-slate-500 font-bold">Thème clair ou sombre</p>
+                                    <p className="text-xs text-slate-500 dark:text-zinc-400 font-bold">Thème clair ou sombre</p>
                                 </div>
                             </div>
                             <select
@@ -410,7 +410,7 @@ export default function SettingsPage() {
                                 </div>
                                 <div className="text-left">
                                     <p className="font-black text-black dark:text-white text-lg">Langue</p>
-                                    <p className="text-xs text-slate-500 font-bold">Français, Anglais</p>
+                                    <p className="text-xs text-slate-500 dark:text-zinc-400 font-bold">Français, Anglais</p>
                                 </div>
                             </div>
                             <select

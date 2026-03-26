@@ -129,14 +129,14 @@ const Footer = () => {
           <div>
             <h3 className="font-black mb-6 text-black dark:text-white uppercase tracking-widest text-sm">Informations légales</h3>
             <ul className="space-y-3 text-sm">
-              <li><Link to="/charte-qualite" className="text-slate-500 hover:text-primary transition-smooth font-bold">Charte Qualité</Link></li>
-              <li><Link to="/charte-du-swap" className="text-slate-500 hover:text-primary transition-smooth font-bold">Charte du SWAP</Link></li>
-              <li><Link to="/politique-echange-tekhpoints" className="text-slate-500 hover:text-primary transition-smooth font-bold">Politique d&apos;échange &amp; TekhPoints</Link></li>
-              <li><Link to="/cgu" className="text-slate-500 hover:text-primary transition-smooth font-bold">Conditions d'Utilisation (CGU)</Link></li>
-              <li><Link to="/cgv" className="text-slate-500 hover:text-primary transition-smooth font-bold">Conditions de Vente (CGV)</Link></li>
-              <li><Link to="/politique-confidentialite" className="text-slate-500 hover:text-primary transition-smooth font-bold">Confidentialité</Link></li>
-              <li><Link to="/aide-et-faq" className="text-slate-500 hover:text-primary transition-smooth font-bold">FAQ & Aide</Link></li>
-              <li><Link to="/mentions-legales" className="text-slate-500 hover:text-primary transition-smooth font-bold">Mentions Légales</Link></li>
+              <li><Link to="/charte-qualite" className="text-slate-500 dark:text-zinc-400 hover:text-primary transition-smooth font-bold">Charte Qualité</Link></li>
+              <li><Link to="/charte-du-swap" className="text-slate-500 dark:text-zinc-400 hover:text-primary transition-smooth font-bold">Charte du SWAP</Link></li>
+              <li><Link to="/politique-echange-tekhpoints" className="text-slate-500 dark:text-zinc-400 hover:text-primary transition-smooth font-bold">Politique d&apos;échange &amp; TekhPoints</Link></li>
+              <li><Link to="/cgu" className="text-slate-500 dark:text-zinc-400 hover:text-primary transition-smooth font-bold">Conditions d'Utilisation (CGU)</Link></li>
+              <li><Link to="/cgv" className="text-slate-500 dark:text-zinc-400 hover:text-primary transition-smooth font-bold">Conditions de Vente (CGV)</Link></li>
+              <li><Link to="/politique-confidentialite" className="text-slate-500 dark:text-zinc-400 hover:text-primary transition-smooth font-bold">Confidentialité</Link></li>
+              <li><Link to="/aide-et-faq" className="text-slate-500 dark:text-zinc-400 hover:text-primary transition-smooth font-bold">FAQ & Aide</Link></li>
+              <li><Link to="/mentions-legales" className="text-slate-500 dark:text-zinc-400 hover:text-primary transition-smooth font-bold">Mentions Légales</Link></li>
             </ul>
           </div>
 

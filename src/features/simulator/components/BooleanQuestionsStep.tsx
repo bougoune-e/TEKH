@@ -58,7 +58,7 @@ export const BooleanQuestionsStep = ({
                     <h2 className="text-lg font-black tracking-tighter uppercase font-sans text-black dark:text-white italic">
                         3. Vérifications rapides
                     </h2>
-                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                    <p className="text-[10px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-widest">
                         4 questions — répondez par oui ou non
                     </p>
                 </div>

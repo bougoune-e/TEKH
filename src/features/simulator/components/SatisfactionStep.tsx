@@ -86,7 +86,7 @@ export const SatisfactionStep = ({
                         placeholder="EX: 450,000"
                         value={proposedPrice}
                         onChange={(e) => setProposedPrice(e.target.value)}
-                        className="w-full bg-slate-50 dark:bg-white/5 border-2 border-zinc-100 dark:border-white/10 rounded-2xl h-14 px-6 font-black text-2xl text-[#064e3b] dark:text-primary outline-none focus:border-[#064e3b] dark:focus:border-primary transition-all shadow-inner placeholder:text-slate-200 dark:placeholder:text-zinc-800 text-center"
+                        className="w-full bg-slate-50 dark:bg-white/5 border-2 border-zinc-100 dark:border-white/10 rounded-2xl h-14 px-6 font-black text-2xl text-[#064e3b] dark:text-primary outline-none focus:border-[#064e3b] dark:focus:border-primary transition-all shadow-inner placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-center"
                     />
                     <Button
                         className={cn(

@@ -42,7 +42,7 @@ const Sidebar = () => {
                   to={item.path}
                   className={`relative transition-all duration-300 hover:scale-110 ${active
                     ? 'text-[#064e3b] dark:text-primary scale-110'
-                    : 'text-black dark:text-slate-500 hover:text-[#064e3b] dark:hover:text-primary'}`}
+                    : 'text-black dark:text-zinc-400 hover:text-[#064e3b] dark:hover:text-primary'}`}
                   aria-label={item.label}
                 >
                   <Icon
@@ -72,7 +72,7 @@ const Sidebar = () => {
               to="/settings"
               className={`relative transition-all duration-300 hover:scale-110 ${isActive('/settings')
                 ? 'text-[#064e3b] dark:text-primary scale-110'
-                : 'text-black dark:text-slate-500 hover:text-[#064e3b] dark:hover:text-primary'}`}
+                : 'text-black dark:text-zinc-400 hover:text-[#064e3b] dark:hover:text-primary'}`}
               aria-label={t('nav.settings')}
             >
               <Settings
@@ -96,7 +96,7 @@ const Sidebar = () => {
               onClick={handleProfileClick}
               className={`relative transition-all duration-300 hover:scale-110 ${isActive('/profile') || isActive('/login')
                 ? 'text-[#064e3b] dark:text-primary scale-110'
-                : 'text-black dark:text-slate-500 hover:text-[#064e3b] dark:hover:text-primary'}`}
+                : 'text-black dark:text-zinc-400 hover:text-[#064e3b] dark:hover:text-primary'}`}
               aria-label={t('nav.profile')}
             >
               <User
