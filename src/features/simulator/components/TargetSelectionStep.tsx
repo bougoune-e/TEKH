@@ -33,9 +33,9 @@ export const TargetSelectionStep = ({
         <div className="p-4 sm:p-10 space-y-8 animate-in slide-in-from-bottom-12 duration-700">
             <div className="text-center space-y-4">
                 <p className="text-blue-600 dark:text-primary font-black uppercase text-[10px] tracking-[0.5em]">PHASE 3 / NAVIGATION</p>
-                <h2 className="text-4xl sm:text-6xl font-black tracking-tighter uppercase italic leading-[0.85] text-slate-900 dark:text-white">
+                <div className="text-4xl sm:text-6xl font-black tracking-tighter uppercase italic leading-[0.85] text-slate-900 dark:text-white">
                     {t('simulator.possession')} <br /> <span className="text-[#064e3b] dark:text-primary">{t('simulator.target')}</span>
-                </h2>
+                </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto">

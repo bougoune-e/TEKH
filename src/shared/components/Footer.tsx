@@ -100,7 +100,7 @@ const Footer = () => {
   return (
     <footer className="bg-background border-t border-border/50 relative overflow-hidden">
       {/* Overlay très léger pour la texture */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/5 dark:to-white/[0.02] pointer-events-none"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/5 dark:to-white/5 pointer-events-none"></div>
 
       <div className="container mx-auto px-4 py-12 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">

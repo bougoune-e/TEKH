@@ -77,9 +77,9 @@ export const ComparisonStep = ({
     return (
         <div className="p-6 sm:p-10 space-y-12 animate-in zoom-in-95 duration-700">
             <div className="text-center space-y-3">
-                <h2 className="text-3xl sm:text-5xl font-black tracking-[0.3em] uppercase leading-[0.9] text-slate-900 dark:text-white mb-1 font-sans">
+                <div className="text-3xl sm:text-5xl font-black tracking-[0.3em] uppercase leading-[0.9] text-slate-900 dark:text-white mb-1 font-sans">
                     ACCORD DE <span className={cn(isPWA ? "text-blue-600 dark:text-[#00FF41]" : "text-[#064e3b] dark:text-primary", "italic")}>SWAP</span>
-                </h2>
+                </div>
                 <div className="flex items-center justify-center gap-2">
                     <ShieldCheck className={cn("w-4 h-4", isPWA ? "text-blue-600 dark:text-[#00FF41]" : "text-[#064e3b] dark:text-primary")} />
                     <p className="text-slate-800 dark:text-zinc-300 font-black uppercase text-[9px] tracking-[0.5em]">CERTIFICATION TECHNIQUE TEKH+</p>

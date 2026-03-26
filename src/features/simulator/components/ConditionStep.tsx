@@ -111,9 +111,9 @@ export const ConditionStep = ({
                     <ShieldCheck className="w-5 h-5" />
                 </div>
                 <div>
-                    <h2 className="text-lg font-black tracking-tighter uppercase font-sans text-black dark:text-white italic">
+                    <div className="text-lg font-black tracking-tighter uppercase font-sans text-black dark:text-white italic">
                         2. État de l'appareil
-                    </h2>
+                    </div>
                     <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
                         Sélectionnez l'état de chaque composant
                     </p>

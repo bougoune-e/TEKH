@@ -23,7 +23,7 @@ export const DiagnosticStep = ({
                 <div className="w-10 h-10 rounded-xl bg-blue-600/10 dark:bg-primary/10 text-blue-600 dark:text-primary flex items-center justify-center">
                     <Monitor className="w-5 h-5" />
                 </div>
-                <h2 className="text-xl font-black tracking-tighter uppercase font-sans text-black dark:text-white italic">2. Diagnostic technique</h2>
+                <div className="text-xl font-black tracking-tighter uppercase font-sans text-black dark:text-white italic">2. Diagnostic technique</div>
             </div>
             <p className="text-[11px] text-slate-500 dark:text-zinc-400 leading-relaxed">
                 L’écran détermine le coût de remise à neuf (Dealbox). Le châssis est évalué à part.

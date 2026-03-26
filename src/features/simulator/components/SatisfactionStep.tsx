@@ -69,9 +69,9 @@ export const SatisfactionStep = ({
                 )}>
                     <Zap className={cn("w-7 h-7 transition-colors", isPWA ? "text-[#00FF41]" : "text-blue-600 dark:text-primary")} />
                 </div>
-                <h2 className="text-xl sm:text-3xl font-black tracking-tighter uppercase italic leading-[0.9] text-slate-900 dark:text-white">
+                <div className="text-xl sm:text-3xl font-black tracking-tighter uppercase italic leading-[0.9] text-slate-900 dark:text-white">
                     {t('simulator.offre_reprise', 'Offre de reprise TEKH+')} <br /> <span className={cn("italic", isPWA ? "text-blue-700 dark:text-[#00FF41]" : "text-[#064e3b] dark:text-primary")}>{formatCFA(finalPrice || 0)}</span>
-                </h2>
+                </div>
                 <p className="text-slate-600 dark:text-zinc-500 text-xs font-bold mt-1 max-w-sm mx-auto">{t('simulator.offre_reprise_desc', 'Prix de reprise proposé par TEKH+ selon l\'état de votre appareil.')}</p>
                 <p className="text-slate-500 dark:text-zinc-500 font-medium uppercase text-[10px] tracking-widest mt-2">{t('simulator.helper_text')}</p>
             </div>

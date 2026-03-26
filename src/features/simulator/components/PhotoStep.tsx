@@ -134,9 +134,9 @@ export const PhotoStep = ({
                 </div>
                 <div>
                     <div className="flex items-center gap-2 flex-wrap">
-                        <h2 className="text-base font-black tracking-tighter uppercase font-sans text-black dark:text-white italic leading-tight">
+                        <div className="text-base font-black tracking-tighter uppercase font-sans text-black dark:text-white italic leading-tight">
                             4. Photos
-                        </h2>
+                        </div>
                         <span className="text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/10 text-slate-500 dark:text-zinc-500">
                             Optionnel
                         </span>
