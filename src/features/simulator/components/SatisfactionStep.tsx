@@ -1,8 +1,34 @@
 import { Label } from "@/shared/ui/label";
 import { Button } from "@/shared/ui/button";
-import { Zap, CheckCircle2, TrendingUp, ArrowRightLeft } from "lucide-react";
+import { Zap, CheckCircle2, TrendingUp, ArrowRightLeft, AlertCircle } from "lucide-react";
 import { cn } from "@/core/api/utils";
 import { useTranslation } from "react-i18next";
+
+function labelBatterie(state?: string): string {
+    switch (state) {
+        case "gte90":    return "Excellente (capacité ≥ 90%)";
+        case "gte80_89": return "Bonne (capacité 80–89%)";
+        case "gte70_79": return "Correcte (capacité 70–79%)";
+        case "gte60_69": return "Faible (capacité 60–69%)";
+        case "lt60":     return "Très faible — à remplacer (< 60%)";
+        default:         return state || "—";
+    }
+}
+function labelEcran(state?: string): string {
+    switch (state) {
+        case "parfait": return "Parfait (aucune rayure ni trace)";
+        case "raye":    return "Rayé / micro-rayures visibles";
+        case "casse":   return "Cassé / écran fissuré";
+        default:        return state || "—";
+    }
+}
+function labelChassis(state?: string): string {
+    switch (state) {
+        case "intact": return "Intact (aucun choc ni marque)";
+        case "abime":  return "Endommagé (chocs ou fissures)";
+        default:       return state || "—";
+    }
+}
 
 interface SatisfactionStepProps {
     finalPrice: number | null;
@@ -28,6 +54,11 @@ export const SatisfactionStep = ({
     brand, model, storage, ram, ecranState, chassisState, batterieState
 }: SatisfactionStepProps) => {
     const { t } = useTranslation();
+
+    const proposedNum = Number(proposedPrice);
+    const estimatedNum = finalPrice || 0;
+    const isSameAsEstimate = proposedNum > 0 && proposedNum === estimatedNum;
+    const canSubmit = proposedNum > 0 && !isSameAsEstimate;
 
     return (
         <div className="p-4 sm:p-6 space-y-6 animate-in slide-in-from-bottom-12 duration-700 text-center">
@@ -83,35 +114,54 @@ export const SatisfactionStep = ({
                     </div>
                     <input
                         type="number"
-                        placeholder="EX: 450,000"
+                        placeholder="EX: 450000"
                         value={proposedPrice}
                         onChange={(e) => setProposedPrice(e.target.value)}
-                        className="w-full bg-slate-50 dark:bg-white/5 border-2 border-zinc-100 dark:border-white/10 rounded-2xl h-14 px-6 font-black text-2xl text-[#064e3b] dark:text-primary outline-none focus:border-[#064e3b] dark:focus:border-primary transition-all shadow-inner placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-center"
+                        className={cn(
+                            "w-full bg-slate-50 dark:bg-zinc-900 border-2 rounded-2xl h-14 px-6 font-black text-2xl text-[#064e3b] dark:text-primary outline-none transition-all shadow-inner placeholder:text-slate-400 dark:placeholder:text-zinc-500 text-center",
+                            isSameAsEstimate
+                                ? "border-rose-400 dark:border-rose-500 focus:border-rose-500"
+                                : "border-zinc-100 dark:border-zinc-700 focus:border-[#064e3b] dark:focus:border-primary"
+                        )}
                     />
+                    {isSameAsEstimate && (
+                        <div className="flex items-center gap-2 text-rose-500 text-[10px] font-black uppercase tracking-widest">
+                            <AlertCircle className="w-3 h-3 shrink-0" />
+                            Votre montant doit être différent de l'estimation TEKH+
+                        </div>
+                    )}
                     <Button
                         className={cn(
                             "w-full h-14 rounded-full font-black text-sm uppercase italic tracking-[0.2em] shadow-xl mt-4 transition-all",
                             isPWA ? "bg-[#00FF41] hover:bg-[#00FF41]/90 text-black" : "bg-slate-900 hover:bg-black dark:bg-white dark:hover:bg-slate-100 text-white dark:text-black"
                         )}
                         onClick={() => {
-                            // WhatsApp Integration
                             const phone = import.meta.env.VITE_WHATSAPP_BUSINESS || "22897628117";
-                            const msg = `*RÉCAPITULATIF TEKH+*\n` +
-                                `--------------------\n` +
-                                `📱 *Appareil* : ${brand} ${model}\n` +
-                                `💾 *Stockage* : ${storage} Go\n` +
-                                `🔋 *Batterie* : ${batterieState}\n` +
-                                `📺 *Écran* : ${ecranState}\n` +
-                                `🏗️ *Châssis* : ${chassisState}\n\n` +
-                                `💰 *Prix estimé* : ${formatCFA(finalPrice || 0)}\n` +
-                                `✍️ *Mon offre* : ${proposedPrice} FCFA\n\n` +
-                                `_Expertise générée via TEKH+ App._`;
+                            const diff = proposedNum - estimatedNum;
+                            const diffPct = estimatedNum > 0 ? (diff / estimatedNum) * 100 : 0;
+                            const sign = diff >= 0 ? "+" : "";
+                            const fmtNum = (n: number) => Math.abs(n).toLocaleString("fr-FR");
+                            const msg =
+                                `🔔 *DEMANDE DE NÉGOCIATION — TEKH+*\n` +
+                                `━━━━━━━━━━━━━━━━━━━━\n` +
+                                `📱 *${brand} ${model}*\n` +
+                                `   💾 Stockage : ${storage} Go${ram ? ` · RAM : ${ram} Go` : ``}\n\n` +
+                                `🔍 *ÉTAT DE L'APPAREIL*\n` +
+                                `• Écran    : ${labelEcran(ecranState)}\n` +
+                                `• Châssis  : ${labelChassis(chassisState)}\n` +
+                                `• Batterie : ${labelBatterie(batterieState)}\n\n` +
+                                `💰 *NÉGOCIATION PRIX*\n` +
+                                `• Estimation TEKH+ : ${formatCFA(estimatedNum)}\n` +
+                                `• Contre-offre     : ${fmtNum(proposedNum)} FCFA\n` +
+                                `• Écart             : ${sign}${fmtNum(diff)} FCFA (${sign}${diffPct.toFixed(1)}%)\n` +
+                                `━━━━━━━━━━━━━━━━━━━━\n` +
+                                `⚡ _Expertise auto-générée · TEKH+ App_`;
 
                             const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
                             window.open(url, "_blank");
                             setStep("target_selection");
                         }}
-                        disabled={!proposedPrice}
+                        disabled={!canSubmit}
                     >
                         SOUMETTRE <ArrowRightLeft className="w-5 h-5 ml-4" />
                     </Button>
