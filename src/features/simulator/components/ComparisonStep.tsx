@@ -2,9 +2,35 @@ import { useEffect } from "react";
 import { ShieldCheck, Smartphone, ArrowRightLeft, Zap } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/core/api/utils";
-import type { ChassisTekh, EcranTekh } from "@/core/api/pricing";
+import type { ChassisTekh, EcranTekh, BatterieTekh } from "@/core/api/pricing";
 import { openWhatsApp } from "@/core/utils/whatsapp";
 import { toast } from "@/shared/hooks/use-toast";
+
+function labelBatterie(state?: string): string {
+    switch (state) {
+        case "gte90":    return "Excellente (≥ 90%)";
+        case "gte80_89": return "Bonne (80–89%)";
+        case "gte70_79": return "Correcte (70–79%)";
+        case "gte60_69": return "Faible (60–69%)";
+        case "lt60":     return "Très faible / à remplacer (< 60%)";
+        default:         return state || "—";
+    }
+}
+function labelEcran(state?: string): string {
+    switch (state) {
+        case "parfait": return "Parfait (aucune rayure)";
+        case "raye":    return "Rayé / micro-rayures";
+        case "casse":   return "Cassé / fissuré";
+        default:        return state || "—";
+    }
+}
+function labelChassis(state?: string): string {
+    switch (state) {
+        case "intact": return "Intact (aucun choc)";
+        case "abime":  return "Endommagé (chocs visibles)";
+        default:       return state || "—";
+    }
+}
 
 interface ComparisonStepProps {
     brand: string;
@@ -16,6 +42,7 @@ interface ComparisonStepProps {
     storage: number | null;
     ecranState: EcranTekh | "";
     chassisState: ChassisTekh | "";
+    batterieState?: BatterieTekh | "";
     targetStorage: number | null;
     formatCFA: (n: number) => string;
     isPWA?: boolean;
@@ -24,7 +51,7 @@ interface ComparisonStepProps {
 export const ComparisonStep = ({
     brand, model, finalPrice,
     targetBrand, targetModel, targetModelInfo,
-    storage, ecranState, chassisState, targetStorage,
+    storage, ecranState, chassisState, batterieState, targetStorage,
     formatCFA, isPWA = false
 }: ComparisonStepProps) => {
     const { t } = useTranslation();
@@ -135,14 +162,29 @@ export const ComparisonStep = ({
                     type="button"
                     onClick={() => {
                         const lines = [
-                            "Bonjour TEKH+, je souhaite faire un deal.",
+                            "🔄 *DEMANDE DE SWAP — TEKH+*",
+                            "━━━━━━━━━━━━━━━━━━━━",
                             "",
-                            "Voici le récapitulatif de mon échange :",
-                            `• Mon appareil : ${brand} ${model} (${storage ?? "—"} Go) — VRT estimée : ${formatCFA(safeFinalPrice)}`,
-                            `• Modèle visé : ${targetBrand} ${targetModel} (${targetStorage ?? "—"} Go) — PRT cible : ${formatCFA(safeTargetPrice)}`,
-                            `• Somme à compléter : ${formatCFA(difference)}`,
+                            "📱 *MON APPAREIL À DONNER*",
+                            `• Modèle    : ${brand} ${model}`,
+                            `• Stockage  : ${storage ?? "—"} Go`,
+                            `• Écran     : ${labelEcran(ecranState)}`,
+                            `• Châssis   : ${labelChassis(chassisState)}`,
+                            `• Batterie  : ${labelBatterie(batterieState)}`,
+                            `• Valeur estimée (VRT) : ${formatCFA(safeFinalPrice)}`,
                             "",
-                            "Merci de me confirmer la suite et le point de swap.",
+                            "🎯 *APPAREIL SOUHAITÉ*",
+                            `• Modèle    : ${targetBrand} ${targetModel}`,
+                            `• Stockage  : ${targetStorage ?? "—"} Go · Grade A certifié`,
+                            `• Prix catalogue (PRT) : ${formatCFA(safeTargetPrice)}`,
+                            "",
+                            "💰 *BILAN FINANCIER*",
+                            `• Apport (reprise)     : ${formatCFA(safeFinalPrice)}`,
+                            `• Complément à régler  : ${formatCFA(difference)}`,
+                            "━━━━━━━━━━━━━━━━━━━━",
+                            "⚡ _Estimation auto-générée · TEKH+ App_",
+                            "",
+                            "Merci de confirmer la disponibilité et le point de swap.",
                         ];
                         const ok = openWhatsApp(lines.join("\n"));
                         if (ok) {

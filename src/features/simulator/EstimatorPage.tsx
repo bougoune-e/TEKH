@@ -554,7 +554,7 @@ export default function EstimatorPage() {
                         <div className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10">
                           <ShieldCheck className="w-5 h-5 text-[#00FF41]" />
                           <p className="text-[10px] font-black text-slate-600 dark:text-zinc-400 uppercase tracking-widest italic flex items-center gap-2">
-                            Certification Chartre TEKH+ <CheckCircle2 className="w-3 h-3 text-emerald-500" />
+                            Certification Charte TEKH+ <CheckCircle2 className="w-3 h-3 text-emerald-500" />
                           </p>
                         </div>
                       </div>
@@ -676,6 +676,7 @@ export default function EstimatorPage() {
             storage={storage}
             ecranState={resolvedCondition.ecran as EcranTekh | ""}
             chassisState={resolvedCondition.chassis as ChassisTekh | ""}
+            batterieState={resolvedCondition.batterie as BatterieTekh | ""}
             targetStorage={targetStorage}
             formatCFA={formatCFA}
             isPWA={isPWA}
