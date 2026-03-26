@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Home, Compass, Calculator, User, LayoutGrid, Settings, Bell } from "lucide-react";
+import { Home, Compass, Calculator, User, LayoutGrid, Settings } from "lucide-react";
 import { useAuth } from "@/features/auth/auth.context";
 import { usePWA } from "@/shared/hooks/usePWA";
 
@@ -71,23 +71,6 @@ export default function BottomNav() {
             </Link>
           );
         })}
-
-        {/* 🔔 Notifications */}
-        <button
-          onClick={() => navigate("/notifications")}
-          className={`flex flex-col items-center justify-center gap-1 transition-all duration-300 h-full ${isPWA
-            ? `active:scale-95 ${pathname === "/notifications" ? "text-primary" : "text-black dark:text-foreground/40"}`
-            : `flex-1 active:scale-90 ${pathname === "/notifications" ? "text-primary" : "text-black dark:text-foreground/60"}`
-            }`}
-        >
-          <Bell
-            className={`transition-transform duration-300 ${isPWA ? "h-6 w-6" : "h-[22px] w-[22px]"} ${pathname === "/notifications" ? "scale-110" : ""}`}
-            strokeWidth={isPWA ? (pathname === "/notifications" ? 3 : 2) : (pathname === "/notifications" ? 2.5 : 2)}
-          />
-          <span className={`font-bold tracking-tight ${isPWA ? "text-[10px]" : "text-[11px] font-medium"} ${pathname === "/notifications" ? "opacity-100" : "opacity-60"}`}>
-            Alertes
-          </span>
-        </button>
 
         {/* 👤 Compte — même icône Lucide User que les autres */}
         <button
