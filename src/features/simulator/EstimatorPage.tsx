@@ -453,30 +453,29 @@ export default function EstimatorPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-[#0A0A0A] font-sans pb-32">
       {/* Header Premium — Floating & Detached */}
-      <div className="sticky top-2 md:top-18 z-50 px-4">
-        <div className="max-w-xl mx-auto bg-white/95 dark:bg-black/95 backdrop-blur-xl border border-slate-100 dark:border-white/10 shadow-2xl rounded-3xl h-14 flex items-center justify-between px-4">
+      <div className="sticky top-14 md:top-20 z-50 px-4">
+        <div className="max-w-xl mx-auto bg-white/95 dark:bg-black/95 backdrop-blur-xl border border-slate-100 dark:border-white/10 shadow-lg rounded-2xl h-12 relative flex items-center px-3">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => step === "estimation" ? navigate("/") : setStep("estimation")}
-            className="rounded-2xl hover:bg-slate-100 dark:hover:bg-white/5 h-9"
+            className="rounded-xl hover:bg-slate-100 dark:hover:bg-white/5 h-8 shrink-0"
           >
-            <ArrowLeft className="w-4 h-4 mr-2" />
+            <ArrowLeft className="w-3.5 h-3.5 mr-1.5" />
             <span className="text-[10px] font-black uppercase tracking-tight">Retour</span>
           </Button>
 
-          <div className="flex flex-col items-center">
-            <h1 className="text-sm font-black tracking-tight uppercase italic text-black dark:text-white leading-none">
-              Estimateur <span className="text-blue-600 dark:text-primary">TEKH+</span>
-            </h1>
-            <p className="text-[7px] font-bold text-slate-400 dark:text-zinc-500 tracking-[0.3em] uppercase mt-1">Certification Automatisée</p>
+          {/* Centrage absolu garanti, indépendant des largeurs des boutons */}
+          <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-1">
+            <span className="text-[10px] font-black tracking-tight uppercase italic text-black dark:text-white">Estimateur</span>
+            <span className="text-[10px] font-black tracking-tight uppercase italic text-blue-600 dark:text-primary">TEKH+</span>
           </div>
 
           <Button
             variant="ghost"
             size="sm"
             onClick={() => window.location.reload()}
-            className="rounded-2xl hover:bg-slate-100 dark:hover:bg-white/5 h-9 w-9 p-0"
+            className="rounded-xl hover:bg-slate-100 dark:hover:bg-white/5 h-8 w-8 p-0 ml-auto shrink-0"
           >
             <RotateCcw className="w-3.5 h-3.5" />
           </Button>

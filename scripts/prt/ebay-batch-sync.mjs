@@ -21,10 +21,12 @@ loadRepoEnv();
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
-const DELAY_MINUTES = Number(process.env.DELAY_MINUTES) || 6;
+const DELAY_MINUTES = Number(process.env.DELAY_MINUTES) || 1;
 const DELAY_MS = DELAY_MINUTES * 60 * 1000;
-const BATCH_SIZE = Number(process.env.BATCH_SIZE) || 150;
+const BATCH_SIZE = Number(process.env.BATCH_SIZE) || 300;
 const FACTEUR = Number(process.env.FACTEUR_AFRIQUE) || 1.15;
+// SKIP_TRIED=1 → exclut les modèles déjà tentés (prt_updated_at IS NOT NULL mais prt_fcfa IS NULL)
+const SKIP_TRIED = process.env.SKIP_TRIED === "1";
 
 function sleep(ms) {
     return new Promise((r) => setTimeout(r, ms));
@@ -46,10 +48,13 @@ async function fetchUnpricedSmartphones(supabase) {
     let from = 0;
     const all = [];
     for (; ;) {
-        const { data, error } = await supabase
+        let query = supabase
             .from("smartphones")
             .select("id, marque, modele, variante, facteur_afrique")
-            .is("prt_fcfa", null)
+            .is("prt_fcfa", null);
+        // SKIP_TRIED=1 → skip models already attempted (prt_updated_at set but no price found)
+        if (SKIP_TRIED) query = query.is("prt_updated_at", null);
+        const { data, error } = await query
             .order("marque")
             .order("modele")
             .range(from, from + pageSize - 1);
@@ -126,7 +131,11 @@ async function main() {
                     ok++;
                 }
             } else {
-                console.log(`  ⚠️  Aucune donnée eBay — PRT laissé null`);
+                console.log(`  ⚠️  Aucune donnée eBay — PRT laissé null (marqué comme tenté)`);
+                // Mark as attempted so SKIP_TRIED=1 can skip it next run
+                await supabase.from("smartphones")
+                    .update({ prt_updated_at: new Date().toISOString() })
+                    .eq("id", row.id);
                 noData++;
             }
         } catch (e) {
