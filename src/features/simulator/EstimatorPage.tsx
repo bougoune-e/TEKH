@@ -619,7 +619,7 @@ export default function EstimatorPage() {
 
                 {/* Hint while mandatory fields are still incomplete */}
                 {!isStep1Complete && (
-                  <div className="mt-6 flex flex-col items-center p-6 bg-slate-50 dark:bg-white/3 rounded-3xl border border-slate-100 dark:border-white/5">
+                  <div className="mt-6 flex flex-col items-center p-6 bg-slate-50 dark:bg-zinc-900 rounded-3xl border border-slate-100 dark:border-zinc-800">
                     <p className="text-[10px] font-black text-slate-400 dark:text-zinc-500 uppercase tracking-widest text-center leading-loose">
                       Complétez les sections ci-dessus <br />
                       <span className="text-blue-600 dark:text-primary">pour débloquer l'estimation</span>

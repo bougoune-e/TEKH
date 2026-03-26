@@ -55,9 +55,9 @@ export const BooleanQuestionsStep = ({
                     <AlertCircle className="w-5 h-5" />
                 </div>
                 <div>
-                    <h2 className="text-lg font-black tracking-tighter uppercase font-sans text-black dark:text-white italic">
+                    <div className="text-lg font-black tracking-tighter uppercase font-sans text-black dark:text-white italic">
                         3. Vérifications rapides
-                    </h2>
+                    </div>
                     <p className="text-[10px] font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-widest">
                         4 questions — répondez par oui ou non
                     </p>
@@ -71,7 +71,7 @@ export const BooleanQuestionsStep = ({
 
                     return (
                         <div key={key} className="space-y-1.5">
-                            <div className="flex items-center justify-between gap-3 rounded-xl border border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/3 px-4 py-3">
+                            <div className="flex items-center justify-between gap-3 rounded-xl border border-slate-100 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900 px-4 py-3">
                                 <div className="flex items-center gap-2.5 min-w-0">
                                     <Icon className="w-4 h-4 shrink-0 text-slate-500 dark:text-zinc-400" />
                                     <span className="text-[11px] font-bold text-slate-700 dark:text-zinc-300 leading-snug">{question}</span>
