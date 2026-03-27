@@ -53,6 +53,7 @@ const DEFAULT_ORIGINS = [
   "http://localhost:5173",
   "https://tekh-1.onrender.com",
   "https://tekh.onrender.com",
+  "https://tekh-backend.onrender.com",
   "https://tekh-backend-production.up.railway.app",
   "https://tekh.up.railway.app"
 ];
