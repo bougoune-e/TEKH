@@ -44,8 +44,13 @@ const Users = () => {
   const load = () => {
     if (!isSupabaseConfigured) { setLoading(false); return; }
     setLoading(true);
-    Promise.all([fetchAllProfiles(), fetchAllDealsForAdmin()])
-      .then(([profs, annonces]) => {
+    Promise.allSettled([fetchAllProfiles(), fetchAllDealsForAdmin()])
+      .then(([profsResult, annoncesResult]) => {
+        if (profsResult.status === "rejected") {
+          toast.error("Erreur chargement utilisateurs");
+        }
+        const profs = profsResult.status === "fulfilled" ? profsResult.value : [];
+        const annonces = annoncesResult.status === "fulfilled" ? annoncesResult.value : [];
         const countMap: Record<string, number> = {};
         for (const a of annonces) {
           const oid = (a as any).ownerId;
@@ -53,7 +58,6 @@ const Users = () => {
         }
         setProfiles(profs.map((p: any) => ({ ...p, annonceCount: countMap[p.id] || 0 })));
       })
-      .catch(() => toast.error("Erreur chargement utilisateurs"))
       .finally(() => setLoading(false));
   };
 

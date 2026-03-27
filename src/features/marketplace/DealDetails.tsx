@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useDeals } from "@/features/marketplace/deals.context";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/card";
@@ -17,6 +17,21 @@ export default function DealDetails() {
   const [imageIndex, setImageIndex] = useState(0);
   const images = deal?.images?.filter(Boolean) ?? [];
   const hasMultipleImages = images.length > 1;
+
+  // Préchargement des images adjacentes pour éviter le blocage au changement
+  useEffect(() => {
+    if (images.length <= 1) return;
+    const toPreload = [
+      (imageIndex + 1) % images.length,
+      (imageIndex - 1 + images.length) % images.length,
+    ];
+    toPreload.forEach((idx) => {
+      if (images[idx]) {
+        const img = new Image();
+        img.src = images[idx];
+      }
+    });
+  }, [imageIndex, images]);
 
   if (!deal) {
     return (

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { fetchDealById, fetchBrands, fetchModels, getAvailableVariants, insertDeal, updateDeal, uploadImage, getCurrentUser } from "@/core/api/supabaseApi";
+import { fetchDealById, fetchBrands, fetchModels, getAvailableVariants, insertDeal, updateDeal, uploadImage, getCurrentUser, supabase } from "@/core/api/supabaseApi";
 import { isSupabaseConfigured } from "@/core/api/supabaseClient";
 import type { DealPost, DealStatus } from "@/shared/data/dealsData";
 import { Button } from "@/shared/ui/button";
@@ -139,7 +139,33 @@ export default function AdminDealForm() {
         payload.id = crypto.randomUUID();
         payload.createdAt = new Date().toISOString();
         await insertDeal(payload);
-        toast.success("Deal créé (brouillon).");
+        toast.success(status === "published" ? "Deal publié avec succès !" : "Deal créé (brouillon).");
+        // Envoi automatique de notification push si le deal est publié
+        if (status === "published") {
+          try {
+            const { data: { session } } = await supabase.auth.getSession();
+            const jwt = session?.access_token;
+            const apiUrl = (import.meta.env.VITE_API_URL as string || "").trim().replace(/\/$/, "");
+            if (jwt && apiUrl) {
+              await fetch(`${apiUrl}/api/push/send`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${jwt}`,
+                },
+                body: JSON.stringify({
+                  title: "Nouveau deal disponible !",
+                  body: `${brand} ${model}${storage ? ` ${storage}Go` : ""} — ${Number(price).toLocaleString()} FCFA`,
+                  url: `/deals/${payload.id}`,
+                  tag: "new-deal",
+                  dealId: payload.id,
+                }),
+              });
+            }
+          } catch {
+            // Notification failure ne bloque pas la création du deal
+          }
+        }
       }
       navigate("/admin/deals");
     } catch (e: any) {
