@@ -88,7 +88,8 @@ const PWAInstallBanner = () => {
                     )}
                     <button
                         onClick={handleDismiss}
-                        className="p-2 hover:bg-white/10 rounded-lg transition-colors text-white/40 hover:text-white"
+                        aria-label="Fermer"
+                        className="p-2 hover:bg-white/10 rounded-lg transition-colors text-white hover:text-white/60"
                     >
                         <X className="h-4 w-4" />
                     </button>

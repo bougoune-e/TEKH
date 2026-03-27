@@ -3,8 +3,9 @@ import fs from "fs";
 import csv from "csv-parser";
 import cors from "cors";
 import path from "path";
-import { fileURLToPath, pathToFileURL } from "url";
+import { fileURLToPath } from "url";
 import webpush from "web-push";
+import Anthropic from "@anthropic-ai/sdk";
 import { supabase, TABLE_PRODUCTS } from "./supabase.js";
 
 // ── Web Push VAPID setup ──────────────────────────────────────
@@ -238,24 +239,22 @@ app.get("/api/products", (_req, res) => {
 });
 
 // ──────────────────────────────────────────────────────────────
-// GOOGLE VISION API – Analyse d'images (état écran) pour TEKH+
-// Source : dossier google-vision-api à la racine de TEKH
+// CLAUDE HAIKU VISION – Analyse d'images (état écran) pour TEKH+
 // ──────────────────────────────────────────────────────────────
-const VISION_MODULE_PATH = path.join(__dirname, "..", "..", "google-vision-api", "analyzeScreen.js");
-let visionAnalyze;
-try {
-  const visionModule = await import(pathToFileURL(VISION_MODULE_PATH).href);
-  visionAnalyze = visionModule.analyzeImageForScreen;
-  console.log("[API] Vision module loaded from google-vision-api");
-} catch (e) {
-  console.warn("[API] Vision module not loaded (google-vision-api):", e.message);
-  visionAnalyze = null;
+const anthropic = process.env.ANTHROPIC_API_KEY
+  ? new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+  : null;
+
+if (anthropic) {
+  console.log("[API] Claude Haiku Vision configuré.");
+} else {
+  console.warn("[API] ANTHROPIC_API_KEY manquant — analyse Vision désactivée.");
 }
 
 app.post("/api/vision/analyze-image", async (req, res) => {
-  if (!visionAnalyze) {
+  if (!anthropic) {
     return res.status(503).json({
-      error: "Service d'analyse d'images non configuré (Google Vision API).",
+      error: "Service d'analyse d'images non configuré (ANTHROPIC_API_KEY manquant).",
       code: "VISION_NOT_CONFIGURED",
     });
   }
@@ -265,16 +264,40 @@ app.post("/api/vision/analyze-image", async (req, res) => {
       error: "Fournissez imageBase64 (chaîne base64) ou imageUrl (URL publique).",
     });
   }
+
   try {
-    const input = imageUrl || (Buffer.from(imageBase64, "base64"));
-    const opts = imageUrl ? { source: "url" } : { source: "buffer" };
-    const result = await visionAnalyze(input, opts);
-    if (!result) {
-      return res.status(503).json({ error: "Analyse indisponible." });
-    }
+    const imageSource = imageUrl
+      ? { type: "url", url: imageUrl }
+      : { type: "base64", media_type: "image/jpeg", data: imageBase64 };
+
+    const response = await anthropic.messages.create({
+      model: "claude-haiku-4-5-20251001",
+      max_tokens: 512,
+      messages: [
+        {
+          role: "user",
+          content: [
+            { type: "image", source: imageSource },
+            {
+              type: "text",
+              text: `Analyse l'état de l'écran de ce smartphone. Réponds UNIQUEMENT en JSON valide, sans texte autour, avec ce format exact :
+{"labels":[{"description":"<observation courte>","score":<0.0-1.0>},...],"suggestedCondition":"<bon|moyen|mauvais|hs>","message":"<phrase courte en français décrivant l'état visible>"}
+- labels : 2 à 4 observations visuelles (ex: "Écran fissuré", "Tache noire", "Écran intact", etc.)
+- suggestedCondition : une seule valeur parmi bon / moyen / mauvais / hs
+- message : phrase courte décrivant l'état de l'écran`,
+            },
+          ],
+        },
+      ],
+    });
+
+    const raw = response.content[0]?.text || "";
+    const jsonMatch = raw.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) throw new Error("Réponse Claude non parseable");
+    const result = JSON.parse(jsonMatch[0]);
     return res.json(result);
   } catch (err) {
-    console.error("[API] Vision analyze error:", err);
+    console.error("[API] Claude Vision error:", err);
     return res.status(500).json({
       error: err.message || "Erreur lors de l'analyse de l'image.",
       code: "VISION_ERROR",
