@@ -1,11 +1,13 @@
-import { LogOut, ChevronRight } from "lucide-react";
+import { LogOut, ChevronRight, Sun, Moon } from "lucide-react";
 import { logout, getRole } from "@/core/api/auth";
 import { useLocation, Link } from "react-router-dom";
+import { useTheme } from "@/core/theme/ThemeProvider";
 import logo from "@/assets/logos/robott.jpeg";
 
 const AdminHeader = () => {
   const location = useLocation();
-  const parts = location.pathname.split("/").filter(Boolean).slice(1); // remove 'admin'
+  const { theme, toggleTheme } = useTheme();
+  const parts = location.pathname.split("/").filter(Boolean).slice(1);
 
   return (
     <header className="h-14 border-b border-border/50 flex items-center justify-between px-4 bg-card/80 backdrop-blur shrink-0">
@@ -25,16 +27,24 @@ const AdminHeader = () => {
         </nav>
       </div>
 
-      {/* Role badge + logout (desktop only) */}
-      <div className="hidden md:flex items-center gap-3 text-sm shrink-0">
-        <span className="px-2.5 py-1 rounded-lg bg-primary/10 text-primary font-black text-xs uppercase tracking-widest">
+      {/* Theme toggle + role badge + logout */}
+      <div className="flex items-center gap-2 text-sm shrink-0">
+        <button
+          onClick={toggleTheme}
+          aria-label="Changer le thème"
+          className="p-2 rounded-xl border border-border/50 hover:bg-accent transition-colors"
+        >
+          {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+        </button>
+        <span className="hidden md:inline px-2.5 py-1 rounded-lg bg-primary/10 text-primary font-black text-xs uppercase tracking-widest">
           {getRole()}
         </span>
         <button
           onClick={logout}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-border/50 hover:bg-red-500/10 hover:text-red-500 hover:border-red-500/30 transition-all text-sm font-semibold"
         >
-          <LogOut className="h-3.5 w-3.5" /> Déconnexion
+          <LogOut className="h-3.5 w-3.5" />
+          <span className="hidden md:inline">Déconnexion</span>
         </button>
       </div>
     </header>
