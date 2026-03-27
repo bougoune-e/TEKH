@@ -5,6 +5,16 @@ import AdminHeader from "../components/AdminHeader";
 import { AdminPWAInstall } from "../components/AdminPWAInstall";
 
 const AdminLayout = () => {
+  // Force dark mode for the entire admin section
+  useEffect(() => {
+    const root = document.documentElement;
+    const hadDark = root.classList.contains("dark");
+    root.classList.add("dark");
+    return () => {
+      if (!hadDark) root.classList.remove("dark");
+    };
+  }, []);
+
   // Swap manifest → admin version so "Add to Home Screen" installs the admin app
   useEffect(() => {
     const link = document.querySelector<HTMLLinkElement>('link[rel="manifest"]');
