@@ -52,6 +52,7 @@ const DEFAULT_ORIGINS = [
   "http://localhost:8083",
   "http://localhost:5173",
   "https://tekh-1.onrender.com",
+  "https://tekh.onrender.com",
   "https://tekh-backend-production.up.railway.app",
   "https://tekh.up.railway.app"
 ];
@@ -60,20 +61,31 @@ const ORIGINS = process.env.CORS_ORIGIN
   ? process.env.CORS_ORIGIN.split(",").map(s => s.trim())
   : DEFAULT_ORIGINS;
 
-app.use(cors({
+const corsOptions = {
   origin: (origin, callback) => {
-    // Allow requests with no origin (like mobile apps or curl)
     if (!origin) return callback(null, true);
     if (ORIGINS.indexOf(origin) !== -1 || ORIGINS.includes("*")) {
       callback(null, true);
     } else {
       console.warn(`[CORS] Rejected origin: ${origin}`);
-      callback(null, true); // Fallback: allow for now to debug
+      callback(null, true); // Allow all for now
     }
   },
   methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
-  credentials: true
-}));
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization",
+    "x-client-info",
+    "apikey",
+    "X-Requested-With"
+  ],
+  credentials: true,
+  maxAge: 86400 // Cache preflight response for 24 hours
+};
+
+// Preflight OPTIONS explicite — requis pour Railway/proxies
+app.options("*", cors(corsOptions));
+app.use(cors(corsOptions));
 app.use(express.json({ limit: "12mb" }));
 
 // Logging simple des requêtes
@@ -428,7 +440,7 @@ app.post("/api/push/send", async (req, res) => {
     failed_count: failed,
     total_subs: (subs || []).length,
     sent_by: user.email,
-  }).then(() => {}).catch(() => {});
+  }).then(() => { }).catch(() => { });
 
   console.log(`[PUSH] Envoyé: ${sent}/${(subs || []).length}, échecs: ${failed}`);
   return res.json({ sent, failed, total: (subs || []).length });
