@@ -1,10 +1,10 @@
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, useCallback } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useDeals } from "@/features/marketplace/deals.context";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/card";
 import { Button } from "@/shared/ui/button";
 import { Badge } from "@/shared/ui/badge";
-import { Phone as PhoneIcon, MessageCircle, Mail, ChevronLeft, MapPin, ShieldCheck, Smartphone, Facebook, Calendar, ChevronRight, ChevronLeft as ChevronLeftIcon } from "lucide-react";
+import { Phone as PhoneIcon, MessageCircle, Mail, ChevronLeft, MapPin, ShieldCheck, Smartphone, Facebook, Calendar, ChevronRight, ChevronLeft as ChevronLeftIcon, X, ZoomIn } from "lucide-react";
 import SwapGapWidget from "@/features/marketplace/SwapGapWidget";
 import { CertificationDetails } from "@/features/marketplace/DealboxComponents";
 import { cn } from "@/core/api/utils";
@@ -15,8 +15,32 @@ export default function DealDetails() {
   const deal = useMemo(() => deals.find((d) => d.id === id), [deals, id]);
   const [showPhone, setShowPhone] = useState(false);
   const [imageIndex, setImageIndex] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
   const images = deal?.images?.filter(Boolean) ?? [];
   const hasMultipleImages = images.length > 1;
+
+  const openLightbox = useCallback((idx: number) => {
+    setLightboxIndex(idx);
+    setLightboxOpen(true);
+  }, []);
+
+  const closeLightbox = useCallback(() => setLightboxOpen(false), []);
+
+  const lightboxPrev = useCallback(() => setLightboxIndex((i) => (i - 1 + images.length) % images.length), [images.length]);
+  const lightboxNext = useCallback(() => setLightboxIndex((i) => (i + 1) % images.length), [images.length]);
+
+  // Fermeture lightbox avec Escape
+  useEffect(() => {
+    if (!lightboxOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowLeft") lightboxPrev();
+      if (e.key === "ArrowRight") lightboxNext();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [lightboxOpen, closeLightbox, lightboxPrev, lightboxNext]);
 
   // Préchargement des images adjacentes pour éviter le blocage au changement
   useEffect(() => {
@@ -60,6 +84,7 @@ export default function DealDetails() {
   const mailHref = deal.contactEmail ? `mailto:${deal.contactEmail}` : undefined;
 
   return (
+    <>
     <section className="py-10 pb-28 md:pb-10">
       <div className="container mx-auto px-4 max-w-5xl">
         <div className="mb-6 flex items-center justify-between">
@@ -73,7 +98,19 @@ export default function DealDetails() {
           <Card className="lg:col-span-2 overflow-hidden rounded-2xl border border-border/60 bg-card shadow-lg ring-0">
             <div className="relative aspect-[4/3] bg-muted/30 w-full flex items-center justify-center p-4">
               {images[imageIndex] ? (
-                <img src={images[imageIndex]} alt={`${deal.brand} ${deal.model} ${imageIndex + 1}`} className="w-full h-full object-contain rounded-lg" />
+                <button
+                  type="button"
+                  onClick={() => openLightbox(imageIndex)}
+                  className="w-full h-full relative group focus:outline-none"
+                  aria-label="Agrandir la photo"
+                >
+                  <img src={images[imageIndex]} alt={`${deal.brand} ${deal.model} ${imageIndex + 1}`} className="w-full h-full object-contain rounded-lg" />
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="bg-black/40 rounded-full p-2">
+                      <ZoomIn className="h-6 w-6 text-white" />
+                    </div>
+                  </div>
+                </button>
               ) : (
                 <Smartphone className="h-20 w-20 text-muted-foreground" />
               )}
@@ -214,5 +251,75 @@ export default function DealDetails() {
         </div>
       </div>
     </section>
+
+    {/* Lightbox */}
+    {lightboxOpen && images[lightboxIndex] && (
+      <div
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black/90"
+        onClick={closeLightbox}
+      >
+        {/* Fermer */}
+        <button
+          type="button"
+          onClick={closeLightbox}
+          className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white"
+          aria-label="Fermer"
+        >
+          <X className="h-5 w-5" />
+        </button>
+
+        {/* Compteur */}
+        {hasMultipleImages && (
+          <div className="absolute top-4 left-1/2 -translate-x-1/2 text-white/70 text-sm font-medium">
+            {lightboxIndex + 1} / {images.length}
+          </div>
+        )}
+
+        {/* Image */}
+        <img
+          src={images[lightboxIndex]}
+          alt={`${deal.brand} ${deal.model} ${lightboxIndex + 1}`}
+          className="max-w-[95vw] max-h-[90vh] object-contain rounded-lg select-none"
+          onClick={(e) => e.stopPropagation()}
+        />
+
+        {/* Navigation */}
+        {hasMultipleImages && (
+          <>
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); lightboxPrev(); }}
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white"
+              aria-label="Photo précédente"
+            >
+              <ChevronLeftIcon className="h-6 w-6" />
+            </button>
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); lightboxNext(); }}
+              className="absolute right-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white"
+              aria-label="Photo suivante"
+            >
+              <ChevronRight className="h-6 w-6" />
+            </button>
+            {/* Miniatures */}
+            <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 px-4">
+              {images.map((src, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); setLightboxIndex(i); }}
+                  className={cn("w-12 h-12 rounded-md overflow-hidden border-2 transition-all shrink-0", i === lightboxIndex ? "border-white opacity-100" : "border-transparent opacity-50 hover:opacity-80")}
+                  aria-label={`Photo ${i + 1}`}
+                >
+                  <img src={src} alt="" className="w-full h-full object-cover" />
+                </button>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+    )}
+    </>
   );
 }

@@ -15,11 +15,13 @@ CREATE INDEX IF NOT EXISTS idx_profiles_updated_at ON profiles(updated_at DESC N
 ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
 
 -- Lecture publique de tous les profils (nécessaire pour l'admin)
+DROP POLICY IF EXISTS "Lecture publique des profils" ON profiles;
 CREATE POLICY "Lecture publique des profils"
   ON profiles FOR SELECT
   USING (true);
 
 -- Chaque utilisateur peut mettre à jour son propre profil
+DROP POLICY IF EXISTS "Utilisateur peut modifier son profil" ON profiles;
 CREATE POLICY "Utilisateur peut modifier son profil"
   ON profiles FOR UPDATE
   USING (auth.uid() = id)
