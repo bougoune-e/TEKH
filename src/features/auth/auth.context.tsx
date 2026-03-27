@@ -16,6 +16,20 @@ const AuthContext = createContext<AuthValue>({
   signOut: async () => { },
 });
 
+const ADMIN_EMAILS = (import.meta.env.VITE_ADMIN_EMAILS as string || "")
+  .split(",").map((e) => e.trim().toLowerCase()).filter(Boolean);
+
+function isAdminEmail(email: string): boolean {
+  return ADMIN_EMAILS.includes(email.trim().toLowerCase());
+}
+
+// Détecte si ce chargement de page est le retour d'un callback OAuth
+// (hash contient access_token) ou PKCE (query contient code).
+const _isOAuthReturn =
+  typeof window !== "undefined" &&
+  (window.location.hash.includes("access_token") ||
+    new URLSearchParams(window.location.search).has("code"));
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
@@ -49,8 +63,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           });
         }, 800)
       : 0;
-    const { data } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data } = supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user ?? null);
+
+      // Redirection automatique admin après callback OAuth Google
+      if (
+        event === "SIGNED_IN" &&
+        session?.user &&
+        _isOAuthReturn &&
+        !window.location.pathname.startsWith("/admin")
+      ) {
+        const email = (session.user.email || session.user.user_metadata?.email || "").toLowerCase();
+        if (isAdminEmail(email)) {
+          window.location.replace("/admin");
+        }
+      }
     });
     unsub = () => data?.subscription?.unsubscribe?.();
     return () => {
