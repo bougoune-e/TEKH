@@ -3,21 +3,22 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { cn } from "@/core/api/utils";
 import {
   LayoutGrid, Users, Smartphone, Boxes, Tags, BarChart3,
-  Settings, Handshake, ChevronRight, X, Menu, LogOut,
+  Settings, Handshake, ChevronRight, X, Menu, LogOut, Bell,
 } from "lucide-react";
 import { getRole } from "@/core/api/auth";
 import { useAuth } from "@/features/auth/auth.context";
 import logo from "@/assets/logos/robott.jpeg";
 
 const items = [
-  { to: "/admin",             label: "Dashboard",    icon: LayoutGrid,  end: true },
-  { to: "/admin/annonces",    label: "Annonces",     icon: Smartphone },
-  { to: "/admin/deals",       label: "Deals",        icon: Handshake },
-  { to: "/admin/users",       label: "Utilisateurs", icon: Users },
-  { to: "/admin/dealbox",     label: "DealBox",      icon: Boxes },
-  { to: "/admin/categories",  label: "Catégories",   icon: Tags },
-  { to: "/admin/stats",       label: "Stats",        icon: BarChart3 },
-  { to: "/admin/settings",    label: "Paramètres",   icon: Settings },
+  { to: "/admin",                  label: "Dashboard",      icon: LayoutGrid,  end: true },
+  { to: "/admin/annonces",         label: "Annonces",       icon: Smartphone },
+  { to: "/admin/deals",            label: "Deals",          icon: Handshake },
+  { to: "/admin/users",            label: "Utilisateurs",   icon: Users },
+  { to: "/admin/notifications",    label: "Notifications",  icon: Bell },
+  { to: "/admin/dealbox",          label: "DealBox",        icon: Boxes },
+  { to: "/admin/categories",       label: "Catégories",     icon: Tags },
+  { to: "/admin/stats",            label: "Stats",          icon: BarChart3 },
+  { to: "/admin/settings",         label: "Paramètres",     icon: Settings },
 ];
 
 // 5 primary items for the mobile bottom bar; rest are in the drawer

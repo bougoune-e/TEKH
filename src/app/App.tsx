@@ -17,6 +17,7 @@ import DealBox from "@/features/admin/pages/DealBox";
 import Categories from "@/features/admin/pages/Categories";
 import Stats from "@/features/admin/pages/Stats";
 import Settings from "@/features/admin/pages/Settings";
+import AdminNotifications from "@/features/admin/pages/AdminNotifications";
 import PageLoader from "@/shared/components/PageLoader";
 import { DealsProvider } from "@/features/marketplace/deals.context";
 import { CartProvider } from "@/features/marketplace/cart.context";
@@ -215,6 +216,7 @@ const NavigationWrapper = () => {
                       <Route path="categories" element={<Categories />} />
                       <Route path="stats" element={<Stats />} />
                       <Route path="settings" element={<Settings />} />
+                      <Route path="notifications" element={<AdminNotifications />} />
                     </Route>
 
                     {/* Route 404 - Doit être la dernière */}
