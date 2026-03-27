@@ -2,7 +2,7 @@ import { Link as RouterLink, useLocation } from 'react-router-dom';
 import {
     Home, Compass, LayoutGrid, Plus, Bell, MessageCircle, User, Settings
 } from 'lucide-react';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/shared/ui/tooltip';
 import { HoverCard, HoverCardTrigger, HoverCardContent } from '@/shared/ui/hover-card';
 import { useAuth } from '@/features/auth/auth.context';
 import { useDeals } from '@/features/marketplace/deals.context';
@@ -106,7 +106,6 @@ const PinterestSidebar = () => {
                                 </div>
                                 <div className="space-y-1">
                                     <RouterLink to="/profile" className="block text-xs font-bold p-2 hover:bg-slate-50 dark:hover:bg-white/5 rounded-lg transition-colors">Mon profil</RouterLink>
-                                    <RouterLink to="/mes-publications" className="block text-xs font-bold p-2 hover:bg-slate-50 dark:hover:bg-white/5 rounded-lg transition-colors">Mes annonces ({myCount})</RouterLink>
                                 </div>
                             </HoverCardContent>
                         </HoverCard>

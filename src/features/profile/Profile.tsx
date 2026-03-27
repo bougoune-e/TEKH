@@ -205,21 +205,6 @@ export default function Profile() {
               </div>
               <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-[#064e3b]" />
             </Link>
-            <Link
-              to="/mes-publications"
-              className="flex items-center justify-between p-5 bg-card border border-border/60 rounded-2xl hover:shadow-md transition-all group"
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-[#064e3b]/10 dark:bg-[#059669]/20 flex items-center justify-center">
-                  <Package className="h-6 w-6 text-[#064e3b] dark:text-[#059669]" />
-                </div>
-                <div>
-                  <p className="font-black text-foreground">Mes annonces</p>
-                  <p className="text-xs text-muted-foreground font-bold">{dbCount ?? myCount} publication{(dbCount ?? myCount) !== 1 ? "s" : ""}</p>
-                </div>
-              </div>
-              <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-[#064e3b]" />
-            </Link>
             <div className="flex items-center justify-between p-5 bg-card border border-border/60 rounded-2xl">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-xl bg-rose-500/10 flex items-center justify-center">
