@@ -38,7 +38,7 @@ export async function subscribeToPush(_userId: string | null): Promise<string | 
   const reg = await navigator.serviceWorker.ready;
   const sub = await reg.pushManager.subscribe({
     userVisibleOnly: true,
-    applicationServerKey: VAPID_PUBLIC.startsWith("B") ? VAPID_PUBLIC : urlBase64ToUint8Array(VAPID_PUBLIC),
+    applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC) as Uint8Array<ArrayBuffer>,
   });
 
   const subscriptionJson = sub.toJSON() as Record<string, unknown>;

@@ -52,6 +52,13 @@ export default function SettingsPage() {
         setPassionBio(bio);
     }, [user]);
 
+    // Auto-enregistrement silencieux si la permission est déjà accordée
+    useEffect(() => {
+        if (!isPushSupported() || getNotificationPermission() !== "granted") return;
+        if (!user?.id) return;
+        subscribeToPush(user.id).catch(() => {});
+    }, [user?.id]);
+
     const savePassionBio = async () => {
         if (!user?.id) return;
         setSavingBio(true);
