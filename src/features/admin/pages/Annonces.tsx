@@ -10,7 +10,12 @@ import { Trash2, Send, Archive, Phone, MapPin, Plus, X, Image as ImageIcon, Bell
 import { toast } from "sonner";
 import ConfirmDialog from "../components/ConfirmDialog";
 
-const API_URL = (import.meta.env.VITE_API_URL as string || "").replace(/\/$/, "");
+function getApiUrl(): string {
+  const env = (import.meta.env.VITE_API_URL as string || "").trim().replace(/\/$/, "");
+  if (!env) return "";
+  return /^https?:\/\//i.test(env) ? env : `https://${env}`;
+}
+const API_URL = getApiUrl();
 
 type Annonce = {
   id: string;

@@ -51,6 +51,7 @@ const DEFAULT_ORIGINS = [
   "http://localhost:8082",
   "http://localhost:8083",
   "http://localhost:5173",
+  "https://tekh-1.onrender.com",
   "https://tekh-backend-production.up.railway.app",
   "https://tekh.up.railway.app"
 ];
@@ -339,6 +340,25 @@ app.patch("/produits/:id/stock", async (req, res) => {
   if (idx < 0) return res.status(404).json({ error: "Produit introuvable" });
   produits[idx].stock = stock;
   return res.json({ success: true });
+});
+
+// ──────────────────────────────────────────────────────────────
+// WEB PUSH — Helpers admin (service role = pas de RLS)
+// ──────────────────────────────────────────────────────────────
+
+/** Nombre d'abonnés — service role bypass RLS, JWT admin requis */
+app.get("/api/push/count", async (req, res) => {
+  const jwt = (req.headers.authorization || "").replace("Bearer ", "").trim();
+  if (!jwt || !supabase) return res.status(401).json({ error: "Non autorisé" });
+  const { data: { user }, error: authErr } = await supabase.auth.getUser(jwt);
+  if (authErr || !user) return res.status(401).json({ error: "Token invalide" });
+  const email = (user.email || "").toLowerCase();
+  if (!ADMIN_EMAILS.includes(email)) return res.status(403).json({ error: "Admins uniquement" });
+  const { count, error } = await supabase
+    .from("push_subscriptions")
+    .select("*", { count: "exact", head: true });
+  if (error) return res.status(500).json({ error: error.message });
+  return res.json({ count: count ?? 0 });
 });
 
 // ──────────────────────────────────────────────────────────────

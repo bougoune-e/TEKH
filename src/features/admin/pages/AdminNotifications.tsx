@@ -17,7 +17,12 @@ type Campaign = {
   created_at: string;
 };
 
-const API_URL = (import.meta.env.VITE_API_URL as string || "").replace(/\/$/, "");
+function getApiUrl(): string {
+  const env = (import.meta.env.VITE_API_URL as string || "").trim().replace(/\/$/, "");
+  if (!env) return "";
+  return /^https?:\/\//i.test(env) ? env : `https://${env}`;
+}
+const API_URL = getApiUrl();
 
 export default function AdminNotifications() {
   const [title, setTitle] = useState("");
@@ -35,15 +40,22 @@ export default function AdminNotifications() {
 
   async function loadData() {
     setLoadingHistory(true);
-    const [{ count }, { data: camp }] = await Promise.all([
-      supabase.from("push_subscriptions").select("*", { count: "exact", head: true }),
+    const { data: { session } } = await supabase.auth.getSession();
+    const jwt = session?.access_token;
+
+    const [countRes, { data: camp }] = await Promise.all([
+      jwt
+        ? fetch(`${API_URL}/api/push/count`, {
+            headers: { Authorization: `Bearer ${jwt}` },
+          }).then((r) => r.ok ? r.json() : { count: 0 }).catch(() => ({ count: 0 }))
+        : Promise.resolve({ count: 0 }),
       supabase
         .from("notification_campaigns")
         .select("*")
         .order("created_at", { ascending: false })
         .limit(20),
     ]);
-    setSubCount(count ?? 0);
+    setSubCount(countRes.count ?? 0);
     setCampaigns(camp ?? []);
     setLoadingHistory(false);
   }
