@@ -1,13 +1,16 @@
-import { useEffect, useState, useMemo } from "react";
-import { fetchAllDealsForAdmin, updateDeal, deleteDealById } from "@/core/api/supabaseApi";
+import { useEffect, useState, useMemo, useRef } from "react";
+import { fetchAllDealsForAdmin, updateDeal, deleteDealById, insertDeal, uploadImage } from "@/core/api/supabaseApi";
 import { isSupabaseConfigured } from "@/core/api/supabaseClient";
+import { supabase } from "@/core/api/supabaseApi";
 import Table from "../components/Table";
 import EmptyState from "../components/EmptyState";
 import { Button } from "@/shared/ui/button";
 import { Badge } from "@/shared/ui/badge";
-import { Trash2, Send, Archive, Phone, MapPin } from "lucide-react";
+import { Trash2, Send, Archive, Phone, MapPin, Plus, X, Image as ImageIcon, Bell } from "lucide-react";
 import { toast } from "sonner";
 import ConfirmDialog from "../components/ConfirmDialog";
+
+const API_URL = (import.meta.env.VITE_API_URL as string || "").replace(/\/$/, "");
 
 type Annonce = {
   id: string;
@@ -45,11 +48,192 @@ const FILTER_TABS: { key: StatusFilter; label: string }[] = [
   { key: "archived", label: "Archivées" },
 ];
 
+// ── Formulaire de création d'annonce admin ────────────────────
+function AdminAnnonceForm({ onClose, onCreated }: { onClose: () => void; onCreated: () => void }) {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [sendPush, setSendPush] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setImageFile(file);
+    setImagePreview(URL.createObjectURL(file));
+  };
+
+  const handleSubmit = async () => {
+    if (!title.trim()) { toast.error("Le titre est obligatoire"); return; }
+    setSaving(true);
+    try {
+      let images: string[] = [];
+      if (imageFile) {
+        const { publicUrl } = await uploadImage(imageFile);
+        images = [publicUrl];
+      }
+
+      await insertDeal({
+        title: title.trim(),
+        brand: "TEKH+",
+        model: "Annonce",
+        description: description.trim() || title.trim(),
+        price: Number(price) || 0,
+        images,
+        status: "published",
+        sellerName: "Admin",
+        publishedAt: new Date().toISOString(),
+      });
+
+      // Envoyer une notification push si demandé
+      if (sendPush) {
+        const { data: { session } } = await supabase.auth.getSession();
+        const jwt = session?.access_token;
+        if (jwt) {
+          await fetch(`${API_URL}/api/push/send`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Authorization: `Bearer ${jwt}` },
+            body: JSON.stringify({
+              title: title.trim(),
+              body: description.trim() || "Nouvelle annonce disponible",
+              url: "/deals",
+              tag: "tekh-annonce",
+            }),
+          }).catch(() => {});
+        }
+      }
+
+      toast.success("Annonce publiée" + (sendPush ? " + notification envoyée" : ""));
+      onCreated();
+      onClose();
+    } catch (e: any) {
+      toast.error(e?.message || "Erreur lors de la publication");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-end md:items-center justify-center p-4">
+      {/* Backdrop */}
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
+
+      {/* Sheet */}
+      <div className="relative w-full max-w-lg bg-card rounded-3xl border border-border/50 p-5 space-y-4 shadow-2xl">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="font-black text-base">Publier une annonce</h2>
+            <p className="text-xs text-muted-foreground mt-0.5">Visible immédiatement dans l'app</p>
+          </div>
+          <button onClick={onClose} className="p-2 hover:bg-muted rounded-xl transition-colors">
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+
+        {/* Titre */}
+        <div className="space-y-1">
+          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Titre *</label>
+          <input
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Ex: Promo iPhone 13 ce week-end !"
+            maxLength={100}
+            className="w-full px-3 py-2.5 rounded-xl border border-border bg-background text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/30"
+          />
+        </div>
+
+        {/* Description */}
+        <div className="space-y-1">
+          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Description</label>
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Détails de l'annonce..."
+            maxLength={500}
+            rows={3}
+            className="w-full px-3 py-2.5 rounded-xl border border-border bg-background text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none"
+          />
+        </div>
+
+        {/* Prix (optionnel) */}
+        <div className="space-y-1">
+          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Prix FCFA <span className="normal-case font-normal">(optionnel)</span></label>
+          <input
+            type="number"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            placeholder="0"
+            min="0"
+            className="w-full px-3 py-2.5 rounded-xl border border-border bg-background text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/30"
+          />
+        </div>
+
+        {/* Image */}
+        <div className="space-y-2">
+          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Photo <span className="normal-case font-normal">(optionnel)</span></label>
+          {imagePreview ? (
+            <div className="relative w-full h-36 rounded-2xl overflow-hidden border border-border">
+              <img src={imagePreview} alt="preview" className="w-full h-full object-cover" />
+              <button
+                onClick={() => { setImageFile(null); setImagePreview(null); if (fileRef.current) fileRef.current.value = ""; }}
+                className="absolute top-2 right-2 p-1.5 bg-black/60 rounded-full hover:bg-black/80 transition-colors"
+              >
+                <X className="h-3.5 w-3.5 text-white" />
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => fileRef.current?.click()}
+              className="w-full h-24 rounded-2xl border-2 border-dashed border-border hover:border-primary/50 transition-colors flex flex-col items-center justify-center gap-1.5 text-muted-foreground hover:text-foreground"
+            >
+              <ImageIcon className="h-5 w-5" />
+              <span className="text-xs font-medium">Ajouter une photo</span>
+            </button>
+          )}
+          <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleImage} />
+        </div>
+
+        {/* Toggle push */}
+        <label className="flex items-center gap-3 p-3 rounded-2xl border border-border cursor-pointer hover:bg-muted/50 transition-colors select-none">
+          <div
+            onClick={() => setSendPush((v) => !v)}
+            className={`w-10 h-5 rounded-full transition-colors relative flex-shrink-0 ${sendPush ? "bg-primary" : "bg-muted-foreground/30"}`}
+          >
+            <div className={`absolute top-0.5 h-4 w-4 rounded-full bg-white shadow transition-transform ${sendPush ? "translate-x-5" : "translate-x-0.5"}`} />
+          </div>
+          <div>
+            <div className="text-sm font-semibold flex items-center gap-1.5">
+              <Bell className="h-3.5 w-3.5 text-primary" />
+              Notifier les abonnés
+            </div>
+            <div className="text-xs text-muted-foreground">Envoie une push notification en même temps</div>
+          </div>
+        </label>
+
+        {/* Actions */}
+        <div className="flex gap-2 pt-1">
+          <Button variant="outline" onClick={onClose} className="flex-1" disabled={saving}>Annuler</Button>
+          <Button onClick={handleSubmit} disabled={saving || !title.trim()} className="flex-1 gap-2 font-black">
+            <Send className="h-4 w-4" />
+            {saving ? "Publication..." : "Publier"}
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Page principale ───────────────────────────────────────────
 export default function Annonces() {
   const [annonces, setAnnonces] = useState<Annonce[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<StatusFilter>("all");
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [showForm, setShowForm] = useState(false);
 
   const load = () => {
     if (!isSupabaseConfigured) { setLoading(false); return; }
@@ -108,10 +292,12 @@ export default function Annonces() {
     },
     {
       key: "sellerName",
-      header: "Vendeur",
+      header: "Source",
       render: (row: Annonce) => (
         <div>
-          <div className="font-medium">{row.sellerName || <span className="text-muted-foreground italic">Admin</span>}</div>
+          <div className={`font-medium text-sm ${row.sellerName === "Admin" ? "text-primary" : ""}`}>
+            {row.sellerName || <span className="text-muted-foreground italic">—</span>}
+          </div>
           {(row.contactPhone || row.contactWhatsapp) && (
             <div className="flex items-center gap-1 text-xs text-muted-foreground mt-0.5">
               <Phone className="h-3 w-3" />
@@ -194,11 +380,12 @@ export default function Annonces() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold">Annonces</h1>
-          <p className="text-sm text-muted-foreground mt-0.5">Modération des annonces utilisateurs</p>
+          <p className="text-sm text-muted-foreground mt-0.5">Publie et modère les annonces</p>
         </div>
-        <div className="text-sm text-muted-foreground">
-          {counts.all} annonce{counts.all !== 1 ? "s" : ""}
-        </div>
+        <Button onClick={() => setShowForm(true)} className="gap-2 font-black">
+          <Plus className="h-4 w-4" />
+          Publier une annonce
+        </Button>
       </div>
 
       {/* Filtres statut */}
@@ -228,7 +415,7 @@ export default function Annonces() {
       ) : filtered.length === 0 ? (
         <EmptyState
           title={filter === "all" ? "Aucune annonce" : `Aucune annonce ${STATUS_LABELS[filter]?.toLowerCase() || ""}`}
-          description="Les annonces soumises par les utilisateurs apparaîtront ici."
+          description={filter === "all" ? "Publie ta première annonce avec le bouton ci-dessus." : "Aucune annonce dans cette catégorie."}
         />
       ) : (
         <Table columns={columns} data={filtered} empty="Aucune annonce" />
@@ -242,6 +429,10 @@ export default function Annonces() {
         confirmLabel="Supprimer"
         onConfirm={() => deleteId && remove(deleteId)}
       />
+
+      {showForm && (
+        <AdminAnnonceForm onClose={() => setShowForm(false)} onCreated={load} />
+      )}
     </div>
   );
 }

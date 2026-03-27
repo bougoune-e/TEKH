@@ -17,7 +17,7 @@ type Campaign = {
   created_at: string;
 };
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string;
+const API_URL = (import.meta.env.VITE_API_URL as string || "").replace(/\/$/, "");
 
 export default function AdminNotifications() {
   const [title, setTitle] = useState("");
@@ -59,7 +59,7 @@ export default function AdminNotifications() {
       const jwt = session?.access_token;
       if (!jwt) throw new Error("Session expirée");
 
-      const res = await fetch(`${SUPABASE_URL}/functions/v1/send-push`, {
+      const res = await fetch(`${API_URL}/api/push/send`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -4,7 +4,22 @@ import csv from "csv-parser";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath, pathToFileURL } from "url";
+import webpush from "web-push";
 import { supabase, TABLE_PRODUCTS } from "./supabase.js";
+
+// ── Web Push VAPID setup ──────────────────────────────────────
+const VAPID_PUBLIC = process.env.VAPID_PUBLIC_KEY;
+const VAPID_PRIVATE = process.env.VAPID_PRIVATE_KEY;
+const VAPID_SUBJECT = process.env.VAPID_SUBJECT || "mailto:tekhswap@gmail.com";
+const ADMIN_EMAILS = (process.env.VITE_ADMIN_EMAILS || "tekhswap@gmail.com")
+  .split(",").map((e) => e.trim().toLowerCase());
+
+if (VAPID_PUBLIC && VAPID_PRIVATE) {
+  webpush.setVapidDetails(VAPID_SUBJECT, VAPID_PUBLIC, VAPID_PRIVATE);
+  console.log("[PUSH] VAPID configuré.");
+} else {
+  console.warn("[PUSH] VAPID_PUBLIC_KEY ou VAPID_PRIVATE_KEY manquant — push désactivé.");
+}
 
 const app = express();
 const PORT = process.env.PORT || 8083;
@@ -301,6 +316,79 @@ app.patch("/produits/:id/stock", async (req, res) => {
   if (idx < 0) return res.status(404).json({ error: "Produit introuvable" });
   produits[idx].stock = stock;
   return res.json({ success: true });
+});
+
+// ──────────────────────────────────────────────────────────────
+// WEB PUSH — Envoi de notifications aux abonnés (admin only)
+// ──────────────────────────────────────────────────────────────
+app.post("/api/push/send", async (req, res) => {
+  if (!VAPID_PUBLIC || !VAPID_PRIVATE) {
+    return res.status(503).json({ error: "Push non configuré (VAPID keys manquantes)." });
+  }
+
+  // Vérifier le JWT Supabase
+  const jwt = (req.headers.authorization || "").replace("Bearer ", "").trim();
+  if (!jwt) return res.status(401).json({ error: "Non autorisé" });
+
+  if (!supabase) return res.status(503).json({ error: "Supabase non configuré" });
+
+  const { data: { user }, error: authErr } = await supabase.auth.getUser(jwt);
+  if (authErr || !user) return res.status(401).json({ error: "Token invalide" });
+
+  const email = (user.email || "").toLowerCase();
+  const role = (user.app_metadata?.role || user.user_metadata?.role || "").toLowerCase();
+  if (role !== "admin" && !ADMIN_EMAILS.includes(email)) {
+    return res.status(403).json({ error: "Accès réservé aux admins" });
+  }
+
+  const { title, body, url, tag, dealId } = req.body || {};
+  if (!title?.trim() || !body?.trim()) {
+    return res.status(400).json({ error: "title et body sont requis" });
+  }
+
+  const { data: subs, error: subsErr } = await supabase
+    .from("push_subscriptions")
+    .select("endpoint, subscription");
+  if (subsErr) return res.status(500).json({ error: subsErr.message });
+
+  const payload = JSON.stringify({
+    title: title.trim(),
+    body: body.trim(),
+    url: url || "/deals",
+    tag: tag || "tekh-push",
+    dealId: dealId || null,
+  });
+
+  let sent = 0, failed = 0;
+  const invalid = [];
+
+  for (const sub of subs || []) {
+    try {
+      await webpush.sendNotification(sub.subscription, payload);
+      sent++;
+    } catch (e) {
+      failed++;
+      if (e.statusCode === 410 || e.statusCode === 404) invalid.push(sub.endpoint);
+    }
+  }
+
+  if (invalid.length > 0) {
+    await supabase.from("push_subscriptions").delete().in("endpoint", invalid);
+  }
+
+  await supabase.from("notification_campaigns").insert({
+    title: title.trim(),
+    body: body.trim(),
+    url: url || "/deals",
+    tag: tag || "tekh-push",
+    sent_count: sent,
+    failed_count: failed,
+    total_subs: (subs || []).length,
+    sent_by: user.email,
+  }).then(() => {}).catch(() => {});
+
+  console.log(`[PUSH] Envoyé: ${sent}/${(subs || []).length}, échecs: ${failed}`);
+  return res.json({ sent, failed, total: (subs || []).length });
 });
 
 // ──────────────────────────────────────────────────────────────
