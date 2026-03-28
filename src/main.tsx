@@ -3,6 +3,10 @@ import App from "@/app/App";
 import "@/app/index.css";
 import "@/core/config/i18n";
 import "@/core/pwa/pwaInstall"; // registers beforeinstallprompt listener at startup
+import { initSentry } from "@/core/config/sentry";
+
+// Sentry doit être initialisé le plus tôt possible
+initSentry();
 
 // ---------------------------------------------------------------------------
 // 1. Synchronous path restoration (Anti-Splash Screen)
