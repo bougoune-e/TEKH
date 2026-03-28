@@ -1,9 +1,12 @@
 import { useEffect, useState, useCallback } from "react";
-import { Bell, Clock, CheckCircle2, XCircle, Megaphone, Sparkles, ArrowLeft, Trash2 } from "lucide-react";
+import {
+  Bell, Clock, ArrowLeft, Trash2, X, MessageCircle, ChevronRight
+} from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/core/api/supabaseApi";
 import { isSupabaseConfigured } from "@/core/api/supabaseClient";
+import { openWhatsApp } from "@/core/utils/whatsapp";
 
 type Campaign = {
   id: string;
@@ -17,61 +20,128 @@ type Campaign = {
 };
 
 const DISMISSED_KEY = "tekh_dismissed_notifs";
-
 function getDismissed(): Set<string> {
-  try {
-    const raw = localStorage.getItem(DISMISSED_KEY);
-    return new Set(raw ? JSON.parse(raw) : []);
-  } catch {
-    return new Set();
-  }
+  try { return new Set(JSON.parse(localStorage.getItem(DISMISSED_KEY) || "[]")); }
+  catch { return new Set(); }
 }
-
 function saveDismissed(ids: Set<string>) {
   localStorage.setItem(DISMISSED_KEY, JSON.stringify([...ids]));
 }
 
-function getContentEmoji(title: string, body?: string): string {
-  const text = `${title} ${body || ""}`.toLowerCase();
-  if (text.includes("charg")) return "🔌";
-  if (text.includes("iphone") || text.includes("apple")) return "📱";
-  if (text.includes("samsung") || text.includes("galaxy")) return "📱";
-  if (text.includes("huawei") || text.includes("xiaomi") || text.includes("oppo") || text.includes("tecno") || text.includes("infinix")) return "📱";
-  if (text.includes("batterie")) return "🔋";
-  if (text.includes("écran") || text.includes("ecran") || text.includes("screen")) return "🖥️";
-  if (text.includes("livraison") || text.includes("livré")) return "🚚";
-  if (text.includes("cadeau") || text.includes("gagn")) return "🎁";
-  if (text.includes("répar") || text.includes("repair")) return "🔧";
-  if (text.includes("promo") || text.includes("réduction") || text.includes("solde")) return "🏷️";
-  if (text.includes("deal") || text.includes("offre") || text.includes("bon plan")) return "🔥";
-  if (text.includes("nouveau") || text.includes("arrivage")) return "✨";
-  if (text.includes("certif") || text.includes("garanti")) return "✅";
-  if (text.includes("échange") || text.includes("reprise")) return "🔄";
-  if (text.includes("paiement") || text.includes("prix") || text.includes("fcfa")) return "💰";
-  if (text.includes("urgent") || text.includes("limité") || text.includes("stock")) return "⚡";
-  if (text.includes("annonce")) return "📢";
+function getEmoji(title: string, body = ""): string {
+  const t = `${title} ${body}`.toLowerCase();
+  if (t.includes("charg")) return "🔌";
+  if (t.includes("iphone") || t.includes("apple")) return "📱";
+  if (t.includes("samsung") || t.includes("galaxy")) return "📱";
+  if (t.includes("batterie")) return "🔋";
+  if (t.includes("écran") || t.includes("ecran")) return "🖥️";
+  if (t.includes("livraison")) return "🚚";
+  if (t.includes("cadeau") || t.includes("gagn")) return "🎁";
+  if (t.includes("répar") || t.includes("repair")) return "🔧";
+  if (t.includes("promo") || t.includes("réduction") || t.includes("solde")) return "🏷️";
+  if (t.includes("deal") || t.includes("offre") || t.includes("bon plan")) return "🔥";
+  if (t.includes("nouveau") || t.includes("arrivage")) return "✨";
+  if (t.includes("échange") || t.includes("reprise")) return "🔄";
+  if (t.includes("fcfa") || t.includes("prix")) return "💰";
+  if (t.includes("urgent") || t.includes("limité")) return "⚡";
   return "📣";
 }
 
-function formatDate(iso: string): string {
-  const date = new Date(iso);
-  const diffMs = Date.now() - date.getTime();
-  const diffMin = Math.floor(diffMs / 60000);
-  const diffH = Math.floor(diffMs / 3600000);
-  const diffD = Math.floor(diffMs / 86400000);
-  if (diffMin < 1) return "À l'instant";
-  if (diffMin < 60) return `Il y a ${diffMin} min`;
-  if (diffH < 24) return `Il y a ${diffH}h`;
-  if (diffD < 7) return `Il y a ${diffD}j`;
-  return date.toLocaleDateString("fr-FR", { day: "numeric", month: "short" });
+function timeAgo(iso: string): string {
+  const d = Math.floor((Date.now() - new Date(iso).getTime()) / 1000);
+  if (d < 60) return "À l'instant";
+  if (d < 3600) return `${Math.floor(d / 60)}min`;
+  if (d < 86400) return `${Math.floor(d / 3600)}h`;
+  if (d < 604800) return `${Math.floor(d / 86400)}j`;
+  return new Date(iso).toLocaleDateString("fr-FR", { day: "numeric", month: "short" });
 }
 
+function fullDate(iso: string): string {
+  return new Date(iso).toLocaleDateString("fr-FR", {
+    weekday: "long", day: "numeric", month: "long",
+    hour: "2-digit", minute: "2-digit",
+  });
+}
+
+// ── Feuille de détail (bottom sheet) ──────────────────────────
+function DetailSheet({
+  c, onClose, onDismiss,
+}: { c: Campaign; onClose: () => void; onDismiss: (id: string) => void }) {
+  const emoji = getEmoji(c.title, c.body);
+
+  const handleWhatsApp = () => {
+    const msg = `Bonjour TEKH+ 👋\nJe suis intéressé(e) par votre offre :\n*${c.title}*\n\n${c.body}\n\nPouvez-vous m'en dire plus ?`;
+    const opened = openWhatsApp(msg);
+    if (!opened) window.open("https://wa.me/22891000000", "_blank");
+  };
+
+  return (
+    <>
+      {/* Backdrop */}
+      <div
+        className="fixed inset-0 bg-black/50 z-40 backdrop-blur-sm"
+        onClick={onClose}
+      />
+
+      {/* Sheet */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-background rounded-t-3xl border-t border-border/50 shadow-2xl max-w-lg mx-auto animate-in slide-in-from-bottom-4 duration-200">
+        {/* Handle */}
+        <div className="flex justify-center pt-3 pb-1">
+          <div className="w-9 h-1 rounded-full bg-muted-foreground/20" />
+        </div>
+
+        <div className="px-5 pb-6 space-y-4">
+          {/* Header sheet */}
+          <div className="flex items-start justify-between gap-3 pt-1">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-2xl bg-muted/50 flex items-center justify-center text-2xl shrink-0">
+                {emoji}
+              </div>
+              <div className="min-w-0">
+                <p className="font-black text-[15px] text-foreground leading-tight">{c.title}</p>
+                <p className="text-[11px] text-muted-foreground mt-0.5">{fullDate(c.created_at)}</p>
+              </div>
+            </div>
+            <button onClick={onClose} className="w-8 h-8 rounded-xl bg-muted/50 flex items-center justify-center shrink-0">
+              <X className="w-4 h-4 text-muted-foreground" />
+            </button>
+          </div>
+
+          {/* Corps complet */}
+          <div className="rounded-2xl bg-muted/30 border border-border/30 p-4">
+            <p className="text-sm text-foreground leading-relaxed">{c.body}</p>
+          </div>
+
+          {/* Bouton WhatsApp */}
+          <button
+            onClick={handleWhatsApp}
+            className="w-full flex items-center justify-center gap-2.5 bg-[#064e3b] dark:bg-[#059669] hover:opacity-90 active:scale-[0.98] text-white font-black text-sm py-3.5 rounded-2xl transition-all shadow-lg shadow-emerald-900/20"
+          >
+            <MessageCircle className="w-5 h-5" />
+            Contacter TEKH+ sur WhatsApp
+          </button>
+
+          {/* Supprimer */}
+          <button
+            onClick={() => { onDismiss(c.id); onClose(); }}
+            className="w-full text-center text-[12px] text-muted-foreground hover:text-rose-500 font-semibold py-1 transition-colors"
+          >
+            Supprimer cette notification
+          </button>
+        </div>
+      </div>
+    </>
+  );
+}
+
+// ── Page principale ────────────────────────────────────────────
 export default function NotificationsPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [visible, setVisible] = useState<Campaign[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selected, setSelected] = useState<Campaign | null>(null);
 
   useEffect(() => {
     if (!isSupabaseConfigured) { setLoading(false); return; }
@@ -85,141 +155,137 @@ export default function NotificationsPage() {
         setCampaigns(all);
         const dismissed = getDismissed();
         setVisible(all.filter((c) => !dismissed.has(c.id)));
-        setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .finally(() => setLoading(false));
   }, []);
 
   const dismiss = useCallback((id: string) => {
-    const dismissed = getDismissed();
-    dismissed.add(id);
-    saveDismissed(dismissed);
+    const d = getDismissed(); d.add(id); saveDismissed(d);
     setVisible((prev) => prev.filter((c) => c.id !== id));
   }, []);
 
   const dismissAll = useCallback(() => {
-    const dismissed = getDismissed();
-    campaigns.forEach((c) => dismissed.add(c.id));
-    saveDismissed(dismissed);
+    const d = getDismissed();
+    campaigns.forEach((c) => d.add(c.id));
+    saveDismissed(d);
     setVisible([]);
   }, [campaigns]);
 
-  return (
-    <div className="min-h-dvh bg-background pb-32 pt-safe">
-      <div className="container mx-auto px-4 max-w-2xl">
+  // Back button robuste : évite de sortir de l'app
+  const handleBack = () => {
+    if (window.history.length > 2) navigate(-1);
+    else navigate("/");
+  };
 
-        {/* Header avec bouton retour */}
-        <div className="flex items-center gap-3 py-5">
+  return (
+    <div className="min-h-dvh bg-background pb-28 pt-safe">
+      {/* ── Header compact ── */}
+      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm border-b border-border/30">
+        <div className="flex items-center gap-2.5 px-4 h-12">
           <button
-            onClick={() => navigate(-1)}
-            className="w-9 h-9 rounded-xl bg-muted/60 flex items-center justify-center hover:bg-muted/80 active:scale-95 transition-all shrink-0"
+            onClick={handleBack}
+            className="w-8 h-8 rounded-xl bg-muted/60 flex items-center justify-center active:scale-90 transition-all shrink-0"
           >
-            <ArrowLeft className="w-4 h-4 text-foreground" strokeWidth={2} />
+            <ArrowLeft className="w-4 h-4 text-foreground" strokeWidth={2.5} />
           </button>
 
           <div className="flex-1">
-            <h1 className="text-xl font-black text-foreground tracking-tight leading-none">
+            <h1 className="text-[15px] font-black text-foreground tracking-tight">
               {t("nav.notifications", "Notifications")}
             </h1>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Alertes et mises à jour TEKH+
-            </p>
           </div>
 
           {visible.length > 0 && (
-            <button
-              onClick={dismissAll}
-              className="text-[11px] font-bold text-muted-foreground hover:text-foreground transition-colors px-2 py-1 rounded-lg hover:bg-muted/40"
-            >
-              Tout effacer
-            </button>
+            <>
+              <span className="text-[10px] font-black px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                {visible.length}
+              </span>
+              <button
+                onClick={dismissAll}
+                className="text-[11px] font-semibold text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Tout lire
+              </button>
+            </>
           )}
         </div>
+      </div>
 
-        {/* Content */}
+      {/* ── Contenu ── */}
+      <div className="max-w-lg mx-auto px-4 pt-3">
         {loading ? (
-          <div className="space-y-3 pt-2">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="h-20 rounded-2xl bg-muted/40 animate-pulse" />
+          <div className="space-y-2 pt-1">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="h-[60px] rounded-2xl bg-muted/40 animate-pulse" />
             ))}
           </div>
         ) : visible.length === 0 ? (
-          <div className="rounded-3xl border border-border/40 bg-card p-10 text-center space-y-3 mt-2">
-            <div className="w-14 h-14 rounded-2xl bg-muted/50 flex items-center justify-center mx-auto">
-              <Bell className="w-6 h-6 text-muted-foreground/30" />
+          <div className="flex flex-col items-center justify-center py-16 gap-3 text-center">
+            <div className="w-12 h-12 rounded-2xl bg-muted/40 flex items-center justify-center">
+              <Bell className="w-5 h-5 text-muted-foreground/30" />
             </div>
-            <p className="text-foreground font-bold">Aucune notification</p>
-            <p className="text-muted-foreground text-sm max-w-xs mx-auto leading-relaxed">
-              Vous serez notifié des nouveaux deals, offres et mises à jour.
+            <p className="text-sm font-bold text-foreground">Tout est à jour</p>
+            <p className="text-xs text-muted-foreground max-w-[200px] leading-relaxed">
+              Vous serez notifié des nouveaux deals et offres.
             </p>
           </div>
         ) : (
-          <div className="space-y-2 pt-1">
-            <div className="flex items-center gap-1.5 px-1 pb-1">
-              <Sparkles className="w-3 h-3 text-emerald-500" />
-              <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">
-                {visible.length} message{visible.length > 1 ? "s" : ""}
-              </span>
-            </div>
-
+          <div className="space-y-1.5">
             {visible.map((c) => {
-              const emoji = getContentEmoji(c.title, c.body);
+              const emoji = getEmoji(c.title, c.body);
               return (
-                <div
+                <button
                   key={c.id}
-                  className="flex items-start gap-3.5 p-4 rounded-2xl bg-card border border-border/40 hover:border-border/70 transition-all group"
+                  onClick={() => setSelected(c)}
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl bg-card border border-border/30 hover:border-border/60 hover:bg-muted/20 active:scale-[0.99] transition-all text-left group"
                 >
-                  {/* Emoji */}
-                  <div className="shrink-0 w-11 h-11 rounded-2xl bg-muted/50 flex items-center justify-center text-xl">
+                  {/* Emoji compact */}
+                  <div className="shrink-0 w-9 h-9 rounded-xl bg-muted/50 flex items-center justify-center text-base">
                     {emoji}
                   </div>
 
-                  {/* Content */}
-                  <div className="flex-1 min-w-0 pt-0.5">
-                    <div className="flex items-start justify-between gap-2">
-                      <p className="font-bold text-[14px] text-foreground leading-tight">
-                        {c.title}
-                      </p>
-                      <span className="shrink-0 text-[10px] text-muted-foreground flex items-center gap-1 mt-0.5">
-                        <Clock className="w-3 h-3" />
-                        {formatDate(c.created_at)}
-                      </span>
-                    </div>
-                    <p className="text-sm text-muted-foreground mt-0.5 leading-snug line-clamp-2">
+                  {/* Texte */}
+                  <div className="flex-1 min-w-0">
+                    <p className="font-semibold text-[13px] text-foreground leading-tight truncate">
+                      {c.title}
+                    </p>
+                    <p className="text-[11px] text-muted-foreground truncate mt-0.5">
                       {c.body}
                     </p>
-                    <div className="flex items-center gap-3 mt-2">
-                      <span className="flex items-center gap-1 text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">
-                        <CheckCircle2 className="w-3 h-3" />
-                        {c.sent_count} reçus
-                      </span>
-                      {c.failed_count > 0 && (
-                        <span className="flex items-center gap-1 text-[10px] text-rose-500 font-semibold">
-                          <XCircle className="w-3 h-3" />
-                          {c.failed_count}
-                        </span>
-                      )}
-                      <span className="ml-auto text-[10px] text-muted-foreground/50 flex items-center gap-1">
-                        <Megaphone className="w-3 h-3" />
-                        Admin
-                      </span>
-                    </div>
                   </div>
 
-                  {/* Bouton supprimer */}
-                  <button
-                    onClick={() => dismiss(c.id)}
-                    className="shrink-0 w-7 h-7 rounded-xl flex items-center justify-center text-muted-foreground/30 hover:text-rose-500 hover:bg-rose-500/10 opacity-0 group-hover:opacity-100 transition-all mt-0.5"
-                    title="Supprimer"
-                  >
-                    <Trash2 className="w-3.5 h-3.5" />
-                  </button>
-                </div>
+                  {/* Meta */}
+                  <div className="shrink-0 flex flex-col items-end gap-1">
+                    <span className="text-[10px] text-muted-foreground/60 flex items-center gap-0.5">
+                      <Clock className="w-2.5 h-2.5" />
+                      {timeAgo(c.created_at)}
+                    </span>
+                    <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/30 group-hover:text-muted-foreground transition-colors" />
+                  </div>
+                </button>
               );
             })}
+
+            {/* Action globale bas de page */}
+            <button
+              onClick={dismissAll}
+              className="w-full flex items-center justify-center gap-2 py-3 mt-2 text-[11px] font-semibold text-muted-foreground hover:text-rose-500 transition-colors"
+            >
+              <Trash2 className="w-3.5 h-3.5" />
+              Effacer toutes les notifications
+            </button>
           </div>
         )}
       </div>
+
+      {/* ── Detail sheet ── */}
+      {selected && (
+        <DetailSheet
+          c={selected}
+          onClose={() => setSelected(null)}
+          onDismiss={dismiss}
+        />
+      )}
     </div>
   );
 }
