@@ -73,7 +73,6 @@ const HistoriquePage = lazy(() => import("@/features/settings/Historique"));
 const CommandesPage = lazy(() => import("@/features/settings/Commandes").then((m) => ({ default: m.default })));
 const CommandeDetailPage = lazy(() => import("@/features/settings/Commandes").then((m) => ({ default: m.CommandeDetailPage })));
 const SignupPage = lazy(() => import("@/features/auth/Signup"));
-const ForgotPasswordPage = lazy(() => import("@/features/auth/ForgotPassword"));
 
 const queryClient = new QueryClient();
 
@@ -167,7 +166,6 @@ const NavigationWrapper = () => {
                       <Route path="/search" element={<PageTransition navType={navType}><SearchPage /></PageTransition>} />
                       <Route path="/login" element={<PageTransition navType={navType}><Login /></PageTransition>} />
                       <Route path="/signup" element={<PageTransition navType={navType}><SignupPage /></PageTransition>} />
-                      <Route path="/forgot-password" element={<PageTransition navType={navType}><ForgotPasswordPage /></PageTransition>} />
                       <Route path="/a-propos" element={<PageTransition navType={navType}><APropos /></PageTransition>} />
                       <Route path="/aide-et-faq" element={<PageTransition navType={navType}><AideEtFaq /></PageTransition>} />
                       <Route path="/contact" element={<PageTransition navType={navType}><Contact /></PageTransition>} />
