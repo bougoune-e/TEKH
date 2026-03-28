@@ -84,6 +84,7 @@ export default function AdminNotifications() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [url, setUrl] = useState("/deals");
+  const [image, setImage] = useState("");
   const [sending, setSending] = useState(false);
   const [subCount, setSubCount] = useState<number | null>(null);
   const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
@@ -143,7 +144,7 @@ export default function AdminNotifications() {
       const res = await fetch(`${API_URL}/api/push/send`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${jwt}` },
-        body: JSON.stringify({ title: title.trim(), body: body.trim(), url }),
+        body: JSON.stringify({ title: title.trim(), body: body.trim(), url, ...(image.trim() && { image: image.trim() }) }),
       });
 
       const json = await res.json();
@@ -153,6 +154,7 @@ export default function AdminNotifications() {
       setTitle("");
       setBody("");
       setUrl("/deals");
+      setImage("");
       await loadData(true);
     } catch (e: any) {
       toast.error(e.message || "Échec de l'envoi");
@@ -286,6 +288,21 @@ export default function AdminNotifications() {
             placeholder="/deals"
             className="w-full px-3 py-2.5 rounded-xl border border-border bg-background text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/30"
           />
+        </div>
+
+        <div className="space-y-1">
+          <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+            Image <span className="normal-case font-normal text-muted-foreground">(optionnel — URL image pour aperçu riche)</span>
+          </label>
+          <input
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+            placeholder="https://... (affichée dans la bannière comme Pinterest)"
+            className="w-full px-3 py-2.5 rounded-xl border border-border bg-background text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/30"
+          />
+          {image.trim() && (
+            <img src={image.trim()} alt="preview" className="w-full h-28 object-cover rounded-xl mt-1 border border-border/50" onError={(e) => (e.currentTarget.style.display = 'none')} />
+          )}
         </div>
 
         {/* Preview */}
