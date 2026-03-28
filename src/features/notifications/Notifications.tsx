@@ -184,7 +184,7 @@ export default function NotificationsPage() {
         const all = data ?? [];
         setCampaigns(all);
         const d = getDismissed();
-        setVisible(all.filter((c) => !d.has(c.id)));
+        setVisible(all.filter((c: Campaign) => !d.has(c.id)));
       })
       .finally(() => setLoading(false));
   }, []);
@@ -201,10 +201,7 @@ export default function NotificationsPage() {
     setVisible([]);
   }, [campaigns]);
 
-  const handleBack = () => {
-    if (window.history.length > 2) navigate(-1);
-    else navigate("/");
-  };
+  const handleBack = () => navigate("/");
 
   /* Grouper par date */
   const groups: { label: string; items: Campaign[] }[] = [];
