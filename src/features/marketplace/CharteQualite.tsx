@@ -1,8 +1,8 @@
-import { BadgeCheck, ShieldCheck, Heart, Zap, Globe, Gauge } from "lucide-react";
-import { Link } from "react-router-dom";
-import { ChevronLeft } from "lucide-react";
+import { BadgeCheck, ShieldCheck, Heart, Zap, Globe, Gauge, ChevronLeft } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 
 const CharteQualite = () => {
+    const navigate = useNavigate();
     const sections = [
         {
             icon: BadgeCheck,
@@ -39,10 +39,10 @@ const CharteQualite = () => {
     return (
         <div className="min-h-dvh bg-white dark:bg-black text-black dark:text-white pt-20 sm:pt-24 pb-32 md:pb-20 scroll-pt-24">
             <div className="container mx-auto px-4 max-w-5xl">
-                <Link to="/" className="inline-flex items-center gap-2 text-primary font-black mb-8 hover:-translate-x-1 transition-transform">
+                <button onClick={() => navigate(-1)} className="inline-flex items-center gap-2 text-primary font-black mb-8 hover:-translate-x-1 transition-transform">
                     <ChevronLeft className="h-5 w-5" />
-                    Retour à l'accueil
-                </Link>
+                    Retour
+                </button>
 
                 <header className="mb-20">
                     <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-6 uppercase">Notre Charte <br /><span className="text-primary tracking-normal">Qualité & Excellence</span></h1>

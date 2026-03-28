@@ -1,20 +1,21 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ChevronLeft, Coins, ArrowUpDown } from "lucide-react";
 
 /**
  * Contenu aligné sur la charte métier TEKH+ (Section 9).
  */
 const PolitiqueEchangeTekhPoints = () => {
+  const navigate = useNavigate();
   return (
     <main className="pt-20 sm:pt-24 pb-32 sm:pb-16 bg-white dark:bg-black text-black dark:text-white min-h-dvh scroll-pt-24">
       <div className="container mx-auto px-4 max-w-4xl">
-        <Link
-          to="/"
+        <button
+          onClick={() => navigate(-1)}
           className="inline-flex items-center gap-2 text-primary font-black mb-8 hover:-translate-x-1 transition-transform"
         >
           <ChevronLeft className="h-5 w-5" />
           Retour
-        </Link>
+        </button>
 
         <header className="mb-10">
           <div className="h-14 w-14 bg-[#064e3b] dark:bg-[#059669] rounded-2xl flex items-center justify-center mb-5 shadow-lg">

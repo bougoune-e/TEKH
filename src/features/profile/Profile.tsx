@@ -9,7 +9,7 @@ import { useAuth } from "@/features/auth/auth.context";
 import { uploadAvatar, upsertProfile, supabase, ensureProfileForUser, countDealsByOwner, fetchTekhPointsSummary } from "@/core/api/supabaseApi";
 import { isSupabaseConfigured } from "@/core/api/supabaseClient";
 import UserAvatar from "@/shared/components/UserAvatar";
-import { LogOut, Camera, Package, ShieldCheck, Heart, Settings, ShoppingCart, ChevronRight, Coins } from "lucide-react";
+import { LogOut, Camera, Package, ShieldCheck, ShoppingCart, ChevronRight, Coins } from "lucide-react";
 import { toast } from "@/shared/hooks/use-toast";
 import MotionRings from "@/shared/components/MotionRings";
 import { useCart } from "@/features/marketplace/cart.context";
@@ -186,10 +186,10 @@ export default function Profile() {
           </Link>
         </section>
 
-        {/* Espace personnel : Mon panier, Mes commandes, Favoris */}
+        {/* Espace personnel : Mon panier */}
         <section className="space-y-3">
           <h2 className="text-xs font-black uppercase tracking-widest text-muted-foreground px-1">Espace personnel</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-4">
             <Link
               to="/panier"
               className="flex items-center justify-between p-5 bg-card border border-border/60 rounded-2xl hover:shadow-md transition-all group"
@@ -205,36 +205,12 @@ export default function Profile() {
               </div>
               <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-[#064e3b]" />
             </Link>
-            <div className="flex items-center justify-between p-5 bg-card border border-border/60 rounded-2xl">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-rose-500/10 flex items-center justify-center">
-                  <Heart className="h-6 w-6 text-rose-500" />
-                </div>
-                <div>
-                  <p className="font-black text-foreground">Favoris</p>
-                  <p className="text-xs text-muted-foreground font-bold">Bientôt disponible</p>
-                </div>
-              </div>
-            </div>
           </div>
         </section>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Stats & Shortlinks */}
+          {/* Shortlinks */}
           <div className="md:col-span-1 space-y-6">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="p-6 bg-card border border-border/60 rounded-2xl text-center space-y-1 shadow-sm">
-                <Heart className="h-6 w-6 mx-auto text-rose-500 fill-rose-500/10" />
-                <div className="text-2xl font-black">12</div>
-                <div className="text-[10px] font-black uppercase text-muted-foreground tracking-widest">{t('profile.favorites')}</div>
-              </div>
-              <div className="p-6 bg-card border border-border/60 rounded-2xl text-center space-y-1 shadow-sm">
-                <Settings className="h-6 w-6 mx-auto text-slate-400" />
-                <div className="text-2xl font-black">{dbCount ?? myCount}</div>
-                <div className="text-[10px] font-black uppercase text-muted-foreground tracking-widest">{t('profile.active')}</div>
-              </div>
-            </div>
-
             <Button
               variant="outline"
               onClick={() => window.location.href = "/settings"}
@@ -268,6 +244,7 @@ export default function Profile() {
                     <Input
                       value={name}
                       onChange={(e) => setName(e.target.value)}
+                      onBlur={saveProfile}
                       placeholder="Ex: Jean Dupont"
                       className="h-14 rounded-2xl border-2 border-border/40 bg-background font-black text-lg focus-visible:ring-primary/20 transition-all"
                     />
@@ -284,19 +261,10 @@ export default function Profile() {
                 </div>
               </div>
 
-              <div className="pt-4 space-y-4">
-                <Button
-                  onClick={saveProfile}
-                  disabled={saving}
-                  className="w-full h-16 rounded-[1.5rem] font-black text-lg shadow-xl shadow-primary/10 active:scale-95 transition-all"
-                >
-                  {saving ? "Enregistrement..." : "Mettre à jour mon profil"}
-                </Button>
-                <p className="text-[10px] text-center font-bold text-muted-foreground uppercase tracking-widest leading-relaxed">
-                  Vos informations sont privées et sécurisées par TEKH+. <br />
-                  Seul votre nom est visible lors de vos deals.
-                </p>
-              </div>
+              <p className="text-[10px] text-center font-bold text-muted-foreground uppercase tracking-widest leading-relaxed pt-2">
+                Vos informations sont privées et sécurisées par TEKH+. <br />
+                Seul votre nom est visible lors de vos deals.
+              </p>
             </CardContent>
           </Card>
         </div>

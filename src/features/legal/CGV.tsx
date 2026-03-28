@@ -1,14 +1,15 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ChevronLeft, ShoppingBag } from "lucide-react";
 
 const CGV = () => {
+  const navigate = useNavigate();
   return (
     <main className="pt-24 pb-12 bg-white dark:bg-black text-black dark:text-white min-h-dvh">
       <div className="container mx-auto px-4 max-w-4xl">
-        <Link to="/" className="inline-flex items-center gap-2 text-primary font-black mb-8 hover:-translate-x-1 transition-transform">
+        <button onClick={() => navigate(-1)} className="inline-flex items-center gap-2 text-primary font-black mb-8 hover:-translate-x-1 transition-transform">
           <ChevronLeft className="h-5 w-5" />
           Retour
-        </Link>
+        </button>
 
         <header className="mb-12">
           <div className="h-16 w-16 bg-black dark:bg-white rounded-2xl flex items-center justify-center mb-6 shadow-xl">

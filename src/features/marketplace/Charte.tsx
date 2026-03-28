@@ -1,7 +1,8 @@
 import { ShieldCheck, Scale, BadgeCheck, Wallet, AlertTriangle, Users, ChevronLeft } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Charte = () => {
+  const navigate = useNavigate();
   const items = [
     {
       icon: Users,
@@ -62,10 +63,10 @@ const Charte = () => {
   return (
     <div className="min-h-dvh bg-zinc-50 dark:bg-black text-black dark:text-white pt-24 pb-16">
       <div className="container mx-auto px-4 max-w-6xl">
-        <Link to="/" className="inline-flex items-center gap-2 text-primary font-black mb-8 hover:-translate-x-1 transition-transform">
+        <button onClick={() => navigate(-1)} className="inline-flex items-center gap-2 text-primary font-black mb-8 hover:-translate-x-1 transition-transform">
           <ChevronLeft className="h-5 w-5" />
-          Retour à l'accueil
-        </Link>
+          Retour
+        </button>
 
         <header className="text-center space-y-6 mb-20">
           <h1 className="text-5xl md:text-8xl font-black tracking-tighter uppercase leading-none">

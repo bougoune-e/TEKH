@@ -3,10 +3,12 @@ import { Input } from "@/shared/ui/input";
 import { Textarea } from "@/shared/ui/textarea";
 import { Button } from "@/shared/ui/button";
 import { Label } from "@/shared/ui/label";
-import { Mail, Facebook, Instagram } from "lucide-react";
+import { Mail, Facebook, Instagram, ArrowLeft } from "lucide-react";
 import { buildWhatsAppUrl, buildWhatsAppUrlAlt } from "@/core/utils/whatsapp";
+import { useNavigate } from "react-router-dom";
 
 const Contact = () => {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
@@ -22,14 +24,27 @@ const Contact = () => {
       message,
     ].join("%0D%0A");
     const url = `mailto:${supportEmail}?subject=${encodeURIComponent(subject || "Contact TΞKΗ+")}&body=${bodyLines}`;
-    window.location.href = url;
+    try {
+      const w = window.open(url, "_blank");
+      if (!w) window.location.href = url;
+    } catch {
+      window.location.href = url;
+    }
   };
 
   return (
-    <main className="pt-24 pb-12">
+    <main className="pt-6 pb-12">
       <div className="container mx-auto px-4">
-        <h1 className="text-3xl md:text-4xl font-bold mb-3">Contact</h1>
-        <p className="text-muted-foreground max-w-2xl mb-8">
+        <div className="flex items-center gap-3 mb-6">
+          <button
+            onClick={() => navigate(-1)}
+            className="w-9 h-9 rounded-xl bg-muted/60 flex items-center justify-center active:scale-90 transition-all shrink-0"
+          >
+            <ArrowLeft className="w-4 h-4" strokeWidth={2.5} />
+          </button>
+          <h1 className="text-3xl md:text-4xl font-bold">Contact</h1>
+        </div>
+        <p className="text-muted-foreground max-w-2xl mb-8 -mt-2">
           Une question, une suggestion ou besoin d'aide ? Écrivez‑nous, nous répondons rapidement.
         </p>
 

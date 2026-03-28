@@ -1,10 +1,17 @@
 import AboutSection from "@/features/home/AboutSection";
 import { servicesForAPropos } from "@/features/home/ServicesSection";
+import { useNavigate } from "react-router-dom";
+import { ChevronLeft } from "lucide-react";
 
 const APropos = () => {
+  const navigate = useNavigate();
   return (
     <main className="pt-24 pb-12">
       <div className="container mx-auto px-4">
+        <button onClick={() => navigate(-1)} className="inline-flex items-center gap-2 text-primary font-black mb-6 hover:-translate-x-1 transition-transform">
+          <ChevronLeft className="h-5 w-5" />
+          Retour
+        </button>
         <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-8 uppercase text-[#0a0a0a] dark:text-white">À propos de <span className="text-[#064e3b] dark:text-[#00FF41]">TΞKΗ+</span></h1>
 
         <div className="grid md:grid-cols-2 gap-12 mb-20">

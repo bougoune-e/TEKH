@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
-import { Bell, Send, Users, CheckCircle2, XCircle, Clock, Smartphone, Zap, RefreshCw } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { Bell, Send, Users, CheckCircle2, XCircle, Clock, Smartphone, Zap, RefreshCw, ImagePlus, X } from "lucide-react";
 import { Button } from "@/shared/ui/button";
 import { toast } from "sonner";
-import { supabase } from "@/core/api/supabaseApi";
+import { supabase, uploadImage } from "@/core/api/supabaseApi";
 import { isSupabaseConfigured } from "@/core/api/supabaseClient";
 
 type Campaign = {
@@ -85,6 +85,8 @@ export default function AdminNotifications() {
   const [body, setBody] = useState("");
   const [url, setUrl] = useState("/deals");
   const [image, setImage] = useState("");
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const imageRef = useRef<HTMLInputElement | null>(null);
   const [sending, setSending] = useState(false);
   const [subCount, setSubCount] = useState<number | null>(null);
   const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
@@ -292,16 +294,49 @@ export default function AdminNotifications() {
 
         <div className="space-y-1">
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-            Image <span className="normal-case font-normal text-muted-foreground">(optionnel — URL image pour aperçu riche)</span>
+            Image <span className="normal-case font-normal text-muted-foreground">(optionnel — aperçu riche dans la bannière)</span>
           </label>
           <input
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
-            placeholder="https://... (affichée dans la bannière comme Pinterest)"
-            className="w-full px-3 py-2.5 rounded-xl border border-border bg-background text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/30"
+            ref={imageRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={async (e) => {
+              const file = e.target.files?.[0];
+              if (!file) return;
+              setUploadingImage(true);
+              try {
+                const { publicUrl } = await uploadImage(file);
+                setImage(publicUrl);
+              } catch {
+                toast.error("Échec du téléversement de l'image");
+              } finally {
+                setUploadingImage(false);
+                e.target.value = "";
+              }
+            }}
           />
-          {image.trim() && (
-            <img src={image.trim()} alt="preview" className="w-full h-28 object-cover rounded-xl mt-1 border border-border/50" onError={(e) => (e.currentTarget.style.display = 'none')} />
+          {image ? (
+            <div className="relative">
+              <img src={image} alt="preview" className="w-full h-28 object-cover rounded-xl border border-border/50" />
+              <button
+                type="button"
+                onClick={() => setImage("")}
+                className="absolute top-2 right-2 w-6 h-6 rounded-full bg-black/70 flex items-center justify-center hover:bg-black transition-colors"
+              >
+                <X className="w-3.5 h-3.5 text-white" />
+              </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => imageRef.current?.click()}
+              disabled={uploadingImage}
+              className="w-full flex items-center justify-center gap-2 px-3 py-3 rounded-xl border border-dashed border-border bg-muted/30 text-sm text-muted-foreground hover:bg-muted/50 transition-colors disabled:opacity-50"
+            >
+              <ImagePlus className="w-4 h-4" />
+              {uploadingImage ? "Téléversement..." : "Choisir une image"}
+            </button>
           )}
         </div>
 

@@ -40,7 +40,7 @@ const STATIC_SLIDES = [
     image: carousel3,
     badge: "Certifié",
     title: "Qualité Premium",
-    highlight: "Garantie 12 mois.",
+    highlight: "Garantie 06 mois.",
     desc: "Tous nos appareils sont testés sur 50 points de contrôle.",
     cta: "Découvrir TEKH+",
     path: "/a-propos",
@@ -192,7 +192,7 @@ export const HomeCarousel = () => {
       ))}
 
       {/* ── Indicateurs (dots) ── */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex gap-2 items-center">
+      <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-30 flex gap-2 items-center">
         {Array.from({ length: total }).map((_, i) => (
           <button
             key={i}

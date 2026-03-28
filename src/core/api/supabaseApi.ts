@@ -698,11 +698,11 @@ export async function fetchDeals() {
   let data: any[] = [];
   let error: any = null;
   try {
-    const r = await realClient.from("annonces").select("*").eq("status", "published").order("created_at", { ascending: false });
+    const r = await realClient.from("annonces").select("*").eq("status", "published").neq("seller_name", "Admin").order("created_at", { ascending: false });
     data = r.data || [];
     error = r.error;
   } catch {
-    const r = await realClient.from("annonces").select("*").order("created_at", { ascending: false });
+    const r = await realClient.from("annonces").select("*").neq("seller_name", "Admin").order("created_at", { ascending: false });
     data = (r.data || []).filter((row: any) => row.status !== "draft" && row.status !== "archived");
     error = r.error;
   }

@@ -55,7 +55,7 @@ const Layout = () => {
       )}
       <Sidebar />
       <PWAInstallBanner />
-      <div className="flex-1 flex flex-col md:pl-16 relative min-w-0 pb-20 md:pb-0">
+      <div className={`flex-1 flex flex-col md:pl-16 relative min-w-0 md:pb-0 ${isPWA ? "pb-28" : "pb-20"}`}>
         {/* Header — transparent en haut de la homepage, opaque ailleurs */}
         <header className={`sticky top-0 z-40 w-full transition-all duration-300 pt-safe shrink-0 ${
           isHomepage && !scrolled && !isPWA
