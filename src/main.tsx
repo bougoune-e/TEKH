@@ -45,25 +45,24 @@ if (!isReturningUser) {
 
 // ---------------------------------------------------------------------------
 // 2. Splash screen logic
-//    - PWA standalone only: first-time users see splash 1.8s
-//    - Web browser (non-standalone): skip splash entirely (non-professionnel)
-//    - Returning users: toujours skip
+//    - PWA standalone: tous les utilisateurs voient le splash 3s
+//    - Web browser (non-standalone): skip splash (non-professionnel)
 // ---------------------------------------------------------------------------
 const isStandalonePWA =
   window.matchMedia('(display-mode: standalone)').matches ||
   (window.navigator as any).standalone === true;
 
-if (isReturningUser || !isStandalonePWA) {
+if (!isStandalonePWA) {
   if (typeof (window as any).hideSplashScreen === 'function') {
     (window as any).hideSplashScreen();
   }
 } else {
-  // PWA first-time → show splash 1.8s then fade out
+  // PWA → splash 3s pour tous (nouveaux et récurrents)
   setTimeout(() => {
     if (typeof (window as any).hideSplashScreen === 'function') {
       (window as any).hideSplashScreen();
     }
-  }, 1800);
+  }, 3000);
 }
 
 // ---------------------------------------------------------------------------
