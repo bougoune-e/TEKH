@@ -8,6 +8,30 @@ import webpush from "web-push";
 import Anthropic from "@anthropic-ai/sdk";
 import { supabase, TABLE_PRODUCTS } from "./supabase.js";
 
+// ── Vérification JWT Supabase via HTTP direct (compatible clés ECC P-256 et Legacy HS256)
+const SUPABASE_URL = process.env.SUPABASE_URL || "";
+const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
+
+async function getSupabaseUser(jwt) {
+  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY || !jwt) return null;
+  try {
+    const res = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+      headers: {
+        "Authorization": `Bearer ${jwt}`,
+        "apikey": SUPABASE_SERVICE_ROLE_KEY,
+      },
+    });
+    if (!res.ok) {
+      console.error("[AUTH] Supabase auth/v1/user →", res.status, await res.text().catch(() => ""));
+      return null;
+    }
+    return await res.json();
+  } catch (e) {
+    console.error("[AUTH] fetch error:", e.message);
+    return null;
+  }
+}
+
 // ── Web Push VAPID setup ──────────────────────────────────────
 const VAPID_PUBLIC = process.env.VAPID_PUBLIC_KEY;
 const VAPID_PRIVATE = process.env.VAPID_PRIVATE_KEY;
@@ -363,8 +387,8 @@ app.patch("/produits/:id/stock", async (req, res) => {
 app.get("/api/push/count", async (req, res) => {
   const jwt = (req.headers.authorization || "").replace("Bearer ", "").trim();
   if (!jwt || !supabase) return res.status(401).json({ error: "Non autorisé" });
-  const { data: { user }, error: authErr } = await supabase.auth.getUser(jwt);
-  if (authErr || !user) return res.status(401).json({ error: "Token invalide" });
+  const user = await getSupabaseUser(jwt);
+  if (!user) return res.status(401).json({ error: "Token invalide" });
   const email = (user.email || "").toLowerCase();
   if (!ADMIN_EMAILS.includes(email)) return res.status(403).json({ error: "Admins uniquement" });
   const { count, error } = await supabase
@@ -388,8 +412,8 @@ app.post("/api/push/send", async (req, res) => {
 
   if (!supabase) return res.status(503).json({ error: "Supabase non configuré" });
 
-  const { data: { user }, error: authErr } = await supabase.auth.getUser(jwt);
-  if (authErr || !user) return res.status(401).json({ error: "Token invalide" });
+  const user = await getSupabaseUser(jwt);
+  if (!user) return res.status(401).json({ error: "Token invalide" });
 
   const email = (user.email || "").toLowerCase();
   const role = (user.app_metadata?.role || user.user_metadata?.role || "").toLowerCase();
