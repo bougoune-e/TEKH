@@ -81,6 +81,10 @@ function AdminAnnonceForm({ onClose, onCreated }: { onClose: () => void; onCreat
         images = [publicUrl];
       }
 
+      // Récupérer l'UID de l'admin pour satisfaire la RLS policy (owner_id = auth.uid())
+      const { data: { session } } = await supabase.auth.getSession();
+      const adminUid = session?.user?.id ?? null;
+
       await insertDeal({
         title: title.trim(),
         brand: "TEKH+",
@@ -90,6 +94,7 @@ function AdminAnnonceForm({ onClose, onCreated }: { onClose: () => void; onCreat
         images,
         status: "published",
         sellerName: "Admin",
+        ownerId: adminUid,
         publishedAt: new Date().toISOString(),
       });
 
