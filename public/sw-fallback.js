@@ -1,5 +1,5 @@
 /* TEKH+ PWA: évite 404 au rafraîchissement sur les routes SPA */
-const CACHE = 'tekh-fallback-4'; // bumped 2026-03-28 png icons
+const CACHE = 'tekh-fallback-5'; // bumped 2026-03-28 icon left fix
 const FALLBACK = '/index.html';
 
 self.addEventListener('install', (e) => {
@@ -33,10 +33,9 @@ self.addEventListener('push', function (e) {
   var opts = {
     body: data.body || 'Nouvelle offre disponible',
 
-    // Logo TEKH+ affiché dans la bannière (PNG requis sur Android/Chrome)
-    icon: '/icon-512.png',
-
-    // Petite icône dans la barre de statut Android (PNG requis)
+    // badge = petite icône TEKH+ en haut à gauche dans la barre de statut
+    // NE PAS mettre "icon" ici : sur Android/Chrome, icon s'affiche à DROITE.
+    // Chrome utilise automatiquement l'icône du manifest (icon-512.png) à GAUCHE.
     badge: '/icon-192.png',
 
     // Image de prévisualisation large (comme Pinterest) — optionnelle
