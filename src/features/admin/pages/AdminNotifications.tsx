@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Bell, Send, Users, CheckCircle2, XCircle, Clock, Smartphone } from "lucide-react";
+import { Bell, Send, Users, CheckCircle2, XCircle, Clock, Smartphone, Zap, RefreshCw } from "lucide-react";
 import { Button } from "@/shared/ui/button";
 import { toast } from "sonner";
 import { supabase } from "@/core/api/supabaseApi";
@@ -24,27 +24,46 @@ function getApiUrl(): string {
 }
 const API_URL = getApiUrl();
 
-/** Compte les abonnés push via RPC Supabase (SECURITY DEFINER, bypass RLS). */
+/** Emoji intelligent basé sur les mots-clés du titre/message */
+function getContentEmoji(title: string, body?: string): string {
+  const text = `${title} ${body || ""}`.toLowerCase();
+  if (text.includes("charg")) return "🔌";
+  if (text.includes("iphone") || text.includes("apple")) return "📱";
+  if (text.includes("samsung") || text.includes("galaxy")) return "📱";
+  if (text.includes("huawei") || text.includes("xiaomi") || text.includes("oppo") || text.includes("tecno") || text.includes("infinix")) return "📱";
+  if (text.includes("batterie")) return "🔋";
+  if (text.includes("écran") || text.includes("ecran") || text.includes("screen")) return "🖥️";
+  if (text.includes("livraison") || text.includes("livré")) return "🚚";
+  if (text.includes("cadeau") || text.includes("gagn") || text.includes("gagnant")) return "🎁";
+  if (text.includes("répar") || text.includes("repair") || text.includes("service")) return "🔧";
+  if (text.includes("promo") || text.includes("réduction") || text.includes("solde") || text.includes("remise")) return "🏷️";
+  if (text.includes("deal") || text.includes("offre") || text.includes("bon plan")) return "🔥";
+  if (text.includes("nouveau") || text.includes("arrivage") || text.includes("neuf")) return "✨";
+  if (text.includes("certif") || text.includes("garanti")) return "✅";
+  if (text.includes("échange") || text.includes("troc") || text.includes("reprise")) return "🔄";
+  if (text.includes("paiement") || text.includes("prix") || text.includes("fcfa")) return "💰";
+  if (text.includes("urgent") || text.includes("limité") || text.includes("stock")) return "⚡";
+  if (text.includes("annonce")) return "📢";
+  return "📣";
+}
+
+/** Suggestions d'emojis pour le titre en cours de saisie */
+function getTitlePreviewEmoji(title: string): string {
+  if (!title.trim()) return "📣";
+  return getContentEmoji(title);
+}
+
 async function fetchSubCountFromSupabase(): Promise<number | null> {
   const { data, error } = await supabase.rpc("count_push_subscriptions");
-  if (error) {
-    console.error("[push/count] RPC Supabase:", error.message);
-    return null;
-  }
+  if (error) { console.error("[push/count] RPC Supabase:", error.message); return null; }
   return typeof data === "number" ? data : Number(data ?? 0);
 }
 
-/** Compte les abonnés push via le backend Node (service role). */
 async function fetchSubCountFromBackend(jwt: string): Promise<number | null> {
   if (!API_URL) return null;
   try {
-    const res = await fetch(`${API_URL}/api/push/count`, {
-      headers: { Authorization: `Bearer ${jwt}` },
-    });
-    if (!res.ok) {
-      console.error("[push/count] Backend HTTP", res.status, await res.text().catch(() => ""));
-      return null;
-    }
+    const res = await fetch(`${API_URL}/api/push/count`, { headers: { Authorization: `Bearer ${jwt}` } });
+    if (!res.ok) { console.error("[push/count] Backend HTTP", res.status); return null; }
     const json = await res.json();
     return typeof json.count === "number" ? json.count : null;
   } catch (e: any) {
@@ -70,14 +89,17 @@ export default function AdminNotifications() {
   const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [loadingHistory, setLoadingHistory] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     if (!isSupabaseConfigured) { setLoadingHistory(false); return; }
     loadData();
   }, []);
 
-  async function loadData() {
-    setLoadingHistory(true);
+  async function loadData(showRefresh = false) {
+    if (showRefresh) setRefreshing(true);
+    else setLoadingHistory(true);
+
     const { data: { session } } = await supabase.auth.getSession();
     const jwt = session?.access_token;
 
@@ -89,9 +111,9 @@ export default function AdminNotifications() {
         return nb ?? 0;
       }),
       jwt
-        ? fetch(`${API_URL}/api/push/subscribers`, {
-            headers: { Authorization: `Bearer ${jwt}` },
-          }).then(r => r.ok ? r.json() : { subscribers: [] }).catch(() => ({ subscribers: [] }))
+        ? fetch(`${API_URL}/api/push/subscribers`, { headers: { Authorization: `Bearer ${jwt}` } })
+            .then(r => r.ok ? r.json() : { subscribers: [] })
+            .catch(() => ({ subscribers: [] }))
         : Promise.resolve({ subscribers: [] }),
       supabase
         .from("notification_campaigns")
@@ -99,10 +121,12 @@ export default function AdminNotifications() {
         .order("created_at", { ascending: false })
         .limit(20),
     ]);
+
     setSubCount(count);
     setSubscribers(subsRes.subscribers ?? []);
     setCampaigns(camp ?? []);
     setLoadingHistory(false);
+    setRefreshing(false);
   }
 
   async function handleSend() {
@@ -118,21 +142,18 @@ export default function AdminNotifications() {
 
       const res = await fetch(`${API_URL}/api/push/send`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${jwt}`,
-        },
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${jwt}` },
         body: JSON.stringify({ title: title.trim(), body: body.trim(), url }),
       });
 
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || "Erreur serveur");
 
-      toast.success(`Envoyé à ${json.sent} abonné(s) sur ${json.total}`);
+      toast.success(`${getContentEmoji(title)} Envoyé à ${json.sent} abonné(s) sur ${json.total}`);
       setTitle("");
       setBody("");
       setUrl("/deals");
-      await loadData();
+      await loadData(true);
     } catch (e: any) {
       toast.error(e.message || "Échec de l'envoi");
     } finally {
@@ -140,44 +161,66 @@ export default function AdminNotifications() {
     }
   }
 
+  const previewEmoji = getTitlePreviewEmoji(title);
+  const successRate = campaigns.length > 0
+    ? Math.round((campaigns.reduce((a, c) => a + c.sent_count, 0) / Math.max(1, campaigns.reduce((a, c) => a + c.total_subs, 0))) * 100)
+    : null;
+
   return (
     <div className="space-y-6 max-w-2xl">
-      <div>
-        <h1 className="text-xl font-black tracking-tight">Notifications Push</h1>
-        <p className="text-sm text-muted-foreground mt-1">
-          Envoie une notification à tous les utilisateurs abonnés.
-        </p>
+      {/* Header */}
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-xl font-black tracking-tight">🔔 Notifications Push</h1>
+          <p className="text-sm text-muted-foreground mt-1">
+            Envoie une notification à tous les utilisateurs abonnés.
+          </p>
+        </div>
+        <button
+          onClick={() => loadData(true)}
+          disabled={refreshing}
+          className="p-2 rounded-xl border border-border hover:bg-muted transition-colors"
+        >
+          <RefreshCw className={`h-4 w-4 ${refreshing ? "animate-spin text-primary" : "text-muted-foreground"}`} />
+        </button>
       </div>
 
-      {/* Stat abonnés */}
-      <div className="flex items-center gap-3 p-4 rounded-2xl bg-primary/5 border border-primary/20">
-        <div className="p-2.5 rounded-xl bg-primary/10">
-          <Users className="h-5 w-5 text-primary" />
+      {/* Stats row */}
+      <div className="grid grid-cols-3 gap-3">
+        <div className="p-4 rounded-2xl bg-primary/5 border border-primary/20 text-center">
+          <div className="text-2xl font-black text-foreground">{subCount === null ? "—" : subCount}</div>
+          <div className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider mt-0.5">Abonnés</div>
         </div>
-        <div>
-          <div className="text-2xl font-black text-foreground">
-            {subCount === null ? "—" : subCount}
-          </div>
-          <div className="text-xs text-muted-foreground font-medium">abonné(s) aux notifications</div>
+        <div className="p-4 rounded-2xl bg-emerald-500/5 border border-emerald-500/20 text-center">
+          <div className="text-2xl font-black text-foreground">{campaigns.length}</div>
+          <div className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider mt-0.5">Campagnes</div>
+        </div>
+        <div className="p-4 rounded-2xl bg-blue-500/5 border border-blue-500/20 text-center">
+          <div className="text-2xl font-black text-foreground">{successRate !== null ? `${successRate}%` : "—"}</div>
+          <div className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider mt-0.5">Taux livraison</div>
         </div>
       </div>
 
       {/* Liste abonnés */}
       {subscribers.length > 0 && (
         <div className="rounded-2xl border border-border/50 bg-card p-4 space-y-2">
-          <div className="flex items-center gap-2 mb-2">
+          <div className="flex items-center gap-2 mb-3">
             <Smartphone className="h-4 w-4 text-primary" />
             <span className="text-sm font-black">Appareils abonnés</span>
+            <span className="ml-auto text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-full">{subscribers.length}</span>
           </div>
           {subscribers.map((s) => (
-            <div key={s.id} className="flex items-center gap-3 p-2 rounded-xl bg-muted/40 text-xs">
+            <div key={s.id} className="flex items-center gap-3 p-2.5 rounded-xl bg-muted/40 text-xs">
+              <div className="w-7 h-7 rounded-xl bg-primary/10 flex items-center justify-center text-sm font-black text-primary shrink-0">
+                {(s.profile?.full_name || "?").slice(0, 1).toUpperCase()}
+              </div>
               <div className="flex-1 min-w-0">
                 <div className="font-semibold truncate">
                   {s.profile?.full_name || s.profile?.id?.slice(0, 8) || "Anonyme"}
                 </div>
                 <div className="text-muted-foreground truncate">{s.user_agent?.split(" ").slice(-2).join(" ")}</div>
               </div>
-              <div className="text-muted-foreground shrink-0">
+              <div className="text-muted-foreground/60 shrink-0 text-[10px]">
                 {new Date(s.created_at).toLocaleDateString("fr-FR", { day: "numeric", month: "short" })}
               </div>
             </div>
@@ -185,24 +228,36 @@ export default function AdminNotifications() {
         </div>
       )}
 
-      {/* Formulaire */}
+      {/* Formulaire composer */}
       <div className="rounded-2xl border border-border/50 bg-card p-5 space-y-4">
         <div className="flex items-center gap-2 mb-1">
           <Bell className="h-4 w-4 text-primary" />
           <span className="text-sm font-black">Composer une notification</span>
+          {title && (
+            <span className="ml-auto text-2xl leading-none" title="Emoji auto-détecté">
+              {previewEmoji}
+            </span>
+          )}
         </div>
 
         <div className="space-y-1">
           <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
             Titre *
           </label>
-          <input
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Nouveau deal disponible !"
-            maxLength={80}
-            className="w-full px-3 py-2.5 rounded-xl border border-border bg-background text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/30"
-          />
+          <div className="relative">
+            <input
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Nouveau deal disponible !"
+              maxLength={80}
+              className="w-full px-3 py-2.5 pr-10 rounded-xl border border-border bg-background text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/30"
+            />
+            {title && (
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-lg pointer-events-none">
+                {previewEmoji}
+              </span>
+            )}
+          </div>
           <div className="text-right text-[10px] text-muted-foreground">{title.length}/80</div>
         </div>
 
@@ -233,59 +288,113 @@ export default function AdminNotifications() {
           />
         </div>
 
+        {/* Preview */}
+        {title && body && (
+          <div className="rounded-xl border border-dashed border-border/50 bg-muted/30 p-3 space-y-1">
+            <p className="text-[10px] font-black text-muted-foreground uppercase tracking-wider">Aperçu</p>
+            <div className="flex items-start gap-2.5">
+              <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center shrink-0">
+                <Zap className="w-4 h-4 text-black" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-black text-foreground leading-tight">
+                  {previewEmoji} {title}
+                </p>
+                <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">{body}</p>
+              </div>
+            </div>
+          </div>
+        )}
+
         <Button
           onClick={handleSend}
           disabled={sending || !title.trim() || !body.trim()}
           className="w-full gap-2 font-black"
         >
           <Send className="h-4 w-4" />
-          {sending ? "Envoi en cours..." : `Envoyer à ${subCount ?? "?"} abonné(s)`}
+          {sending ? "Envoi en cours..." : `${previewEmoji} Envoyer à ${subCount ?? "?"} abonné(s)`}
         </Button>
       </div>
 
       {/* Historique */}
       <div>
-        <h2 className="text-sm font-black mb-3">Historique des envois</h2>
+        <div className="flex items-center gap-2 mb-3">
+          <h2 className="text-sm font-black">Historique des campagnes</h2>
+          {campaigns.length > 0 && (
+            <span className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-full">{campaigns.length}</span>
+          )}
+        </div>
+
         {loadingHistory ? (
-          <div className="text-sm text-muted-foreground">Chargement...</div>
+          <div className="space-y-2">
+            {[1, 2].map((i) => <div key={i} className="h-20 rounded-2xl bg-muted/40 animate-pulse" />)}
+          </div>
         ) : campaigns.length === 0 ? (
-          <div className="text-sm text-muted-foreground p-4 rounded-2xl border border-dashed border-border text-center">
+          <div className="text-sm text-muted-foreground p-6 rounded-2xl border border-dashed border-border text-center">
+            <Bell className="w-8 h-8 mx-auto mb-2 opacity-20" />
             Aucune notification envoyée pour l'instant
           </div>
         ) : (
           <div className="space-y-2">
-            {campaigns.map((c) => (
-              <div
-                key={c.id}
-                className="rounded-2xl border border-border/50 bg-card p-4 space-y-1.5"
-              >
-                <div className="flex items-start justify-between gap-2">
-                  <div className="font-semibold text-sm leading-tight">{c.title}</div>
-                  <div className="flex items-center gap-1 shrink-0 text-[10px] text-muted-foreground">
-                    <Clock className="h-3 w-3" />
-                    {new Date(c.created_at).toLocaleDateString("fr-FR", {
-                      day: "numeric", month: "short", hour: "2-digit", minute: "2-digit",
-                    })}
+            {campaigns.map((c) => {
+              const emoji = getContentEmoji(c.title, c.body);
+              const rate = c.total_subs > 0 ? Math.round((c.sent_count / c.total_subs) * 100) : 100;
+              return (
+                <div
+                  key={c.id}
+                  className="rounded-2xl border border-border/50 bg-card p-4"
+                >
+                  <div className="flex items-start gap-3">
+                    {/* Emoji badge */}
+                    <div className="w-10 h-10 rounded-2xl bg-muted/60 flex items-center justify-center text-xl shrink-0 shadow-sm">
+                      {emoji}
+                    </div>
+
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-start justify-between gap-2">
+                        <p className="font-black text-[14px] text-foreground leading-tight">
+                          {c.title}
+                        </p>
+                        <div className="flex items-center gap-1 shrink-0 text-[10px] text-muted-foreground">
+                          <Clock className="h-3 w-3" />
+                          {new Date(c.created_at).toLocaleDateString("fr-FR", {
+                            day: "numeric", month: "short", hour: "2-digit", minute: "2-digit",
+                          })}
+                        </div>
+                      </div>
+                      <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">{c.body}</p>
+
+                      {/* Stats bar */}
+                      <div className="mt-2 space-y-1">
+                        <div className="flex items-center justify-between text-[10px]">
+                          <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-bold">
+                            <CheckCircle2 className="h-3 w-3" />
+                            {c.sent_count} livrés
+                          </span>
+                          {c.failed_count > 0 && (
+                            <span className="flex items-center gap-1 text-rose-500 font-bold">
+                              <XCircle className="h-3 w-3" />
+                              {c.failed_count} échoués
+                            </span>
+                          )}
+                          <span className="text-muted-foreground ml-auto">
+                            <Users className="h-3 w-3 inline mr-0.5" />
+                            {c.total_subs} abonnés · {rate}%
+                          </span>
+                        </div>
+                        {/* Progress bar */}
+                        <div className="h-1 rounded-full bg-muted overflow-hidden">
+                          <div
+                            className="h-full bg-emerald-500 rounded-full transition-all"
+                            style={{ width: `${rate}%` }}
+                          />
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="text-xs text-muted-foreground">{c.body}</div>
-                <div className="flex items-center gap-3 pt-1">
-                  <span className="flex items-center gap-1 text-xs text-emerald-600 font-semibold">
-                    <CheckCircle2 className="h-3.5 w-3.5" />
-                    {c.sent_count} envoyés
-                  </span>
-                  {c.failed_count > 0 && (
-                    <span className="flex items-center gap-1 text-xs text-rose-500 font-semibold">
-                      <XCircle className="h-3.5 w-3.5" />
-                      {c.failed_count} échoués
-                    </span>
-                  )}
-                  <span className="text-xs text-muted-foreground ml-auto">
-                    {c.total_subs} abonnés au moment de l'envoi
-                  </span>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>

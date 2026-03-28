@@ -1,29 +1,26 @@
 import { useState, useEffect } from "react";
 import {
-    User,
-    Settings as SettingsIcon,
     Globe,
-    Moon,
     Sun,
-    Smartphone,
-    ShieldCheck,
+    Monitor,
     LogOut,
     ChevronRight,
     Camera,
-    CheckCircle2,
     List,
     Package,
     CreditCard,
     MapPin,
     Bell,
-    LifeBuoy
+    LifeBuoy,
+    Shield,
+    Sparkles,
+    Zap,
 } from "lucide-react";
 import { useAuth } from "@/features/auth/auth.context";
 import { useTheme } from "@/core/theme/ThemeProvider";
 import UserAvatar from "@/shared/components/UserAvatar";
 import { isPushSupported, getNotificationPermission, subscribeToPush } from "@/features/notifications/pushNotifications";
 import { Button } from "@/shared/ui/button";
-import { Input } from "@/shared/ui/input";
 import { Label } from "@/shared/ui/label";
 import { useTranslation } from "react-i18next";
 import i18n from "@/core/config/i18n";
@@ -35,17 +32,11 @@ export default function SettingsPage() {
     const { user, signOut, refreshUser } = useAuth();
     const { theme, setTheme } = useTheme();
     const [lang, setLang] = useState(i18n.language || "fr");
-    const [isPWA, setIsPWA] = useState(false);
     const [uploading, setUploading] = useState(false);
     const [passionBio, setPassionBio] = useState("");
     const [savingBio, setSavingBio] = useState(false);
     const [pushLoading, setPushLoading] = useState(false);
-
-    useEffect(() => {
-        if (window.matchMedia('(display-mode: standalone)').matches) {
-            setIsPWA(true);
-        }
-    }, []);
+    const [editingBio, setEditingBio] = useState(false);
 
     useEffect(() => {
         const bio = (user as any)?.user_metadata?.bio ?? "";
@@ -70,6 +61,7 @@ export default function SettingsPage() {
             await refreshUser();
             const { toast } = await import("sonner");
             toast.success("Enregistré", { description: "Votre passion TEKH a été mise à jour." });
+            setEditingBio(false);
         } catch (e: any) {
             const { toast } = await import("sonner");
             toast.error("Erreur", { description: e?.message || "Impossible d'enregistrer." });
@@ -96,367 +88,338 @@ export default function SettingsPage() {
         }
     };
 
-    const sections = [
-        {
-            title: t('settings.navigate', 'Naviguer'),
-            items: [
-                { icon: List, label: t('settings.history', 'Historique'), desc: t('settings.history_desc', 'Transactions passées'), path: "/historique", color: "bg-black dark:bg-white text-white dark:text-black" },
-                { icon: Package, label: t('settings.orders', 'Commandes'), desc: t('settings.orders_desc', 'Achats en cours'), path: "/commandes", color: "bg-black dark:bg-white text-white dark:text-black" },
-                { icon: CreditCard, label: t('settings.payment', 'Paiement'), desc: t('settings.payment_desc', 'Cartes & comptes'), path: "/panier", color: "bg-black dark:bg-white text-white dark:text-black" },
-                { icon: MapPin, label: t('settings.addresses', 'Adresses'), desc: t('settings.addresses_desc', 'Lieux de réception'), path: "/profile", color: "bg-black dark:bg-white text-white dark:text-black" },
-            ]
-        },
-        {
-            title: t('settings.preferences', 'Préférences'),
-            items: [
-                { icon: Bell, label: t('settings.alerts', 'Alertes'), desc: t('settings.alerts_desc', 'Notifications'), path: "/notifications", color: "bg-black dark:bg-white text-white dark:text-black" },
-                { icon: LifeBuoy, label: t('settings.support', 'Support'), desc: t('settings.support_desc', 'Aide & assistance'), path: "/contact", color: "bg-black dark:bg-white text-white dark:text-black" },
-            ]
-        }
-    ];
-
     const changeLanguage = (newLang: string) => {
         setLang(newLang);
         i18n.changeLanguage(newLang);
     };
 
-    /* ─────────────────────────────────────────────
-       PWA LAYOUT — cards minimales style Spotify
-    ───────────────────────────────────────────── */
-    if (isPWA) {
-        return (
-            <div className="min-h-dvh bg-background pb-32 pt-safe transition-colors">
-                <div className="max-w-xl mx-auto space-y-8 text-foreground pt-6">
-                    {/* Profile Section - List Style */}
-                    <section className="space-y-1">
-                        <div className="flex items-center gap-4 px-5 py-6 bg-muted/30 border-y border-border/10 active:bg-muted/50 transition-colors">
+    const pushGranted = getNotificationPermission() === "granted";
+    const userName = (user as any)?.user_metadata?.full_name || "Utilisateur TEKH+";
+    const userEmail = (user as any)?.email || "";
+
+    const navSections = [
+        {
+            title: t('settings.navigate', 'Mes activités'),
+            items: [
+                {
+                    icon: List,
+                    label: t('settings.history', 'Historique'),
+                    desc: t('settings.history_desc', 'Transactions passées'),
+                    path: "/historique",
+                    emoji: "📋",
+                    color: "from-violet-500 to-purple-600",
+                },
+                {
+                    icon: Package,
+                    label: t('settings.orders', 'Commandes'),
+                    desc: t('settings.orders_desc', 'Achats en cours'),
+                    path: "/commandes",
+                    emoji: "📦",
+                    color: "from-amber-500 to-orange-500",
+                },
+                {
+                    icon: CreditCard,
+                    label: t('settings.payment', 'Paiement'),
+                    desc: t('settings.payment_desc', 'Méthodes de paiement'),
+                    path: "/panier",
+                    emoji: "💳",
+                    color: "from-blue-500 to-cyan-500",
+                },
+                {
+                    icon: MapPin,
+                    label: t('settings.addresses', 'Adresses'),
+                    desc: t('settings.addresses_desc', 'Lieux de réception'),
+                    path: "/profile",
+                    emoji: "📍",
+                    color: "from-rose-500 to-pink-500",
+                },
+            ]
+        },
+        {
+            title: t('settings.preferences', 'Aide & Préférences'),
+            items: [
+                {
+                    icon: Bell,
+                    label: t('settings.alerts', 'Notifications'),
+                    desc: pushGranted ? 'Activées ✓' : t('settings.alerts_desc', 'Alertes et offres'),
+                    path: "/notifications",
+                    emoji: "🔔",
+                    color: "from-emerald-500 to-teal-500",
+                },
+                {
+                    icon: LifeBuoy,
+                    label: t('settings.support', 'Support'),
+                    desc: t('settings.support_desc', 'Aide & assistance'),
+                    path: "/contact",
+                    emoji: "🆘",
+                    color: "from-sky-500 to-blue-500",
+                },
+            ]
+        }
+    ];
+
+    const themeOptions = [
+        { value: "light", label: "Clair", icon: Sun },
+        { value: "dark", label: "Sombre", icon: Moon },
+        { value: "system", label: "Système", icon: Monitor },
+    ];
+
+    return (
+        <div className="min-h-dvh bg-background pb-32 pt-safe">
+            <div className="max-w-xl mx-auto text-foreground">
+
+                {/* ── Hero profil ── */}
+                <div className="relative overflow-hidden">
+                    {/* Gradient background */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-emerald-950 via-emerald-900 to-black dark:from-black dark:via-emerald-950 dark:to-black" />
+                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(0,255,65,0.12),transparent_60%)]" />
+
+                    <div className="relative px-5 pt-8 pb-10">
+                        {/* Avatar + info */}
+                        <div className="flex items-center gap-5">
                             <div className="relative shrink-0">
-                                <UserAvatar user={user} size="xl" className="h-[72px] w-[72px] rounded-full border border-border/10" />
-                                <label className="absolute -bottom-1 -right-1 bg-primary text-black p-1.5 rounded-full shadow-lg cursor-pointer active:scale-90 transition-all">
-                                    <Camera className="h-4 w-4" />
+                                <div className="w-20 h-20 rounded-3xl ring-2 ring-[#00FF41]/30 shadow-[0_0_30px_rgba(0,255,65,0.15)] overflow-hidden">
+                                    <UserAvatar user={user} size="xl" className="w-full h-full object-cover" />
+                                </div>
+                                <label className="absolute -bottom-1 -right-1 w-7 h-7 bg-[#00FF41] text-black flex items-center justify-center rounded-xl shadow-lg cursor-pointer hover:scale-110 active:scale-95 transition-all">
+                                    {uploading ? (
+                                        <div className="w-3 h-3 border-2 border-black border-t-transparent animate-spin rounded-full" />
+                                    ) : (
+                                        <Camera className="h-3.5 w-3.5" strokeWidth={2.5} />
+                                    )}
                                     <input type="file" className="hidden" accept="image/*" onChange={handleProfileUpload} disabled={uploading} />
                                 </label>
                             </div>
+
                             <div className="flex-1 min-w-0">
-                                <p className="text-xl font-black truncate tracking-tight">
-                                    {(user as any)?.user_metadata?.full_name || "Utilisateur TEKH+"}
-                                </p>
-                                <p className="text-sm text-muted-foreground truncate font-medium">{(user as any)?.email}</p>
+                                <div className="flex items-center gap-2">
+                                    <p className="text-xl font-black text-white tracking-tight truncate">
+                                        {userName}
+                                    </p>
+                                    <span className="shrink-0 px-1.5 py-0.5 rounded-md bg-[#00FF41]/20 border border-[#00FF41]/30">
+                                        <Zap className="w-3 h-3 text-[#00FF41]" />
+                                    </span>
+                                </div>
+                                <p className="text-sm text-emerald-300/70 font-medium truncate mt-0.5">{userEmail}</p>
                             </div>
                         </div>
-                    </section>
 
-                    {/* Décrivez votre passion TEKH — masquer le formulaire une fois enregistré */}
-                    <div className="space-y-1">
-                        <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground px-5 mb-2">TEKH+</h3>
-                        <div className="bg-muted/30 border-y border-border/10 px-5 py-4">
-                            <Label className="text-[10px] font-black uppercase text-muted-foreground">Décrivez votre passion TEKH</Label>
-                            {passionBio?.trim() ? (
-                                <p className="mt-2 text-foreground font-medium text-sm">{passionBio}</p>
+                        {/* Bio / Passion TEKH */}
+                        <div className="mt-5">
+                            {passionBio?.trim() && !editingBio ? (
+                                <div
+                                    className="flex items-start gap-2 p-3 rounded-2xl bg-white/5 border border-white/10 cursor-pointer"
+                                    onClick={() => setEditingBio(true)}
+                                >
+                                    <Sparkles className="w-4 h-4 text-[#00FF41] shrink-0 mt-0.5" />
+                                    <p className="text-sm text-emerald-100/80 font-medium flex-1 leading-snug">{passionBio}</p>
+                                    <span className="text-[10px] text-emerald-500/50 font-bold uppercase tracking-widest shrink-0">modifier</span>
+                                </div>
                             ) : (
-                                <>
+                                <div className="space-y-2">
+                                    <Label className="text-[10px] font-black uppercase tracking-widest text-emerald-400/60">
+                                        Décrivez votre passion TEKH
+                                    </Label>
                                     <textarea
                                         value={passionBio}
                                         onChange={(e) => setPassionBio(e.target.value)}
-                                        placeholder="Décrivez votre passion tech..."
-                                        className="mt-2 w-full min-h-[100px] rounded-xl bg-background border border-border/50 px-4 py-3 text-foreground font-medium text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+                                        placeholder="Passionné de tech, amateur d'iPhone..."
+                                        className="w-full min-h-[80px] rounded-2xl bg-white/5 border border-white/10 px-4 py-3 text-white text-sm font-medium placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-[#00FF41]/30 resize-none"
                                     />
-                                    <Button onClick={savePassionBio} disabled={savingBio} className="mt-3 w-full bg-[#064e3b] dark:bg-[#059669] hover:opacity-90 text-white rounded-xl h-11 font-bold">
-                                        {savingBio ? "Enregistrement…" : "Enregistrer"}
-                                    </Button>
-                                </>
+                                    <div className="flex gap-2">
+                                        {editingBio && (
+                                            <button
+                                                onClick={() => { setEditingBio(false); setPassionBio((user as any)?.user_metadata?.bio ?? ""); }}
+                                                className="flex-1 h-10 rounded-xl border border-white/10 text-white/60 text-sm font-bold"
+                                            >
+                                                Annuler
+                                            </button>
+                                        )}
+                                        <Button
+                                            onClick={savePassionBio}
+                                            disabled={savingBio}
+                                            className="flex-1 h-10 rounded-xl bg-[#00FF41] hover:bg-[#00FF41]/90 text-black font-black text-sm border-0 shadow-[0_0_20px_rgba(0,255,65,0.3)]"
+                                        >
+                                            {savingBio ? "Enregistrement…" : "Enregistrer"}
+                                        </Button>
+                                    </div>
+                                </div>
                             )}
                         </div>
                     </div>
+                </div>
 
-                    {/* Dynamic Sections - Grouped Lists */}
-                    {sections.map((section) => (
-                        <div key={section.title} className="space-y-1">
-                            <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground px-5 mb-2">{section.title}</h3>
-                            <div className="bg-muted/30 border-y border-border/10 divide-y divide-border/10">
+                {/* ── Sections navigation ── */}
+                <div className="px-4 pt-6 space-y-6">
+                    {navSections.map((section) => (
+                        <div key={section.title} className="space-y-2">
+                            <h3 className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground/60 px-1">
+                                {section.title}
+                            </h3>
+                            <div className="rounded-3xl border border-border/50 bg-card overflow-hidden divide-y divide-border/30">
                                 {section.items.map((item) => (
                                     <Link
                                         key={item.label}
-                                        to={(item as any).path || "#"}
-                                        className="w-full flex items-center justify-between h-[58px] px-5 active:bg-muted/50 transition-colors group"
+                                        to={item.path}
+                                        className="flex items-center justify-between px-4 py-3.5 hover:bg-muted/40 active:bg-muted/60 transition-colors group"
                                     >
-                                        <div className="flex items-center gap-4 text-left">
-                                            <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-background border border-border/10">
-                                                <item.icon className="h-4 w-4 text-foreground" strokeWidth={2} />
+                                        <div className="flex items-center gap-3.5">
+                                            <div className={`w-10 h-10 rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center shadow-md text-lg`}>
+                                                {item.emoji}
                                             </div>
                                             <div>
-                                                <p className="font-semibold text-[15px] tracking-tight">{item.label}</p>
-                                                <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">{item.desc}</p>
+                                                <p className="font-bold text-[15px] text-foreground tracking-tight">{item.label}</p>
+                                                <p className="text-[11px] text-muted-foreground font-medium">{item.desc}</p>
                                             </div>
                                         </div>
-                                        <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-foreground transition-colors" />
+                                        <ChevronRight className="w-4 h-4 text-muted-foreground/40 group-hover:text-foreground group-hover:translate-x-0.5 transition-all" />
                                     </Link>
                                 ))}
                             </div>
                         </div>
                     ))}
 
-                    {/* System Section - List Style */}
-                    <div className="space-y-1">
-                        <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground px-5 mb-2">{t('settings.system', 'Système')}</h3>
-                        <div className="bg-muted/30 border-y border-border/10 divide-y divide-border/10">
-                            {/* Apparence */}
-                            <div className="flex items-center justify-between h-[58px] px-5">
-                                <div className="flex items-center gap-4">
-                                    <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-background border border-border/10">
-                                        <Sun className="h-4 w-4 text-foreground" strokeWidth={2} />
+                    {/* ── Système ── */}
+                    <div className="space-y-2">
+                        <h3 className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground/60 px-1">
+                            {t('settings.system', 'Système')}
+                        </h3>
+                        <div className="rounded-3xl border border-border/50 bg-card overflow-hidden divide-y divide-border/30">
+
+                            {/* Thème */}
+                            <div className="flex items-center justify-between px-4 py-3.5">
+                                <div className="flex items-center gap-3.5">
+                                    <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-slate-600 to-slate-800 flex items-center justify-center text-lg shadow-md">
+                                        🎨
                                     </div>
-                                    <p className="font-semibold text-[15px] tracking-tight">{t('settings.theme', 'Thème')}</p>
+                                    <div>
+                                        <p className="font-bold text-[15px] text-foreground tracking-tight">{t('settings.theme', 'Apparence')}</p>
+                                        <p className="text-[11px] text-muted-foreground font-medium">Thème clair ou sombre</p>
+                                    </div>
                                 </div>
-                                <select
-                                    value={theme}
-                                    onChange={(e) => setTheme(e.target.value as any)}
-                                    className="bg-transparent font-black text-primary text-[12px] uppercase tracking-wider focus:outline-none cursor-pointer text-right appearance-none px-2"
-                                >
-                                    <option value="light" className="bg-background text-foreground">Clair</option>
-                                    <option value="dark" className="bg-background text-foreground">Sombre</option>
-                                    <option value="system" className="bg-background text-foreground">Système</option>
-                                </select>
+                                <div className="flex items-center gap-1 p-1 rounded-xl bg-muted/60 border border-border/30">
+                                    {themeOptions.map(({ value, icon: Icon }) => (
+                                        <button
+                                            key={value}
+                                            onClick={() => setTheme(value as any)}
+                                            className={`w-8 h-7 rounded-lg flex items-center justify-center transition-all ${
+                                                theme === value
+                                                    ? "bg-emerald-500 text-white shadow-sm"
+                                                    : "text-muted-foreground hover:text-foreground"
+                                            }`}
+                                        >
+                                            <Icon className="w-3.5 h-3.5" />
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
 
                             {/* Langue */}
-                            <div className="flex items-center justify-between h-[58px] px-5">
-                                <div className="flex items-center gap-4">
-                                    <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-background border border-border/10">
-                                        <Globe className="h-4 w-4 text-foreground" strokeWidth={2} />
+                            <div className="flex items-center justify-between px-4 py-3.5">
+                                <div className="flex items-center gap-3.5">
+                                    <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-lg shadow-md">
+                                        🌍
                                     </div>
-                                    <p className="font-semibold text-[15px] tracking-tight">{t('settings.language', 'Langue')}</p>
+                                    <div>
+                                        <p className="font-bold text-[15px] text-foreground tracking-tight">{t('settings.language', 'Langue')}</p>
+                                        <p className="text-[11px] text-muted-foreground font-medium">Français / English</p>
+                                    </div>
                                 </div>
-                                <select
-                                    value={lang}
-                                    onChange={(e) => changeLanguage(e.target.value)}
-                                    className="bg-transparent font-black text-primary text-[12px] uppercase tracking-wider focus:outline-none cursor-pointer text-right appearance-none px-2"
-                                >
-                                    <option value="fr" className="bg-background text-foreground">FR</option>
-                                    <option value="en" className="bg-background text-foreground">EN</option>
-                                </select>
+                                <div className="flex items-center gap-1 p-1 rounded-xl bg-muted/60 border border-border/30">
+                                    {["fr", "en"].map((l) => (
+                                        <button
+                                            key={l}
+                                            onClick={() => changeLanguage(l)}
+                                            className={`px-3 h-7 rounded-lg text-xs font-black uppercase tracking-wide transition-all ${
+                                                lang === l
+                                                    ? "bg-emerald-500 text-white shadow-sm"
+                                                    : "text-muted-foreground hover:text-foreground"
+                                            }`}
+                                        >
+                                            {l}
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
 
-                            {/* Notifications push (PWA) */}
+                            {/* Notifications push */}
                             {isPushSupported() && (
-                                <div className="flex items-center justify-between h-[58px] px-5">
-                                    <div className="flex items-center gap-4">
-                                        <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-background border border-border/10">
-                                            <Bell className="h-4 w-4 text-foreground" strokeWidth={2} />
+                                <div className="flex items-center justify-between px-4 py-3.5">
+                                    <div className="flex items-center gap-3.5">
+                                        <div className={`w-10 h-10 rounded-2xl bg-gradient-to-br ${pushGranted ? "from-emerald-500 to-teal-600" : "from-zinc-600 to-zinc-700"} flex items-center justify-center text-lg shadow-md`}>
+                                            {pushGranted ? "🔔" : "🔕"}
                                         </div>
                                         <div>
-                                            <p className="font-semibold text-[15px] tracking-tight">Notifications</p>
-                                            <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">
-                                                {getNotificationPermission() === "granted" ? "Activées" : "Nouveaux deals"}
+                                            <p className="font-bold text-[15px] text-foreground tracking-tight">Notifications push</p>
+                                            <p className="text-[11px] text-muted-foreground font-medium">
+                                                {pushGranted ? "Activées — vous recevez les alertes" : "Désactivées — deals & promos"}
                                             </p>
                                         </div>
                                     </div>
                                     <Button
                                         size="sm"
-                                        variant={getNotificationPermission() === "granted" ? "outline" : "default"}
-                                        disabled={pushLoading}
-                                        className={getNotificationPermission() === "granted" ? "rounded-xl" : "rounded-xl bg-[#064e3b] dark:bg-[#059669] text-white"}
+                                        disabled={pushLoading || pushGranted}
                                         onClick={async () => {
                                             setPushLoading(true);
-                                            const toast = (await import("sonner")).toast;
+                                            const { toast } = await import("sonner");
                                             const err = await subscribeToPush(user?.id ?? null);
                                             if (err) toast.error(err);
-                                            else toast.success("Notifications activées", { description: "Vous serez alerté des nouveaux deals." });
+                                            else toast.success("Notifications activées !", { description: "Vous serez alerté des nouveaux deals." });
                                             setPushLoading(false);
                                         }}
+                                        className={`rounded-xl h-8 px-4 text-xs font-black border-0 ${
+                                            pushGranted
+                                                ? "bg-emerald-500/10 text-emerald-500 cursor-default"
+                                                : "bg-emerald-500 text-white shadow-[0_0_15px_rgba(0,255,65,0.2)] hover:opacity-90"
+                                        }`}
                                     >
-                                        {pushLoading ? "…" : getNotificationPermission() === "granted" ? "OK" : "Activer"}
+                                        {pushLoading ? "…" : pushGranted ? "Activé ✓" : "Activer"}
                                     </Button>
                                 </div>
                             )}
 
-                            {/* Logout - Full List Row */}
-                            <button
-                                type="button"
-                                onClick={() => signOut().then(() => navigate("/login"))}
-                                className="w-full h-[58px] px-5 flex items-center gap-4 active:bg-rose-500/10 transition-colors"
-                            >
-                                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-rose-500 shadow-lg shadow-rose-500/20">
-                                    <LogOut className="h-4 w-4 text-white" strokeWidth={2.5} />
+                            {/* Sécurité */}
+                            <div className="flex items-center justify-between px-4 py-3.5 opacity-60">
+                                <div className="flex items-center gap-3.5">
+                                    <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-rose-500 to-orange-500 flex items-center justify-center text-lg shadow-md">
+                                        🔐
+                                    </div>
+                                    <div>
+                                        <p className="font-bold text-[15px] text-foreground tracking-tight">Sécurité</p>
+                                        <p className="text-[11px] text-muted-foreground font-medium">Mot de passe & 2FA</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <p className="font-bold text-rose-500 text-[15px] tracking-tight">{t('profile.logout', 'Déconnexion')}</p>
-                                    <p className="text-[10px] font-black text-rose-500/60 uppercase tracking-widest">{t('settings.logout_desc', 'Quitter votre session')}</p>
-                                </div>
-                            </button>
+                                <span className="text-[10px] font-black text-muted-foreground bg-muted px-2.5 py-1 rounded-full uppercase tracking-widest">Bientôt</span>
+                            </div>
                         </div>
                     </div>
+
+                    {/* ── Déconnexion ── */}
+                    <button
+                        type="button"
+                        onClick={() => signOut().then(() => navigate("/login"))}
+                        className="w-full flex items-center justify-between px-4 py-3.5 rounded-3xl border border-rose-500/20 bg-rose-500/5 hover:bg-rose-500/10 active:scale-[0.99] transition-all group"
+                    >
+                        <div className="flex items-center gap-3.5">
+                            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-rose-500 to-rose-600 flex items-center justify-center text-lg shadow-md">
+                                🚪
+                            </div>
+                            <div className="text-left">
+                                <p className="font-black text-rose-500 text-[15px] tracking-tight">{t('profile.logout', 'Déconnexion')}</p>
+                                <p className="text-[11px] text-rose-400/60 font-medium">{t('settings.logout_desc', 'Quitter votre session')}</p>
+                            </div>
+                        </div>
+                        <LogOut className="w-4 h-4 text-rose-500/40 group-hover:text-rose-500 transition-colors" />
+                    </button>
 
                     {/* Version */}
-                    <p className="text-center text-[10px] font-black text-muted-foreground/40 uppercase tracking-[0.3em] py-8">
-                        TΞKΗ+ v3.0.0 • NATIVE PWA
-                    </p>
-                </div>
-            </div>
-        );
-    }
-
-    /* ─────────────────────────────────────────────
-       WEB LAYOUT — design original inchangé
-    ───────────────────────────────────────────── */
-    return (
-        <div className="min-h-dvh bg-white dark:bg-black pb-32 pt-safe transition-colors">
-            <div className="max-w-xl mx-auto px-4 pt-8 space-y-8">
-
-                {/* Profile Title */}
-                <div className="px-4">
-                    <h1 className="text-3xl font-black text-black dark:text-white">Paramètres</h1>
-                    <p className="text-slate-500 dark:text-zinc-400 font-bold">Gérez votre compte et vos préférences</p>
-                </div>
-
-                {/* Profile Card */}
-                <section className="bg-slate-50 dark:bg-zinc-900 rounded-[32px] p-6 border-2 border-black dark:border-white shadow-xl">
-                    <div className="flex items-center gap-6">
-                        <div className="relative group">
-                            <UserAvatar user={user} size="xl" className="h-24 w-24 ring-4 ring-white dark:ring-black shadow-2xl" />
-                            <label className="absolute bottom-0 right-0 bg-black dark:bg-white text-white dark:text-black p-2 rounded-full shadow-lg cursor-pointer hover:scale-110 active:scale-95 transition-all">
-                                <Camera className="h-5 w-5" />
-                                <input type="file" className="hidden" accept="image/*" onChange={handleProfileUpload} disabled={uploading} />
-                            </label>
-                            {uploading && (
-                                <div className="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center">
-                                    <div className="w-6 h-6 border-2 border-white border-t-transparent animate-spin rounded-full"></div>
-                                </div>
-                            )}
-                        </div>
-                        <div>
-                            <h2 className="text-2xl font-black text-black dark:text-white">
-                                {(user as any)?.user_metadata?.full_name || "Utilisateur TEKH+"}
-                            </h2>
-                            <p className="text-slate-500 dark:text-zinc-400 font-bold text-sm">{(user as any)?.email}</p>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Personal Info */}
-                <div className="space-y-4">
-                    <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 dark:text-zinc-400 px-4">Informations personnelles</h3>
-                    <div className="bg-slate-50 dark:bg-zinc-900 rounded-[32px] overflow-hidden border-2 border-black dark:border-white">
-                        <div className="p-6 space-y-6">
-                            <div className="space-y-2">
-                                <Label className="text-[10px] font-black uppercase text-slate-500 dark:text-slate-400">Bio / Description</Label>
-                                {passionBio?.trim() ? (
-                                    <p className="py-3 text-black dark:text-white font-medium">{passionBio}</p>
-                                ) : (
-                                    <>
-                                        <Input
-                                            value={passionBio}
-                                            onChange={(e) => setPassionBio(e.target.value)}
-                                            placeholder="Décrivez votre passion tech..."
-                                            className="bg-white dark:bg-black border-2 border-black dark:border-white rounded-2xl h-14 font-black focus:ring-0 text-black dark:text-white"
-                                        />
-                                        <Button onClick={savePassionBio} disabled={savingBio} className="w-full bg-[#064e3b] dark:bg-[#059669] text-white hover:opacity-90 rounded-2xl h-14 font-black shadow-xl transition-all border-0">
-                                            {savingBio ? "Enregistrement…" : "Enregistrer les modifications"}
-                                        </Button>
-                                    </>
-                                )}
-                            </div>
-                        </div>
+                    <div className="flex items-center justify-center gap-2 py-6">
+                        <Shield className="w-3 h-3 text-muted-foreground/30" />
+                        <p className="text-[10px] font-black text-muted-foreground/30 uppercase tracking-[0.3em]">
+                            TΞKΗ+ v3.0.0
+                        </p>
                     </div>
                 </div>
-
-                {/* Main Navigation Sections */}
-                {sections.map((section) => (
-                    <div key={section.title} className="space-y-4">
-                        <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 dark:text-zinc-400 px-4">{section.title}</h3>
-                        <div className="grid gap-4">
-                            {section.items.map((item) => (
-                                <Link key={item.label} to={(item as any).path || "#"} className="w-full flex items-center justify-between p-5 bg-slate-50 dark:bg-zinc-900 rounded-[28px] border-2 border-black dark:border-white hover:scale-[1.02] active:scale-95 transition-all group shadow-lg">
-                                    <div className="flex items-center gap-5">
-                                        <div className={`h-14 w-14 rounded-2xl ${(item as any).color || "bg-muted"} flex items-center justify-center shadow-lg`}>
-                                            <item.icon className="h-7 w-7" strokeWidth={2.5} />
-                                        </div>
-                                        <div className="text-left">
-                                            <p className="font-black text-black dark:text-white text-lg">{item.label}</p>
-                                            <p className="text-xs text-slate-500 dark:text-zinc-400 font-bold">{item.desc}</p>
-                                        </div>
-                                    </div>
-                                    <ChevronRight className="h-6 w-6 text-black dark:text-white group-hover:translate-x-1 transition-transform" />
-                                </Link>
-                            ))}
-                        </div>
-                    </div>
-                ))}
-
-                {/* App Settings */}
-                <div className="space-y-4">
-                    <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 dark:text-zinc-400 px-4">Système</h3>
-                    <div className="grid gap-4">
-                        {/* Apparence */}
-                        <div className="flex items-center justify-between p-5 bg-slate-50 dark:bg-zinc-900 rounded-[28px] border-2 border-black dark:border-white shadow-lg">
-                            <div className="flex items-center gap-5">
-                                <div className="h-14 w-14 rounded-2xl bg-black dark:bg-white text-white dark:text-black flex items-center justify-center shadow-lg">
-                                    <Sun className="h-7 w-7" strokeWidth={2.5} />
-                                </div>
-                                <div className="text-left">
-                                    <p className="font-black text-black dark:text-white text-lg">Apparence</p>
-                                    <p className="text-xs text-slate-500 dark:text-zinc-400 font-bold">Thème clair ou sombre</p>
-                                </div>
-                            </div>
-                            <select
-                                value={theme}
-                                onChange={(e) => setTheme(e.target.value as any)}
-                                className="bg-transparent font-black text-black dark:text-white text-base focus:outline-none cursor-pointer border-2 border-black dark:border-white rounded-xl px-4 py-2"
-                            >
-                                <option value="light">Clair</option>
-                                <option value="dark">Sombre</option>
-                                <option value="system">Système</option>
-                            </select>
-                        </div>
-
-                        {/* Langue */}
-                        <div className="flex items-center justify-between p-5 bg-slate-50 dark:bg-zinc-900 rounded-[28px] border-2 border-black dark:border-white shadow-lg">
-                            <div className="flex items-center gap-5">
-                                <div className="h-14 w-14 rounded-2xl bg-blue-100 dark:bg-blue-500/10 text-blue-600 flex items-center justify-center shadow-lg">
-                                    <Globe className="h-7 w-7" strokeWidth={2.5} />
-                                </div>
-                                <div className="text-left">
-                                    <p className="font-black text-black dark:text-white text-lg">Langue</p>
-                                    <p className="text-xs text-slate-500 dark:text-zinc-400 font-bold">Français, Anglais</p>
-                                </div>
-                            </div>
-                            <select
-                                value={lang}
-                                onChange={(e) => changeLanguage(e.target.value)}
-                                className="bg-transparent font-black text-black dark:text-white text-base focus:outline-none cursor-pointer"
-                            >
-                                <option value="fr">Français</option>
-                                <option value="en">English</option>
-                            </select>
-                        </div>
-
-                        {/* Déconnexion */}
-                        <button
-                            type="button"
-                            onClick={() => signOut().then(() => navigate("/login"))}
-                            className="w-full flex items-center justify-between p-5 bg-slate-50 dark:bg-zinc-900 rounded-[28px] border-2 border-black dark:border-white hover:scale-[1.02] active:scale-95 transition-all group shadow-lg"
-                        >
-                            <div className="flex items-center gap-5">
-                                <div className="h-14 w-14 rounded-2xl bg-rose-50 dark:bg-rose-500/10 text-rose-500 flex items-center justify-center shadow-lg">
-                                    <LogOut className="h-7 w-7" strokeWidth={2.5} />
-                                </div>
-                                <div className="text-left">
-                                    <p className="font-black text-rose-500 text-lg">Déconnexion</p>
-                                    <p className="text-xs text-rose-400 font-bold">Quitter votre session</p>
-                                </div>
-                            </div>
-                            <ChevronRight className="h-6 w-6 text-rose-200 group-hover:text-rose-500 transition-colors" />
-                        </button>
-                    </div>
-                </div>
-
-                {/* App Version */}
-                <div className="pb-12">
-                    <p className="text-center text-[10px] font-black text-slate-300 dark:text-slate-600 uppercase tracking-[0.2em]">
-                        TΞKΗ+ Version 2.2.0 • WEB
-                    </p>
-                </div>
-
             </div>
         </div>
     );
