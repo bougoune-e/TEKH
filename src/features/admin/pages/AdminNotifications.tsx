@@ -24,6 +24,35 @@ function getApiUrl(): string {
 }
 const API_URL = getApiUrl();
 
+/** Compte les abonnés push via RPC Supabase (SECURITY DEFINER, bypass RLS). */
+async function fetchSubCountFromSupabase(): Promise<number | null> {
+  const { data, error } = await supabase.rpc("count_push_subscriptions");
+  if (error) {
+    console.error("[push/count] RPC Supabase:", error.message);
+    return null;
+  }
+  return typeof data === "number" ? data : Number(data ?? 0);
+}
+
+/** Compte les abonnés push via le backend Node (service role). */
+async function fetchSubCountFromBackend(jwt: string): Promise<number | null> {
+  if (!API_URL) return null;
+  try {
+    const res = await fetch(`${API_URL}/api/push/count`, {
+      headers: { Authorization: `Bearer ${jwt}` },
+    });
+    if (!res.ok) {
+      console.error("[push/count] Backend HTTP", res.status, await res.text().catch(() => ""));
+      return null;
+    }
+    const json = await res.json();
+    return typeof json.count === "number" ? json.count : null;
+  } catch (e: any) {
+    console.error("[push/count] Backend réseau:", e.message);
+    return null;
+  }
+}
+
 export default function AdminNotifications() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
@@ -43,19 +72,26 @@ export default function AdminNotifications() {
     const { data: { session } } = await supabase.auth.getSession();
     const jwt = session?.access_token;
 
-    const [countRes, { data: camp }] = await Promise.all([
-      jwt
-        ? fetch(`${API_URL}/api/push/count`, {
-            headers: { Authorization: `Bearer ${jwt}` },
-          }).then((r) => r.ok ? r.json() : { count: 0 }).catch(() => ({ count: 0 }))
-        : Promise.resolve({ count: 0 }),
+    const [count, { data: camp }] = await Promise.all([
+      // 1. Essai direct via RPC Supabase (SECURITY DEFINER — pas de RLS)
+      fetchSubCountFromSupabase().then(async (n) => {
+        if (n !== null) return n;
+        // 2. Fallback : backend Node si l'RPC échoue (ex: migration pas encore appliquée)
+        if (!jwt) return 0;
+        const nb = await fetchSubCountFromBackend(jwt);
+        if (nb !== null) return nb;
+        toast.error("Impossible de récupérer le nombre d'abonnés", {
+          description: "Vérifie la console pour les détails.",
+        });
+        return 0;
+      }),
       supabase
         .from("notification_campaigns")
         .select("*")
         .order("created_at", { ascending: false })
         .limit(20),
     ]);
-    setSubCount(countRes.count ?? 0);
+    setSubCount(count);
     setCampaigns(camp ?? []);
     setLoadingHistory(false);
   }
