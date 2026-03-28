@@ -612,7 +612,7 @@ export async function ensureProfileForUser(user: any) {
 
 export async function countDealsByOwner(ownerId: string) {
   if (!realClient) return 0;
-  const { count, error } = await realClient.from("deals").select("id", { count: 'exact', head: true }).eq("owner_id", ownerId);
+  const { count, error } = await realClient.from("annonces").select("id", { count: 'exact', head: true }).eq("owner_id", ownerId);
   if (error) return 0;
   return count || 0;
 }
