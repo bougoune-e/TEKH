@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Bell, Send, Users, CheckCircle2, XCircle, Clock } from "lucide-react";
+import { Bell, Send, Users, CheckCircle2, XCircle, Clock, Smartphone } from "lucide-react";
 import { Button } from "@/shared/ui/button";
 import { toast } from "sonner";
 import { supabase } from "@/core/api/supabaseApi";
@@ -53,12 +53,21 @@ async function fetchSubCountFromBackend(jwt: string): Promise<number | null> {
   }
 }
 
+type Subscriber = {
+  id: string;
+  created_at: string;
+  user_agent: string | null;
+  endpoint_short: string;
+  profile: { id: string; full_name?: string; avatar_url?: string } | null;
+};
+
 export default function AdminNotifications() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [url, setUrl] = useState("/deals");
   const [sending, setSending] = useState(false);
   const [subCount, setSubCount] = useState<number | null>(null);
+  const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [loadingHistory, setLoadingHistory] = useState(true);
 
@@ -72,19 +81,18 @@ export default function AdminNotifications() {
     const { data: { session } } = await supabase.auth.getSession();
     const jwt = session?.access_token;
 
-    const [count, { data: camp }] = await Promise.all([
-      // 1. Essai direct via RPC Supabase (SECURITY DEFINER — pas de RLS)
+    const [count, subsRes, { data: camp }] = await Promise.all([
       fetchSubCountFromSupabase().then(async (n) => {
         if (n !== null) return n;
-        // 2. Fallback : backend Node si l'RPC échoue (ex: migration pas encore appliquée)
         if (!jwt) return 0;
         const nb = await fetchSubCountFromBackend(jwt);
-        if (nb !== null) return nb;
-        toast.error("Impossible de récupérer le nombre d'abonnés", {
-          description: "Vérifie la console pour les détails.",
-        });
-        return 0;
+        return nb ?? 0;
       }),
+      jwt
+        ? fetch(`${API_URL}/api/push/subscribers`, {
+            headers: { Authorization: `Bearer ${jwt}` },
+          }).then(r => r.ok ? r.json() : { subscribers: [] }).catch(() => ({ subscribers: [] }))
+        : Promise.resolve({ subscribers: [] }),
       supabase
         .from("notification_campaigns")
         .select("*")
@@ -92,6 +100,7 @@ export default function AdminNotifications() {
         .limit(20),
     ]);
     setSubCount(count);
+    setSubscribers(subsRes.subscribers ?? []);
     setCampaigns(camp ?? []);
     setLoadingHistory(false);
   }
@@ -152,6 +161,29 @@ export default function AdminNotifications() {
           <div className="text-xs text-muted-foreground font-medium">abonné(s) aux notifications</div>
         </div>
       </div>
+
+      {/* Liste abonnés */}
+      {subscribers.length > 0 && (
+        <div className="rounded-2xl border border-border/50 bg-card p-4 space-y-2">
+          <div className="flex items-center gap-2 mb-2">
+            <Smartphone className="h-4 w-4 text-primary" />
+            <span className="text-sm font-black">Appareils abonnés</span>
+          </div>
+          {subscribers.map((s) => (
+            <div key={s.id} className="flex items-center gap-3 p-2 rounded-xl bg-muted/40 text-xs">
+              <div className="flex-1 min-w-0">
+                <div className="font-semibold truncate">
+                  {s.profile?.full_name || s.profile?.id?.slice(0, 8) || "Anonyme"}
+                </div>
+                <div className="text-muted-foreground truncate">{s.user_agent?.split(" ").slice(-2).join(" ")}</div>
+              </div>
+              <div className="text-muted-foreground shrink-0">
+                {new Date(s.created_at).toLocaleDateString("fr-FR", { day: "numeric", month: "short" })}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Formulaire */}
       <div className="rounded-2xl border border-border/50 bg-card p-5 space-y-4">

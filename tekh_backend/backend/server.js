@@ -383,6 +383,44 @@ app.patch("/produits/:id/stock", async (req, res) => {
 // WEB PUSH — Helpers admin (service role = pas de RLS)
 // ──────────────────────────────────────────────────────────────
 
+/** Liste des abonnés push avec profil — admin only */
+app.get("/api/push/subscribers", async (req, res) => {
+  const jwt = (req.headers.authorization || "").replace("Bearer ", "").trim();
+  if (!jwt || !supabase) return res.status(401).json({ error: "Non autorisé" });
+  const user = await getSupabaseUser(jwt);
+  if (!user) return res.status(401).json({ error: "Token invalide" });
+  if (!ADMIN_EMAILS.includes((user.email || "").toLowerCase()))
+    return res.status(403).json({ error: "Admins uniquement" });
+
+  const { data: subs, error } = await supabase
+    .from("push_subscriptions")
+    .select("id, created_at, user_id, user_agent, endpoint")
+    .order("created_at", { ascending: false });
+  if (error) return res.status(500).json({ error: error.message });
+
+  // Récupère les profils Supabase pour les user_id non-null
+  const userIds = [...new Set((subs || []).map(s => s.user_id).filter(Boolean))];
+  let profiles = [];
+  if (userIds.length > 0) {
+    const { data } = await supabase
+      .from("profiles")
+      .select("id, full_name, avatar_url")
+      .in("id", userIds);
+    profiles = data || [];
+  }
+
+  const profileMap = Object.fromEntries(profiles.map(p => [p.id, p]));
+  const result = (subs || []).map(s => ({
+    id: s.id,
+    created_at: s.created_at,
+    user_agent: s.user_agent,
+    endpoint_short: s.endpoint?.slice(0, 50) + "...",
+    profile: s.user_id ? (profileMap[s.user_id] || { id: s.user_id }) : null,
+  }));
+
+  return res.json({ count: result.length, subscribers: result });
+});
+
 /** Nombre d'abonnés — service role bypass RLS, JWT admin requis */
 app.get("/api/push/count", async (req, res) => {
   const jwt = (req.headers.authorization || "").replace("Bearer ", "").trim();
@@ -448,6 +486,7 @@ app.post("/api/push/send", async (req, res) => {
       sent++;
     } catch (e) {
       failed++;
+      console.error(`[PUSH] Échec envoi → endpoint: ${sub.endpoint?.slice(0, 60)}... | status: ${e.statusCode} | message: ${e.message}`);
       if (e.statusCode === 410 || e.statusCode === 404) invalid.push(sub.endpoint);
     }
   }
