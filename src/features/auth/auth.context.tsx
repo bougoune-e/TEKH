@@ -35,8 +35,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   const refreshUser = async () => {
-    const { data: { user: updatedUser } } = await supabase.auth.getUser();
-    setUser(updatedUser);
+    try {
+      const { data: { user: updatedUser } } = await supabase.auth.getUser();
+      setUser(updatedUser);
+    } catch {
+      // Supabase may not be configured or getUser may not be available
+    }
   };
 
   const signOut = async () => {
@@ -58,10 +62,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // aide sur mobile/WebView où le hash est parfois traité après le premier rendu.
     const t = isSupabaseConfigured
       ? window.setTimeout(() => {
-          supabase.auth.getSession().then(({ data }) => {
-            if (data.session?.user) setUser(data.session.user);
-          });
-        }, 800)
+        supabase.auth.getSession().then(({ data }) => {
+          if (data.session?.user) setUser(data.session.user);
+        });
+      }, 800)
       : 0;
     const { data } = supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user ?? null);

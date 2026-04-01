@@ -331,8 +331,12 @@ function variantsFromSmartphoneRows(rows: SmartphoneRow[]): ModelVariant[] {
     let storageGb: number | null = null;
     const v = (row.variante || "").trim();
     if (v) {
-      const m = v.match(/(\d+)\s*(GB|Go)/i);
-      if (m) storageGb = parseInt(m[1], 10);
+      const mTb = v.match(/(\d+)\s*(TB|To)/i);
+      if (mTb) storageGb = parseInt(mTb[1], 10) * 1024;
+      else {
+        const m = v.match(/(\d+)\s*(GB|Go)/i);
+        if (m) storageGb = parseInt(m[1], 10);
+      }
     }
     if (storageGb == null) {
       const g = Number(specs.stockage_gb ?? specs.storage_gb ?? specs["Stockages (GB)"]);

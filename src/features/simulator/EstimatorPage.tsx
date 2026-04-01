@@ -605,7 +605,7 @@ export default function EstimatorPage() {
                                   ? ("damaged" as const)
                                   : ("good" as const);
                             setLastSimulation({ model, storage: storage || undefined, estimated: adjustedFinalPrice, condition });
-                            navigate(`/marketplace/deal/${returnToDealId}`);
+                            navigate(`/deal/${returnToDealId}`);
                           }}
                           variant="outline"
                           className="w-full h-14 rounded-2xl border-2 border-slate-200 dark:border-white/10 font-bold uppercase tracking-tight"

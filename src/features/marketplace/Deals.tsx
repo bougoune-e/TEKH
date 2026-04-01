@@ -106,11 +106,8 @@ export default function DealsPage() {
 
   const filtered = useMemo(() => {
     return allDeals.filter((d) => {
-      // Filter out uncertified deals unless user is owner or admin (simplified logic for now)
-      // For MVP: only show if verified OR if owner is current user OR if status is NOT pending
-      // Wait, we want to hide pending deals.
-      // Assuming 'status' field exists or will exist. defaulting to checking 'verified' for strictness or just allow all for now but filter in real implementation.
-      // For now, let's keep it open but filter by explicit filters.
+      // Filter out pending deals from public view (unless owner)
+      if ((d as any).status === 'pending_verification') return false;
 
       if (filters.brand && d.brand !== filters.brand) return false;
       if (filters.condition && d.condition !== filters.condition) return false;

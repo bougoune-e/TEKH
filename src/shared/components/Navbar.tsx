@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Search, Bell, Settings, LogOut } from "lucide-react";
 import { useAuth } from "@/features/auth/auth.context";
 import ThemeToggle from "@/shared/components/ThemeToggle";
@@ -22,6 +22,7 @@ const Navbar = () => {
     const { user, signOut } = useAuth();
     const isPWA = usePWA();
     const location = useLocation();
+    const navigate = useNavigate();
     const handleSignOut = async () => {
         localStorage.removeItem("tekh:nav-snapshot");
         await signOut();
@@ -57,6 +58,7 @@ const Navbar = () => {
                     <input
                         placeholder={t('search_placeholder', 'Rechercher des pépites, des modèles, des marques...')}
                         className="w-full h-12 pl-12 pr-6 rounded-full bg-slate-100 dark:bg-white/10 border-0 focus:ring-2 focus:ring-primary/20 transition-all font-bold text-sm placeholder:text-slate-500 dark:placeholder:text-slate-400 focus:bg-white dark:focus:bg-black shadow-inner text-black dark:text-white"
+                        onKeyDown={(e) => { if (e.key === 'Enter' && (e.target as HTMLInputElement).value.trim()) navigate(`/recherche?q=${encodeURIComponent((e.target as HTMLInputElement).value.trim())}`); }}
                     />
                 </div>
             </div>
@@ -79,9 +81,8 @@ const Navbar = () => {
                 <ThemeToggle />
 
                 {/* 🔔 Notification Bell */}
-                <button className="relative p-2 hover:bg-zinc-50 dark:hover:bg-white/10 rounded-full transition-all group/bell">
+                <button onClick={() => navigate("/notifications")} className="relative p-2 hover:bg-zinc-50 dark:hover:bg-white/10 rounded-full transition-all group/bell">
                     <Bell className="h-6 w-6 text-black dark:text-white group-hover/bell:text-[#064e3b] dark:group-hover/bell:text-primary" strokeWidth={2} />
-                    <span className="absolute top-1.5 right-1.5 h-2.5 w-2.5 bg-rose-600 rounded-full border-2 border-white dark:border-black" />
                 </button>
 
                 {/* Se connecter button if not logged in */}

@@ -18,7 +18,10 @@ export type SmartphoneRow = {
 };
 
 function parseStorageGbFromVariante(variante: string): number | null {
-  const m = String(variante || "").match(/(\d+)\s*(GB|Go|gb|go)/i);
+  const s = String(variante || "");
+  const mTb = s.match(/(\d+)\s*(TB|To)/i);
+  if (mTb) return parseInt(mTb[1], 10) * 1024;
+  const m = s.match(/(\d+)\s*(GB|Go|gb|go)/i);
   if (m) return parseInt(m[1], 10);
   return null;
 }

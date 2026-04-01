@@ -57,11 +57,10 @@ const Layout = () => {
       <PWAInstallBanner />
       <div className={`flex-1 flex flex-col md:pl-16 relative min-w-0 md:pb-0 ${isPWA ? "pb-28" : "pb-20"}`}>
         {/* Header — transparent en haut de la homepage, opaque ailleurs */}
-        <header className={`sticky top-0 z-40 w-full transition-all duration-300 pt-safe shrink-0 ${
-          isHomepage && !scrolled && !isPWA
+        <header className={`sticky top-0 z-40 w-full transition-all duration-300 pt-safe shrink-0 ${isHomepage && !scrolled && !isPWA
             ? "border-transparent bg-transparent"
             : "border-b border-border/5 bg-background/95 backdrop-blur-xl"
-        }`}>
+          }`}>
           <div className="w-full px-4 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between gap-3">
             {/* Branding / Logo Area */}
             <div className="flex items-center gap-3">
@@ -91,7 +90,6 @@ const Layout = () => {
                 className="relative p-2 hover:bg-white/5 rounded-full transition-all group/bell active:scale-90"
               >
                 <Bell className="h-[24px] w-[24px] text-foreground group-hover/bell:text-primary" strokeWidth={2} />
-                <span className="absolute top-2.5 right-2.5 h-2 w-2 bg-rose-500 rounded-full border-2 border-background" />
               </button>
             </div>
           </div>

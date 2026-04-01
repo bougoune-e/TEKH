@@ -157,7 +157,6 @@ const NavigationWrapper = () => {
                       <Route path="/deal/:id" element={<PageTransition navType={navType}><DealDetails /></PageTransition>} />
                       <Route path="/diagnose" element={<PageTransition navType={navType}><DiagnosePage /></PageTransition>} />
                       <Route path="/simulateur" element={<PageTransition navType={navType}><SimulatorPage /></PageTransition>} />
-                      <Route path="/estimer" element={<PageTransition navType={navType}><SimulatorPage /></PageTransition>} />
                       <Route path="/deals-found" element={<PageTransition navType={navType}><DealsFound /></PageTransition>} />
                       <Route path="/charte" element={<PageTransition navType={navType}><ChartePage /></PageTransition>} />
                       <Route path="/charte-du-swap" element={<PageTransition navType={navType}><CharteDuSwap /></PageTransition>} />
@@ -179,8 +178,7 @@ const NavigationWrapper = () => {
                       <Route path="/politique-confidentialite" element={<PageTransition navType={navType}><PolitiqueConfidentialite /></PageTransition>} />
                       <Route path="/apk" element={<PageTransition navType={navType}><Apk /></PageTransition>} />
                       <Route path="/dealboxes" element={<PageTransition navType={navType}><DealboxCatalog /></PageTransition>} />
-                      <Route path="/communities" element={<PageTransition navType={navType}><Index /></PageTransition>} />
-                      <Route path="/messages" element={<PageTransition navType={navType}><Index /></PageTransition>} />
+                      <Route path="/recherche" element={<PageTransition navType={navType}><SearchPage /></PageTransition>} />
                       <Route path="/settings" element={<PageTransition navType={navType}><SettingsPage /></PageTransition>} />
                       <Route path="/historique" element={<ProtectedRoute><PageTransition navType={navType}><HistoriquePage /></PageTransition></ProtectedRoute>} />
                       <Route path="/commandes" element={<ProtectedRoute><PageTransition navType={navType}><CommandesPage /></PageTransition></ProtectedRoute>} />
