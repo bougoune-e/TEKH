@@ -75,19 +75,10 @@ export default function DealsPage() {
     if (!isSupabaseConfigured) return;
     fetchDeals()
       .then((rows) => {
-        if (rows && rows.length > 0) {
-          setDealsList(rows as any);
-        } else {
-          // Fallback to mock data if DB is empty
-          import("@/shared/data/dealsData").then(mod => {
-            setDealsList(mod.dealsData as any);
-          });
-        }
+        setDealsList((rows || []) as any);
       })
       .catch(() => {
-        import("@/shared/data/dealsData").then(mod => {
-          setDealsList(mod.dealsData as any);
-        });
+        setDealsList([]);
       });
   }, []);
 

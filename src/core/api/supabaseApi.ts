@@ -694,7 +694,7 @@ function mapAnnonceRow(row: any) {
 }
 
 /** Délai d’expiration des annonces en heures (après publication). */
-const DEAL_EXPIRATION_HOURS = 72;
+const DEAL_EXPIRATION_HOURS = 720; // 30 jours
 
 /** App publique : uniquement les deals publiés et non expirés (72h après publication). */
 export async function fetchDeals() {

@@ -98,38 +98,17 @@ export const IdentityStep = ({
                 </div>
 
                 <div className="space-y-1.5 text-left">
-                    <div className="flex items-center gap-2 ml-1">
-                        <Label className="text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-zinc-400">RAM</Label>
-                        {rams.length === 0 && (
-                            <span className="text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">
-                                Saisie manuelle
-                            </span>
-                        )}
-                    </div>
-                    {rams.length > 0 ? (
-                        <Select value={ram ? String(ram) : ""} onValueChange={(v) => setRam(Number(v))} disabled={!storage}>
-                            <SelectTrigger className="h-12 rounded-xl border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white disabled:opacity-30">
-                                <SelectValue placeholder={!storage ? "—" : "RAM (GO)"} />
-                            </SelectTrigger>
-                            <SelectContent className="rounded-xl bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
-                                {rams.map((x) => <SelectItem key={x} value={String(x)}>{x} Go</SelectItem>)}
-                            </SelectContent>
-                        </Select>
-                    ) : (
-                        <Input
-                            type="number"
-                            min={1}
-                            step={1}
-                            value={ram ?? ""}
-                            onChange={(e) => {
-                                const n = Number(e.target.value);
-                                setRam(Number.isFinite(n) && n > 0 ? n : null);
-                            }}
-                            disabled={!storage}
-                            placeholder={!storage ? "—" : "Saisir RAM (Go)"}
-                            className="h-12 rounded-xl border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white disabled:opacity-30"
-                        />
-                    )}
+                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-zinc-400 ml-1">RAM</Label>
+                    <Select value={ram ? String(ram) : ""} onValueChange={(v) => setRam(Number(v))} disabled={!storage}>
+                        <SelectTrigger className="h-12 rounded-xl border-2 border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 font-black text-slate-900 dark:text-white disabled:opacity-30">
+                            <SelectValue placeholder={!storage ? "—" : "RAM (GO)"} />
+                        </SelectTrigger>
+                        <SelectContent className="rounded-xl bg-white dark:bg-[#0b0e14] border-slate-200 dark:border-white/10 text-slate-900 dark:text-white">
+                            {(rams.length > 0 ? rams : [4, 6, 8, 12]).map((x) => (
+                                <SelectItem key={x} value={String(x)}>{x} Go</SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
                 </div>
             </div>
         </div>
