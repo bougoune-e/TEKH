@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Mail, Facebook, Instagram, Download, CheckCircle2, Smartphone } from "lucide-react";
 import { Link } from "react-router-dom";
 import logo from "@/assets/logos/robott.jpeg";
-import { buildWhatsAppUrl, buildWhatsAppUrlAlt } from "@/core/utils/whatsapp";
+import { buildWhatsAppUrl } from "@/core/utils/whatsapp";
 import {
   triggerPWAInstall,
   isPWAInstallAvailable,
@@ -93,9 +93,7 @@ const InstallAppButton = () => {
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const waHref =
-    buildWhatsAppUrl("Bonjour TEKH+, je vous contacte depuis le site.") ||
-    buildWhatsAppUrlAlt("Bonjour TEKH+, je vous contacte depuis le site.") ||
-    "/contact";
+    buildWhatsAppUrl("Bonjour TEKH+, je vous contacte depuis le site.") || "/contact";
 
   return (
     <footer className="bg-background border-t border-border/50 relative overflow-hidden">

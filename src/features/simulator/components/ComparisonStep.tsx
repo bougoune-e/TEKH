@@ -187,16 +187,11 @@ export const ComparisonStep = ({
                             "Merci de confirmer la disponibilité et le point de swap.",
                         ];
                         const ok = openWhatsApp(lines.join("\n"));
-                        if (ok) {
-                            toast({
-                                title: "WhatsApp",
-                                description: "Si rien ne s’ouvre, autorisez les pop-ups ou réessayez : le message est prêt.",
-                            });
-                        } else {
+                        if (!ok) {
                             toast({
                                 title: "Numéro WhatsApp manquant",
                                 description:
-                                    "Ajoutez VITE_WHATSAPP_BUSINESS sur le serveur de build (ex. Render) puis redéployez. Ex. 228XXXXXXXX sans +.",
+                                    "Configurez VITE_WHATSAPP_BUSINESS sur Render et redéployez. Format : 228XXXXXXXX (sans +).",
                                 variant: "destructive",
                             });
                         }

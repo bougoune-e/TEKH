@@ -35,17 +35,15 @@ export function buildWhatsAppUrlAlt(message: string, phoneDigits?: string): stri
   return `https://api.whatsapp.com/send?phone=${digits}&text=${text}`;
 }
 
-/** Ouvre WhatsApp (wa.me puis api.whatsapp.com ; si pop-up bloquée → navigation même onglet, typique PWA). */
+/**
+ * Ouvre WhatsApp via navigation directe (window.location.href).
+ * Évite le popup blocker des PWA/in-app browsers et le dialog
+ * "choisir une application" sur Android (l'intent est déclenché
+ * par la navigation courante, pas par une popup).
+ */
 export function openWhatsApp(message: string, phoneDigits?: string): boolean {
-  const u = buildWhatsAppUrl(message, phoneDigits) || buildWhatsAppUrlAlt(message, phoneDigits);
+  const u = buildWhatsAppUrl(message, phoneDigits);
   if (!u) return false;
-  try {
-    const w = window.open(u, "_blank", "noopener,noreferrer");
-    if (!w || (typeof w.closed !== "undefined" && w.closed)) {
-      window.location.assign(u);
-    }
-  } catch {
-    window.location.assign(u);
-  }
+  window.location.href = u;
   return true;
 }

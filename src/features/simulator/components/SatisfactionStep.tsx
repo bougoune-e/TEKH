@@ -3,6 +3,7 @@ import { Button } from "@/shared/ui/button";
 import { Zap, CheckCircle2, TrendingUp, ArrowRightLeft, AlertCircle } from "lucide-react";
 import { cn } from "@/core/api/utils";
 import { useTranslation } from "react-i18next";
+import { openWhatsApp } from "@/core/utils/whatsapp";
 
 function labelBatterie(state?: string): string {
     switch (state) {
@@ -136,7 +137,6 @@ export const SatisfactionStep = ({
                             isPWA ? "bg-[#00FF41] hover:bg-[#00FF41]/90 text-black" : "bg-slate-900 hover:bg-black dark:bg-white dark:hover:bg-slate-100 text-white dark:text-black"
                         )}
                         onClick={() => {
-                            const phone = import.meta.env.VITE_WHATSAPP_BUSINESS || "22897628117";
                             const diff = proposedNum - estimatedNum;
                             const diffPct = estimatedNum > 0 ? (diff / estimatedNum) * 100 : 0;
                             const sign = diff >= 0 ? "+" : "";
@@ -157,8 +157,7 @@ export const SatisfactionStep = ({
                                 `━━━━━━━━━━━━━━━━━━━━\n` +
                                 `⚡ _Expertise auto-générée · TEKH+ App_`;
 
-                            const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
-                            window.open(url, "_blank");
+                            openWhatsApp(msg);
                             setStep("target_selection");
                         }}
                         disabled={!canSubmit}

@@ -82,7 +82,7 @@ function DetailView({
 
   const handleWhatsApp = () => {
     const msg = `Bonjour TEKH+ 👋\nJe suis intéressé(e) par votre offre :\n*${c.title}*\n\n${c.body}\n\nPouvez-vous m'en dire plus ?`;
-    if (!openWhatsApp(msg)) window.open("https://wa.me", "_blank");
+    openWhatsApp(msg);
   };
 
   const handleLink = () => {
