@@ -495,7 +495,7 @@ export default function EstimatorPage() {
               storage={storage} setStorage={setStorage}
               ram={ram} setRam={setRam}
               brands={brands} models={models} storages={storages} rams={rams}
-              loadingBrands={loadingBrands} loadingModels={loadingModels} loadingStorages={loadingStorages}
+              loadingBrands={loadingBrands} loadingModels={loadingModels} loadingStorages={false}
             />
 
             {isIdentityComplete && (

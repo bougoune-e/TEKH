@@ -22,6 +22,9 @@ const localListeners: Array<(ev: string, session: any) => void> = [];
 const CURRENT_YEAR = new Date().getFullYear();
 // Cache for products from Railway API
 let cachedProduits: any[] | null = null;
+// In-memory cache for brands and models (survive component remounts, instant second load)
+let cachedBrands: string[] | null = null;
+const cachedModels: Map<string, string[]> = new Map();
 async function getApiProduits() {
   if (cachedProduits) return cachedProduits;
   try {
@@ -136,72 +139,47 @@ const STATIC_MODELS: Record<string, string[]> = {
 };
 
 export async function fetchBrands(): Promise<string[]> {
+  if (cachedBrands) return cachedBrands;
   try {
     if (realClient) {
-      const { data, error } = await realClient.from("brands").select("name").order("name");
+      const { data, error } = await realClient.from("smartphones").select("marque");
       if (!error && data && data.length > 0) {
-        return data.map(b => b.name).filter(isAllowedBrand);
+        const brands = Array.from(new Set(data.map((r: any) => r.marque).filter(Boolean))).sort((a: any, b: any) => a.localeCompare(b, "fr")) as string[];
+        if (brands.length > 0) { cachedBrands = brands; return brands; }
       }
     }
-
-    // Fallback: Extract from API
     const products = await getApiProduits();
     if (products && products.length > 0) {
-      const brands = Array.from(new Set(products.map(getBrandName).filter(Boolean).filter(isAllowedBrand)));
-      if (brands.length > 0) return (brands as string[]).sort();
+      const brands = Array.from(new Set(products.map(getBrandName).filter(Boolean).filter(isAllowedBrand))).sort() as string[];
+      if (brands.length > 0) { cachedBrands = brands; return brands; }
     }
   } catch (err) {
     console.warn("[supabaseApi] fetchBrands failed, using STATIC_MODELS", err);
   }
-  if (import.meta.env.DEV) console.debug("[supabaseApi] fetchBrands fallback:", Object.keys(STATIC_MODELS).length, "brands");
-  return Object.keys(STATIC_MODELS);
+  cachedBrands = Object.keys(STATIC_MODELS);
+  return cachedBrands;
 }
 
 export async function fetchModels(brand: string): Promise<string[]> {
+  if (cachedModels.has(brand)) return cachedModels.get(brand)!;
   try {
-    if (realClient) {
-      const { data, error } = await realClient
-        .from("models")
-        .select("name, brands!inner(name)")
-        .eq("brands.name", brand)
-        .order("name");
-
-      if (!error && data && data.length > 0) {
-        const fromDb = data.map((m: any) => m.name);
-        const fromSm = await fetchDistinctModelsFromSmartphones(brand);
-        return Array.from(new Set([...fromDb, ...fromSm])).sort((a, b) => a.localeCompare(b, "fr"));
-      }
-    }
-
     const fromSm = await fetchDistinctModelsFromSmartphones(brand);
     if (fromSm.length > 0) {
-      const products = await getApiProduits();
-      if (products && products.length > 0) {
-        const targetBrand = normalizeLower(brand);
-        const fromApi = Array.from(new Set(products
-          .filter(p => normalizeLower(getBrandName(p)) === targetBrand)
-          .map(getModelName)
-          .filter(Boolean))) as string[];
-        return Array.from(new Set([...fromSm, ...fromApi])).sort((a, b) => a.localeCompare(b, "fr"));
-      }
+      cachedModels.set(brand, fromSm);
       return fromSm;
     }
-
-    // Fallback: Extract from API
     const products = await getApiProduits();
     if (products && products.length > 0) {
       const targetBrand = normalizeLower(brand);
-      const models = Array.from(new Set(products
-        .filter(p => normalizeLower(getBrandName(p)) === targetBrand)
-        .map(getModelName)
-        .filter(Boolean)));
-      if (models.length > 0) return (models as string[]).sort();
+      const fromApi = Array.from(new Set(
+        products.filter(p => normalizeLower(getBrandName(p)) === targetBrand).map(getModelName).filter(Boolean)
+      )).sort((a: any, b: any) => a.localeCompare(b, "fr")) as string[];
+      if (fromApi.length > 0) { cachedModels.set(brand, fromApi); return fromApi; }
     }
   } catch (err) {
     console.warn("[supabaseApi] fetchModels failed for brand:", brand, err);
   }
   const fallback = STATIC_MODELS[brand] || [];
-  if (import.meta.env.DEV && fallback.length) console.debug("[supabaseApi] fetchModels fallback for", brand, ":", fallback.length);
   return fallback;
 }
 
