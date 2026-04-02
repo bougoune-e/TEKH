@@ -65,6 +65,7 @@ const PolitiqueEchangeTekhPoints = lazy(() => import("@/features/legal/Politique
 const DiagnosePage = lazy(() => import("@/features/simulator/Diagnose"));
 const AdminPage = lazy(() => import("@/features/misc/AdminPage"));
 const DealboxCatalog = lazy(() => import("@/features/marketplace/DealboxCatalog"));
+const PrixPage = lazy(() => import("@/features/simulator/PrixPage"));
 const NotificationsPage = lazy(() => import("@/features/notifications/Notifications"));
 const PanierPage = lazy(() => import("@/features/marketplace/Panier"));
 const MaintenanceIT = lazy(() => import("@/features/services/MaintenanceIT"));
@@ -188,6 +189,7 @@ const NavigationWrapper = () => {
                       <Route path="/maintenance" element={<PageTransition navType={navType}><MaintenanceIT /></PageTransition>} />
                       <Route path="/formation" element={<PageTransition navType={navType}><FormationTech /></PageTransition>} />
                       <Route path="/dev-web" element={<PageTransition navType={navType}><DevWebMobile /></PageTransition>} />
+                      <Route path="/prix" element={<PageTransition navType={navType}><PrixPage /></PageTransition>} />
                     </Route>
 
                     {/* Route Admin Exclusive */}

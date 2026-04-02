@@ -1,0 +1,1001 @@
+id,marque,modele,variante,annee_sortie,prt_fcfa,facteur_afrique
+4a93f4ae-dab2-4f81-ba7c-2763dbd27c8b,Apple,"Asus Rog Phone 6",256GB,2016,140000,0.4
+386f8d49-fefb-47a9-9640-88f088edd466,Apple,"IPhone 11",128GB,2019,50000,0.4
+1ea0f593-d191-4845-a946-704710957e7b,Apple,"IPhone 11",256GB,2019,56000,0.4
+e1b69a87-d4a4-4074-b073-190c32282e9b,Apple,"IPhone 11",64GB,2019,44000,0.4
+09439a1f-abc9-4c54-8c06-e93b46e507da,Apple,"IPhone 11 Pro",256GB,2019,72000,0.4
+45448ade-e5a6-4e46-9c5b-2f5aa74353b7,Apple,"IPhone 11 Pro",512GB,2019,80000,0.4
+d74a435e-4ec1-43e2-84b7-de1cd86a1b01,Apple,"IPhone 11 Pro",64GB,2019,64000,0.4
+a1d67f0c-a264-421a-958a-b415f9911d98,Apple,"IPhone 11 Pro Max",256GB,2019,100000,0.4
+a3c273ef-ea1a-4ced-a8d7-36891e58fa33,Apple,"IPhone 11 Pro Max",512GB,2019,112000,0.4
+893df839-34e4-4139-b5ba-3f5b44e712f5,Apple,"IPhone 11 Pro Max",64GB,2019,88000,0.4
+2bf1de7c-da9d-4bcd-b8de-458efce4a223,Apple,"IPhone 12",128GB,2020,68000,0.4
+254e13b8-9554-486f-90e7-1241df2b14b5,Apple,"IPhone 12",256GB,2020,76000,0.4
+d211b502-cd0b-4470-8887-15a110da08c8,Apple,"IPhone 12",64GB,2020,60000,0.4
+c52959a2-e824-468a-b82d-f03051db90c3,Apple,"IPhone 12 Mini",128GB,2020,60000,0.4
+c72ad445-977b-444d-a0db-34a018165a57,Apple,"IPhone 12 Mini",256GB,2020,68000,0.4
+108722c2-8264-49a4-8cf1-2ce140a01baf,Apple,"IPhone 12 Mini",64GB,2020,52000,0.4
+b042ad8f-2776-48a2-a21b-19cb7f927a8d,Apple,"IPhone 12 Pro",128GB,2020,88000,0.4
+e4d92c5c-edd2-4409-91d2-33938365ae88,Apple,"IPhone 12 Pro",256GB,2020,100000,0.4
+ee78608f-2098-4182-a145-85bf9382b75e,Apple,"IPhone 12 Pro",512GB,2020,112000,0.4
+01201ede-ae34-47a8-a5e8-383fb34b8558,Apple,"IPhone 12 Pro Max",128GB,2020,120000,0.4
+a95ee72b-3857-4488-9653-ec54758972ec,Apple,"IPhone 12 Pro Max",256GB,2020,136000,0.4
+e3e14323-3a98-4a4a-990d-9a18127eb492,Apple,"IPhone 12 Pro Max",512GB,2020,152000,0.4
+60f8256a-cb86-47e7-b46e-ed7b8cba421f,Apple,"IPhone 13",128GB,2021,88000,0.4
+a93c70da-5a7a-4fc1-b69f-bc989d3918ad,Apple,"IPhone 13",256GB,2021,104000,0.4
+35a8bf58-c615-47d7-8c3f-af1dd1c70b9c,Apple,"IPhone 13",512GB,2021,120000,0.4
+209ebc22-3780-49dc-87c9-dcc24d10834c,Apple,"IPhone 13 Mini",128GB,2021,80000,0.4
+1792e65a-3844-45ef-b7d9-72e20aa5fd89,Apple,"IPhone 13 Mini",256GB,2021,92000,0.4
+0d00824b-8d83-4200-bdb2-56c067c449ec,Apple,"IPhone 13 Mini",512GB,2021,104000,0.4
+7dc68f10-7ea2-4204-b5e3-cb55039554a7,Apple,"IPhone 13 Pro",1024GB,2021,176000,0.4
+051ca57b-0b43-4ec8-81b4-84f439891c1e,Apple,"IPhone 13 Pro",128GB,2021,128000,0.4
+d1aaea26-2035-4477-9570-c42676782dbb,Apple,"IPhone 13 Pro",256GB,2021,144000,0.4
+839d45dc-a970-4a2d-9835-a4420bb47f81,Apple,"IPhone 13 Pro",512GB,2021,160000,0.4
+063fc3c8-b8fc-4be4-ab2c-26725b0d3f53,Apple,"IPhone 13 Pro Max",1024GB,2021,240000,0.4
+9967433d-48ed-4ceb-8040-690d14ea6c6a,Apple,"IPhone 13 Pro Max",128GB,2021,180000,0.4
+7322a1fa-70df-41d2-8499-d72dba5bcc2b,Apple,"IPhone 13 Pro Max",256GB,2021,200000,0.4
+629db098-b2f2-4f60-b292-ad8b9a0a3485,Apple,"IPhone 13 Pro Max",512GB,2021,220000,0.4
+8d2046bf-4884-474c-8f9f-0f963d66fb04,Apple,"iPhone 14",128GB,2025,189572,1
+9e3eadad-f042-4448-ad3f-bd482efbea2f,Apple,"IPhone 14",256GB,2022,128000,0.4
+d26c090b-6dd0-4400-9867-1e9be586d68d,Apple,"IPhone 14",512GB,2022,144000,0.4
+e6b34a63-4b18-4c78-b92b-7ceb71cbff87,Apple,"IPhone 14 Plus",128GB,2022,128000,0.4
+5b3c6ec0-a5c9-475d-972b-371cb2e50836,Apple,"IPhone 14 Plus",256GB,2022,144000,0.4
+37281701-111c-4f22-bb0a-09b57125987f,Apple,"IPhone 14 Plus",512GB,2022,160000,0.4
+1dc4e792-715c-440c-a355-44b256aa6f68,Apple,"IPhone 14 Pro",1024GB,2022,240000,0.4
+35109cf2-ef56-46bb-9fc1-dc6ce4b49883,Apple,"IPhone 14 Pro",128GB,2022,180000,0.4
+49b0bc99-dcc1-4c91-8790-fb5953ed5d16,Apple,"IPhone 14 Pro",256GB,2022,200000,0.4
+9a09abab-2ebf-4ebd-a75d-6de4f446ebce,Apple,"IPhone 14 Pro",512GB,2022,220000,0.4
+4b183ef3-c89c-4efb-9d7b-2ace724ad026,Apple,"IPhone 14 Pro Max",1024GB,2022,300000,0.4
+9cbd76e4-d0c5-451d-8e77-a0f6a9e85c46,Apple,"IPhone 14 Pro Max",128GB,2022,240000,0.4
+ab9ffcf0-73f2-4911-9990-2dcd5f0bb3b1,Apple,"IPhone 14 Pro Max",256GB,2022,260000,0.4
+bea7e132-6c42-4b70-bdb4-b09f5121d722,Apple,"IPhone 14 Pro Max",512GB,2022,280000,0.4
+a62402ce-838e-4259-b390-416f9c8a64a1,Apple,"IPhone 15",128GB,2023,160000,0.4
+af1ea4ae-592d-4809-a82b-13de81015d66,Apple,"IPhone 15",256GB,2023,180000,0.4
+bc7ce551-0bae-4437-803f-c5978fb433cf,Apple,"IPhone 15",512GB,2023,200000,0.4
+134130a2-884b-4a45-bdbd-b0b36202c9cf,Apple,"IPhone 15 Plus",128GB,2023,180000,0.4
+066f6c46-ba19-45e3-ae92-7eb31b6f55b0,Apple,"IPhone 15 Plus",256GB,2023,200000,0.4
+9c632d2f-0c84-47bd-8539-4e8871450661,Apple,"IPhone 15 Plus",512GB,2023,220000,0.4
+868e7b22-86cd-457c-8f98-3e579e9b6bc8,Apple,"iPhone 15 Pro",256GB,2026,412597,1
+0bc3dda4-d253-4ded-a55e-86a2f6fae3ae,Apple,"IPhone 15 Pro",1024GB,2023,300000,0.4
+59816114-2e2e-4a8b-83d1-9eb1da3baa21,Apple,"IPhone 15 Pro",128GB,2023,260000,0.4
+2a6ceda3-4ff4-4d0e-ae6c-9b680cd4a3f8,Apple,"IPhone 15 Pro",512GB,2023,280000,0.4
+68499a2e-5a1a-4eb8-8f39-0be3686a856b,Apple,"IPhone 15 Pro Max",1024GB,2023,340000,0.4
+a3324efa-3a0e-497e-b5fb-b1d0863c28a3,Apple,"IPhone 15 Pro Max",256GB,2023,300000,0.4
+5d563dd6-48cb-4f2c-ada8-888427337fee,Apple,"IPhone 15 Pro Max",512GB,2023,320000,0.4
+eac52024-29da-4ac0-9d75-9287a1c2f9dd,Apple,"iPhone 16",128GB,2025,308300,1
+de857e5b-de35-4af6-a89b-e64140df957a,Apple,"iPhone 16",256GB,2025,399051,1.15
+39f0b2aa-63c6-4673-b23d-192ec4d58e0f,Apple,"iPhone 16",512GB,2025,452610,1.15
+acb88ab8-d23e-47d6-9d67-a72d15a14110,Apple,"iPhone 16 Plus",128GB,2025,338703,1.15
+12d6738a-9acb-425f-9b61-e496c6af7962,Apple,"iPhone 16 Plus",256GB,2025,421682,1.15
+724e21c9-fbfe-45da-846d-0274fdf45a5d,Apple,"iPhone 16 Plus",512GB,2025,376421,1.15
+839401d0-b912-47fe-b1b9-e14eaac6896c,Apple,"iPhone 16 Pro",1024GB,2025,549922,1.15
+ebae2a95-ac30-4500-bcf5-2995520eaf27,Apple,"iPhone 16 Pro",128GB,2025,406972,1.15
+d3fbd7b0-0235-4e74-b1ad-cfdd448c69fe,Apple,"iPhone 16 Pro",256GB,2025,534835,1.15
+83433a85-af3f-4f9a-8284-3e8fe24c2978,Apple,"iPhone 16 Pro",512GB,2025,452610,1.15
+0dcc1708-569e-4c80-b8b9-20c16a0af55f,Apple,"iPhone 16 Pro Max",1024GB,2025,829031,1.15
+dbf43c41-e93d-4383-8138-8eb626e6efa0,Apple,"iPhone 16 Pro Max",256GB,2025,537229,1
+481f410b-d04e-4457-abc3-b91716284064,Apple,"iPhone 16 Pro Max",512GB,2025,621962,1.15
+1b3bd0ec-dee2-4ca9-ab0c-3f7f835d0489,Apple,"iPhone 16e",128GB,2025,391500,1.15
+0f3c355b-61f4-40ed-af4d-bb844e3646dc,Apple,"iPhone 16e",256GB,2025,434038,1.15
+0aedade4-95eb-4dd9-9e1c-486ed5515efb,Apple,"iPhone 17",128GB,2026,436769,1.15
+fc8c66a1-036e-4cc7-8c29-412233dd90d0,Apple,"iPhone 17",256GB,2026,617813,1.15
+9bc93848-3356-4e04-b7da-60a52dc02263,Apple,"iPhone 17",512GB,2026,527291,1.15
+7ede33c4-7dd3-4d59-b4d6-98bb59d1acb3,Apple,"iPhone 17 Air",256GB,2026,574517,1.15
+1809c889-36d8-4d43-a169-d4df87df1c6c,Apple,"iPhone 17 Air",512GB,2026,679677,1.15
+38581c1a-7c23-44fb-bdfe-3a3817bd69cc,Apple,"iPhone 17 Pro",1024GB,2026,715879,1.15
+626def2a-003a-41cd-9900-380869846d7d,Apple,"iPhone 17 Pro",256GB,2026,617813,1.15
+94f7ff7c-7288-40bb-99c2-48bf5c97dd6c,Apple,"iPhone 17 Pro",512GB,2026,527291,1.15
+c6164dbd-d688-4f21-a347-23b0a5bf89e4,Apple,"iPhone 17 Pro Max",1024GB,2026,829031,1.15
+34c7e2a3-0c75-4bcc-b48a-c13e5485fd16,Apple,"iPhone 17 Pro Max",256GB,2026,617813,1.15
+f613f2d3-e4f7-44ff-8aab-891710ea6ba7,Apple,"iPhone 17 Pro Max",512GB,2026,659302,1.15
+cb103160-fb34-419e-a325-14dee0d61c39,Apple,"IPhone 6",128GB,2014,30000,0.4
+86a3d05b-d2e5-4186-b848-a75e1951b1a0,Apple,"IPhone 6",16GB,2014,24000,0.4
+61fcfe88-183e-4ede-af1b-283ef82a1dd9,Apple,"IPhone 6",32GB,2014,26000,0.4
+e174a396-c976-48be-960a-b24b143f5b48,Apple,"IPhone 6",64GB,2014,28000,0.4
+aadcd0c3-1d54-434d-a7fb-527b00757fcb,Apple,"IPhone 6 Plus",128GB,2014,34000,0.4
+942af293-d6c5-41a9-886c-8112b3e3f730,Apple,"IPhone 6 Plus",16GB,2014,28000,0.4
+12a8bfb2-ad04-4ce0-b355-b54adf3c8af5,Apple,"IPhone 6 Plus",32GB,2014,30000,0.4
+bfdc67b3-60b9-4c05-b647-3364c3d8ad0e,Apple,"IPhone 6 Plus",64GB,2014,32000,0.4
+0ac6d196-e526-4c5e-99a5-c2b6b347c202,Apple,"IPhone 6s",128GB,2015,36000,0.4
+dc4be9e5-9d9f-4030-88e5-d5107eb6dd81,Apple,"IPhone 6s",16GB,2015,30000,0.4
+f296cfba-eb3e-462c-b06a-26be7a27dfee,Apple,"IPhone 6s",32GB,2015,32000,0.4
+c51aacd1-d88f-4d54-aa8b-61e36cee6a58,Apple,"IPhone 6s",64GB,2015,34000,0.4
+9a40f8ef-52c4-4c42-ae3d-c3d9769e79a6,Apple,"IPhone 6s Plus",128GB,2015,40000,0.4
+777376fe-9ecc-44b0-989f-4a4bb72b730e,Apple,"IPhone 6s Plus",16GB,2015,34000,0.4
+16e6d771-ba01-47bf-8302-37edf707e35d,Apple,"IPhone 6s Plus",32GB,2015,36000,0.4
+be13edec-ef14-4b75-a9c6-d72ca72bd031,Apple,"IPhone 6s Plus",64GB,2015,38000,0.4
+ab0e236d-8f80-42a4-a71f-7e1e3924a1ed,Apple,"IPhone 7",128GB,2016,48000,0.4
+a58bea77-b442-4115-a973-56a6c86cf9d8,Apple,"IPhone 7",32GB,2016,40000,0.4
+6fb65db4-aad7-49e1-b937-2341fdbecba4,Apple,"IPhone 7 Plus",256GB,2016,60000,0.4
+de3b9bcc-e6b1-4815-b9c6-17e801bade9e,Apple,"IPhone 7 Plus",32GB,2016,52000,0.4
+ff1412ba-8b13-4911-8047-24d1c71e77ee,Apple,"IPhone 8",256GB,2017,60000,0.4
+663b1a5f-600d-4f3b-b8e6-5d2f7aa4fab5,Apple,"IPhone 8",64GB,2017,54000,0.4
+234639d1-b93e-4945-ab35-8078a92490ee,Apple,"IPhone 8 Plus",256GB,2017,72000,0.4
+92fcbb24-6e2f-4d53-a151-f482a9aef696,Apple,"IPhone 8 Plus",64GB,2017,66000,0.4
+59f6520f-5510-4eaf-9e20-672fbb92f90c,Apple,"IPhone Se (1ere Gen.)",128GB,2016,28000,0.4
+99d33e28-276c-4d04-b378-e7ed55435b51,Apple,"IPhone Se (1ere Gen.)",16GB,2016,22000,0.4
+7ee0da2d-14e6-4866-900e-41a8cefc7c1f,Apple,"IPhone Se (1ere Gen.)",32GB,2016,24000,0.4
+e950f128-bb9c-4b10-9a0e-8d51819c4f17,Apple,"IPhone Se (1ere Gen.)",64GB,2016,26000,0.4
+fa8a1215-4777-47ec-a20b-0b3c6666a314,Apple,"iPhone SE (2022)",128GB,2022,123336,1.15
+b0c9e1ce-ed70-433b-9286-9875c8efc65c,Apple,"iPhone SE (2022)",256GB,2022,122197,1.15
+254db66a-1714-4d65-9cad-7f92989513c0,Apple,"iPhone SE (2022)",64GB,2022,109750,1.15
+b0d2342f-3ea7-4a5f-9b7d-970124be02c2,Apple,"IPhone Se (2eme Gen.)",128GB,2020,60000,0.4
+d45ec0de-2f4a-4b7c-8c98-17dd5f670cbb,Apple,"IPhone Se (2eme Gen.)",256GB,2020,72000,0.4
+9f7540f4-ef78-4e6b-9c76-44d2049fc0c7,Apple,"IPhone Se (2eme Gen.)",64GB,2020,54000,0.4
+ac972649-d6c7-4b90-ae93-d7136d0e3588,Apple,"IPhone Se (3eme Gen.)",128GB,2022,88000,0.4
+7f91802e-2ab0-41af-bfcd-0596b25e7254,Apple,"IPhone Se (3eme Gen.)",256GB,2022,100000,0.4
+377c5e27-99b5-4e90-9e49-e3a65e5bcc3f,Apple,"IPhone Se (3eme Gen.)",64GB,2022,80000,0.4
+1351c450-5886-46a4-85c5-e41e442bb8fe,Apple,"IPhone X",256GB,2017,80000,0.4
+1a04d4fc-623b-41e0-a5c7-c69146ffef5c,Apple,"IPhone X",64GB,2017,68000,0.4
+89d0ede9-0295-4412-a1ea-e7a545873639,Apple,"IPhone Xr",128GB,2018,80000,0.4
+a223efa5-3fff-46af-b5b6-02ca583f0586,Apple,"IPhone Xr",256GB,2018,88000,0.4
+998b3af4-5a2e-4f72-84b2-ee768412e331,Apple,"IPhone Xr",64GB,2018,72000,0.4
+48e45ea9-7dd5-46f6-be60-66f9266f295a,Apple,"IPhone Xs",256GB,2018,112000,0.4
+9e64f9d0-a218-4227-aef2-2166beddc612,Apple,"IPhone Xs",512GB,2018,94000,0.4
+0296bb47-6d5f-4a52-b38a-93b180eea051,Apple,"IPhone Xs",64GB,2018,80000,0.4
+4d84a207-c686-40d3-81e9-40ddd98258fc,Apple,"IPhone Xs Max",256GB,2018,108000,0.4
+bfd31cbc-879d-4971-8d47-4f66e4dfca19,Apple,"IPhone Xs Max",512GB,2018,46000,0.4
+4655c4ae-34c7-484a-8b1d-96a60c714c78,Apple,"IPhone7",256GB,2016,52000,0.4
+c0269260-4321-4dd0-9d29-95940978a6ca,Asus,"Asus Rog Phone 6 Pro",512GB,2022,160000,0.4
+0988dcbd-50d7-4734-961e-d40ddb0f049d,Asus,"Asus Rog Phone 6d Ultimate",512GB,2022,180000,0.4
+19c1512e-d16a-4428-a8df-0d888d0270b3,Asus,"Asus Rog Phone 7",256GB,2022,168000,0.4
+72438286-a4ec-4f72-95fe-70e900710be5,Asus,"Asus Rog Phone 7",512GB,2023,192000,0.4
+bf58c49f-604e-46a2-b11a-e2b163e2b8a3,Asus,"Asus Rog Phone 7 Ultimate",512GB,2023,220000,0.4
+2a114c96-e032-4672-8c2a-d9a1a0c4efa1,Asus,"Asus Rog Phone 8",256GB,2023,200000,0.4
+6f2630b0-1807-4a66-b201-cb088ab4e329,Asus,"Asus Rog Phone 8",512GB,2024,232000,0.4
+f2b91d90-871e-46a8-ab67-5bd33fa0d90a,Asus,"Asus Rog Phone 8 Pro",1024GB,2024,320000,0.4
+70b29df1-7752-431f-9c86-c395b565c0a9,Asus,"Asus Rog Phone 8 Pro",32GB,2024,18000,0.4
+2ce32c94-d8aa-47ca-b967-4f7d18f953d1,Asus,"Asus Rog Phone 8 Pro",512GB,2024,288000,0.4
+a8e6c017-f9ee-45cb-aa77-4a0cb9e0d06c,Google,"Google Pixel",128GB,2020,20000,0.4
+542955da-f43b-4d13-b676-df58202f9b18,Google,"Google Pixel",64GB,2020,22000,0.4
+822d4ab4-27d2-4472-910a-bbe0101e15e4,Google,"Google Pixel 2",128GB,2017,24000,0.4
+9b917a59-94ee-4031-a209-6e903b97c7db,Google,"Google Pixel 2",64GB,2017,26000,0.4
+649e5ca1-2287-4adc-a71b-1a675930997f,Google,"Google Pixel 2 Xl",128GB,2017,28000,0.4
+3fe1731e-9786-45e3-bd56-f895b6cf0adb,Google,"Google Pixel 2 Xl",64GB,2017,24000,0.4
+77bb923e-ae39-4b4a-84cb-dd1259e680f4,Google,"Google Pixel 3",128GB,2018,26000,0.4
+d4c85df4-6f29-4d1a-8800-22b6346959e1,Google,"Google Pixel 3",64GB,2018,30000,0.4
+a516ebc1-8788-4838-ac87-dd04cdefb520,Google,"Google Pixel 3 Xl",128GB,2018,34000,0.4
+d97424d7-0a7e-4ab2-9d87-0712ea6af9cf,Google,"Google Pixel 3 Xl",64GB,2018,20000,0.4
+ff69a0d7-9533-44b9-8990-7279433bec2d,Google,"Google Pixel 3a",64GB,2018,22000,0.4
+c3219d0f-e8a2-4eb2-bb78-e68cf1f56cb5,Google,"Google Pixel 3a Xl",64GB,2018,28000,0.4
+48d87586-e286-4b7e-b2db-f654f8fad8f5,Google,"Google Pixel 4",128GB,2019,32000,0.4
+60d197dc-8704-4f86-b9ac-c1ed3f78ede7,Google,"Google Pixel 4",64GB,2019,44000,0.4
+24eb55bd-0a76-434f-8344-10b67d1c5174,Google,"Google Pixel 4 Xl",128GB,2019,56000,0.4
+48582d8b-9a4e-46c8-a342-b87523a0653f,Google,"Google Pixel 4 Xl",64GB,2019,36000,0.4
+6f666643-edc6-44d6-9f37-98c67962e311,Google,"Google Pixel 4a",128GB,2019,44000,0.4
+c7ed4508-9a83-4365-9d22-1b493ff91ba1,Google,"Google Pixel 4a (5g)",128GB,2019,48000,0.4
+6a566151-338d-4cdb-9031-d133d693b424,Google,"Google Pixel 5",128GB,2020,52000,0.4
+f1694569-c0a8-4e5b-bb1d-bde1f769555e,Google,"Google Pixel 5a (5g)",128GB,2020,38000,0.4
+59c88484-c0a6-4c4b-b7f6-5a724d41ca5f,Google,"Google Pixel 6",128GB,2021,56000,0.4
+a8914ab6-501f-418a-9161-0a8f7afac6e0,Google,"Google Pixel 6",256GB,2021,44000,0.4
+6d0506c1-e008-4f1a-a5c6-716a1df07fc5,Google,"Google Pixel 6 Pro",128GB,2021,46000,0.4
+e7fc0535-825e-414f-a6f0-79f1b6749a2e,Google,"Google Pixel 6 Pro",256GB,2021,64000,0.4
+3f37d751-3b8f-4a14-af42-c0fed60a8154,Google,"Google Pixel 6 Pro",512GB,2021,74000,0.4
+8e8cc9fa-cd55-46ea-8e36-1bfa544070d1,Google,"Google Pixel 6a",128GB,2021,42000,0.4
+107c3c85-6f84-4e65-9683-f4959e702709,Google,"Google Pixel 7",128GB,2022,58000,0.4
+ce55e916-5160-4ae4-8d43-ecdde5545dea,Google,"Google Pixel 7",256GB,2022,50000,0.4
+9ccf689f-4a40-48a6-8ffc-2c6108d8b9af,Google,"Google Pixel 7 Pro",128GB,2022,56000,0.4
+d5a65eca-5aff-4a09-b279-a270fab4162d,Google,"Google Pixel 7 Pro",256GB,2022,66000,0.4
+db81f13d-052e-44c2-a696-057cbd87cd9f,Google,"Google Pixel 7 Pro",512GB,2022,74000,0.4
+1a58e585-43e4-4574-bf5b-0e73de701f32,Google,"Google Pixel 7a",128GB,2022,80000,0.4
+4077c975-66d3-4178-bca1-61d4b5f3a228,Google,"Google Pixel 8",128GB,2023,120000,0.4
+e194d884-42c3-4ae6-ae85-c646e0323579,Google,"Google Pixel 8",256GB,2023,92000,0.4
+0a011981-4bc9-4669-878f-1eed8a179fc4,Google,"Google Pixel 8 Pro",1024GB,2023,180000,0.4
+cc8276e4-04f5-4751-a2b7-8b0f12d8eea6,Google,"Google Pixel 8 Pro",128GB,2023,88000,0.4
+5ca32309-6495-4b1b-b053-4d474a116a1f,Google,"Google Pixel 8 Pro",256GB,2023,140000,0.4
+0396c46e-f086-4d98-87a4-77000996f778,Google,"Google Pixel 8 Pro",512GB,2023,160000,0.4
+ba570907-0ac0-4217-9d5a-5d48cd7ad95c,Google,"Google Pixel 8a",256GB,2023,104000,0.4
+e863c0cd-c487-489f-b73c-bdb3907f6689,Google,"Google Pixel 9 Pro",1024GB,2024,260000,0.4
+7a7add0e-75a1-41f3-8b87-017385929650,Google,"Google Pixel 9 Pro Fold",1024GB,2024,320000,0.4
+67c33868-4c4d-4403-9ca7-0dc1ae7440ff,Google,"Google Pixel 9 Pro Fold",128GB,2024,220000,0.4
+eadb5810-ee6e-43b5-9e76-783dc3783c40,Google,"Google Pixel 9 Pro Fold",512GB,2024,300000,0.4
+894f886d-ed71-40fc-9c03-3a332ff9a0c5,Google,"Google Pixel 9 Pro Xl",32GB,2024,20000,0.4
+fe4033da-0740-4882-8959-68bbaa686123,Google,"Google Pixel Xl",128GB,2020,22000,0.4
+3ea4a4bf-cd3f-41d6-a841-2674b3ff4a53,Google,"Pixel 8a",128GB,2025,150352,1
+703d2309-02a2-4fc0-880b-618d23de5b85,Google,"Pixel 9",128GB,2026,426372,1
+9b15565b-64ec-4692-8d77-a59a98bef43a,Google,"Pixel 9",256GB,2025,372645,1.15
+c072a263-11e3-455f-82d3-3741d959de70,Google,"Pixel 9 Pro",128GB,2025,365860,1.15
+b1e7fd53-a366-4b2e-8d29-b0defb6a469b,Google,"Pixel 9 Pro",256GB,2025,474864,1.15
+e5ff1d75-8ecb-467a-ab53-f0424058e352,Google,"Pixel 9 Pro",512GB,2025,463926,1.15
+28188aeb-79f6-468f-a02a-6d58df4ff618,Google,"Pixel 9 Pro XL",1024GB,2025,649948,1.15
+dfeb4d1a-58a0-4956-bbd6-bbbc7fe2684e,Google,"Pixel 9 Pro XL",128GB,2025,378277,1.15
+9e9ae102-cc8c-4876-9093-43a53b1d0b50,Google,"Pixel 9 Pro XL",256GB,2026,447035,1
+fba78aaf-034a-40f8-b446-9df63d395da4,Google,"Pixel 9 Pro XL",512GB,2025,463926,1.15
+7b01177d-c2ee-46ef-8d02-950d7ed53386,Google,"Pixel 9a",128GB,2025,264023,1.15
+312ae879-61ab-47fa-b82f-a54ad4003ae2,Google,"Pixel 9a",256GB,2025,323616,1.15
+7258b16e-2b1a-4835-8da7-9010fc073c5a,Honor,"200",256GB,2025,586130,1.15
+d9ca0124-e0f2-4291-95a5-d91a57639924,Honor,"200 Pro",256GB,2025,586130,1.15
+fdb6473e-09a7-44ad-95aa-c7b470ac01f0,Honor,"200 Pro",512GB,2025,544707,1
+f5922412-0394-49a8-aa6e-1b3a101d6e05,Honor,"Honor 70",128GB,2022,80000,0.4
+566e3f1f-37e6-4786-89b8-ab99e1e3df98,Honor,"Honor 70",256GB,2022,72000,0.4
+0402b45b-ed5b-4fe2-b0aa-21148ae64e36,Honor,"Honor 80",256GB,2022,92000,0.4
+e3ecc54c-1dff-4fee-8d61-b647970425b9,Honor,"Honor 80 Pro",256GB,2022,88000,0.4
+5c0c4bf4-5921-4414-ab5d-a81ad9998fb8,Honor,"Honor 80 Pro",512GB,2022,112000,0.4
+dfd949d1-69aa-44b4-a1ba-3dab009ed505,Honor,"Honor 90",128GB,2023,112000,0.4
+31186f7c-bcd2-43fd-9b02-f38f70c26e2d,Honor,"Honor 90",512GB,2023,104000,0.4
+7ba089b2-cff3-44fa-a50f-fe4aabb7f6d4,Honor,"Honor Magic 4",256GB,2020,128000,0.4
+30c71853-b8e2-45dc-a0bc-fa3f22791500,Honor,"Honor Magic 4 Pro",512GB,2020,160000,0.4
+5c88b3f5-961d-40c5-886b-a9a97b3489c0,Honor,"Honor Magic 4 Ultimate",256GB,2020,152000,0.4
+590b09d4-40bc-47e1-aabc-171a675f98f1,Honor,"Honor Magic 5",256GB,2020,200000,0.4
+9c2199c4-f26d-4d76-9cc6-8dac633f371c,Honor,"Honor Magic 5",512GB,2020,180000,0.4
+a579f3d0-4780-47ab-bea1-b6419378f8f9,Honor,"Honor Magic 5 Pro",512GB,2020,220000,0.4
+9a9270ef-b245-4aaa-b6f4-08c7beb2e424,Honor,"Honor Magic 5 Ultimate",256GB,2020,180000,0.4
+32d02181-76bb-4ed2-8de0-5eddd2d4c54d,Honor,"Honor Magic 6",256GB,2020,220000,0.4
+99ccd89c-e73e-41a4-9231-20f390c22981,Honor,"Honor Magic 6",512GB,2020,200000,0.4
+7693fdf7-f531-4adb-bf12-e3632b0b3c97,Honor,"Honor Magic 6 Pro",1024GB,2020,260000,0.4
+27033c6a-f75a-4ae6-947c-5c96712c77f1,Honor,"Honor Magic 6 Pro",512GB,2020,240000,0.4
+242a2b4c-0743-468e-bd2d-b1073f40cee8,Honor,"Honor Magic 6 Ultimate",1024GB,2020,300000,0.4
+6aa8f2f1-4728-4b9c-aa3d-5ea34be85332,Honor,"Honor Magic 6 Ultimate",128GB,2020,35200,0.4
+864349a8-2ca5-4067-8756-55f543fe6df9,Honor,"Honor X7b",128GB,2024,64000,0.4
+4f63bd65-246e-4f1d-b368-63480f9e44e5,Honor,"Honor X7b",256GB,2024,44000,0.4
+270a4bd9-698b-47fc-9fec-94b99c4ed4b7,Honor,"Honor X8b",256GB,2025,74000,0.4
+e90431e3-70c8-43d9-9476-f1b847340736,Honor,"Magic V2",512GB,2026,584851,1
+03c37fea-2422-4a55-b005-362f3541bfe8,Honor,"Magic V3",256GB,2025,427223,1.15
+f6aab167-9ad1-4fc8-b16e-a9f15b5c825d,Honor,"Magic V3",512GB,2025,952888,1.15
+f2a79000-e2ff-4798-8590-67b3e300e01a,Honor,"Magic6 Pro",256GB,2025,416402,1.15
+6fcb6028-f84b-4544-a616-fcf54d4dbfff,Honor,"Magic6 Pro",512GB,2025,410104,1
+1199ebcb-d7f8-44a7-a2b7-6245daf377d8,Honor,"Magic7 Pro",256GB,2025,566668,1.15
+02da5765-4413-476b-a429-2f232aaf7080,Honor,"Magic7 Pro",512GB,2025,626413,1.15
+2d455d41-ca00-4def-832c-ba4754aa8c71,Honor,"X9b",128GB,2025,54690,1.15
+a6cc9a41-ce8f-40c9-992a-188e7264e8ac,Honor,"X9b",256GB,2025,56576,1.15
+0841a143-bcba-4194-aeed-0da3117ca839,Huawei,"Huawei Mate 40",256GB,2020,120000,0.4
+2bcabf4c-1c89-4248-b37c-e1a358f9a756,Huawei,"Huawei Mate 40 Pro",256GB,2020,168000,0.4
+7246f048-5719-4dce-b732-3b4955ba12a5,Huawei,"Huawei Mate 40 Pro",512GB,2020,160000,0.4
+33d6aa30-2c0b-41b4-bc51-9f7b4ac577a4,Huawei,"Huawei Mate 40 Pro+",256GB,2020,180000,0.4
+7606debd-ae50-4366-b71e-7ae14488d689,Huawei,"Huawei Mate 40 Pro+",512GB,2020,192000,0.4
+dd5d901c-4289-4aa4-a8c3-850b0c2cff89,Huawei,"Huawei Mate 60",256GB,2023,220000,0.4
+a6d69013-df0c-460b-96e0-ceaa6f04d38f,Huawei,"Huawei Mate 60",512GB,2023,200000,0.4
+ce8ff6b1-8e44-43e8-82b6-f8f20b430717,Huawei,"Huawei Mate 60 Pro+",1024GB,2023,300000,0.4
+7bfc0c95-fed4-4d4f-83b0-fc6c5e4fec77,Huawei,"Huawei Mate 60 Pro+",128GB,2023,72000,0.4
+eb5ce4fe-0dd6-45df-acf5-b0b2285dc0d5,Huawei,"Huawei Nova 10",128GB,2017,100000,0.4
+93a4df9f-4398-4f2b-9881-a09949476063,Huawei,"Huawei Nova 10",256GB,2017,88000,0.4
+8665acbf-3935-4013-816d-b780ec070100,Huawei,"Huawei Nova 10 Pro",128GB,2017,80000,0.4
+f8ea9cc2-96c4-4d8c-b6a3-3bab0efcbdd3,Huawei,"Huawei Nova 10 Pro",256GB,2017,116000,0.4
+5665fbaf-2b03-4413-a0c8-76590ccb5965,Huawei,"Huawei Nova 11",256GB,2017,96000,0.4
+dcc672dd-4337-41f5-acad-75e11bdbb4f7,Huawei,"Huawei Nova 11 Pro",256GB,2017,140000,0.4
+23786b0d-a4b0-49c4-8b21-77feeb7f230d,Huawei,"Huawei Nova 11 Pro",512GB,2017,128000,0.4
+016bf759-abcd-4e89-881f-6f72877d2898,Huawei,"Huawei Nova 11 Ultra",256GB,2017,120000,0.4
+741c3309-97d2-48ed-ac8a-e8a56eef5daa,Huawei,"Huawei Nova 12 Pro",256GB,2017,64000,0.4
+9e98d9fd-e44d-406b-89a2-b54a7577a368,Huawei,"Huawei Nova 12 Pro",512GB,2017,140000,0.4
+c331a615-08fa-436c-b3af-8ece8a4f6fb9,Huawei,"Huawei Nova 12 Se",512GB,2017,152000,0.4
+363b3ed3-149d-4cc6-a378-dbda1a4caf65,Huawei,"Huawei Nova 12 Ultra",1024GB,2017,168000,0.4
+0435eab8-db56-4825-8294-f32e05521949,Huawei,"Huawei Nova 12 Ultra",128GB,2017,56000,0.4
+7faef9e2-f9e5-4e3a-a2f0-137e2fae50f1,Huawei,"Huawei Nova 12i",256GB,2017,68000,0.4
+b8c6be34-77a4-4cd3-9925-6d8b7be5fc70,Huawei,"Huawei Nova 12s",128GB,2017,100000,0.4
+ff3e3da0-fa76-459b-ad50-580c43ebfd89,Huawei,"Huawei Nova 13",256GB,2017,116000,0.4
+458a56f6-0e4c-43e7-86c1-3dafe4f1cace,Huawei,"Huawei Nova 13 Pro",128GB,2017,60000,0.4
+7c32cd60-0cd2-4418-a46e-70bd04f5493d,Huawei,"Huawei Nova 13 Pro",512GB,2017,148000,0.4
+a818b6e5-9b58-4058-9e74-e6d61d6b0d7c,Huawei,"Huawei Nova 8",128GB,2021,68000,0.4
+1e54744d-ae0a-405c-9f2a-ef3e1fcd926a,Huawei,"Huawei Nova 8",256GB,2021,72000,0.4
+cd04dde9-b23e-4490-9904-85ba95a40cd9,Huawei,"Huawei Nova 9",128GB,2021,52000,0.4
+469a23f4-c8ef-496c-a170-6091896de062,Huawei,"Huawei Nova 9",256GB,2021,80000,0.4
+7619436d-da1f-495e-ae5d-99360037822d,Huawei,"Huawei Nova 9 Se",256GB,2022,64000,0.4
+ce59ed64-09c9-486f-a32f-113173670698,Huawei,"Huawei Nova 9 Se",64GB,2022,28000,0.4
+d714caf2-34eb-4a90-9743-5f32496ce0ee,Huawei,"Huawei P30",128GB,2019,34000,0.4
+5b07b5b1-fe32-425e-b916-6bb0a344aaf6,Huawei,"Huawei P30",256GB,2019,40000,0.4
+53984444-22f4-4483-848d-c871d58ac583,Huawei,"Huawei P30 Lite",128GB,2019,32000,0.4
+f29d51c5-5dd7-4dd8-8272-a5c7a4a9d300,Huawei,"Huawei P30 Lite",256GB,2019,28000,0.4
+6a9cc60e-adb9-4523-a807-bafd836e8107,Huawei,"Huawei P30 Pro",128GB,2019,48000,0.4
+3fc25ec3-c74d-4f99-b5ff-e80d6d82b7ed,Huawei,"Huawei P30 Pro",256GB,2019,38000,0.4
+e3486321-f8ce-4253-9f6d-b794d149b882,Huawei,"Huawei P30 Pro",512GB,2019,44000,0.4
+16934922-6a8d-4cef-9f77-c4213c23d379,Huawei,"Huawei P40",128GB,2020,80000,0.4
+1450db77-9ce2-4924-94c5-4e2eb0792e36,Huawei,"Huawei P40",256GB,2020,60000,0.4
+fa60d764-19a3-4b7b-8eaa-d8b10b823cee,Huawei,"Huawei P40 Pro",256GB,2020,100000,0.4
+4925823a-e8ba-4d24-b5a8-9566d3d0b03d,Huawei,"Huawei P40 Pro",512GB,2020,120000,0.4
+5d63d058-e590-4fbd-a30e-3f9562175ed1,Huawei,"Huawei P40 Pro+",128GB,2020,88000,0.4
+cefd1280-40aa-4b58-959b-14675e533a2c,Huawei,"Huawei P50",256GB,2021,108000,0.4
+8a6d41c9-984c-4b34-ae2d-f7037a40ca9b,Huawei,"Huawei P50 Pocket",128GB,2022,140000,0.4
+21f63421-3e98-4883-8055-37063727baa8,Huawei,"Huawei P50 Pocket",512GB,2022,132000,0.4
+daf7cc6a-da23-4d87-8e38-19aabd4ba495,Huawei,"Huawei P50 Pro",128GB,2021,120000,0.4
+6baababf-0834-45e9-bbb4-24ca5b9e36b3,Huawei,"Huawei P50 Pro",256GB,2021,160000,0.4
+2d9afe0c-01ff-48b6-9ae2-a6ab5748f9ab,Huawei,"Huawei P50 Pro",512GB,2021,180000,0.4
+01e5f7a8-1e14-420b-b1b7-597815908a9e,Huawei,"Huawei P60",256GB,2023,140000,0.4
+f187a4f6-3efc-49b8-a1b3-a9c130424a49,Huawei,"Huawei P60",512GB,2023,160000,0.4
+a666ba16-c762-4ece-b944-a13b976a1348,Huawei,"Huawei P60 Pro",256GB,2023,180000,0.4
+79dcc0dd-273c-454f-b2c3-f125a88d0d40,Huawei,"Huawei P60 Pro",512GB,2023,200000,0.4
+fe4554d3-9b4d-4a53-aabf-030720e944bd,Huawei,"Huawei Pura 70",512GB,2024,200000,0.4
+997e7f2e-2b54-4c5f-914e-fa7dbe4d5905,Huawei,"Huawei Pura 70 Pro",1024GB,2024,260000,0.4
+dd191ad8-32f6-49cf-86d5-fceec1dcddaf,Huawei,"Huawei Pura 70 Ultra",64GB,2024,18000,0.4
+b65a8211-e5d0-499c-8550-9ca62d5ad4b4,Huawei,"Huawei Y7a",128GB,2020,22000,0.4
+02bb8c8a-05db-48e1-90d3-5e6fb909f61d,Huawei,"Huawei Y7a",64GB,2020,20000,0.4
+97943681-3635-4556-9db4-13580605c841,Huawei,"Huawei Y8p",128GB,2020,24000,0.4
+f1cec19b-db78-41f1-a961-139db9286491,Huawei,"Huawei Y8p",64GB,2020,22000,0.4
+c7508f9c-e19c-4575-9076-c5a99c069558,Huawei,"Huawei Y8s",128GB,2020,26000,0.4
+c9399422-f96c-41b6-bf15-711c00644fb4,Huawei,"Huawei Y8s",64GB,2020,10800,0.4
+95b5eb84-c523-44c2-b23a-802493a9a2a9,Huawei,"Huawei Y9 (2019)",128GB,2018,14000,0.4
+34958330-bae5-42f3-a704-e4367fbff7c8,Huawei,"Huawei Y9 (2019)",64GB,2018,15200,0.4
+47335457-df89-4dde-9fb6-4429ce5cee72,Huawei,"Huawei Y9 Prime (2019)",128GB,2019,18000,0.4
+1a3679f5-f503-47c6-9fcd-377116878a48,Huawei,"Huawei Y9a",64GB,2020,14000,0.4
+e00c3504-0a62-499b-8962-d069f9992e3d,Huawei,"Huawei Y9s",128GB,2019,18000,0.4
+a2244fac-1111-4098-a3c8-59420b1423fc,Huawei,"Huawei Y9s",256GB,2019,100000,0.4
+a765de5c-be45-4a4c-9ade-54a5f093b546,Huawei,"Mate 60 Pro",1024GB,2025,443558,1.15
+53102c92-4c8c-4fa1-a28a-4e0ac42cbaac,Huawei,"Mate 60 Pro",256GB,2025,400108,1.15
+4da71595-4c59-49ef-986b-7043ea3b4c8b,Huawei,"Mate 60 Pro",512GB,2025,416402,1.15
+c11c18a5-0365-46e5-98ef-52f1a1dd4813,Huawei,"Nova 12",128GB,2025,43579,1.15
+a8ac4bef-897d-4904-81f3-a3bc6eec2ac5,Huawei,"Nova 12",256GB,2025,382908,1.15
+c701e24a-7ae5-4816-9a89-5af3d98b8484,Huawei,"Nova 12 Ultra",256GB,2025,447179,1.15
+d9a0796f-2741-4987-a20a-eba25bd58ea2,Huawei,"Nova 12 Ultra",512GB,2025,291934,1.15
+bde36e0d-0652-41da-8346-92ab804c294c,Huawei,"Pura 70",256GB,2026,444739,1
+e3314eb0-e140-446d-b308-11fcf70f343e,Huawei,"Pura 70 Pro",256GB,2025,579341,1.15
+a1ef100e-1ebb-4695-9ca0-70b41018969f,Huawei,"Pura 70 Pro",512GB,2025,581152,1.15
+692618c4-22ba-4e10-9f5b-3cdbca510cb8,Huawei,"Pura 70 Ultra",1024GB,2025,604989,1.15
+7cfa006e-5ac3-401d-b3d5-f7913ff0723b,Huawei,"Pura 70 Ultra",256GB,2025,533326,1.15
+0eb7f1c4-0cfa-449a-a7db-c0a80812d277,Huawei,"Pura 70 Ultra",512GB,2025,664432,1.15
+7b618111-1cbd-4004-a412-ea4cddf0cc13,Infinix,"GT 20 Pro",256GB,2026,295181,1
+1a763455-eb45-4d2a-b179-90b8138b9acf,Infinix,"GT 30",128GB,2026,52805,1.15
+049d325e-e834-4702-bf24-cbba30a4e025,Infinix,"GT 30",256GB,2026,339458,1.15
+eb6507ff-f27e-4954-941c-2f646b04780b,Infinix,"GT 30 Pro",256GB,2026,339458,1.15
+c69e2040-46f2-48e6-9a86-943a07522d8f,Infinix,"GT 30 Pro",512GB,2026,160000,1
+6b158436-3459-4c6f-8f76-209a52e0b395,Infinix,"Hot 40i",128GB,2025,65000,1
+64393ff7-7750-4ad2-9f60-c20ecdf30081,Infinix,"Hot 50 Pro",128GB,2026,45917,1
+f53ada76-1b3c-4f76-9b28-d7537cacda5c,Infinix,"Hot 50 Pro+",128GB,2025,52805,1.15
+91f33f80-079e-4fb5-afb5-b4f14b3e0593,Infinix,"Hot 50 Pro+",256GB,2025,52805,1.15
+5a480bd7-2893-4ecc-90df-e1cd80c2ea17,Infinix,"Hot 60",128GB,2025,52805,1.15
+80fa23d3-5b12-403d-b674-0b195b2716f4,Infinix,"Hot 60i 5G",128GB,2025,52805,1.15
+cd4546a3-326c-4c29-bc36-4ff55aff8df7,Infinix,"Infinix GT 10 Pro",256GB,2023,81175,1
+5ddb3878-a8e5-4626-b204-2ce69543ddac,Infinix,"Infinix Gt 20 Pro",64GB,2022,16000,0.4
+b650c6c4-d8ac-436b-bff0-d007a8a1e50d,Infinix,"Infinix Hot 10",128GB,2022,20000,0.4
+72006b1c-b20f-4b0c-8201-49aa0f00d46b,Infinix,"Infinix Hot 10",32GB,2022,14000,0.4
+87b05b86-4d0e-4c2f-bccd-75e5c56a29c9,Infinix,"Infinix Hot 10",64GB,2020,45917,1
+d15a1388-3b31-44be-8e9a-d8b59ec17fa9,Infinix,"Infinix Hot 10 Lite",32GB,2020,45917,1
+e5058b99-f85d-4862-b3a9-a2b6bf2241a9,Infinix,"Infinix Hot 10 Play",32GB,2021,45917,1
+4d8de278-4696-4579-b654-da31cb98ae50,Infinix,"Infinix Hot 10 Play",64GB,2022,18000,0.4
+ae56a1cf-9fcb-4366-8c7e-21ce8ce22b36,Infinix,"Infinix Hot 10i",32GB,2021,45917,1
+af133c60-c229-4160-9c8a-9957f420c501,Infinix,"Infinix Hot 10s",128GB,2022,22000,0.4
+eb977351-7616-4a6f-8824-2148563fe98f,Infinix,"Infinix Hot 10s",64GB,2021,45917,1
+72f2e734-3199-488b-b928-a18dafb8c0fd,Infinix,"Infinix Hot 10s NFC",64GB,2021,45917,1
+748d6daa-dc3a-4953-81a2-19ffa8d5e147,Infinix,"Infinix Hot 10t",128GB,2022,24000,0.4
+647a9bcd-434a-458f-ace3-a2da7f3dcbdf,Infinix,"Infinix Hot 10T",64GB,2021,45917,1
+ada205c5-91f8-46f6-bc31-56eb125d6a9a,Infinix,"Infinix Hot 11",128GB,2023,26000,0.4
+4e9b93b2-3748-438a-ba42-b731e1366539,Infinix,"Infinix Hot 11",64GB,2021,32732,1
+bf2965be-c7cc-4f0d-81dc-9bd31bc5e98d,Infinix,"Infinix Hot 11 2022",64GB,2022,45917,1
+97bd5ea3-93f3-493a-ac4d-21d973acf3e7,Infinix,"Infinix Hot 11 Play",64GB,2021,32732,1
+7bdf69f5-f747-4b95-bb8e-3f93e8b65554,Infinix,"Infinix Hot 11s",64GB,2021,32732,1
+e45e7879-2851-4173-8260-d95185e4cbc3,Infinix,"Infinix Hot 11s Nfc",128GB,2023,28000,0.4
+1d136239-61a7-4cac-b872-9865b03de835,Infinix,"Infinix Hot 11s NFC",64GB,2022,2519,1
+a7711042-1a01-4460-8d21-42eccfafb348,Infinix,"Infinix Hot 12",128GB,2022,24218,1
+d1981b2d-f1de-488b-a93b-386aab9e9c49,Infinix,"Infinix Hot 12 Play",128GB,2022,26000,0.4
+2499e24c-d97a-4424-8d7e-6d5f3424b965,Infinix,"Infinix Hot 12 Play",64GB,2022,45917,1
+464d4e12-ade4-4230-825d-d6432330cf95,Infinix,"Infinix Hot 12 Play NFC",64GB,2022,45917,1
+4fb35d0a-df9b-4889-bb51-0afa36ed2e42,Infinix,"Infinix Hot 12 Pro",128GB,2022,85000,1
+6414d1b1-12dc-415a-a8ab-80cbf91b504e,Infinix,"Infinix Hot 12 Pro",64GB,2022,30000,0.4
+8d4d7c27-4bbc-4dc5-848a-115fba0cb7ba,Infinix,"Infinix Hot 12i",64GB,2022,45917,1
+a8b54d1c-31e9-4f23-a23a-8b167dce40b8,Infinix,"Infinix Hot 20",128GB,2022,45917,1
+7d89e801-bc91-4e6d-8149-6d5b7b29506f,Infinix,"Infinix Hot 20",64GB,2022,36000,0.4
+c9fc5bf9-e272-46e8-88e9-ef5ff6bb52b0,Infinix,"Infinix Hot 20 5g",128GB,2022,44000,0.4
+9b4d691a-375b-490c-bbed-9720311a2d3f,Infinix,"Infinix Hot 20 5G",64GB,2022,45917,1
+e8fd27ab-2e1f-488e-a8aa-5a7bdf395dc1,Infinix,"Infinix Hot 20 Play",64GB,2022,45917,1
+a7daf837-e5b9-4907-b2f8-edaa5a9fdf64,Infinix,"Infinix Hot 20i",64GB,2022,45917,1
+f629d47b-e06e-41db-aa63-aeed6341e461,Infinix,"Infinix Hot 20S",128GB,2022,45917,1
+305a9e74-a087-433b-a79c-743e30c7ad97,Infinix,"Infinix Hot 30",128GB,2023,45917,1
+0ec93ee1-f358-4b98-bbaa-6858db33715f,Infinix,"Infinix Hot 30",64GB,2023,26000,0.4
+90c7ac87-c388-4f19-9f3c-adb582d724f2,Infinix,"Infinix Hot 30 5G",128GB,2023,45917,1
+2e0bbaa7-a4bf-4ca8-8753-379e7f6ecf61,Infinix,"Infinix Hot 30 Play NFC",128GB,2023,45917,1
+0de48f50-b41d-4515-8683-553275b87b87,Infinix,"Infinix Hot 30i",128GB,2023,30000,0.4
+d592c9c5-d52f-4a96-abcd-2608b93aecfa,Infinix,"Infinix Hot 30i",64GB,2023,45917,1
+64f29fa5-35fd-4669-b3df-e01c48571e07,Infinix,"Infinix Hot 4",16GB,2016,25000,1
+e18c01f1-8755-4752-91be-3aa3650bbc1f,Infinix,"Infinix Hot 4 Pro",16GB,2016,25000,1
+fe822890-9460-4d1e-9659-7d73de9b16c8,Infinix,"Infinix Hot 40",128GB,2023,45917,1
+cb5fffe7-0f03-49bd-bd6c-8d6dae0ec9c6,Infinix,"Infinix Hot 40 5g",128GB,2023,34000,0.4
+61644c8b-3e3a-46d3-90dc-df1039663132,Infinix,"Infinix Hot 40 5g",256GB,2023,56000,0.4
+206811a7-a6b3-46d0-9803-151fe61005b3,Infinix,"Infinix Hot 40 Pro",128GB,2023,45917,1
+3b21bde3-bdef-4aca-ac7f-96aca3c26639,Infinix,"Infinix Hot 40 Pro",256GB,2023,50000,0.4
+6b26cdd3-30de-4f47-bd65-ee47d067dd95,Infinix,"Infinix Hot 40i",256GB,2023,22000,0.4
+4946de9f-13f1-40f5-8011-d9486c5d1e82,Infinix,"Infinix Hot 40i",64GB,2023,14000,0.4
+78dbf9eb-eeb8-42e5-8270-17c19e6a1547,Infinix,"Infinix Hot 5",16GB,2017,6041,1
+af67d46f-c9c1-4af5-9f0b-c5f70c81dd03,Infinix,"Infinix Hot 5 Lite",16GB,2017,6041,1
+a38e612c-c711-4303-ad4d-598595fd0948,Infinix,"Infinix Hot 50",128GB,2024,45917,1
+780bb896-ad32-4dd2-8403-2de5bad4b55e,Infinix,"Infinix Hot 50 4G",128GB,2024,45917,1
+47fe11ac-c031-42be-ad7d-053b810251bb,Infinix,"Infinix Hot 50i",128GB,2024,45917,1
+524182d6-dca2-4e0e-8596-e60a60708627,Infinix,"Infinix Hot 6",16GB,2018,45917,1
+8bb793e8-99b5-419d-a9ec-d5ec99922266,Infinix,"Infinix Hot 6 Pro",16GB,2018,30000,1
+511f07a4-6029-4768-b072-35b6f0a57676,Infinix,"Infinix Hot 6X",16GB,2018,45917,1
+3176670c-5111-48dc-933d-54e8da1d354d,Infinix,"Infinix Hot 7",16GB,2019,45917,1
+5c73f10c-f172-468b-9d46-95d9125d3d20,Infinix,"Infinix Hot 7 Pro",32GB,2019,35000,1
+e427fef6-bbb0-43a8-97cb-cdf218335f69,Infinix,"Infinix Hot 8",32GB,2019,45917,1
+3a7c22ee-fddf-4a02-9203-e95208d57cc5,Infinix,"Infinix Hot 8 Lite",32GB,2019,30000,1
+467f8457-28f4-4a6f-b99d-ecd6f16cc1f3,Infinix,"Infinix Hot 9",32GB,2020,45917,1
+9b27773d-de28-41e8-b14e-def7971caed1,Infinix,"Infinix Hot 9 Play",32GB,2020,45917,1
+c98afb2e-0a40-438b-9da8-e14c9638f77f,Infinix,"Infinix Hot 9 Play",64GB,2020,16000,0.4
+2990f411-4403-4148-a17f-a120b9d7fc8d,Infinix,"Infinix Hot 9 Pro",64GB,2020,45917,1
+7df37788-0553-4b24-8365-9c535847a5fd,Infinix,"Infinix Hot S",16GB,2016,45917,1
+d840e9ee-c5af-48c0-b829-77c4c0e5ca25,Infinix,"Infinix Hot S3",32GB,2018,45917,1
+e13b9dab-cc6d-4bfe-a9ae-981d27ca42b7,Infinix,"Infinix Note 10",128GB,2021,28000,0.4
+70db9a78-9e0d-4dc7-92c9-b84c783fd777,Infinix,"Infinix Note 10",64GB,2021,95284,1
+88ae07fc-0817-4d09-958b-a4bd9fbc8ef0,Infinix,"Infinix Note 10 Pro",256GB,2021,34000,0.4
+46f8fa54-1c93-4724-8d5a-479b6cc93d10,Infinix,"Infinix Note 10 Pro",64GB,2021,95284,1
+4d813c7b-0cdd-481f-825d-254315f19465,Infinix,"Infinix Note 10 Pro NFC",128GB,2021,95284,1
+0fecc8a8-fdb4-40ec-afd3-2747a0a3734f,Infinix,"Infinix Note 11",128GB,2021,36000,0.4
+b799bc3a-0b9d-4103-8b78-3e0e77f4a91b,Infinix,"Infinix Note 11",64GB,2021,75000,1
+2683af9e-3a80-4aed-82de-fa10fa263ad8,Infinix,"Infinix Note 11 Pro",128GB,2021,95000,1
+6826d0af-82ea-48b7-852a-2116a61c1eca,Infinix,"Infinix Note 11 Pro",64GB,2021,40000,0.4
+4da9b033-c5f0-44f6-9f3a-6af29cb728a4,Infinix,"Infinix Note 11i",64GB,2021,24218,1
+d1cd7fd7-c41d-4943-9395-43aa3bd24793,Infinix,"Infinix Note 11s",64GB,2021,80000,1
+c7c30d1c-a3e0-423c-b70f-cf32ccb15022,Infinix,"Infinix Note 12",128GB,2022,44000,0.4
+5cbc0bb0-2482-4d97-8400-ad387fe16747,Infinix,"Infinix Note 12",256GB,2022,48000,0.4
+cab7fa8b-8ae6-4ed5-b855-51130b432a0e,Infinix,"Infinix Note 12",64GB,2022,85000,1
+beee924e-34da-4929-b290-0bbe4183e960,Infinix,"Infinix Note 12 (2023)",128GB,2022,95000,1
+69ab2c71-389a-4421-9864-d3c0117a32d6,Infinix,"Infinix Note 12 5G",64GB,2022,100000,1
+fafe4465-6f00-4bd8-88a2-57a99f6f4c88,Infinix,"Infinix Note 12 G96",128GB,2022,24218,1
+7a28f484-40f4-4992-84ca-3bdd95bc7e38,Infinix,"Infinix Note 12 Pro",256GB,2022,326011,1
+986c79d3-0b92-4a26-9145-7cf52102e940,Infinix,"Infinix Note 12 Pro 4g",128GB,2022,56000,0.4
+6c5c893c-e478-4822-89e0-cead002c020d,Infinix,"Infinix Note 12 Pro 5G",128GB,2022,52000,0.4
+237b8f04-2202-4d19-8628-d6fb087bf23f,Infinix,"Infinix Note 12 VIP",128GB,2022,120000,1
+a7e145c5-3687-4201-a339-35a8d2e01a26,Infinix,"Infinix Note 12i",128GB,2022,85000,1
+93014ad8-d197-4c40-a0ef-18c6a5efcffd,Infinix,"Infinix Note 12i 2022",64GB,2022,75000,1
+eb9b0c24-cf70-47af-bfc1-94ffffff6c71,Infinix,"Infinix Note 3",16GB,2016,24218,1
+3cc7147d-5b2c-4652-9563-68a683e192bf,Infinix,"Infinix Note 3 Pro",16GB,2016,25000,1
+31c7f248-ddc6-470b-92ba-de553e7e6381,Infinix,"Infinix Note 30",128GB,2023,2519,1
+84b75b62-e11d-4599-a23b-f1e28b1b75e7,Infinix,"Infinix Note 30",256GB,2023,60000,0.4
+4f62d6d2-071b-4598-b80d-b51dc41d0e9f,Infinix,"Infinix Note 30 5G",128GB,2023,110000,1
+04d46c9b-677a-4092-8f3c-f3d86dccca29,Infinix,"Infinix Note 30 Pro",128GB,2023,44000,0.4
+14c2c3d0-1605-440f-b159-b298c581c72a,Infinix,"Infinix Note 30 Pro",256GB,2023,105000,1
+fbc96e2b-d138-48ab-aa16-73210c03cd1c,Infinix,"Infinix Note 30 VIP",256GB,2023,163983,1
+7f88a595-5076-410d-b034-d71d2352af73,Infinix,"Infinix Note 30i",128GB,2023,56000,0.4
+099212c2-a761-4dbc-b904-58cef728e97c,Infinix,"Infinix Note 30i",256GB,2023,52000,0.4
+b199e5bf-0803-4711-849f-94262228e497,Infinix,"Infinix Note 4",16GB,2018,30000,1
+c9921f2b-15c2-42ca-8026-0786475a1218,Infinix,"Infinix Note 4 Pro",16GB,2017,30000,1
+740342dc-0cac-4a56-8366-f0d1f9f17d62,Infinix,"Infinix Note 40 4g",128GB,2024,68000,0.4
+45f4d68f-f233-4fa2-b23b-8f3dda81c610,Infinix,"Infinix Note 40 4g",256GB,2024,64000,0.4
+7e8421c9-bf3b-4679-8277-d494d2f0fdfd,Infinix,"Infinix Note 40 5G",256GB,2024,109577,1.15
+d4e40a34-4a1b-4796-a194-cf88e216d78a,Infinix,"Infinix Note 40 Pro",256GB,2024,235161,1
+df1bd13d-f363-48ef-b11d-651391883938,Infinix,"Infinix Note 40 Pro 4G",256GB,2024,90000,0.4
+a179ae8c-71cd-4ed4-a8b6-532af64b2e83,Infinix,"Infinix Note 40 Pro 5g",256GB,2024,100000,0.4
+4d3ba664-3c7a-4465-a548-b22a802d7d3e,Infinix,"Infinix Note 40 Pro+",256GB,2024,235161,1
+ad0e908c-7c0b-40c6-aac2-00bb1b01c1ae,Infinix,"Infinix Note 40 Pro+ 5g",64GB,2019,14000,0.4
+e33eee04-fa55-4fb5-b5d6-7ff4977ccbbc,Infinix,"Infinix Note 40X 5G",256GB,2024,109577,1.15
+21aa6c9f-59b1-4f6e-b88e-e6f4b74f3966,Infinix,"Infinix Note 5",32GB,2018,40000,1
+6ea81989-ca33-4f0c-876b-f96e55ee04d0,Infinix,"Infinix Note 5 Stylus",32GB,2018,40000,1
+b5575f2b-0ced-4c11-93e9-cc7e4df6d06d,Infinix,"Infinix Note 6",64GB,2019,16000,0.4
+eaf29fa8-972d-4a53-afcc-163cb8a2230f,Infinix,"Infinix Note 7",128GB,2020,18000,0.4
+3b56399f-2d42-431e-a07d-7124198e813e,Infinix,"Infinix Note 7",64GB,2020,20000,0.4
+d855be1e-7172-4626-aab7-5c04aa08d856,Infinix,"Infinix Note 7 Lite",64GB,2020,60000,1
+a89b4569-59e8-4309-a441-5bfae636445e,Infinix,"Infinix Note 8",128GB,2020,90178,1
+6b013a73-625f-409e-be82-e81a73148d4b,Infinix,"Infinix Note 8",32GB,2021,12000,0.4
+90a6c606-8170-4094-8b10-92a12b6b7cdb,Infinix,"Infinix Note 8i",64GB,2020,70000,1
+d929d199-f69c-4ff7-98b1-871f0d1e010f,Infinix,"Infinix S2 Pro",16GB,2017,45917,1
+0ab777c2-f84c-423d-b174-7f2872c3a4c2,Infinix,"Infinix S3X",32GB,2018,45917,1
+fdb6427a-5b2d-4c8d-8b84-35b9d48e8c98,Infinix,"Infinix S4",32GB,2019,45917,1
+4dd64abf-073e-44d0-90ba-93e61370c60c,Infinix,"Infinix S4",64GB,2021,14000,0.4
+183416eb-9a32-4506-89e7-81ba7f3469db,Infinix,"Infinix S5",64GB,2019,45917,1
+54923a73-d74c-4729-87e8-49627fc6292f,Infinix,"Infinix S5 lite",32GB,2019,45917,1
+4bdc815c-9274-4cf5-8a95-1ffdf5bcb4e6,Infinix,"Infinix S5 Pro",128GB,2019,18000,0.4
+b3406e47-b001-46a0-9467-6b68df556ea5,Infinix,"Infinix S5 Pro",32GB,2019,10000,0.4
+d26afd4d-a9a2-489b-aa56-628f1a5e0781,Infinix,"Infinix S5 Pro",64GB,2020,24218,1
+043ffdbd-1b63-495b-9da6-35fff5f48125,Infinix,"Infinix S5 Pro (16+32)",64GB,2020,65000,1
+dfe85e3c-83db-48d9-8743-769d5adcfbf3,Infinix,"Infinix S5 Pro (48+40)",64GB,2020,75000,1
+f97c6ac9-04ce-404f-8686-49f81e9076f3,Infinix,"Infinix Smart",16GB,2017,45917,1
+1837936d-7b83-4dd6-9915-6412373dc4a5,Infinix,"Infinix Smart 2",16GB,2018,45917,1
+1c5de970-da69-4a96-8f3d-71dfec3f4dbd,Infinix,"Infinix Smart 2 HD",16GB,2018,45917,1
+a65ec128-7e72-4b4a-9431-df3165d719e6,Infinix,"Infinix Smart 2 Pro",16GB,2018,45917,1
+8d136bc4-f990-40db-9159-13c777a4a3cb,Infinix,"Infinix Smart 4",16GB,2019,45917,1
+7b4a254c-cd26-42e7-a2c3-59846d9e1dd1,Infinix,"Infinix Smart 4",32GB,2019,11200,0.4
+c93a696f-4a49-472e-909c-d145628e9044,Infinix,"Infinix Smart 4 Plus",32GB,2019,10000,0.4
+6fdbf82d-6e77-4584-88a1-82e3ea27528a,Infinix,"Infinix Smart 4 Plus",64GB,2019,12800,0.4
+e447c309-13a6-4737-8895-78ac83308df6,Infinix,"Infinix Smart 4c",32GB,2019,40000,1
+4bf73bc8-aa9b-42ae-8541-9f4d99cf442f,Infinix,"Infinix Smart 5",32GB,2020,45917,1
+eef1f3a9-ae15-4494-b931-9b35a4393e0e,Infinix,"Infinix Smart 5 (India)",32GB,2021,45000,1
+94c5080f-9477-411e-a015-2b20b1ea7cdd,Infinix,"Infinix Smart 5 Pro",32GB,2021,45917,1
+7d936b94-0e70-4d4f-aa5f-173e6de27da7,Infinix,"Infinix Smart 6",32GB,2021,45917,1
+08052471-dde9-4f17-ba00-81bccb037bad,Infinix,"Infinix Smart 6",64GB,2019,12000,0.4
+b75ad8ca-236a-4d31-862a-5dbaf7c58658,Infinix,"Infinix Smart 6 HD",32GB,2022,45917,1
+31815c41-7070-4d4a-8916-1d34651d81bd,Infinix,"Infinix Smart 6 Plus",64GB,2019,16000,0.4
+4854f469-c9d7-495f-bf7d-ac74668e4f82,Infinix,"Infinix Smart 6 Plus (India)",64GB,2022,55000,1
+bef7da01-cff5-4824-b01a-ab49d4fc5f67,Infinix,"Infinix Smart 7",64GB,2023,63523,1
+52cb0b74-cb06-42ef-a776-9a43807c0fd7,Infinix,"Infinix Smart 7 (India)",64GB,2023,50509,1
+2b509e26-a394-478f-9883-de248fc02522,Infinix,"Infinix Smart 7 HD",64GB,2023,45917,1
+64461e08-2ea7-411b-825e-a0f91cbd69f4,Infinix,"Infinix Smart 8",128GB,2019,18000,0.4
+0d27de6e-9da3-4d4e-813d-9fabc45d5c2e,Infinix,"Infinix Smart 8",64GB,2023,63523,1
+f49d86dc-f08f-4e74-b11d-74b63d83a8d0,Infinix,"Infinix Smart 8 (India)",64GB,2024,50000,1
+9390a2bc-a285-4ced-ba1f-de51aa28c042,Infinix,"Infinix Smart 8 HD",64GB,2023,45917,1
+c90cd4f2-6c31-4088-8d16-295895472470,Infinix,"Infinix Smart 8 Plus",64GB,2024,45917,1
+369b9f4a-d747-4cb5-8cb0-b8ef42f871f7,Infinix,"Infinix Smart 8 Pro",128GB,2020,22000,0.4
+619abd7e-c766-4c18-a799-7125cb51216e,Infinix,"Infinix Smart 8 Pro",256GB,2020,48000,0.4
+3c707364-08ff-4ac8-a412-9c4e7faf10f9,Infinix,"Infinix Smart 8 Pro",64GB,2024,45917,1
+9ed2ac2b-e198-4b0e-ac88-ff5298ff8faf,Infinix,"Infinix Smart HD 2021",32GB,2020,45917,1
+c395a23e-061e-4c37-9c18-dd9eb063a77a,Infinix,"Infinix Smart3 Plus",32GB,2019,45917,1
+fda28b3c-627e-4b28-9cf1-6f388a763511,Infinix,"Infinix Zero 20",128GB,2022,81175,1
+718f49dc-766b-4faa-9e9c-7a06fe75e7c0,Infinix,"Infinix Zero 20",256GB,2020,72000,0.4
+a8c02863-baa4-4da2-bed0-78fd51e7df4b,Infinix,"Infinix Zero 30",256GB,2023,163989,1
+cdf86587-2108-428a-bbc8-5ab9c2693427,Infinix,"Infinix Zero 30 4g",512GB,2020,88000,0.4
+a479f39a-8a89-4abe-b721-ab4ebad8eed5,Infinix,"Infinix Zero 30 4G",256GB,2023,163989,1
+bc35bdba-75ed-428b-9439-31f6830767a7,Infinix,"Infinix Zero 30 5g",128GB,2020,40000,0.4
+eb80fa59-eab6-43b8-9caa-cf91413d8ccc,Infinix,"Infinix Zero 4",32GB,2017,40000,1
+489af960-cfe1-4607-99ed-c4c5ff262e7e,Infinix,"Infinix Zero 4 Plus",64GB,2017,45917,1
+ea663a7b-b25d-49ba-bee5-25db06686644,Infinix,"Infinix Zero 40 4G",256GB,2024,45917,1
+c1e0ed49-0411-4aea-964a-be3dd59801a4,Infinix,"Infinix Zero 5",64GB,2018,45917,1
+8918d57a-b4d5-4b83-be3b-744361d1de96,Infinix,"Infinix Zero 5 Pro",128GB,2018,65000,1
+bd088d2d-6b6d-43a9-8a10-d39274b3fc4c,Infinix,"Infinix Zero 5G",128GB,2022,45917,1
+542fbb8e-2802-4ccd-96bf-bbed4e1c0997,Infinix,"Infinix Zero 5G 2023",256GB,2022,45917,1
+1cf216a0-df29-4206-9c9e-4df3809bd033,Infinix,"Infinix Zero 6",64GB,2019,45917,1
+cec8724b-f770-4d60-b022-e834b2e7b18f,Infinix,"Infinix Zero 6 Pro",128GB,2019,75000,1
+23979ac0-028c-4053-808a-e83fda86eb3c,Infinix,"Infinix Zero 8",128GB,2020,45917,1
+60285588-ffb5-47a4-aede-eb7cf3c28114,Infinix,"Infinix Zero 8",256GB,2020,112000,0.4
+1f293578-5cce-4df3-95c3-d516e2a0009c,Infinix,"Infinix Zero 8i",128GB,2020,45917,1
+128cd448-8bcc-40f1-893b-76d6a5d803f1,Infinix,"Infinix Zero Flip",512GB,2024,350000,1
+7abcb237-4041-46cf-b871-f211d48d2fb8,Infinix,"Infinix Zero Ultra",128GB,2020,60000,0.4
+f5ba2559-a44a-4908-8b35-ba69620dbb5d,Infinix,"Infinix Zero Ultra",256GB,2022,45917,1
+c3acac70-71ee-4084-9687-e682ea287b37,Infinix,"Infinix Zero X",128GB,2021,110000,1
+36f7e276-3e8a-4637-b197-6cacf340ff4f,Infinix,"Infinix Zero X Neo",128GB,2021,95000,1
+6bf3f416-696f-463d-860d-083b16817b39,Infinix,"Infinix Zero X Pro",128GB,2021,81175,1
+618c97fd-3a40-4d3e-8366-efb15be0a6fe,Infinix,"Infinix Zero X Pro",256GB,2018,68000,0.4
+0c1041fa-ddf2-4611-9ea5-91c8d85d6f39,Infinix,"Infinix Zero X Pro",32GB,2018,24000,0.4
+161f63f8-cff1-499a-a5c5-d276a1e5c013,Infinix,"Note 40 Pro",128GB,2026,109577,1.15
+42802f5f-46fc-4953-aba4-32dbd058e278,Infinix,"Note 50s 5G+",128GB,2026,170000,1
+63bbc828-2789-46c5-b861-0efb85fe590a,Infinix,"Note 50s 5G+",256GB,2026,170000,1
+1c8910f8-aeed-46d3-8d5d-e79ddb94aa2d,Infinix,"Note 50X",128GB,2025,145000,1
+b115d730-d7dc-46b1-ba3b-2ba45cdb4b6c,Infinix,"Note 50X",256GB,2025,109577,1.15
+ad900f4e-391f-4a96-8ec9-3df5052788b5,Infinix,"Note 60 Ultra",256GB,2026,195000,1
+c6269472-4041-4c0d-8282-1bdfc11d26e0,Infinix,"Smart 9",128GB,2025,52805,1.15
+12f3b8fc-3767-4a76-bc2a-d4d232be966f,Infinix,"Smart 9",64GB,2026,63523,1
+05aec30b-195a-4ac2-8c7b-6cf0757996cf,Infinix,"Zero 40",256GB,2025,116432,1
+09b4adf6-e2e4-4c4d-84db-5a4e87517cb4,Infinix,"Zero 40 5G",256GB,2025,99005,1.15
+fbb9bcbb-459b-426c-87b9-c5d7ddc5b28e,Itel,"A70",128GB,2025,45000,1
+cdc67eb6-2a1c-4e52-9385-72bb0b8a98bd,Itel,"A70",64GB,2025,45000,1
+ea3bb5cb-8ed2-4c1e-8c17-f83ced3ca537,Itel,"itel A04",32GB,2023,30000,1
+b1ebaf4d-523d-4f2d-b271-c80759df600e,Itel,"itel A05s",32GB,2023,35000,1
+5f32e0b4-942a-48ff-a2a8-96050ad245af,Itel,"itel A23 Pro",8GB,2021,15000,1
+99437baa-ed2f-4ce1-9d4d-06d6c86eefc5,Itel,"itel A25",16GB,2020,20000,1
+64ed845c-220a-4b13-9e60-2dc2e824c9a0,Itel,"itel A27",32GB,2022,30000,1
+4b70d3f9-988d-44a3-9417-e4a6d0cf6d50,Itel,"itel A48",32GB,2021,30000,1
+3a4ea75c-115a-446e-8fed-cc82bcf18b43,Itel,"itel A49",32GB,2022,40000,1
+456d9b75-b4e7-420a-8c68-f9177843b09a,Itel,"itel A50",64GB,2024,45000,1
+1ac59264-d612-4028-9ade-bc6cd3b5bd14,Itel,"itel A50C",32GB,2024,40000,1
+6dbc8fba-244a-403f-9114-c0c87e7e18fd,Itel,"itel A60",32GB,2022,40000,1
+cc8d6632-7068-4f43-a851-228cc91d3309,Itel,"itel A60s",64GB,2023,55000,1
+9c7f2e39-f72d-42f4-9853-29ac66925a6e,Itel,"itel A80",128GB,2024,65000,1
+2b5f9de2-5ffa-4ca9-af4e-92fd63bcc09b,Itel,"itel P38",32GB,2022,45000,1
+84f82a32-626a-45fb-a952-e3ca98120cf4,Itel,"itel P38 Pro",64GB,2022,55000,1
+367f1de1-1100-4ea6-b659-79fd8e22a86b,Itel,"itel P40",32GB,2023,50000,1
+267acbde-8269-4042-83d3-967a0c1fa720,Itel,"itel P40+",128GB,2023,55000,1
+78cf8462-1618-4e8b-abc6-2eae01f1c4d4,Itel,"itel P55 5G",64GB,2023,75000,1
+a6324ce3-7d69-47c5-a00c-dff65b47d224,Itel,"itel P65",128GB,2024,90000,1
+0b198eb4-5102-4ac3-aa3a-5ee9ada45863,Itel,"itel RS4",128GB,2024,85000,1
+ca764ce2-a5dc-483f-9b9a-35497329a6c9,Itel,"itel S18",64GB,2022,50000,1
+30672096-621c-47f7-9dcb-0dc35d0b17a8,Itel,"itel S18 Pro",64GB,2023,60000,1
+f78c7f16-6306-4e97-9157-c57564c08895,Itel,"itel S23",128GB,2023,70000,1
+11174b9d-02e0-4e40-b999-61b539390268,Itel,"itel S23+",128GB,2023,75000,1
+025b4dd7-9291-459c-a94b-09f365936880,Itel,"itel Vision 2",32GB,2021,40000,1
+e42d1710-5f1a-47c5-85c8-d60580859a17,Itel,"itel Vision 2S",32GB,2021,45000,1
+b6d4797c-180c-4622-91ee-f0a0083ae1a3,Itel,"itel Vision 3",32GB,2022,40000,1
+d4de9814-efe6-49a8-ac41-9d8635f5036e,Itel,"itel Vision 3 Turbo",64GB,2022,55000,1
+840f66aa-099f-47be-a79e-4de92e21696c,Itel,"itel VistaTab 30",128GB,2024,100000,1
+c8e019b9-841c-4b33-b1fd-0ae7a620e478,Itel,"P55",128GB,2025,75000,1
+17e510bb-dd3d-4f1f-8768-722da8a87ceb,Itel,"P55",64GB,2025,65000,1
+d45be56e-8d37-412f-9ac8-aa58b6e56b3d,Itel,"P55 5G",128GB,2025,70000,1
+2bae766a-28da-4d80-ad97-73ef59b9c9a5,Itel,"P55+",128GB,2025,70000,1
+5ba8927c-b45b-4330-be7d-ba16c1e0f7a4,Itel,"P55+",256GB,2025,105000,1
+c07c9f7c-813a-41ff-a2bb-9259939bf49c,Itel,"S24",128GB,2025,75000,1
+0ee8a035-83b6-435a-99bb-b4232fb4d29a,Itel,"S25",128GB,2025,90000,1
+107e5035-527e-42fc-96b4-242031dbe595,Itel,"S25",256GB,2025,90000,1
+76dbb525-a896-420c-9380-c67192065818,Lenovo,"Lenovo Legion Phone Duel 2",128GB,2020,32000,0.4
+41dfa8e4-7a8b-4ec8-8795-b2924eb64f61,Lenovo,"Lenovo Legion Phone Duel 2",512GB,2020,140000,0.4
+d9c5ce63-5005-4290-9eb3-999dc7dcf678,LG,"Lg G6",128GB,2017,32000,0.4
+ead0088b-294f-44ef-b5ca-be780975e30a,LG,"Lg G6",64GB,2017,28000,0.4
+3f9ea003-15b3-477e-8419-a33c0c38caee,LG,"Lg G7 Thinq",128GB,2018,44000,0.4
+7a1b4883-796b-4cbc-a01b-d52643924e10,LG,"Lg G8 Thinq",128GB,2019,52000,0.4
+d988543a-e4f1-4181-93fd-a1bd95eadd4b,LG,"Lg G8 Thinq",256GB,2019,56000,0.4
+9adb9914-8b83-44e7-af2f-712c53c7438e,LG,"Lg G8x Thinq",32GB,2019,18000,0.4
+49e3968b-67ef-46ba-b6f9-48816682ad25,LG,"Lg K41s",64GB,2020,20000,0.4
+c5c9f345-8a60-4f43-ad04-207c0daafe12,LG,"Lg K51s",64GB,2020,22000,0.4
+46f48684-8c25-44da-b292-d00fa899f7c8,LG,"Lg K61",128GB,2020,26000,0.4
+8653676a-b9c5-41cb-b310-f0637a8271cb,LG,"Lg K92 5g",64GB,2020,28000,0.4
+dd4c9fca-b940-44c0-b8b0-a965356871d7,LG,"Lg Stylo 6",64GB,2020,36000,0.4
+ae8ff7f8-1c44-4dda-b5c3-9d919c255593,LG,"Lg V30",128GB,2017,44000,0.4
+acdaec92-8d3d-482a-9dbd-ceb8d1f594f3,LG,"Lg V30s Thinq",256GB,2018,48000,0.4
+e08e666f-4268-4f82-84ee-0ecba8660134,LG,"Lg V30s Thinq",64GB,2018,52000,0.4
+101891e9-e664-4ff1-881d-12498a17abc8,LG,"Lg V40 Thinq",128GB,2018,60000,0.4
+9c261722-55cc-4568-bdf0-dd93b56b6857,LG,"Lg V40 Thinq",256GB,2018,68000,0.4
+7671beb0-317a-4be3-b929-a630c9c2b430,LG,"Lg V50 Thinq 5g",128GB,2019,88000,0.4
+6507451d-7fa5-4418-8e07-fbbaf9229319,LG,"Lg V50 Thinq 5g",256GB,2019,80000,0.4
+94bf682f-7389-4c48-b76b-885bef053239,LG,"Lg V60 Thinq 5g",128GB,2020,40000,0.4
+e30bb321-2ce2-4ce0-8793-53dd0d3d72c4,LG,"Lg V60 Thinq 5g",256GB,2020,100000,0.4
+92648afe-68e3-4cdc-9b6e-e3a262aeddb3,LG,"Lg Velvet 4g",128GB,2020,50000,0.4
+49872c08-9f8c-4993-9d12-01635682906d,LG,"Lg Velvet 5g",128GB,2020,80000,0.4
+647eba2b-332a-4d65-9ddc-73b7bf605f28,LG,"Lg Wing 5g",256GB,2020,92000,0.4
+d5cf5527-304d-466e-a064-89bca2c089cb,Motorola,"Edge 50 Pro",256GB,2025,167269,1
+c43547c7-48e6-45f6-9cca-14357d6f6f4b,Motorola,"Edge 50 Pro",512GB,2025,252293,1.15
+676feeeb-f111-4ad3-9078-ea1b4f0fa129,Motorola,"Edge 50 Ultra",256GB,2025,231405,1.15
+00127af0-7f77-4041-afdc-af14b934dd2e,Motorola,"Edge 50 Ultra",512GB,2025,154642,1.15
+3bdc3ca0-7889-4ea5-bf91-2d40efa2faef,Motorola,"G84",256GB,2025,113809,1
+aaab7fde-6ed0-4b16-8bdd-c744ff6a2920,Motorola,"Moto G54",128GB,2025,133520,1.15
+5cc736d7-8ca6-4849-a0c9-6d3ab8439782,Motorola,"Moto G54",256GB,2025,83718,1.15
+ef5a1653-acb2-429b-a1f0-5098e22ae2d4,Motorola,"Moto G85",128GB,2025,58843,1.15
+3cbf7fa7-9077-4ef7-90c2-c81de318b422,Motorola,"Moto G85",256GB,2025,125332,1.15
+bb8a314f-1a65-4822-8955-e71aeeaadbc6,Motorola,"Motorola Edge (2020)",128GB,2021,48000,0.4
+c0cb328d-9311-4015-96fb-1b7a98736120,Motorola,"Motorola Edge (2022)",128GB,2021,40000,0.4
+d9e4abb2-8b50-4322-93b6-5756b82d2fea,Motorola,"Motorola Edge (2022)",256GB,2021,56000,0.4
+31a0ab29-cc5b-4dc6-9a10-41329b9b34d6,Motorola,"Motorola Edge 20",128GB,2021,36000,0.4
+0fb6dcf5-06fa-49fb-b4e2-f393234e5c9b,Motorola,"Motorola Edge 20",256GB,2021,48000,0.4
+808cce2c-3f31-475e-a89a-9b783d24bd10,Motorola,"Motorola Edge 20 Fusion",128GB,2021,32000,0.4
+c043f76e-4969-47ee-9acc-db4d059424fc,Motorola,"Motorola Edge 20 Lite",128GB,2022,52000,0.4
+5f3b4e22-26ef-4a0c-86d6-83e8c1a40a35,Motorola,"Motorola Edge 20 Pro",128GB,2022,56000,0.4
+7692623b-4d63-4ef4-9e91-24838ef4de08,Motorola,"Motorola Edge 20 Pro",256GB,2022,60000,0.4
+b378691d-5984-4119-800a-5a9a4b4986b4,Motorola,"Motorola Edge 30",128GB,2022,48000,0.4
+a5669a67-11bb-47e7-9968-1f8b01900077,Motorola,"Motorola Edge 30",256GB,2022,64000,0.4
+acf5933d-5689-441a-8b88-0d8a5779c01c,Motorola,"Motorola Edge 30 Fusion",256GB,2022,56000,0.4
+c8cd5693-f6b1-4225-bbdc-0821b7521a4d,Motorola,"Motorola Edge 30 Fusion",64GB,2022,44000,0.4
+c9af9ffd-05fd-4299-91ae-7a73dbf39cc2,Motorola,"Motorola Edge 30 Neo",128GB,2022,52000,0.4
+b7adf5e5-dc28-434a-819e-f5614a2645a7,Motorola,"Motorola Edge 30 Pro",128GB,2022,80000,0.4
+67c2cf41-98ee-432a-af96-8b0542160506,Motorola,"Motorola Edge 30 Pro",256GB,2022,76000,0.4
+cdf28f35-0dd7-4dd0-9cc2-67b3cb562f7f,Motorola,"Motorola Edge 30 Ultra",128GB,2023,64000,0.4
+3b934339-692a-4ccb-afc5-bd23d645caf0,Motorola,"Motorola Edge 30 Ultra",256GB,2023,88000,0.4
+94a9d908-71b5-4dec-b81d-0b547c40b027,Motorola,"Motorola Edge 30 Ultra",512GB,2023,96000,0.4
+b8756d3b-f5e7-46b3-abd3-390097e0b925,Motorola,"Motorola Edge 40",128GB,2023,56000,0.4
+2e2871fd-cbdf-4761-ba02-1e1fd1e1ba4a,Motorola,"Motorola Edge 40",256GB,2023,72000,0.4
+bd906e38-06a1-4d5a-9240-0b53f0622c97,Motorola,"Motorola Edge 40 Fusion",128GB,2023,52000,0.4
+127129c3-1dd9-4b71-b75d-b1def537a29e,Motorola,"Motorola Edge 40 Fusion",256GB,2023,64000,0.4
+3e106db6-a711-4e7a-a2d6-d2cbf6a9b33b,Motorola,"Motorola Edge 40 Neo",128GB,2023,76000,0.4
+e13c5dce-ba81-442a-8d4a-43dd037382a4,Motorola,"Motorola Edge 40 Neo",256GB,2023,60000,0.4
+6e9ad736-f1f8-4b08-a928-791c7daa1c7d,Motorola,"Motorola Edge 40 Pro",256GB,2020,84000,0.4
+c4a2159d-e6c0-4cc3-bfb2-9fa091bed362,Motorola,"Motorola Edge 40 Pro",512GB,2020,92000,0.4
+495a04f2-6566-4363-bd89-3d8bb5663aa7,Motorola,"Motorola Edge 50",128GB,2020,54000,0.4
+3135a320-488f-4cbf-bda2-529081bbcf57,Motorola,"Motorola Edge 50 Fusion",128GB,2020,56000,0.4
+ce83e69b-f44d-4db2-b582-0f498dbd02c2,Motorola,"Motorola Edge 50 Fusion",256GB,2020,62000,0.4
+231c8f97-c442-4d4d-a528-38cea741e9b3,Motorola,"Motorola Edge 50 Fusion",512GB,2020,70000,0.4
+6423afd4-61f6-4f15-a4da-970f82cd69e7,Motorola,"Motorola Edge 50 Neo",128GB,2020,80000,0.4
+1146a7f8-808b-4e34-8b03-db67a51d832f,Motorola,"Motorola Edge 50 Neo",256GB,2020,64000,0.4
+d2078c4f-10e0-43a7-b387-031113991f73,Motorola,"Motorola Edge 50 Ultra",1024GB,2020,108000,0.4
+5e5c91c5-0af1-4590-bfee-985be13bee37,Motorola,"Motorola Edge 50 Ultra",128GB,2020,78000,0.4
+dce05038-8373-4615-9c8a-1cc49d57316a,Motorola,"Motorola Edge 60 Fusion",256GB,2020,86000,0.4
+d8bb4244-069c-401e-ad0e-af8a36f9623d,Motorola,"Motorola Edge 60 Pro",512GB,2020,100000,0.4
+1d793a36-1f39-4292-884e-5c2607e41af1,Motorola,"Motorola Edge 60 Ultra",1024GB,2020,112000,0.4
+2e524dda-47f5-4784-96e9-6c5f3e7fe6f2,Motorola,"Motorola Edge 60 Ultra",256GB,2020,36000,0.4
+5ab19fc2-7eea-42af-8b86-123caa6535ed,Motorola,"Motorola Edge+ (2020)",128GB,2020,60000,0.4
+da729923-f4a5-4a4e-b356-c76fb1f1b6e3,Motorola,"Motorola Edge+ (2022)",256GB,2022,68000,0.4
+b1ad6f64-2f24-40e1-be24-50b7b56ab756,Motorola,"Motorola Edge+ (2022)",32GB,2022,12000,0.4
+65cf29ce-239c-40b8-8d83-c71a0bba5fd4,Motorola,"Motorola Edge+ (2022)",512GB,2022,76000,0.4
+5db0b346-b63b-4090-bb38-7f88e82dd16a,Motorola,"Motorola Moto E13",32GB,2023,14000,0.4
+ffa45a41-5eaf-40ff-8345-81936aa15613,Motorola,"Motorola Moto E13",64GB,2023,14000,0.4
+141a5d0f-78b5-4dd7-90e1-1aba2c27c101,Motorola,"Motorola Moto E20",32GB,2021,16000,0.4
+f5449cb3-1639-49d5-aa07-83bdac606b40,Motorola,"Motorola Moto E20",64GB,2021,16000,0.4
+03c858ef-0359-4c9b-85af-b3c90257dfcc,Motorola,"Motorola Moto E22",64GB,2022,18000,0.4
+d3c85b8a-f4dc-4c14-9c9d-6b4ae0eff5ac,Motorola,"Motorola Moto E22s",128GB,2022,20000,0.4
+a7d8f29e-8333-4ce3-ab45-11c1460e816b,Motorola,"Motorola Moto E22s",64GB,2022,20000,0.4
+fd93150c-d6cd-476f-b71e-abc8ed92361a,Motorola,"Motorola Moto E40",128GB,2021,22000,0.4
+9df4cb90-1445-4826-862b-c99a0809a26b,Motorola,"Motorola Moto E40",64GB,2021,26000,0.4
+1a77df97-dd28-4e8e-b2ec-2968d1108830,Motorola,"Motorola Moto G13",128GB,2023,30000,0.4
+61d0204c-3ec8-4718-af26-c14129a00ef9,Motorola,"Motorola Moto G13",64GB,2023,28000,0.4
+535e5024-e769-47ff-8986-ff85262ed30e,Motorola,"Motorola Moto G14",128GB,2023,32000,0.4
+12536f8c-3fd3-4d08-a531-0f3acfe74fad,Motorola,"Motorola Moto G14",64GB,2023,30000,0.4
+e5b9c541-9985-4cad-b4ea-62627e590a8f,Motorola,"Motorola Moto G23",128GB,2023,34000,0.4
+d3790742-f737-48fd-9845-73b94c57777f,Motorola,"Motorola Moto G23",64GB,2023,32000,0.4
+b8a88199-9f7c-4b56-ab1e-52e86a46f748,Motorola,"Motorola Moto G32",128GB,2022,36000,0.4
+6bf7eb1a-0cc5-4b20-9330-3d4afa84859b,Motorola,"Motorola Moto G32",64GB,2022,34000,0.4
+be9007d0-bd38-47c4-8ca9-1b52792419a5,Motorola,"Motorola Moto G34 5g",128GB,2023,38000,0.4
+49b712e5-e6cc-4b0f-9af9-e5b06726f0d2,Motorola,"Motorola Moto G34 5g",64GB,2023,36000,0.4
+14722159-7aac-4773-a33b-625a64cad469,Motorola,"Motorola Moto G53 5g",128GB,2022,42000,0.4
+dfa03798-2439-446e-8b22-4059563ce66e,Motorola,"Motorola Moto G54 5g",128GB,2023,44000,0.4
+6ba75d36-ddda-4613-8424-fd5aa67c111a,Motorola,"Motorola Moto G54 5g",256GB,2023,44000,0.4
+3c02b983-accf-482d-9ab3-b67b162d6ec9,Motorola,"Motorola Moto G73 5g",128GB,2023,48000,0.4
+49e40f80-4584-42db-b7aa-5eb6e730859b,Motorola,"Motorola Moto G73 5g",256GB,2023,52000,0.4
+91ec23ab-f1e5-4a06-8a6d-a22f1645cb7c,Motorola,"Motorola Moto G84 5g",128GB,2023,58000,0.4
+c9206afa-f243-459e-a1f5-053000fd59f8,Motorola,"Motorola Moto G84 5g",256GB,2023,56000,0.4
+61beceae-244c-4f95-a942-4008b3074554,Motorola,"Motorola Razr 40",256GB,2023,66000,0.4
+1d97e791-27f1-441a-8d8e-0feccbc736a5,Motorola,"Motorola Razr 40 Ultra",128GB,2023,140000,0.4
+07eb58b6-f9b4-449f-b8fc-df7ca51ed4d9,Motorola,"Motorola Razr 40 Ultra",512GB,2023,92000,0.4
+5991243c-4833-461f-aadc-b80fa928ee66,Motorola,"Razr 50",256GB,2025,217879,1.15
+95847361-fd6f-4587-a31e-07a036bf914d,Motorola,"Razr 50 Ultra",256GB,2025,226305,1.15
+fb0d15bf-c8fd-4126-abee-06cfc9f8e1fa,Motorola,"Razr 50 Ultra",512GB,2025,316827,1.15
+7bacd994-0ede-4333-a772-c97ae04aa730,Motorola,"ThinkPhone",256GB,2025,220983,1.15
+bc1cbaf9-650c-465f-a9a5-775769855400,Nothing,"Nothing Phone (1)",128GB,2022,127912,1
+ada346d3-7587-4dc5-8e05-cbe7bb6ef922,Nothing,"Nothing Phone (2)",128GB,2023,122625,1
+c1a0a564-8ef8-45dd-92b6-736eed782eba,Nothing,"Phone (2a)",128GB,2025,135029,1.15
+45df5260-7d16-412a-9ec7-726bad3e5e86,Nothing,"Phone (2a)",256GB,2025,152175,1.15
+cb56602c-aa17-4b56-9cdb-53e245221f13,Nothing,"Phone (2a) Plus",128GB,2025,153510,1.15
+a3c494c0-2ff3-4b70-8d85-728a0e84b273,Nothing,"Phone (2a) Plus",256GB,2025,154257,1.15
+4ede2f55-0e3a-42fd-9900-04e061be38cc,Nothing,"Phone (3)",128GB,2025,143327,1.15
+ed96cee0-f2f7-4945-8344-0da4cf9907e7,Nothing,"Phone (3)",256GB,2025,279110,1.15
+3f878ebc-bcc0-4136-9cfd-f76ca37d90d3,Nothing,"Phone (3)",512GB,2025,454070,1.15
+f68a2d5c-405f-4a42-ae74-098187e3e77e,OnePlus,"12",256GB,2026,215810,1
+62e81824-9a6b-4d7c-88f5-4f567f915c33,OnePlus,"12",512GB,2025,289671,1.15
+3bbdb106-2e2f-4afd-8d81-327df137c3b4,OnePlus,"13",256GB,2025,285178,1.15
+366da256-e897-48ba-b83b-7a06ddce496f,OnePlus,"13",512GB,2025,427034,1.15
+bb4ddabd-2ee9-4b35-b71e-945611b6cc21,OnePlus,"13R",128GB,2025,368613,1.15
+137be128-870f-40d0-a8ec-066651a5fb1b,OnePlus,"13R",256GB,2025,338998,1.15
+9e77b55e-eaa4-4e01-ba71-b0ffc8240730,OnePlus,"Nord 4",128GB,2025,132011,1.15
+418597ce-0cd3-4234-812d-0eaebf102183,OnePlus,"Nord 4",256GB,2026,96590,1
+144556a9-85b1-4dc9-8538-c64cb0c30a98,OnePlus,"Nord 4",512GB,2025,158414,1.15
+d147bfed-36ef-4bca-b303-e1d2a1db7344,OnePlus,"Nord CE4",128GB,2025,65628,1.15
+ad57cc8e-8b76-4617-ad21-a4a7194ea1cc,OnePlus,"Nord CE4",256GB,2025,143327,1.15
+a8d64953-e570-462b-a47f-98567e39d317,OnePlus,"Oneplus 10 Pro",128GB,2022,120000,0.4
+cc534bad-1bb2-43fb-8709-a61ce96fb877,OnePlus,"Oneplus 10 Pro",256GB,2022,160000,0.4
+9dbd8a0a-3d26-443b-89ce-d961f4b43fb6,OnePlus,"Oneplus 10 Pro",512GB,2022,180000,0.4
+94abd65a-672d-4fab-a48f-4e32af786c44,OnePlus,"Oneplus 10r",128GB,2022,128000,0.4
+759e81dd-2970-425c-8d66-a900f588b10b,OnePlus,"Oneplus 10r",256GB,2022,140000,0.4
+f9b0894e-a5fd-4024-91a6-cde99c114b64,OnePlus,"Oneplus 10t",128GB,2022,180000,0.4
+3f9faacc-4765-4625-8916-d357f727d319,OnePlus,"Oneplus 10t",256GB,2022,148000,0.4
+a4f55dcd-3259-4619-a5cd-343837c1e8ef,OnePlus,"Oneplus 11",128GB,2023,160000,0.4
+41c2b8d3-7a77-4035-8551-6d1cb900f6e3,OnePlus,"Oneplus 11",256GB,2023,200000,0.4
+c9f1e146-c062-4a7e-8d56-958d94b03357,OnePlus,"Oneplus 11",512GB,2023,220000,0.4
+9ce6ede3-d209-49b5-8b97-eb53f498d841,OnePlus,"Oneplus 11r",256GB,2023,180000,0.4
+254899ee-ff7b-4da2-bd46-88887fadca80,OnePlus,"Oneplus 12",1024GB,2023,260000,0.4
+4a43d1fa-1130-487e-9bbe-129126e02a48,OnePlus,"Oneplus 12",128GB,2023,200000,0.4
+fe688cf4-6a4f-4ce1-8a55-511d391f1dcb,OnePlus,"Oneplus 12r",16GB,2024,16000,0.4
+c0e7bb1b-04ea-403d-8813-e2eebdeb523e,OnePlus,"Oneplus 12r",256GB,2024,220000,0.4
+a0582133-ca8e-4103-841b-ef2af5bf0edc,OnePlus,"Oneplus 2",64GB,2015,18000,0.4
+ce83fede-082d-4508-a71a-c08cb5d27812,OnePlus,"Oneplus 3",64GB,2016,22000,0.4
+75295474-7d2b-465d-8671-d11521b70757,OnePlus,"Oneplus 3t",128GB,2016,18000,0.4
+eb5ad167-1559-4ff3-9a5a-7ce3025dade7,OnePlus,"Oneplus 3t",64GB,2016,20000,0.4
+797736aa-2d96-4382-9393-d4ed4d0ef0f8,OnePlus,"Oneplus 5",128GB,2017,22000,0.4
+2c8730cf-9189-472f-a4ae-91422ff7a29e,OnePlus,"Oneplus 5",64GB,2017,24000,0.4
+eb977285-5a18-480e-b37c-e9ec040b30d7,OnePlus,"Oneplus 5t",128GB,2017,20000,0.4
+e86fd4c4-3a81-4641-9642-7f2a9fbff743,OnePlus,"Oneplus 5t",64GB,2017,22000,0.4
+3decd703-7b34-4b15-be93-36cd3e96c8b3,OnePlus,"Oneplus 6",128GB,2018,24000,0.4
+e63c5dc3-3ebb-44f3-83ae-801384f9e90b,OnePlus,"Oneplus 6",256GB,2018,26000,0.4
+3f9bbeb8-ecff-4c6c-872c-693daa68ad59,OnePlus,"Oneplus 6t",256GB,2018,24000,0.4
+4928b9f5-a5bc-478b-9a7d-03e666e02976,OnePlus,"Oneplus 6t",512GB,2018,26000,0.4
+fa8e476f-20d0-4885-88d4-c4930ca11216,OnePlus,"Oneplus 6t Mclaren",128GB,2018,24000,0.4
+d50ae1f8-fbc3-44ce-b3b5-fd75873347b3,OnePlus,"Oneplus 7",128GB,2019,28000,0.4
+96fc963e-3a66-41ce-8d6c-c27570a1a007,OnePlus,"Oneplus 7",256GB,2019,26000,0.4
+d0b6cd5e-9e61-4799-80ba-92d1de2315d6,OnePlus,"Oneplus 7 Pro",256GB,2019,30000,0.4
+d7b0c019-83f7-4cda-b0a5-bc2483fb530a,OnePlus,"Oneplus 7 Pro",512GB,2019,26000,0.4
+36489315-198a-4b0d-8445-45aa67f26836,OnePlus,"Oneplus 7 Pro 5g",128GB,2019,30000,0.4
+8c1176b7-d260-4069-9975-7cba7ca17d7d,OnePlus,"Oneplus 7t",128GB,2019,28000,0.4
+474a7187-e6a1-48e7-84d4-fb91d7343dcb,OnePlus,"Oneplus 7t",256GB,2019,32000,0.4
+637dc225-bfcf-4363-bd66-f971e1e8671e,OnePlus,"Oneplus 7t Pro",256GB,2019,30000,0.4
+265ca460-1553-4c4f-9589-b2d5cf1c96d6,OnePlus,"Oneplus 7t Pro Mclaren",128GB,2019,34000,0.4
+1361b50b-9f9c-4521-b91e-bcd208321373,OnePlus,"Oneplus 8",128GB,2020,32000,0.4
+95af6978-e128-4800-b8b5-2ae32f3ec4e2,OnePlus,"Oneplus 8",256GB,2020,48000,0.4
+4c7db735-9e0b-4510-b924-84872580e7dc,OnePlus,"Oneplus 8 Pro",128GB,2020,36000,0.4
+f653647f-1cc5-409f-a677-17d961eda440,OnePlus,"Oneplus 8 Pro",256GB,2020,34000,0.4
+0d59539b-9745-4a74-9b37-36c576e23337,OnePlus,"Oneplus 8t",128GB,2020,34000,0.4
+15519023-e644-43f3-9d22-14093a875b6d,OnePlus,"Oneplus 8t",256GB,2020,32000,0.4
+ee89e7db-4280-449f-b779-6e369eb5e2cb,OnePlus,"Oneplus 9",128GB,2021,38000,0.4
+6f8f0618-90ad-40ae-8030-44e1a5adbe59,OnePlus,"Oneplus 9",256GB,2021,36000,0.4
+7a0d2356-745a-4221-8d45-d3179da60593,OnePlus,"Oneplus 9 Pro",128GB,2021,44000,0.4
+3669f9a5-de6c-4af3-a637-43b6f5860287,OnePlus,"Oneplus 9 Pro",256GB,2021,40000,0.4
+4b4eb16f-9601-4789-bbb1-432ce886a5d0,OnePlus,"Oneplus 9rt",128GB,2021,52000,0.4
+9e616372-c112-46af-ac97-47b2ced7732e,OnePlus,"Oneplus 9rt",256GB,2021,48000,0.4
+a039a9d2-1426-44f7-a201-df63abf3c588,OnePlus,"Oneplus Nord",128GB,2020,44000,0.4
+4730635c-8713-4d89-98d0-468ca1d36536,OnePlus,"Oneplus Nord",256GB,2020,56000,0.4
+6d5dde07-b02a-4786-99ec-314eb044fc0b,OnePlus,"Oneplus Nord 2",128GB,2021,48000,0.4
+9975f37a-64d9-4c21-8b33-6d62e60733c2,OnePlus,"Oneplus Nord 2",256GB,2021,60000,0.4
+9fb70c47-f9b8-4e02-a36b-9ec5566e8f27,OnePlus,"Oneplus Nord 2t",128GB,2022,69200,0.4
+79492a09-af0b-4c70-afc7-d16cf28bbb9a,OnePlus,"Oneplus Nord 2t",256GB,2022,52000,0.4
+0d45c9c9-daf5-45f5-88e7-5204466ebf6f,OnePlus,"Oneplus Nord 3",128GB,2023,38000,0.4
+e776d07f-a20b-4b65-812f-8320de49fa5f,OnePlus,"Oneplus Nord 3",256GB,2023,36000,0.4
+462149ed-73c9-4e98-8648-b0e69d02d10d,OnePlus,"Oneplus Nord Ce 2",256GB,2022,40000,0.4
+c45d9750-373d-47eb-b514-d3475f6708ce,OnePlus,"Oneplus Nord Ce 2",64GB,2022,42000,0.4
+ee86f8af-17dd-435e-96ff-36bfae8e0cac,OnePlus,"Oneplus Nord Ce 2 Lite",128GB,2022,42000,0.4
+63c4e392-7a57-4925-93da-63482c53472e,OnePlus,"Oneplus Nord Ce 3",128GB,2023,48000,0.4
+c98b9755-810c-4a4b-84f9-c526e1802af7,OnePlus,"Oneplus Nord Ce 3",256GB,2023,46000,0.4
+760c2765-add1-45b7-b36a-95150f87b093,OnePlus,"Oneplus Nord Ce 3 Lite",128GB,2023,46000,0.4
+515ad2e7-3ce7-43be-a6f7-e29e05a9b16a,OnePlus,"Oneplus Nord Ce 3 Lite",256GB,2023,44000,0.4
+76741e35-794a-4472-acf5-fde315cdad9f,OnePlus,"Oneplus Nord Ce 4",16GB,2024,14000,0.4
+44c52735-ff85-4b74-8f5f-439fed450a43,OnePlus,"Oneplus Nord Ce 4",256GB,2024,48000,0.4
+48ff5c73-b761-4781-be09-56661582a8de,OnePlus,"Oneplus One",256GB,2014,180000,0.4
+1149986a-15f5-4ce6-bbf1-8d2f53521d84,OnePlus,"Oneplus One",64GB,2014,48000,0.4
+65d26d5c-5a6e-4274-91a2-8d79b7504c03,OnePlus,"Oneplus Open",256GB,2023,60000,0.4
+b57580ad-91ca-43b8-9a50-f2962372e7eb,OnePlus,"Open",512GB,2025,479337,1.15
+82593237-cd3d-4ae3-b3a1-825291164940,Oppo,"A2",128GB,2025,52292,1.15
+c4e59b8b-4b7e-475a-8df0-7ee97bdafa76,Oppo,"A2",256GB,2025,62196,1.15
+95541b7d-ec1f-4367-8b9f-b47cf379df99,Oppo,"A3 Pro",128GB,2025,49029,1.15
+953638db-7e2d-4133-a9f6-9ead0f66aa3e,Oppo,"A3 Pro",256GB,2025,32798,1
+b37d5080-4ca2-4d03-854d-de19cad64999,Oppo,"Find X5",256GB,2023,60000,0.4
+05fe03b9-f9ad-4e3a-9751-89146a9e48f0,Oppo,"Find X5",512GB,2022,60000,0.4
+817e7129-64cc-4b4e-8156-795f5f407e21,Oppo,"Find X5 Pro",512GB,2023,68000,0.4
+2f8bbf84-c46c-4706-af8c-5016ec542746,Oppo,"Find X6",256GB,2023,72000,0.4
+21a2fce6-396a-4e65-a6eb-3036b4ab06e6,Oppo,"Find X6 Pro",256GB,2024,64000,0.4
+90c53b48-f441-4477-9b0d-0a22c2552f1f,Oppo,"Find X6 Pro",512GB,2024,60000,0.4
+2fac3942-b574-4285-800e-4055be199d58,Oppo,"Find X7",1024GB,2024,72000,0.4
+e901258e-1432-4da8-a6a2-90d8790984f4,Oppo,"Find X7",256GB,2024,80000,0.4
+991f4fec-a030-4f48-b4a5-3153c5b32f83,Oppo,"Find X7",512GB,2024,68000,0.4
+a27d16c2-0159-4b6e-bc70-25283f1dea0b,Oppo,"Find X7 Ultra",1024GB,2025,88000,0.4
+39e601b7-5098-4718-af34-d8d10d3a286b,Oppo,"Find X7 Ultra",256GB,2025,100000,0.4
+6bdce5d0-d321-4a6a-8d09-0b61217e153f,Oppo,"Find X7 Ultra",512GB,2025,84000,0.4
+fbeb29c1-c916-4c4e-845a-a70062000804,Oppo,"Find X8",1024GB,2025,32000,0.4
+e36c5732-b99c-4ebb-a14a-6781f50567bd,Oppo,"Find X8",256GB,2025,567573,1.15
+1efc867f-14ec-451a-a4ec-fd8edbee246e,Oppo,"Find X8",512GB,2025,584773,1.15
+a34000d0-96c7-4d6d-92d4-cab2b9430e05,Oppo,"Find X8 Pro",256GB,2025,567573,1.15
+5d04da64-654c-43a0-aa8d-e098e58f6e47,Oppo,"Find X8 Pro",512GB,2025,584773,1.15
+7ecb269d-5307-41e4-93a8-6785811377dd,Oppo,"Find X8 Ultra",1024GB,2018,40000,0.4
+63751a7a-68b0-4447-a60d-b96118c2d5db,Oppo,"Find X8 Ultra",32GB,2019,44000,0.4
+c131d977-c415-4107-9e6f-82f647b2f2e0,Oppo,"Find X8 Ultra",512GB,2018,36000,0.4
+7248c181-676e-4812-99ec-c7682a77f345,Oppo,"Oppo A1",32GB,2019,44000,0.4
+caf60e54-2143-48a1-b96e-c0341d493ef0,Oppo,"Oppo A1",64GB,2019,40000,0.4
+68032a0e-6269-4762-9c1d-f2a88b916b00,Oppo,"Oppo A12",64GB,2019,48000,0.4
+ff00bf86-22c9-41cf-86df-794510c28db8,Oppo,"Oppo A12e",32GB,2019,52000,0.4
+3526f18b-1e85-49d8-ae64-971ea00a6ffe,Oppo,"Oppo A15",64GB,2019,56000,0.4
+619df53a-0581-429a-9147-a50f0e5677b3,Oppo,"Oppo A15s",128GB,2019,60000,0.4
+54ad8cb1-98b3-446d-8e0e-069041ae533a,Oppo,"Oppo A15s",32GB,2019,64000,0.4
+1ba385be-d674-4a3f-a8a0-35bf151d0715,Oppo,"Oppo A16",32GB,2019,38000,0.4
+0b2bc834-ed69-4b6d-a7b4-d06dfaf63a9f,Oppo,"Oppo A16",64GB,2019,36000,0.4
+cf69291d-8ad1-4300-bfb4-a4c33788a014,Oppo,"Oppo A16k",64GB,2019,40000,0.4
+32c752e9-d6fa-4f2d-a5ef-7d5d83f1b55b,Oppo,"Oppo A16s",128GB,2019,36000,0.4
+f0c73633-1e3f-4a32-93c4-ca1e384b739f,Oppo,"Oppo A16s",64GB,2019,38000,0.4
+aba21929-8879-4e78-9eba-46c0e042b065,Oppo,"Oppo A17",64GB,2019,40000,0.4
+e0d0d29d-e2ff-4192-b93a-1a3ddc096652,Oppo,"Oppo A17k",64GB,2018,32000,0.4
+aef56b98-bc92-4143-a08c-8eb281e72088,Oppo,"Oppo A18",128GB,2018,34000,0.4
+96a3b142-9a7e-4051-9a46-17248167a46d,Oppo,"Oppo A18",32GB,2018,40000,0.4
+11fae93b-17f9-464b-b4d5-9fdf5a7529bd,Oppo,"Oppo A1k",128GB,2018,44000,0.4
+531674b8-511b-4e69-8e71-d4df8a87ce95,Oppo,"Oppo A3",128GB,2018,48000,0.4
+f2faebe8-9471-4c4c-bf8b-d5b4c3cd3e39,Oppo,"Oppo A3 5g",256GB,2018,52000,0.4
+46718798-61e2-479d-8b58-332b004c19eb,Oppo,"Oppo A3 Pro 5g",512GB,2021,16000,0.4
+20307faf-4835-497e-bc01-553cd3514a7f,Oppo,"Oppo A3 Pro 5g",64GB,2021,18000,0.4
+3ef35a08-7a6f-4021-a53f-8c8bb1d768ad,Oppo,"Oppo A31 (2020)",128GB,2021,180000,0.4
+7f31516e-76ec-45c3-ac91-2d2d18409920,Oppo,"Oppo A31 (2020)",64GB,2018,200000,0.4
+32263c06-23ea-4966-9655-1370c3883e1d,Oppo,"Oppo A38",128GB,2018,220000,0.4
+74f80775-da06-42c0-9aee-c96a2d5d2259,Oppo,"Oppo A38",16GB,2018,240000,0.4
+ae692ee6-df29-46d5-a641-15b10fecad56,Oppo,"Oppo A3s",32GB,2018,160000,0.4
+1acdb80f-a8f7-48c3-9dce-cbd796aad93c,Oppo,"Oppo A3s",64GB,2018,168000,0.4
+f285eaeb-2bbc-42e9-a014-b8ce60706ced,Oppo,"Oppo A3x 4g",128GB,2018,176000,0.4
+5a6663dd-ba69-4876-bf56-fa79017f8dc2,Oppo,"Oppo A3x 4g",32GB,2018,14000,0.4
+b7ff8b1e-202e-4e9f-b386-8af91e9e12ac,Oppo,"Oppo A5",128GB,2018,20000,0.4
+d91bf267-27dc-4b8b-a695-4da645404422,Oppo,"Oppo A5",64GB,2018,16000,0.4
+07861168-f010-4bcf-8a40-4b32b4e5a93c,Oppo,"Oppo A5 (2020)",128GB,2018,18000,0.4
+a0e12481-b586-4054-a066-da559f946a06,Oppo,"Oppo A5 5g",128GB,2018,20000,0.4
+889fffb2-b345-4273-9ca4-6534efe5ed7b,Oppo,"Oppo A5 5g",256GB,2018,22000,0.4
+d6481f19-96f4-4ff0-862c-959f484d39b3,Oppo,"Oppo A5 Pro",128GB,2023,24000,0.4
+613cb9c6-b071-4608-867e-a32796f525fc,Oppo,"Oppo A5 Pro",256GB,2018,22000,0.4
+cdd80e66-f3fb-43b7-82b7-590faccd540f,Oppo,"Oppo A5 Pro 5g",256GB,2023,26000,0.4
+03da3691-8a92-4a4c-811f-8f6967448d2d,Oppo,"Oppo A5 Pro 5g",64GB,2023,168000,0.4
+3bb3d830-8b21-4cd7-a95e-b19f1177f9a0,Oppo,"Oppo A52",128GB,2023,176000,0.4
+a2ea188e-1311-485a-b699-8da528094d5a,Oppo,"Oppo A52",64GB,2023,184000,0.4
+5aca9c2a-3bd4-4215-bb7d-4bf331f8c999,Oppo,"Oppo A53",128GB,2023,172000,0.4
+81239917-0d52-416b-9aca-d1f3e650cab4,Oppo,"Oppo A53",64GB,2023,180000,0.4
+2a1ab37f-1651-468d-a018-cdd21dbbbd95,Oppo,"Oppo A53 5g",128GB,2023,188000,0.4
+0fafef2c-def0-4f28-b4fb-9332a635a706,Oppo,"Oppo A53 5g",64GB,2023,196000,0.4
+c8652c8c-9fc3-457e-a4ad-40cfed9bb503,Oppo,"Oppo A53s",128GB,2023,180000,0.4
+8e2d6ade-e6d0-43b4-b0ce-b664533dfc1d,Oppo,"Oppo A53s 5g",64GB,2023,196000,0.4
+44bfc2fa-02d5-41f9-ab9b-cb38552874a3,Oppo,"Oppo A54",128GB,2023,204000,0.4
+f04aba19-7ab9-4e7a-99d1-11e2ff2efa9a,Oppo,"Oppo A54",64GB,2023,192000,0.4
+3fa3cd1c-b040-43bf-8e97-f718c857be1a,Oppo,"Oppo A54 5g",128GB,2023,200000,0.4
+36ee8301-c4dd-4f8a-bab9-01b03e894951,Oppo,"Oppo A54 5g",64GB,2023,208000,0.4
+db90d8bb-c1fc-42fe-9282-c19621bc899c,Oppo,"Oppo A55",128GB,2023,216000,0.4
+55802f70-3bfd-486f-88dd-fc2686fe0d75,Oppo,"Oppo A55",64GB,2023,200000,0.4
+ca6da5cd-a8d6-4c41-8c8d-6330c1030240,Oppo,"Oppo A55 5g",128GB,2023,208000,0.4
+49083dba-690f-49bc-b6c9-db3f94d96e1a,Oppo,"Oppo A55 5g",64GB,2023,216000,0.4
+0f4dc6a5-be8f-4e7c-b7fc-4d62fb4ba48b,Oppo,"Oppo A57",128GB,2023,224000,0.4
+a76acc28-0b9c-4f84-b0e9-7faa0e1aeb02,Oppo,"Oppo A57",64GB,2023,220000,0.4
+9c37cf44-9c81-43d4-94e2-efb066f2e012,Oppo,"Oppo A57s",128GB,2023,228000,0.4
+596818a4-6307-494f-8e92-34048a4065f5,Oppo,"Oppo A58",256GB,2018,244000,0.4
+ae3abfd5-7e4c-4950-a2b4-2ceedb1bf03f,Oppo,"Oppo A58",64GB,2018,240000,0.4
+4e027ed4-6f43-4ba2-a4d7-2c1d67a3caba,Oppo,"Oppo A5i",128GB,2018,248000,0.4
+3fd699f4-7114-41c9-9723-e3187ca085f9,Oppo,"Oppo A5i Pro",128GB,2018,260000,0.4
+9560f3d8-6a5a-4295-9e97-d9319708252f,Oppo,"Oppo A5i Pro",256GB,2018,264000,0.4
+b005ac4b-92ad-4c96-a812-4f68b0cf65e8,Oppo,"Oppo A5i Pro 5g",256GB,2018,268000,0.4
+702658c4-f12d-4042-b238-9247e61c1aab,Oppo,"Oppo A5i Pro 5g",64GB,2018,276000,0.4
+5cf49173-75e3-467a-a6f0-c78eb666df15,Oppo,"Oppo A5x",128GB,2018,284000,0.4
+b9e919ba-1d47-40f0-8d2f-239a069ee2c4,Oppo,"Oppo A5x",512GB,2018,18000,0.4
+dbdd5bdb-4a78-4c10-a6c5-0b81e0469d2a,Oppo,"Oppo A6",512GB,2018,20000,0.4
+c9f01777-8e63-478a-9024-cb2d3b1d45a1,Oppo,"Oppo A6 Pro",512GB,2018,22000,0.4
+d959bf8a-6ae2-4282-aa71-0be85546391b,Oppo,"Oppo A6 Pro 5g",1024GB,2018,24000,0.4
+b2c0c5cb-7b54-4364-a02a-3387b8928234,Oppo,"Oppo A6 Pro 5g",128GB,2018,26000,0.4
+2ef7d728-ad77-40f7-a6bd-0c3439047fe1,Oppo,"Oppo A6x",128GB,2018,22000,0.4
+c642fc4b-e54c-4f78-b68b-7c546b03b4ba,Oppo,"Oppo A6x",256GB,2018,20000,0.4
+788b114a-4cd1-48f7-a0fd-32a78d9a5b9a,Oppo,"Oppo A6x 5g",256GB,2018,24000,0.4
+b84f6fec-1548-4b51-8b5d-590079fea96d,Oppo,"Oppo A6x 5g",32GB,2025,26000,0.4
+e77821ea-8bdf-46d6-bf8a-d2d17d113c8c,Oppo,"Oppo A7",16GB,2018,18000,0.4
+b57c4f2c-ca9d-4e5c-a081-c274c04e8b22,Oppo,"Oppo A7",64GB,2025,16000,0.4
+c7c79fa7-b232-4811-9f79-3414d0abb6c4,Oppo,"Oppo A71",16GB,2018,19200,0.4
+fb3ca30a-6369-4df7-885c-6c6facbda5ac,Oppo,"Oppo A71 (2018)",32GB,2017,20800,0.4
+ef06f456-efb2-41df-97e9-8c39afc62868,Oppo,"Oppo A71 (2018)",64GB,2018,22000,0.4
+20ced847-6fde-465d-8370-e58d31b0311c,Oppo,"Oppo A72",128GB,2018,24000,0.4
+ecdcbb3e-92c6-48b8-85a7-c628d348bec4,Oppo,"Oppo A72 5g",128GB,2020,28000,0.4
+3b31d118-cb98-4f9f-8dce-f7a9befc7898,Oppo,"Oppo A74",64GB,2020,30000,0.4
+78f647b1-9a06-4c67-b9be-a3ce59e162ca,Oppo,"Oppo A74 5g",128GB,2021,32000,0.4
+d3168541-155a-46a2-9d7f-a47e82e52914,Oppo,"Oppo A74 5g",64GB,2021,30000,0.4
+83a855ac-df6a-482d-bd3e-f0d62a3e38ee,Oppo,"Oppo A76",128GB,2021,32000,0.4
+d06b0539-f60c-4050-bd87-ad4a3c083747,Oppo,"Oppo A76",64GB,2022,34000,0.4
+4f06fcc1-8f4d-44d7-bf04-9deeb658eefa,Oppo,"Oppo A77 5g",128GB,2022,36000,0.4
+dfd1fb7a-b2d8-41cd-8292-8ef4ace9c8f4,Oppo,"Oppo A78",128GB,2023,38000,0.4
+e51bb3d3-6915-4ecb-8a44-f51bca4e4f07,Oppo,"Oppo A78",256GB,2022,36000,0.4
+c31975de-55ca-4c4f-be51-dadf7f6222c6,Oppo,"Oppo A78 5g",128GB,2023,40000,0.4
+4bf715a3-4940-49cb-9653-ca268b02ba72,Oppo,"Oppo A78 5g",256GB,2023,40000,0.4
+5aa6565c-dd61-4b0c-8cf1-59978728431b,Oppo,"Oppo A79 5g",256GB,2023,38000,0.4
+aac42375-e8a6-4a63-a2d8-3aef9e064bc0,Oppo,"Oppo A79 5g",64GB,2023,20000,0.4
+ae82dc2a-76a0-4875-bbbb-e627bd298993,Oppo,"Oppo A7n",128GB,2023,22000,0.4
+0f453291-3486-4336-aeca-e2c6484322e4,Oppo,"Oppo A8",32GB,2019,18000,0.4
+e9771a6f-7e82-4b50-b12c-046cf82889d8,Oppo,"Oppo A83",64GB,2019,20000,0.4
+719d164e-2e73-4c94-808d-aa5c521fdadf,Oppo,"Oppo A83 Pro",128GB,2018,24000,0.4
+16d28fef-df85-45a3-86ee-8e9eb1a73b37,Oppo,"Oppo A9 (2020)",128GB,2019,28000,0.4
+d00cb71e-b74d-4d3e-81d8-a9bcd7b0286e,Oppo,"Oppo A9 (2020)",256GB,2018,26000,0.4
+92299c72-b495-403b-92c3-5edb6f4cb849,Oppo,"Oppo A91",128GB,2019,30000,0.4
+e48371ca-5453-4e8f-befe-ebbb9591c9ef,Oppo,"Oppo A92",128GB,2020,34000,0.4
+ff3c6ad1-982c-411a-86e4-f6ea0cb43d2e,Oppo,"Oppo A92",256GB,2019,32000,0.4
+2225497c-e877-463b-a9c4-a6588a255e6b,Oppo,"Oppo A92s 5g",128GB,2020,34000,0.4
+5b138476-0b24-48c2-87ff-f7062382657f,Oppo,"Oppo A92s 5g",256GB,2020,36000,0.4
+aa1b1724-be68-4387-9c16-9e593dc938d8,Oppo,"Oppo A93",128GB,2020,36000,0.4
+873b6116-e928-47b2-801a-03f7a37677c9,Oppo,"Oppo A93 5g",128GB,2021,38000,0.4
+64f2322e-ac0f-4604-ac44-01efe5945289,Oppo,"Oppo A93 5g",256GB,2020,38000,0.4
+d54083b5-11fb-441f-929f-75d8a09de606,Oppo,"Oppo A94",128GB,2021,40000,0.4
+b213a953-af11-4c06-890a-f0bea2a6158e,Oppo,"Oppo A94 5g",128GB,2021,40000,0.4
+e5f468ef-4b1b-4e1b-8943-da0f8bdafbe4,Oppo,"Oppo A94 5g",256GB,2021,42000,0.4
+32e2055c-237d-4d15-8bff-3664a3c0e2af,Oppo,"Oppo A95",128GB,2021,42000,0.4
+e18a4c8b-89b8-48e2-818e-fc442eafbae6,Oppo,"Oppo A95 5g",128GB,2021,42000,0.4
+46f4ed2a-87aa-4d04-8f51-d94011d9f16f,Oppo,"Oppo A95 5g",256GB,2021,44000,0.4
+4090720c-d9f3-451c-9240-fe48781c7775,Oppo,"Oppo A96",128GB,2022,44000,0.4
+0ca728f9-232d-478a-bcfd-a5afb61b385e,Oppo,"Oppo A96",256GB,2021,44000,0.4
+30997eb5-2831-4975-a598-50062e695d7b,Oppo,"Oppo A97 5g",128GB,2022,48000,0.4
+dde81340-cf06-4b5e-a8e7-349f8d310c05,Oppo,"Oppo A97 5g",256GB,2022,46000,0.4
+019146e3-a74d-4a3d-b5d2-9abb8795b23c,Oppo,"Oppo A98 5g",256GB,2022,48000,0.4
+95ac5c80-6db8-44bc-a220-b2967e7600d7,Oppo,"Oppo A98 5g",64GB,2023,26000,0.4
+b4fdc12b-8ee4-418c-ab2c-87e2a7e22d67,Oppo,"Oppo F11",128GB,2023,28000,0.4
+c9825915-c079-4159-adc4-c122b259105d,Oppo,"Oppo F11",64GB,2019,30000,0.4
+f978accb-26cf-463b-801c-3f3a3630727a,Oppo,"Oppo F11 Pro",128GB,2019,32000,0.4
+ab370799-8503-4aad-9ce8-2adc8f0bcfcb,Oppo,"Oppo F15",128GB,2019,32000,0.4
+9d9ad272-4b34-4aba-9d48-fe5ff3debdfd,Oppo,"Oppo F17",128GB,2020,34000,0.4
+be1dfa9e-9cf8-4808-9f1c-c610b09a88ee,Oppo,"Oppo F17",256GB,2020,30000,0.4
+e166a71d-bcb4-4472-9b92-6a321cf326cb,Oppo,"Oppo F17 Pro",128GB,2020,36000,0.4
+67fecfc2-2a22-4ea6-a684-dfbe03ba01e1,Oppo,"Oppo F19",128GB,2020,38000,0.4
+3e4b676d-caa2-4e62-a15c-776defed58de,Oppo,"Oppo F19 Pro",128GB,2021,44000,0.4
+d2ef422b-fe65-4136-b539-a8e8ebe12f83,Oppo,"Oppo F19 Pro",256GB,2021,40000,0.4
+5355e3d8-2f8b-4364-8f31-8c07dff3536c,Oppo,"Oppo F19 Pro+ 5g",128GB,2021,44000,0.4
+521d2d3c-abc5-4e92-a180-76f7f8735413,Oppo,"Oppo F21 Pro (4g/5g)",128GB,2021,46000,0.4
+edff52bc-e7cf-4163-8b38-4fa0232586ea,Oppo,"Oppo F23",128GB,2019,80000,0.4
+8ec1ae8c-eac5-44b2-b091-7e7c90dd0f9d,Oppo,"Oppo F23",256GB,2019,48000,0.4
+5254a4d7-aaca-42a5-81f4-c78e4fb5b12b,Oppo,"Oppo Find X2",128GB,2019,60000,0.4
+8623ac4f-22d8-4125-beed-526805bcec64,Oppo,"Oppo Find X2",256GB,2019,88000,0.4
+cbae8def-3abc-4728-b61c-7b8e6e7731fc,Oppo,"Oppo Find X2 Lite",256GB,2020,72000,0.4
+44798401-3056-43e5-854f-ddae4b16fe54,Oppo,"Oppo Find X2 Neo",256GB,2020,100000,0.4
+82534ad5-42ec-4115-b1db-a6634822d20c,Oppo,"Oppo Find X2 Pro",128GB,2020,120000,0.4
+148291b8-fb07-4c9a-9269-09949b63d102,Oppo,"Oppo Find X2 Pro",512GB,2020,112000,0.4
+feff3d88-b3e6-486f-931a-e28748c9ec34,Oppo,"Oppo Find X3",128GB,2020,80000,0.4
+01e8b5fe-b113-47cb-8bf6-dc4f9dcf1641,Oppo,"Oppo Find X3",256GB,2020,128000,0.4
+18f08277-9ce3-441a-8e71-735bb1b6d1e3,Oppo,"Oppo Find X3 Lite",256GB,2028,100000,0.4
+e3b6cbfc-8c94-4b94-8661-073792e1fde6,Oppo,"Oppo Find X3 Neo",256GB,2028,140000,0.4
+92a559ac-3139-4299-af09-e10e8faeab30,Oppo,"Oppo Find X3 Pro",128GB,2028,72000,0.4
+2eef786f-0fb4-4765-807a-c08609e5de8a,Oppo,"Oppo Find X3 Pro",512GB,2028,152000,0.4
+d8fc19c7-6523-4be3-8ca4-7998cccf0b48,Oppo,"Oppo Reno 10",256GB,2028,80000,0.4
+50ae5c4d-0e4f-41c2-854f-d4cb4927b098,Oppo,"Oppo Reno 10 Pro",256GB,2029,96000,0.4
+cb03c92c-3dd5-4f51-8044-8e4c3459776f,Oppo,"Oppo Reno 10 Pro+",128GB,2029,100000,0.4
+f74bdeb9-61ce-4f09-b131-35d5b090a3df,Oppo,"Oppo Reno 10 Pro+",512GB,2029,104000,0.4
+f0b8bd47-1e57-42cf-a91f-1ce9bcecbe77,Oppo,"Oppo Reno 11",256GB,2030,108000,0.4
+a1af9dc6-cd7f-4cda-84a1-85257e8a1906,Oppo,"Oppo Reno 11 Pro",128GB,2030,128000,0.4
+3feff200-3103-40bc-aae4-e09214ec555e,Oppo,"Oppo Reno 11 Pro",512GB,2030,132000,0.4
+8edd4125-c0bc-416a-8674-5c307ab0ba02,Oppo,"Oppo Reno 12",512GB,2030,152000,0.4
+dd5e10a1-f79b-4d1e-9b27-47593a17ea7e,Oppo,"Oppo Reno 12 F",256GB,2030,92000,0.4
+fb9dd2f6-463f-4855-b1b0-232bdddf564a,Oppo,"Oppo Reno 12 F",512GB,2030,88000,0.4
+ad9c78a9-3dd0-4e10-9645-ecafa6d41c40,Oppo,"Oppo Reno 12 Fs",256GB,2031,160000,0.4
+c182e5a1-bc56-45a2-972f-ac3d9e4edb3c,Oppo,"Oppo Reno 12 Fs",512GB,2031,100000,0.4
+b98e1d83-e004-4caa-90ed-694e7ed1bc66,Oppo,"Oppo Reno 12 Pro",128GB,2031,100000,0.4
+44776008-3fce-4a9d-abff-ad39ca163304,Oppo,"Oppo Reno 12 Pro",512GB,2031,172000,0.4
+d8b11fb5-46ef-4d17-8bab-9a11709c0122,Oppo,"Oppo Reno 13 F",128GB,2020,112000,0.4
+c5757f96-1079-46f2-8abb-59711e5622e4,Oppo,"Oppo Reno 13 F",256GB,2031,112000,0.4
+d52baf29-f3d4-41e8-b517-4e99e01081c2,Oppo,"Oppo Reno 13 F",512GB,2031,124000,0.4
+003fb022-aeb9-4f48-8d1f-ce479aa0a973,Oppo,"Oppo Reno 13 Fs",128GB,2024,112000,0.4
+bc651fe5-0ae2-4968-b2c6-971cd66c9c12,Oppo,"Oppo Reno 13 Fs",256GB,2024,124000,0.4
+f4bd19fe-0b3f-4289-a278-ba1c1a0f90fd,Oppo,"Oppo Reno 13 Fs",512GB,2024,136000,0.4
+bd8fe66c-3c1e-494a-8cbe-14d8ada5bfeb,Oppo,"Oppo Reno 2f",128GB,2025,120000,0.4
+4212c01a-aeb9-4739-b03b-3106b6428d8d,Oppo,"Oppo Reno 6",128GB,2025,140000,0.4
+ee64b44a-5878-472b-8f38-14beb106b99d,Oppo,"Oppo Reno 6 Pro",128GB,2026,180000,0.4
+b1f53538-c7be-4b54-86d7-47ea2479d1ab,Oppo,"Oppo Reno 6 Pro",256GB,2025,160000,0.4
+6f4a9b9f-acf3-452d-b6f3-c097389dbc92,Oppo,"Oppo Reno 7",256GB,2026,200000,0.4
+bc81aaaf-5181-4390-832b-146d4c4f539b,Oppo,"Oppo Reno 7 Pro",128GB,2021,240000,0.4
+12459ba0-3194-4c4f-8f18-c08d6e3c789d,Oppo,"Oppo Reno 8",256GB,2022,248000,0.4
+cb452361-2623-4e52-ab3c-934d55517306,Oppo,"Oppo Reno 8 Pro",128GB,2022,48000,0.4
+06e8eeaf-9908-4591-acea-c11aeb39ecf4,Oppo,"Reno 12",128GB,2025,60341,1.15
+d44fb516-5314-498a-bcbb-70c2f3e4d94b,Oppo,"Reno 12",256GB,2025,551279,1.15
+1c747761-4b5a-4ac3-b072-e17c3b23bb4c,Oppo,"Reno 12 Pro",256GB,2025,551279,1.15
+85798459-4f3f-4a59-962f-36525fee7da1,Oppo,"Reno12",256GB,2025,189021,1
+f41c12be-cf36-4819-882b-8d4dcf5848d5,Poco,"C75",128GB,2025,61894,1.15
+71793935-e477-4ca9-b92f-ff216801ec08,Poco,"C75",64GB,2025,60348,1.15
+34e73c6a-889e-4559-a7fd-4a3b1774fe7c,Poco,"C85x",128GB,2026,60348,1.15
+c8832a43-a05d-4b15-ac9d-d87a9b3d6460,Poco,"C85x",64GB,2026,60348,1.15
+d43a6a77-fe3f-48ef-b6f2-5ff5c2ad0e79,Poco,"F6",128GB,2025,130122,1.15
+214cd732-7f0e-4d4a-9752-02d4b29087d5,Poco,"F6",256GB,2025,165893,1.15
+6dd7b5d5-7c16-4724-8210-066b60de18d5,Poco,"F6",512GB,2025,183164,1.15
+c4bd6a25-387b-4511-a8cd-56059bb7c627,Poco,"F6 Pro",256GB,2025,172656,1.15
+4c9c70b1-1e85-4943-9803-61912c374a71,Poco,"F6 Pro",512GB,2025,205938,1.15
+58b513d5-650c-4e8a-9f8d-9ea4e66402e6,Poco,"M6 Pro",256GB,2026,85242,1
+7f9d08a7-84e2-41a9-aa15-b66aa45edc93,Poco,"M7 Pro 5G",128GB,2025,86826,1.15
+24c45a25-c9ef-494e-8fb2-5522eb17cc9a,Poco,"M7 Pro 5G",256GB,2025,86351,1.15
+aed3659d-44f7-4b51-96b9-246b3eeedc68,Poco,"Poco C65",128GB,2023,140000,0.4
+b4223b0f-a7da-4b3b-95d7-b0e5d8099e36,Poco,"Poco C65",256GB,2023,38000,0.4
+14261272-5284-4f4d-acc2-1e94692981b8,Poco,"Poco F4",128GB,2023,168000,0.4
+bfd34576-ed00-4a55-84a0-b94d5482989b,Poco,"Poco F4",256GB,2023,160000,0.4
+a8fbefad-2596-42c0-bbe8-79a8f445e735,Poco,"Poco F4 Gt",256GB,2023,188000,0.4
+386560d0-4969-46b1-8950-11049690e34c,Poco,"Poco F5",256GB,2023,220000,0.4
+d485743c-de62-4ba3-8118-ab0cdfcb3eac,Poco,"Poco F5 Pro",128GB,2023,220000,0.4
+d6319fc2-6e26-43a6-95a4-4da310b9de2f,Poco,"Poco F5 Pro",512GB,2023,240000,0.4
+7b86960b-13ea-49cf-a475-17b42c4d2a59,Poco,"Poco F6 Pro",128GB,2024,300000,0.4
+55e7bcb6-81f4-4cf2-8b9d-16a7ddf45409,Poco,"Poco F6 Pro",64GB,2024,48000,0.4
+4a4ac922-6b2b-4a91-988e-722ac7261ae7,Poco,"Poco M2",128GB,2024,56000,0.4
+032c11d9-b049-4d12-ae82-a5c99a29a409,Poco,"Poco M2",64GB,2024,64000,0.4
+6fb24cbd-8dbb-4e0e-aabb-bbc26451f651,Poco,"Poco M2 Pro",128GB,2024,72000,0.4
+cfc68446-5f47-4275-afd0-b101773e377d,Poco,"Poco M2 Pro",64GB,2024,60000,0.4
+399f6942-fe43-4ed1-911a-0d93bbe691e3,Poco,"Poco M3",128GB,2024,68000,0.4
+c7ad3f7a-ef06-4457-a452-3b3191d934ec,Poco,"Poco M3",64GB,2018,76000,0.4
+a3a73455-28f0-408e-97c3-f6d235059629,Poco,"Poco M3 Pro 5g",128GB,2018,84000,0.4
+9e401c6c-9045-4615-bcad-69ac9d13817a,Poco,"Poco M3 Pro 5g",64GB,2018,80000,0.4
