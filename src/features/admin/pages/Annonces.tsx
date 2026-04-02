@@ -101,7 +101,14 @@ function AdminAnnonceForm({ onClose, onCreated }: { onClose: () => void; onCreat
       // Envoyer une notification push si demandé
       if (sendPush) {
         const { data: { session } } = await supabase.auth.getSession();
-        const jwt = session?.access_token;
+        let jwt = session?.access_token;
+        if (jwt) {
+          const { error: userErr } = await supabase.auth.getUser(jwt);
+          if (userErr) {
+            const { data: refreshed } = await supabase.auth.refreshSession();
+            jwt = refreshed.session?.access_token ?? undefined;
+          }
+        }
         if (jwt) {
           await fetch(`${API_URL}/api/push/send`, {
             method: "POST",

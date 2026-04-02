@@ -144,7 +144,14 @@ export default function AdminDealForm() {
         if (status === "published") {
           try {
             const { data: { session } } = await supabase.auth.getSession();
-            const jwt = session?.access_token;
+            let jwt = session?.access_token;
+            if (jwt) {
+              const { error: userErr } = await supabase.auth.getUser(jwt);
+              if (userErr) {
+                const { data: refreshed } = await supabase.auth.refreshSession();
+                jwt = refreshed.session?.access_token ?? undefined;
+              }
+            }
             const apiUrl = (import.meta.env.VITE_API_URL as string || "").trim().replace(/\/$/, "");
             if (jwt && apiUrl) {
               await fetch(`${apiUrl}/api/push/send`, {

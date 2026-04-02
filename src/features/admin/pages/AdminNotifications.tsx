@@ -103,8 +103,22 @@ export default function AdminNotifications() {
     if (showRefresh) setRefreshing(true);
     else setLoadingHistory(true);
 
+    // getUser() valide le token côté Supabase et rafraîchit silencieusement si expiré
     const { data: { session } } = await supabase.auth.getSession();
-    const jwt = session?.access_token;
+    let jwt = session?.access_token;
+    if (jwt) {
+      const { error: userErr } = await supabase.auth.getUser(jwt);
+      if (userErr) {
+        // Token invalide → tenter un refresh
+        const { data: refreshed } = await supabase.auth.refreshSession();
+        jwt = refreshed.session?.access_token ?? undefined;
+      }
+    }
+    if (!jwt) {
+      setLoadingHistory(false);
+      setRefreshing(false);
+      return;
+    }
 
     const [count, subsRes, { data: camp }] = await Promise.all([
       fetchSubCountFromSupabase().then(async (n) => {
@@ -140,8 +154,15 @@ export default function AdminNotifications() {
     setSending(true);
     try {
       const { data: { session } } = await supabase.auth.getSession();
-      const jwt = session?.access_token;
-      if (!jwt) throw new Error("Session expirée");
+      let jwt = session?.access_token;
+      if (jwt) {
+        const { error: userErr } = await supabase.auth.getUser(jwt);
+        if (userErr) {
+          const { data: refreshed } = await supabase.auth.refreshSession();
+          jwt = refreshed.session?.access_token ?? undefined;
+        }
+      }
+      if (!jwt) throw new Error("Session expirée — veuillez vous reconnecter");
 
       const res = await fetch(`${API_URL}/api/push/send`, {
         method: "POST",
