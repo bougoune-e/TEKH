@@ -53,11 +53,18 @@ export async function fetchDistinctModelsFromSmartphones(brand: string): Promise
     .ilike("marque", brand.trim());
 
   if (error || !data?.length) return [];
-  const set = new Set<string>();
+  // Deduplicate case-insensitively (e.g. "iPhone 14" vs "IPhone 14")
+  const seen = new Map<string, string>();
   for (const row of data) {
-    if (row.modele) set.add(String(row.modele).trim());
+    if (!row.modele) continue;
+    const name = String(row.modele).trim();
+    const key = name.toLowerCase();
+    // Keep the version that starts with a lowercase brand prefix (e.g. "iPhone" over "IPhone")
+    if (!seen.has(key) || name.length > (seen.get(key)?.length ?? 0)) {
+      seen.set(key, name);
+    }
   }
-  return Array.from(set).sort((a, b) => a.localeCompare(b, "fr"));
+  return Array.from(seen.values()).sort((a, b) => a.localeCompare(b, "fr"));
 }
 
 /**

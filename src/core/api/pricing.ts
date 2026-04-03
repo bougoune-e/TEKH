@@ -5,7 +5,7 @@
  */
 
 export const VRT_FLOOR_RATIO = 0.05;
-export const C_MARCHE = 0.9;
+export const C_MARCHE = 0.85;
 export const C_SECURITE = 0.85;
 /** Soulte négative absorbée par TEKH+ sans conversion en points (FCFA) */
 export const DOWNGRADE_ABSORPTION_CAP_FCFA = 15_000;
@@ -200,14 +200,14 @@ export function calculerEstimation(
   const chassis = normalizeChassis(diag);
   const batterie = normalizeBatterie(diag);
 
-  const cMarque = getCoefficientMarque(brand, model);
-  const cAge = getCoefficientAge(releaseYear);
+  // NOTE: C_marque and C_age are intentionally NOT applied here.
+  // The PRT already reflects the current market price which encodes
+  // brand reputation and age depreciation. Applying them again would
+  // cause double-depreciation (audit April 2026).
   const cEtat = getCoefficientEtatEcran(ecran);
   const cBatt = getCoefficientBatterie(batterie);
 
-  let vrt =
-    prt *
-    (cMarque * cAge * cEtat * cBatt * C_MARCHE * C_SECURITE);
+  let vrt = prt * (cEtat * cBatt * C_MARCHE * C_SECURITE);
 
   if (chassis === "abime") vrt *= 0.85;
 
