@@ -18,8 +18,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       const saved = localStorage.getItem(STORAGE_KEY) as Theme | null;
       if (saved === "light" || saved === "dark") return saved;
     } catch { }
-    // Force dark by default for the premium look
-    return "dark";
+    return "light";
   });
 
   const apply = useCallback((t: Theme) => {

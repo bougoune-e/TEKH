@@ -66,17 +66,6 @@ const Navbar = () => {
             {/* Right Section */}
             <div className="flex items-center gap-3">
 
-                {/* Prix rapide */}
-                <Link
-                    to="/prix"
-                    className={`px-4 py-2 rounded-full font-black text-xs transition-all whitespace-nowrap border-2 ${isActive('/prix')
-                        ? 'bg-[#064e3b] dark:bg-primary text-white border-[#064e3b] dark:border-primary'
-                        : 'bg-transparent text-[#064e3b] dark:text-primary border-[#064e3b] dark:border-primary hover:bg-[#064e3b] dark:hover:bg-primary hover:text-white'
-                        }`}
-                >
-                    Prix
-                </Link>
-
                 {/* Upgrade TEKH+ CTA */}
                 <Link
                     to="/simulateur"
