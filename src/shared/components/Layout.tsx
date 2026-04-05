@@ -10,6 +10,7 @@ import logo from "@/assets/logos/robott.jpeg";
 import PWAInstallBanner from "@/shared/components/PWAInstallBanner";
 import NewVersionBanner from "@/shared/components/NewVersionBanner";
 import { usePWA } from "@/shared/hooks/usePWA";
+import { consumeScrollTarget } from "@/shared/hooks/useGoToFooter";
 import { Link } from "react-router-dom";
 
 
@@ -28,6 +29,11 @@ const Layout = () => {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Consomme la cible de scroll mémorisée par useGoToFooter (ex: "footer")
+  useEffect(() => {
+    consumeScrollTarget();
+  }, [location.pathname]);
 
   // Après OAuth, Supabase peut renvoyer vers /profile ou / au lieu de /admin : on corrige ici.
   useEffect(() => {

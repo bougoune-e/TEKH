@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useGoToFooter } from "@/shared/hooks/useGoToFooter";
 import { ChevronLeft, Scale } from "lucide-react";
 
 export default function CGU() {
