@@ -1,8 +1,8 @@
 import { ShieldCheck, Scale, BadgeCheck, Wallet, AlertTriangle, Users, ChevronLeft } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useGoToFooter } from "@/shared/hooks/useGoToFooter";
 
 const Charte = () => {
-  const navigate = useNavigate();
+  const goToFooter = useGoToFooter();
   const items = [
     {
       icon: Users,
@@ -63,7 +63,7 @@ const Charte = () => {
   return (
     <div className="min-h-dvh bg-zinc-50 dark:bg-black text-black dark:text-white pt-24 pb-16">
       <div className="container mx-auto px-4 max-w-6xl">
-        <button onClick={() => navigate(-1)} className="inline-flex items-center gap-2 text-primary font-black mb-8 hover:-translate-x-1 transition-transform">
+        <button onClick={() => goToFooter()} className="inline-flex items-center gap-2 text-primary font-black mb-8 hover:-translate-x-1 transition-transform">
           <ChevronLeft className="h-5 w-5" />
           Retour
         </button>
