@@ -61,7 +61,7 @@ const Contact = () => {
             <div className="rounded-2xl border border-border bg-card p-5">
               <div className="text-sm text-muted-foreground mb-2">Réseaux</div>
               <div className="flex items-center gap-3">
-                <a href="https://www.facebook.com/desmond.kizerbo/" target="_blank" rel="noreferrer" aria-label="Facebook" className="h-9 w-9 inline-flex items-center justify-center rounded-lg border border-border">
+                <a href="https://web.facebook.com/profile.php?id=61587680237623" target="_blank" rel="noreferrer" aria-label="Facebook" className="h-9 w-9 inline-flex items-center justify-center rounded-lg border border-border">
                   <Facebook className="h-4 w-4 text-[#1877F2]" />
                 </a>
                 <a href="https://www.tiktok.com/@tekh228?_r=1&_t=ZS-94xayuFa6LN" target="_blank" rel="noreferrer" aria-label="TikTok" className="h-9 w-9 inline-flex items-center justify-center rounded-lg border border-border">

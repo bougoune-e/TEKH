@@ -79,7 +79,9 @@ const DEFAULT_ORIGINS = [
   "https://tekh.onrender.com",
   "https://tekh-backend.onrender.com",
   "https://tekh-backend-production.up.railway.app",
-  "https://tekh.up.railway.app"
+  "https://tekh.up.railway.app",
+  "https://tekhplus.com",
+  "https://www.tekhplus.com"
 ];
 
 const ORIGINS = process.env.CORS_ORIGIN
