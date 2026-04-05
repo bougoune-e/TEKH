@@ -18,29 +18,28 @@ export function useGoToFooter() {
   const { pathname } = useLocation();
 
   return useCallback(() => {
-    console.log("[useGoToFooter] Clicked. Current pathname:", pathname, "History length:", window.history.length);
-
+    // Si déjà sur la homepage, scroller directement au footer
     if (pathname === "/") {
-      console.log("[useGoToFooter] Already on home, scrolling to footer.");
       const el = document.getElementById("footer");
-      if (el) el.scrollIntoView({ behavior: "auto", block: "start" });
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
       return;
     }
 
+    // Stratégie hybride : on tente le retour arrière pour préserver le scroll exact (via ScrollRestorer)
+    // Mais on ajoute un fallback immédiat vers le hash #footer si on ne vient pas de la home.
     if (window.history.length > 1) {
-      console.log("[useGoToFooter] History > 1, calling navigate(-1)");
       navigate(-1);
 
-      // Fallback au cas où navigate(-1) ne déclenche rien après 500ms
+      // Fallback de sécurité : si après 200ms on est toujours sur la même page, 
+      // on force le retour vers la home.
       setTimeout(() => {
         if (window.location.pathname !== "/") {
-          console.log("[useGoToFooter] navigate(-1) fallback: going to /#footer");
           navigate("/#footer");
         }
-      }, 500);
+      }, 200);
     } else {
-      console.log("[useGoToFooter] History <= 1, calling navigate('/')");
-      navigate("/");
+      // Pas d'historique (deep link) : retour direct home
+      navigate("/#footer");
     }
   }, [navigate, pathname]);
 }
