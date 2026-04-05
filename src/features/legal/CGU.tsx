@@ -6,7 +6,7 @@ export default function CGU() {
     return (
         <div className="min-h-dvh bg-white dark:bg-black text-black dark:text-white pt-24 pb-16">
             <div className="container mx-auto px-4 max-w-4xl">
-                <button onClick={() => navigate(-1)} className="inline-flex items-center gap-2 text-primary font-black mb-8 hover:-translate-x-1 transition-transform">
+                <button onClick={() => navigate("/#footer")} className="inline-flex items-center gap-2 text-primary font-black mb-8 hover:-translate-x-1 transition-transform">
                     <ChevronLeft className="h-5 w-5" />
                     Retour
                 </button>

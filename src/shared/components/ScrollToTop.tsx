@@ -1,5 +1,22 @@
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { useLocation, useNavigationType } from "react-router-dom";
+
+/** Scroll vers un élément ancre après navigation SPA */
+function scrollToHash(hash: string) {
+    if (!hash) return;
+    const id = hash.replace("#", "");
+    // Retry jusqu'à ce que l'élément soit monté (max 400ms)
+    let attempts = 0;
+    const tryScroll = () => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.scrollIntoView({ behavior: "smooth", block: "start" });
+        } else if (attempts++ < 8) {
+            setTimeout(tryScroll, 50);
+        }
+    };
+    requestAnimationFrame(tryScroll);
+}
 import { saveJson, loadJson } from "@/core/pwa/tekhSession";
 
 /**
@@ -16,7 +33,7 @@ import { saveJson, loadJson } from "@/core/pwa/tekhSession";
  * to set the correct scrollY before the first paint.
  */
 const ScrollRestorer = () => {
-    const { pathname, key } = useLocation();
+    const { pathname, hash, key } = useLocation();
     const navType = useNavigationType();
     const isRestoring = useRef(false);
 
@@ -65,10 +82,13 @@ const ScrollRestorer = () => {
                 });
             }
         } else {
-            // Normal navigation: scroll to top
-            window.scrollTo(0, 0);
+            if (hash) {
+                scrollToHash(hash);
+            } else {
+                window.scrollTo(0, 0);
+            }
         }
-    }, [pathname, key, navType]);
+    }, [pathname, hash, key, navType]);
 
     // Continuous scroll position tracking
     useEffect(() => {

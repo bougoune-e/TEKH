@@ -14,15 +14,14 @@ import { toast } from "@/shared/hooks/use-toast";
 import { uploadImage, insertDeal, getCurrentUser, fetchBrands, fetchModels, fetchStorages, fetchAllStorages, fetchAllRams, fetchRams } from "@/core/api/supabaseApi";
 import { analyzeImageForScreen, type VisionAnalyzeResult } from "@/core/api/main_api";
 import { isSupabaseConfigured } from "@/core/api/supabaseClient";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/shared/ui/dialog";
-import { supabase } from "@/core/api/supabaseApi";
+import { useAuthSheet } from "@/features/auth/AuthSheet";
 
 const BRANDS = ["Apple", "Samsung", "Xiaomi", "Infinix", "Tecno", "Google", "Huawei", "OnePlus", "Oppo", "Vivo"];
 const CONDITIONS = ["Neuf", "Très bon", "Bon", "Moyen"] as const;
 
 export default function PublishPage() {
   const navigate = useNavigate();
-  const { addDeal, setMatchRequest } = useDeals();
+  const { addDeal } = useDeals();
 
   const [images, setImages] = useState<string[]>([]);
   const [imageFiles, setImageFiles] = useState<File[]>([]);
@@ -48,11 +47,7 @@ export default function PublishPage() {
   const [contactPhone, setContactPhone] = useState<string>("");
   const [contactWhatsapp, setContactWhatsapp] = useState<string>("");
   const [contactEmail, setContactEmail] = useState<string>("");
-  const [loginOpen, setLoginOpen] = useState(false);
-  const [loginError, setLoginError] = useState<string>("");
-  const [loginSubmitting, setLoginSubmitting] = useState(false);
-  const [loginEmail, setLoginEmail] = useState("");
-  const [loginPassword, setLoginPassword] = useState("");
+  const { showAuth } = useAuthSheet();
   const [visionLoading, setVisionLoading] = useState(false);
   const [visionResult, setVisionResult] = useState<VisionAnalyzeResult | null>(null);
 
@@ -175,7 +170,7 @@ export default function PublishPage() {
     const current = await getCurrentUser();
     if (!current?.id) {
       toast({ title: "Authentification requise", description: "Connectez-vous pour publier un deal." });
-      setLoginOpen(true);
+      showAuth("Pour publier une annonce, vous devez être connecté.");
       return;
     }
     const estimatedValue = typeof estimated === 'number' ? estimated : 0;
@@ -441,66 +436,6 @@ export default function PublishPage() {
           </Card>
         </div>
       </div>
-      <Dialog open={loginOpen} onOpenChange={setLoginOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Connexion requise</DialogTitle>
-            <DialogDescription>
-              Connectez-vous pour publier votre annonce.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4">
-            {loginError && (
-              <div className="text-red-500 text-sm bg-red-500/10 border border-red-500/30 rounded-md p-2">
-                {loginError}
-              </div>
-            )}
-            {isSupabaseConfigured && (
-              <Button
-                type="button"
-                onClick={async () => {
-                  setLoginError("");
-                  const redirectTo = window.location.href;
-                  const { error } = await supabase.auth.signInWithOAuth({
-                    provider: "google",
-                    options: { redirectTo } as any,
-                  });
-                  if (error) setLoginError(error.message);
-                }}
-                className="w-full justify-center gap-3 bg-[#DB4437] hover:bg-[#C53D32] text-white"
-              >
-                Continuer avec Google
-              </Button>
-            )}
-            <div className="pt-2">
-              <Label className="text-xs text-muted-foreground">Ou avec e‑mail / mot de passe</Label>
-              <div className="mt-2 grid gap-2">
-                <Input type="email" placeholder="votre@email.com" value={loginEmail} onChange={(e) => setLoginEmail(e.target.value)} />
-                <Input type="password" placeholder="••••••••" value={loginPassword} onChange={(e) => setLoginPassword(e.target.value)} />
-                <div className="flex gap-2">
-                  <Button type="button" onClick={async () => {
-                    try {
-                      setLoginError("");
-                      setLoginSubmitting(true);
-                      const { error } = await supabase.auth.signInWithPassword({ email: loginEmail, password: loginPassword });
-                      if (error) throw error;
-                      setLoginOpen(false);
-                      await publish();
-                    } catch (e: any) {
-                      setLoginError(e?.message || "Connexion échouée.");
-                    } finally {
-                      setLoginSubmitting(false);
-                    }
-                  }} disabled={loginSubmitting} className="flex-1">
-                    {loginSubmitting ? 'Connexion...' : 'Se connecter'}
-                  </Button>
-                  {/* Pas d'inscription ici */}
-                </div>
-              </div>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
     </section>
   );
 }

@@ -1,6 +1,7 @@
 import { getToken, setSession, clearSession } from "./auth";
 import { supabase as realClient } from "./supabaseClient";
 import { getProduits } from "@/core/api/main_api";
+import { lookupCsvVariants } from "@/core/api/csvCatalog";
 import {
   fetchSmartphonesForBrandModel,
   fetchDistinctModelsFromSmartphones,
@@ -204,6 +205,9 @@ export async function fetchStorages(brand: string, model: string): Promise<numbe
   } catch (err) {
     console.warn("[supabaseApi] fetchStorages failed", brand, model, err);
   }
+  // CSV catalogue as authoritative fallback
+  const csv = lookupCsvVariants(brand, model);
+  if (csv && csv.storages.length > 0) return csv.storages;
   return [64, 128, 256, 512];
 }
 
@@ -413,6 +417,9 @@ export async function fetchRams(brand: string, model: string): Promise<number[]>
   } catch (err) {
     console.warn("[supabaseApi] fetchRams failed", err);
   }
+  // CSV catalogue as authoritative fallback
+  const csv = lookupCsvVariants(brand, model);
+  if (csv && csv.rams.length > 0) return csv.rams;
   return [];
 }
 

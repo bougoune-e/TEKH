@@ -23,6 +23,7 @@ import PageLoader from "@/shared/components/PageLoader";
 import { DealsProvider } from "@/features/marketplace/deals.context";
 import { CartProvider } from "@/features/marketplace/cart.context";
 import { AuthProvider } from "@/features/auth/auth.context";
+import { AuthSheetProvider } from "@/features/auth/AuthSheet";
 import { ThemeProvider } from "@/core/theme/ThemeProvider";
 import Layout from "@/shared/components/Layout";
 import ScrollRestorer from "@/shared/components/ScrollToTop";
@@ -147,6 +148,7 @@ const NavigationWrapper = () => {
         <NavigationShell>
           <ScrollRestorer />
           <AuthProvider>
+            <AuthSheetProvider>
             <DealsProvider>
               <CartProvider>
                 <Suspense fallback={<PageLoader />}>
@@ -228,6 +230,7 @@ const NavigationWrapper = () => {
                 </Suspense>
               </CartProvider>
             </DealsProvider>
+            </AuthSheetProvider>
           </AuthProvider>
         </NavigationShell>
       </NavigationProvider>

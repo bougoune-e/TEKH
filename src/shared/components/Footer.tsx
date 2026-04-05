@@ -96,7 +96,7 @@ const Footer = () => {
     buildWhatsAppUrl("Bonjour TEKH+, je vous contacte depuis le site.") || "/contact";
 
   return (
-    <footer className="bg-background border-t border-border/50 relative overflow-hidden">
+    <footer id="footer" className="bg-background border-t border-border/50 relative overflow-hidden">
       {/* Overlay très léger pour la texture */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/5 dark:to-white/5 pointer-events-none"></div>
 

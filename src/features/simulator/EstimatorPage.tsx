@@ -8,6 +8,7 @@ import {
   getModelInfo,
   getAvailableVariants
 } from "@/core/api/supabaseApi";
+import { lookupCsvVariants } from "@/core/api/csvCatalog";
 import { calculerEstimation, type BatterieTekh, type ChassisTekh, type EcranTekh } from "@/core/api/pricing";
 import { cn } from "@/core/api/utils";
 import {
@@ -352,7 +353,11 @@ export default function EstimatorPage() {
         setModelInfoData(null);
         const variants = await getAvailableVariants(brand, model);
         setAvailableVariants(variants);
-        const sList = [...new Set(variants.map(v => v.storage_gb))].sort((a, b) => a - b);
+        let sList = [...new Set(variants.map(v => v.storage_gb))].sort((a, b) => a - b);
+        if (sList.length === 0) {
+          const csv = lookupCsvVariants(brand, model);
+          sList = csv?.storages ?? [];
+        }
         setStorages(sList);
         if (sList.length === 1) setStorage(sList[0]);
       } finally {
@@ -398,7 +403,13 @@ export default function EstimatorPage() {
     (async () => {
       try {
         setLoadingTargetVariants(true);
-        const variants = await getAvailableVariants(targetBrand, targetModel);
+        let variants = await getAvailableVariants(targetBrand, targetModel);
+        if (variants.length === 0) {
+          const csv = lookupCsvVariants(targetBrand, targetModel);
+          if (csv?.storages.length) {
+            variants = csv.storages.map(s => ({ storage_gb: s, ram_gb: csv.rams[0] ?? null, base_price_fcfa: 0 }));
+          }
+        }
         setTargetVariants(variants);
         const firstStorage = variants[0]?.storage_gb ?? 0;
         const info = await getModelInfo(targetBrand, targetModel, firstStorage);

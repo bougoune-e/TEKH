@@ -37,7 +37,7 @@ const Contact = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center gap-3 mb-6">
           <button
-            onClick={() => navigate(-1)}
+            onClick={() => navigate("/#footer")}
             className="w-9 h-9 rounded-xl bg-muted/60 flex items-center justify-center active:scale-90 transition-all shrink-0"
           >
             <ArrowLeft className="w-4 h-4" strokeWidth={2.5} />

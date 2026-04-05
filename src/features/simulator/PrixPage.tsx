@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { fetchBrands, fetchModels, getAvailableVariants } from "@/core/api/supabaseApi";
+import { lookupCsvVariants } from "@/core/api/csvCatalog";
 import { calculerEstimation } from "@/core/api/pricing";
 import { getPhoneSpecs } from "./phoneSpecs";
 import { createClient } from "@supabase/supabase-js";
@@ -98,9 +99,15 @@ export default function PrixPage() {
     getAvailableVariants(brand, model)
       .then((v: any[]) => {
         const s = Array.from(new Set((v || []).map((x: any) => x.storage_gb).filter(Boolean))).sort((a, b) => a - b) as number[];
-        setStorages(s);
+        if (s.length > 0) { setStorages(s); return; }
+        // CSV fallback
+        const csv = lookupCsvVariants(brand, model);
+        setStorages(csv?.storages ?? []);
       })
-      .catch(() => setStorages([]));
+      .catch(() => {
+        const csv = lookupCsvVariants(brand, model);
+        setStorages(csv?.storages ?? []);
+      });
   }, [brand, model]);
 
   useEffect(() => {
@@ -189,8 +196,10 @@ export default function PrixPage() {
       {!loading && device && (
         <div className="px-4 mt-6 space-y-4">
 
-          {/* Device identity card */}
+          {/* ── 1. Identité + Prix de rachat ─────────────────────────────── */}
           <div className="rounded-2xl border-2 border-slate-100 bg-white overflow-hidden shadow-sm">
+
+            {/* En-tête identité */}
             <div className="px-4 py-4 border-b border-slate-100 flex items-start justify-between gap-3">
               <div>
                 <div className="flex items-center gap-2 flex-wrap mb-1">
@@ -214,45 +223,13 @@ export default function PrixPage() {
               </div>
             </div>
 
-            {/* Fiche technique */}
-            {hasSpecs && (
-              <div className="px-4 py-1">
-                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 pt-3 pb-1">Fiche technique</p>
-                {staticSpecs.processeur && <SpecItem icon={Cpu} label="Processeur" value={staticSpecs.processeur} />}
-                <SpecItem icon={Layers} label="RAM" value={ram ? `${ram} Go` : undefined} />
-                <SpecItem icon={Layers} label="Stockage" value={storage ? `${storage} Go` : undefined} />
-                {staticSpecs.ecran_pouces && (
-                  <SpecItem icon={Monitor} label="Écran" value={`${staticSpecs.ecran_pouces}${staticSpecs.ecran_type ? ` · ${staticSpecs.ecran_type}` : ""}`} />
-                )}
-                {staticSpecs.batterie_mah && (
-                  <SpecItem icon={Battery} label="Batterie" value={`${staticSpecs.batterie_mah.toLocaleString("fr-FR")} mAh${staticSpecs.charge_w ? ` · Charge ${staticSpecs.charge_w}W` : ""}`} />
-                )}
-                {staticSpecs.camera_principale && (
-                  <SpecItem icon={Camera} label="Caméra principale" value={staticSpecs.camera_principale} />
-                )}
-                {staticSpecs.camera_selfie && (
-                  <SpecItem icon={Camera} label="Caméra frontale" value={staticSpecs.camera_selfie} />
-                )}
-                {reseau && (
-                  <SpecItem icon={Wifi} label="Réseau" value={reseau} />
-                )}
-                {staticSpecs.sim_slots && (
-                  <SpecItem icon={Smartphone} label="Slots SIM" value={`Dual SIM (${staticSpecs.sim_slots} nano-SIM)`} />
-                )}
-                {staticSpecs.os && (
-                  <SpecItem icon={Zap} label="Système" value={staticSpecs.os} />
-                )}
-              </div>
-            )}
-          </div>
-
-          {/* Prix de rachat */}
-          <div className="rounded-2xl border-2 border-slate-100 bg-white overflow-hidden shadow-sm">
+            {/* Prix de référence */}
             <div className="px-4 pt-4 pb-3 border-b border-slate-100">
               <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Prix de référence (marché occasion)</p>
               <p className="text-3xl font-black mt-1 tracking-tight">{fmt(device.prt_fcfa)}</p>
             </div>
 
+            {/* Prix de reprise selon état */}
             <div className="px-4 py-2">
               <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 pt-2 pb-1">Prix de reprise TΞKΗ+ selon l'état</p>
               {vrtResults?.map(({ label, desc, icon: Icon, color, bg, dot, vrt }) => (
@@ -272,14 +249,44 @@ export default function PrixPage() {
                   </div>
                 </div>
               ))}
-            </div>
-
-            <div className="px-4 pb-4">
-              <p className="text-[11px] text-slate-400 leading-relaxed">
-                Estimation indicative basée sur les prix du marché à Lomé. Le prix final est confirmé après diagnostic complet par un technicien TΞKΗ+.
+              <p className="text-[11px] text-slate-400 leading-relaxed pb-3">
+                Estimation indicative. Le prix final est confirmé après diagnostic complet par un technicien TΞKΗ+.
               </p>
             </div>
           </div>
+
+          {/* ── 2. Fiche technique ───────────────────────────────────────── */}
+          {hasSpecs && (
+          <div className="rounded-2xl border-2 border-slate-100 bg-white overflow-hidden shadow-sm">
+            <div className="px-4 py-1">
+              <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 pt-3 pb-1">Fiche technique</p>
+              {staticSpecs.processeur && <SpecItem icon={Cpu} label="Processeur" value={staticSpecs.processeur} />}
+              <SpecItem icon={Layers} label="RAM" value={ram ? `${ram} Go` : undefined} />
+              <SpecItem icon={Layers} label="Stockage" value={storage ? `${storage} Go` : undefined} />
+              {staticSpecs.ecran_pouces && (
+                <SpecItem icon={Monitor} label="Écran" value={`${staticSpecs.ecran_pouces}${staticSpecs.ecran_type ? ` · ${staticSpecs.ecran_type}` : ""}`} />
+              )}
+              {staticSpecs.batterie_mah && (
+                <SpecItem icon={Battery} label="Batterie" value={`${staticSpecs.batterie_mah.toLocaleString("fr-FR")} mAh${staticSpecs.charge_w ? ` · Charge ${staticSpecs.charge_w}W` : ""}`} />
+              )}
+              {staticSpecs.camera_principale && (
+                <SpecItem icon={Camera} label="Caméra principale" value={staticSpecs.camera_principale} />
+              )}
+              {staticSpecs.camera_selfie && (
+                <SpecItem icon={Camera} label="Caméra frontale" value={staticSpecs.camera_selfie} />
+              )}
+              {reseau && (
+                <SpecItem icon={Wifi} label="Réseau" value={reseau} />
+              )}
+              {staticSpecs.sim_slots && (
+                <SpecItem icon={Smartphone} label="Slots SIM" value={`Dual SIM (${staticSpecs.sim_slots} nano-SIM)`} />
+              )}
+              {staticSpecs.os && (
+                <SpecItem icon={Zap} label="Système" value={staticSpecs.os} />
+              )}
+            </div>
+          </div>
+          )}
 
         </div>
       )}
