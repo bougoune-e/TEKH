@@ -19,7 +19,7 @@ function makeKey(brand: string, model: string): string {
 }
 
 const CATALOG: Record<string, { storages: number[]; rams: number[] }> = {
-  "apple|asusrogphone6": { storages: [256], rams: [3] },
+  "asus|rogphone6": { storages: [256], rams: [3] },
   "apple|iphone11": { storages: [64, 128, 256], rams: [4] },
   "apple|iphone11pro": { storages: [64, 256, 512], rams: [4] },
   "apple|iphone11promax": { storages: [64, 256, 512], rams: [4] },

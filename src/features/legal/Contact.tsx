@@ -5,10 +5,10 @@ import { Button } from "@/shared/ui/button";
 import { Label } from "@/shared/ui/label";
 import { Mail, Facebook, Instagram, ArrowLeft } from "lucide-react";
 import { buildWhatsAppUrl } from "@/core/utils/whatsapp";
-import { useNavigate } from "react-router-dom";
+import { useGoToFooter } from "@/shared/hooks/useGoToFooter";
 
 const Contact = () => {
-  const navigate = useNavigate();
+  const goToFooter = useGoToFooter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
@@ -37,7 +37,7 @@ const Contact = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center gap-3 mb-6">
           <button
-            onClick={() => navigate("/#footer")}
+            onClick={() => goToFooter()}
             className="w-9 h-9 rounded-xl bg-muted/60 flex items-center justify-center active:scale-90 transition-all shrink-0"
           >
             <ArrowLeft className="w-4 h-4" strokeWidth={2.5} />

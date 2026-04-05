@@ -1,16 +1,16 @@
-import { useNavigate } from "react-router-dom";
+import { useGoToFooter } from "@/shared/hooks/useGoToFooter";
 import { ChevronLeft, Coins, ArrowUpDown } from "lucide-react";
 
 /**
  * Contenu aligné sur la charte métier TEKH+ (Section 9).
  */
 const PolitiqueEchangeTekhPoints = () => {
-  const navigate = useNavigate();
+  const goToFooter = useGoToFooter();
   return (
     <main className="pt-20 sm:pt-24 pb-32 sm:pb-16 bg-white dark:bg-black text-black dark:text-white min-h-dvh scroll-pt-24">
       <div className="container mx-auto px-4 max-w-4xl">
         <button
-          onClick={() => navigate("/#footer")}
+          onClick={() => goToFooter()}
           className="inline-flex items-center gap-2 text-primary font-black mb-8 hover:-translate-x-1 transition-transform"
         >
           <ChevronLeft className="h-5 w-5" />

@@ -1,14 +1,14 @@
 import AboutSection from "@/features/home/AboutSection";
 import { servicesForAPropos } from "@/features/home/ServicesSection";
-import { useNavigate } from "react-router-dom";
+import { useGoToFooter } from "@/shared/hooks/useGoToFooter";
 import { ChevronLeft } from "lucide-react";
 
 const APropos = () => {
-  const navigate = useNavigate();
+  const goToFooter = useGoToFooter();
   return (
     <main className="pt-24 pb-12">
       <div className="container mx-auto px-4">
-        <button onClick={() => navigate("/#footer")} className="inline-flex items-center gap-2 text-primary font-black mb-6 hover:-translate-x-1 transition-transform">
+        <button onClick={() => goToFooter()} className="inline-flex items-center gap-2 text-primary font-black mb-6 hover:-translate-x-1 transition-transform">
           <ChevronLeft className="h-5 w-5" />
           Retour
         </button>
