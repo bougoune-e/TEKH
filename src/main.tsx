@@ -56,17 +56,22 @@ const isStandalonePWA =
   window.matchMedia('(display-mode: standalone)').matches ||
   (window.navigator as any).standalone === true;
 
-if (!isStandalonePWA) {
+const SPLASH_KEY = 'tekh:splashShown';
+const splashAlreadyShown = sessionStorage.getItem(SPLASH_KEY) === '1';
+
+if (!isStandalonePWA || splashAlreadyShown) {
+  // Web browser OU retour dans une session PWA déjà active → pas de splash
   if (typeof (window as any).hideSplashScreen === 'function') {
     (window as any).hideSplashScreen();
   }
 } else {
-  // PWA → splash 3s pour tous (nouveaux et récurrents)
+  // PWA, premier affichage de la session → splash 1.5s max
+  sessionStorage.setItem(SPLASH_KEY, '1');
   setTimeout(() => {
     if (typeof (window as any).hideSplashScreen === 'function') {
       (window as any).hideSplashScreen();
     }
-  }, 3000);
+  }, 1500);
 }
 
 // ---------------------------------------------------------------------------

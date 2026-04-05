@@ -269,6 +269,20 @@
     window.addEventListener('load', () => {
       setTimeout(window.hideSplashScreen, 3500);
     });
+
+    // Masquer le splash immédiatement si l'utilisateur revient en arrière-plan
+    // (tab focus ou app foreground après backgrounding en PWA)
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') {
+        window.hideSplashScreen();
+      }
+    });
+    window.addEventListener('pageshow', (e) => {
+      if (e.persisted) {
+        // Page restaurée depuis le bfcache (back/forward cache)
+        window.hideSplashScreen();
+      }
+    });
   </script>
   <script>
     // Ne plus désenregistrer le SW : en PWA le SW doit servir index.html pour toutes les routes
