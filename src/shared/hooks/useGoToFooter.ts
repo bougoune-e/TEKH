@@ -18,18 +18,28 @@ export function useGoToFooter() {
   const { pathname } = useLocation();
 
   return useCallback(() => {
+    console.log("[useGoToFooter] Clicked. Current pathname:", pathname, "History length:", window.history.length);
+
     if (pathname === "/") {
-      // Déjà sur la homepage : sauter directement au footer
+      console.log("[useGoToFooter] Already on home, scrolling to footer.");
       const el = document.getElementById("footer");
       if (el) el.scrollIntoView({ behavior: "auto", block: "start" });
       return;
     }
 
     if (window.history.length > 1) {
-      // Retour navigateur standard — ScrollRestorer restaure la position exacte
+      console.log("[useGoToFooter] History > 1, calling navigate(-1)");
       navigate(-1);
+
+      // Fallback au cas où navigate(-1) ne déclenche rien après 500ms
+      setTimeout(() => {
+        if (window.location.pathname !== "/") {
+          console.log("[useGoToFooter] navigate(-1) fallback: going to /#footer");
+          navigate("/#footer");
+        }
+      }, 500);
     } else {
-      // Deep link : pas d'historique, on revient au top de la homepage
+      console.log("[useGoToFooter] History <= 1, calling navigate('/')");
       navigate("/");
     }
   }, [navigate, pathname]);
