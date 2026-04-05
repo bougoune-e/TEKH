@@ -34,8 +34,8 @@ const MentionsLegales = () => {
           <section>
             <h2 className="text-2xl font-black mb-4 uppercase tracking-tight text-primary">2. Hébergement</h2>
             <p>
-              La plateforme est hébergée par <strong className="text-black dark:text-white">Vercel Inc.</strong>,
-              situé au 340 S Lemon Ave #4133, Walnut, CA 91789, USA.
+              La plateforme est hébergée par <strong className="text-black dark:text-white">Render Services, Inc.</strong>,
+              situé au 525 Brannan Street, Suite 300, San Francisco, CA 94107, USA.
             </p>
           </section>
 
@@ -52,8 +52,8 @@ const MentionsLegales = () => {
             <h2 className="text-2xl font-black mb-4 uppercase tracking-tight text-primary">4. Contact</h2>
             <p>
               Pour toute question ou réclamation, vous pouvez nous contacter :
-              <br />Par email : <a href="mailto:owldesmond8@gmail.com" className="text-primary underline">owldesmond8@gmail.com</a>
-              <br />Par téléphone : +228 XX XX XX XX
+              <br />Par email : <a href="mailto:tekhswap@gmail.com" className="text-primary underline">tekhswap@gmail.com</a>
+              <br />Par téléphone : +228 97 62 81 17
             </p>
           </section>
         </div>

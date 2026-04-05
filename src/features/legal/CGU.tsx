@@ -74,7 +74,7 @@ export default function CGU() {
                         <h2 className="text-2xl font-black mb-4 uppercase tracking-tight text-primary">6. Certification et Garantie</h2>
                         <ul className="list-disc pl-6 space-y-4">
                             <li><span className="text-black dark:text-white uppercase font-black">Processus de certification :</span> TEKH+ certifie les appareils selon des critères techniques précis (état, fonctionnalités, authenticité).</li>
-                            <li><span className="text-black dark:text-white uppercase font-black">Garantie :</span> Les appareils certifiés bénéficient d’une garantie limitée couvrant les défauts de fonctionnement non déclarés.</li>
+                            <li><span className="text-black dark:text-white uppercase font-black">Garantie :</span> Les appareils certifiés bénéficient d’une garantie de <strong>6 mois</strong> couvrant les défauts de fonctionnement non déclarés. En cas de panne couverte, TEKH+ prend en charge la réparation ou le remplacement.</li>
                             <li><span className="text-black dark:text-white uppercase font-black">Exclusions :</span> La garantie ne couvre pas les dommages causés par une mauvaise utilisation, chute, ou modification non autorisée.</li>
                         </ul>
                     </section>

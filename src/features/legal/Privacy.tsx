@@ -73,7 +73,7 @@ export default function Privacy() {
                             <li>Vous opposer à leur utilisation.</li>
                             <li>Demander leur portabilité.</li>
                         </ul>
-                        <p className="mt-4 font-black">Contact : privacy@tekhplus.com</p>
+                        <p className="mt-4 font-black">Contact : <a href="mailto:tekhswap@gmail.com" className="text-primary underline">tekhswap@gmail.com</a></p>
                     </section>
 
                     <section>

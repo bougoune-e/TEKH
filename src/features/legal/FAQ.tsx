@@ -3,16 +3,17 @@ import { ChevronLeft, HelpCircle, Plus, Minus } from "lucide-react";
 import { useState } from "react";
 
 const faqs = [
-    { q: "Qu’est-ce que TEKH+ ?", a: "TEKH+ est une plateforme qui permet d’acheter, vendre et faire certifier des appareils électroniques d’occasion en Afrique, avec garantie et services techniques inclus." },
-    { q: "Comment créer un compte ?", a: "Téléchargez l’app ou inscrivez-vous sur tekhplus.com, puis suivez les étapes d’inscription." },
-    { q: "Comment acheter un appareil certifié ?", a: "Parcourez notre catalogue, sélectionnez un appareil, validez la commande et payez en ligne. L’appareil est livré avec sa Dealbox et sa garantie." },
-    { q: "Comment vendre mon appareil ?", a: "Utilisez notre outil de trade-in pour obtenir une estimation, puis envoyez-nous votre appareil pour certification." },
-    { q: "Que couvre la certification TEKH+ ?", a: "La certification garantit que l’appareil est fonctionnel, sans défaut caché, et conforme à la description." },
-    { q: "Quelle est la durée de la garantie ?", a: "Les appareils certifiés bénéficient d'une garantie technique pour une durée variable selon le pack choisi." },
-    { q: "Quels moyens de paiement acceptez-vous ?", a: "Mobile money (Flooz, TMoney), carte bancaire, virement." },
-    { q: "Combien coûte la livraison ?", a: "Les frais de livraison sont calculés selon votre localisation et affichés avant validation de la commande." },
-    { q: "Comment retourner un appareil ?", a: "Contactez notre SAV dans les [7] jours suivant la réception pour organiser le retour." },
-    { q: "Que faire en cas de problème technique ?", a: "Contactez-nous via l’app ou support@tekhplus.com. Notre équipe vous assistera sous 24h." },
+    { q: "Qu’est-ce que TEKH+ ?", a: "TEKH+ est une plateforme togolaise qui permet d’acheter, vendre, échanger (swap) et faire certifier des appareils électroniques d’occasion. Chaque appareil certifié est fourni avec une Dealbox premium incluant un rapport de santé technique et une garantie de 6 mois." },
+    { q: "Comment créer un compte ?", a: "Rendez-vous sur l’application TEKH+, cliquez sur « Créer un compte » et renseignez votre nom, email et mot de passe. Vous pouvez aussi vous connecter directement avec Google. La création de compte est gratuite et instantanée." },
+    { q: "Comment acheter un appareil certifié ?", a: "Parcourez le catalogue dans la section « Deals », sélectionnez l’appareil de votre choix, vérifiez les détails et la fiche technique, puis validez la commande. Le paiement s’effectue via mobile money (Flooz, TMoney) ou carte bancaire. L’appareil vous est remis avec sa Dealbox et sa carte de garantie 6 mois." },
+    { q: "Comment vendre ou échanger mon appareil ?", a: "Utilisez l’estimateur TEKH+ (section « Simulateur ») pour obtenir une cotation en temps réel. Si vous acceptez le prix, un rendez-vous est fixé dans un point TEKH+ pour vérification physique de l’appareil. Une fois validé, vous recevez votre règlement ou un bon d’échange selon votre choix." },
+    { q: "Que couvre la certification TEKH+ ?", a: "Le processus de certification comporte 50 points de contrôle : état de l’écran et de la vitre, performance de la batterie (capacité réelle), qualité des appareils photo, état des capteurs, connectivité (WiFi, Bluetooth, 4G/5G), et vérification de l’IMEI pour s’assurer que l’appareil n’est ni volé ni bloqué." },
+    { q: "Quelle est la durée de la garantie ?", a: "Tous les appareils certifiés TEKH+ bénéficient d’une garantie de 6 mois couvrant les défauts de fonctionnement non déclarés. La garantie ne couvre pas les dommages causés par une chute, l’eau ou une modification non autorisée. En cas de panne couverte, TEKH+ prend en charge la réparation ou le remplacement." },
+    { q: "Quels moyens de paiement acceptez-vous ?", a: "Nous acceptons : Mobile money (Flooz et TMoney), carte bancaire (Visa/Mastercard) et virement bancaire. Toutes les transactions sont sécurisées. Pour les échanges (swap), un dépôt de garantie peut être demandé via notre SWAP Wallet." },
+    { q: "Combien coûte la livraison ?", a: "La livraison est disponible sur Lomé et ses environs. Les frais sont calculés selon votre localisation et affichés avant la validation de la commande. Pour les clients en dehors de Lomé, un retrait en point relais TEKH+ est possible sans frais supplémentaires." },
+    { q: "Comment retourner un appareil ?", a: "Vous disposez de 7 jours après réception pour signaler tout problème non déclaré. Contactez notre SAV à tekhswap@gmail.com ou via WhatsApp au +228 97 62 81 17 en précisant votre numéro de commande. Notre équipe organise la prise en charge sous 24h." },
+    { q: "Que faire en cas de problème technique ?", a: "Contactez-nous par email à tekhswap@gmail.com ou par WhatsApp au +228 97 62 81 17. Notre équipe technique vous répond sous 24h en semaine. Pour les pannes couvertes par la garantie 6 mois, la réparation ou le remplacement est pris en charge gratuitement." },
+    { q: "Qu’est-ce que les TekhPoints ?", a: "Les TekhPoints sont les points de fidélité TEKH+. Chaque transaction physique vous permet d’accumuler des points : 1 TekhPoint = 500 FCFA de valeur. Ils sont crédités par l’équipe TEKH+ après validation de votre transaction et peuvent être utilisés pour réduire le coût de votre prochain achat (jusqu’à 30% du montant total). Les points sont valables 6 mois." },
 ];
 
 export default function FAQ() {

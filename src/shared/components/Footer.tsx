@@ -154,8 +154,8 @@ const Footer = () => {
                 <WhatsAppIcon className="h-4 w-4 text-[#25D366]" />
               </a>
             </div>
-            <a href="mailto:owldesmond8@gmail.com" className="text-sm inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-smooth">
-              <Mail className="h-4 w-4" /> owldesmond8@gmail.com
+            <a href="mailto:tekhswap@gmail.com" className="text-sm inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-smooth">
+              <Mail className="h-4 w-4" /> tekhswap@gmail.com
             </a>
           </div>
         </div>

@@ -13,7 +13,7 @@ const Contact = () => {
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
-  const supportEmail = "owldesmond8@gmail.com";
+  const supportEmail = "tekhswap@gmail.com";
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
