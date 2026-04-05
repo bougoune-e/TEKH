@@ -15,6 +15,7 @@ import AdminDeals from "@/features/admin/pages/AdminDeals";
 import AdminDealForm from "@/features/admin/pages/AdminDealForm";
 import AdminDenied from "@/features/admin/pages/AdminDenied";
 import DealBox from "@/features/admin/pages/DealBox";
+import AdminTekhPoints from "@/features/admin/pages/AdminTekhPoints";
 import Categories from "@/features/admin/pages/Categories";
 import Stats from "@/features/admin/pages/Stats";
 import Settings from "@/features/admin/pages/Settings";
@@ -218,6 +219,7 @@ const NavigationWrapper = () => {
                       <Route path="deals/new" element={<AdminDealForm />} />
                       <Route path="deals/:id/edit" element={<AdminDealForm />} />
                       <Route path="dealbox" element={<DealBox />} />
+                      <Route path="tekhpoints" element={<AdminTekhPoints />} />
                       <Route path="categories" element={<Categories />} />
                       <Route path="stats" element={<Stats />} />
                       <Route path="settings" element={<Settings />} />

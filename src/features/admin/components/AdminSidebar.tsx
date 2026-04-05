@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { cn } from "@/core/api/utils";
 import {
   LayoutGrid, Users, Smartphone, Boxes, Tags, BarChart3,
-  Settings, Handshake, ChevronRight, X, Menu, LogOut, Bell,
+  Settings, Handshake, ChevronRight, X, Menu, LogOut, Bell, Coins,
 } from "lucide-react";
 import { getRole } from "@/core/api/auth";
 import { useAuth } from "@/features/auth/auth.context";
@@ -16,6 +16,7 @@ const items = [
   { to: "/admin/users",            label: "Utilisateurs",   icon: Users },
   { to: "/admin/notifications",    label: "Notifications",  icon: Bell },
   { to: "/admin/dealbox",          label: "DealBox",        icon: Boxes },
+  { to: "/admin/tekhpoints",       label: "TekhPoints",     icon: Coins },
   { to: "/admin/categories",       label: "Catégories",     icon: Tags },
   { to: "/admin/stats",            label: "Stats",          icon: BarChart3 },
   { to: "/admin/settings",         label: "Paramètres",     icon: Settings },
