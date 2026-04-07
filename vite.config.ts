@@ -31,15 +31,17 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          // React core — must share a single instance across all chunks
-          if (id.includes("node_modules/react/") || id.includes("node_modules/react-dom/")) {
-            return "react-core";
+          // React + React Router must stay together — Router calls createContext
+          // at module init time and React must already be defined in the same chunk.
+          if (
+            id.includes("node_modules/react/") ||
+            id.includes("node_modules/react-dom/") ||
+            id.includes("node_modules/react-router") ||
+            id.includes("node_modules/scheduler/")
+          ) {
+            return "vendor-react";
           }
-          // Router
-          if (id.includes("node_modules/react-router")) {
-            return "router";
-          }
-          // Recharts — heavyweight, rarely changes
+          // Recharts — heavyweight, only needed on /prix and /simulateur
           if (id.includes("node_modules/recharts") || id.includes("node_modules/d3-")) {
             return "charts";
           }
