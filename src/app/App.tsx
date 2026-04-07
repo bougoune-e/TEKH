@@ -7,19 +7,21 @@ import { BrowserRouter, Routes, Route, useNavigationType } from "react-router-do
 import { Suspense, lazy, useEffect } from "react";
 import ProtectedRoute from "@/features/auth/ProtectedRoute";
 import AdminRoute from "@/features/auth/AdminRoute";
-import AdminLayout from "@/features/admin/layout/AdminLayout";
-import Dashboard from "@/features/admin/pages/Dashboard";
-import Users from "@/features/admin/pages/Users";
-import Annonces from "@/features/admin/pages/Annonces";
-import AdminDeals from "@/features/admin/pages/AdminDeals";
-import AdminDealForm from "@/features/admin/pages/AdminDealForm";
-import AdminDenied from "@/features/admin/pages/AdminDenied";
-import DealBox from "@/features/admin/pages/DealBox";
-import AdminTekhPoints from "@/features/admin/pages/AdminTekhPoints";
-import Categories from "@/features/admin/pages/Categories";
-import Stats from "@/features/admin/pages/Stats";
-import Settings from "@/features/admin/pages/Settings";
-import AdminNotifications from "@/features/admin/pages/AdminNotifications";
+
+// Admin pages — lazy loaded so they never bloat the main bundle
+const AdminLayout = lazy(() => import("@/features/admin/layout/AdminLayout"));
+const Dashboard = lazy(() => import("@/features/admin/pages/Dashboard"));
+const Users = lazy(() => import("@/features/admin/pages/Users"));
+const Annonces = lazy(() => import("@/features/admin/pages/Annonces"));
+const AdminDeals = lazy(() => import("@/features/admin/pages/AdminDeals"));
+const AdminDealForm = lazy(() => import("@/features/admin/pages/AdminDealForm"));
+const AdminDenied = lazy(() => import("@/features/admin/pages/AdminDenied"));
+const DealBox = lazy(() => import("@/features/admin/pages/DealBox"));
+const AdminTekhPoints = lazy(() => import("@/features/admin/pages/AdminTekhPoints"));
+const Categories = lazy(() => import("@/features/admin/pages/Categories"));
+const AdminStats = lazy(() => import("@/features/admin/pages/Stats"));
+const AdminSettings = lazy(() => import("@/features/admin/pages/Settings"));
+const AdminNotifications = lazy(() => import("@/features/admin/pages/AdminNotifications"));
 import PageLoader from "@/shared/components/PageLoader";
 import { DealsProvider } from "@/features/marketplace/deals.context";
 import { CartProvider } from "@/features/marketplace/cart.context";
@@ -221,8 +223,8 @@ const NavigationWrapper = () => {
                       <Route path="dealbox" element={<DealBox />} />
                       <Route path="tekhpoints" element={<AdminTekhPoints />} />
                       <Route path="categories" element={<Categories />} />
-                      <Route path="stats" element={<Stats />} />
-                      <Route path="settings" element={<Settings />} />
+                      <Route path="stats" element={<AdminStats />} />
+                      <Route path="settings" element={<AdminSettings />} />
                       <Route path="notifications" element={<AdminNotifications />} />
                     </Route>
 

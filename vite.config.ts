@@ -24,18 +24,45 @@ export default defineConfig(({ mode }) => ({
     extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json"],
   },
   build: {
-    // Relax the warning threshold a bit and improve vendor chunking
-    chunkSizeWarningLimit: 1024, // in kB
-    // Désactive le polyfill de modulePreload pour éviter certains bugs
-    // de chargement sur des bundles minifiés (ex: erreurs 'Cannot access S before initialization')
+    chunkSizeWarningLimit: 600,
     modulePreload: {
       polyfill: false,
     },
     rollupOptions: {
       output: {
-        // React + Recharts dans le même chunk pour éviter "Cannot access 'S' before initialization"
-        manualChunks: {
-          vendor: ["react", "react-dom", "recharts"],
+        manualChunks(id) {
+          // React core — must share a single instance across all chunks
+          if (id.includes("node_modules/react/") || id.includes("node_modules/react-dom/")) {
+            return "react-core";
+          }
+          // Router
+          if (id.includes("node_modules/react-router")) {
+            return "router";
+          }
+          // Recharts — heavyweight, rarely changes
+          if (id.includes("node_modules/recharts") || id.includes("node_modules/d3-")) {
+            return "charts";
+          }
+          // Supabase client
+          if (id.includes("node_modules/@supabase")) {
+            return "supabase";
+          }
+          // Sentry — monitoring, not needed on first paint
+          if (id.includes("node_modules/@sentry")) {
+            return "sentry";
+          }
+          // Radix UI / shadcn components
+          if (id.includes("node_modules/@radix-ui")) {
+            return "ui";
+          }
+          // Lucide icons
+          if (id.includes("node_modules/lucide-react")) {
+            return "icons";
+          }
+          // Admin pages — only loaded by /admin routes
+          if (id.includes("src/features/admin")) {
+            return "admin";
+          }
         },
       },
     },
