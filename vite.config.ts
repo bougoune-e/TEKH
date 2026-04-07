@@ -30,34 +30,8 @@ export default defineConfig(({ mode }) => ({
     },
     rollupOptions: {
       output: {
-        manualChunks(id) {
-          // Stable Core: React, Router, and UI foundations MUST stay together
-          if (
-            id.includes("node_modules/react/") ||
-            id.includes("node_modules/react-dom/") ||
-            id.includes("node_modules/react-router") ||
-            id.includes("node_modules/scheduler/") ||
-            id.includes("node_modules/lucide-react") ||
-            id.includes("node_modules/@radix-ui") ||
-            id.includes("node_modules/framer-motion")
-          ) {
-            return "vendor-core";
-          }
-          // Supabase — core but can be separate
-          if (id.includes("node_modules/@supabase")) {
-            return "supabase";
-          }
-          // Recharts — heavyweight, only on specific pages
-          if (id.includes("node_modules/recharts") || id.includes("node_modules/d3-")) {
-            return "charts";
-          }
-          // Sentry — non-critical for rendering
-          if (id.includes("node_modules/@sentry")) {
-            return "sentry";
-          }
-          // Note: Features like 'admin' are now left to Vite's default strategy
-          // to avoid circular/init-order issues with React context.
-        },
+        // We've removed manualChunks to avoid runtime initialization and circular dependency errors.
+        // Vite will now handle chunk splitting automatically using its stable default strategy.
       },
     },
   },
