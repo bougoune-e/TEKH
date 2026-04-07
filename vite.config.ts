@@ -31,34 +31,32 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          // React + React Router must stay together — Router calls createContext
-          // at module init time and React must already be defined in the same chunk.
+          // Stable Core: React, Router, and UI foundations MUST stay together
           if (
             id.includes("node_modules/react/") ||
             id.includes("node_modules/react-dom/") ||
             id.includes("node_modules/react-router") ||
             id.includes("node_modules/scheduler/") ||
             id.includes("node_modules/lucide-react") ||
-            id.includes("node_modules/@radix-ui")
+            id.includes("node_modules/@radix-ui") ||
+            id.includes("node_modules/framer-motion")
           ) {
-            return "vendor-react";
+            return "vendor-core";
           }
-          // Recharts — heavyweight, only needed on /prix and /simulateur
-          if (id.includes("node_modules/recharts") || id.includes("node_modules/d3-")) {
-            return "charts";
-          }
-          // Supabase client
+          // Supabase — core but can be separate
           if (id.includes("node_modules/@supabase")) {
             return "supabase";
           }
-          // Sentry — monitoring, not needed on first paint
+          // Recharts — heavyweight, only on specific pages
+          if (id.includes("node_modules/recharts") || id.includes("node_modules/d3-")) {
+            return "charts";
+          }
+          // Sentry — non-critical for rendering
           if (id.includes("node_modules/@sentry")) {
             return "sentry";
           }
-          // Admin pages — only loaded by /admin routes
-          if (id.includes("src/features/admin")) {
-            return "admin";
-          }
+          // Note: Features like 'admin' are now left to Vite's default strategy
+          // to avoid circular/init-order issues with React context.
         },
       },
     },
