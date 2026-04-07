@@ -37,7 +37,9 @@ export default defineConfig(({ mode }) => ({
             id.includes("node_modules/react/") ||
             id.includes("node_modules/react-dom/") ||
             id.includes("node_modules/react-router") ||
-            id.includes("node_modules/scheduler/")
+            id.includes("node_modules/scheduler/") ||
+            id.includes("node_modules/lucide-react") ||
+            id.includes("node_modules/@radix-ui")
           ) {
             return "vendor-react";
           }
@@ -52,14 +54,6 @@ export default defineConfig(({ mode }) => ({
           // Sentry — monitoring, not needed on first paint
           if (id.includes("node_modules/@sentry")) {
             return "sentry";
-          }
-          // Radix UI / shadcn components
-          if (id.includes("node_modules/@radix-ui")) {
-            return "ui";
-          }
-          // Lucide icons
-          if (id.includes("node_modules/lucide-react")) {
-            return "icons";
           }
           // Admin pages — only loaded by /admin routes
           if (id.includes("src/features/admin")) {
