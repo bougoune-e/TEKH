@@ -25,21 +25,21 @@ export function useGoToFooter() {
       return;
     }
 
-    // Stratégie hybride : on tente le retour arrière pour préserver le scroll exact (via ScrollRestorer)
-    // Mais on ajoute un fallback immédiat vers le hash #footer si on ne vient pas de la home.
+    // Stratégie : on tente le retour arrière pour laisser le ScrollRestorer (ScrollToTop.tsx)
+    // restaurer la position EXACTE du footer ou de la section vue précédemment.
     if (window.history.length > 1) {
       navigate(-1);
 
-      // Fallback de sécurité : si après 200ms on est toujours sur la même page, 
-      // on force le retour vers la home.
+      // Sécurité : si après 300ms on est toujours sur la même page (cas rare où -1 ne bouge pas)
+      // on force le retour vers le footer.
       setTimeout(() => {
         if (window.location.pathname !== "/") {
-          navigate("/#footer");
+          navigate("/#footer", { replace: true });
         }
-      }, 200);
+      }, 300);
     } else {
-      // Pas d'historique (deep link) : retour direct home
-      navigate("/#footer");
+      // Pas d'historique (lien direct externe) : on va à la home au niveau du footer
+      navigate("/#footer", { replace: true });
     }
   }, [navigate, pathname]);
 }
