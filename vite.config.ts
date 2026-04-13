@@ -30,8 +30,21 @@ export default defineConfig(({ mode }) => ({
     },
     rollupOptions: {
       output: {
-        // We've removed manualChunks to avoid runtime initialization and circular dependency errors.
-        // Vite will now handle chunk splitting automatically using its stable default strategy.
+        // Forme objet explicite (noms de packages) — fonctionne sur Node ET Bun/Render.
+        // La forme fonction (id.includes) est ignorée par Bun et produit un seul chunk 970 kB.
+        //
+        // Règles :
+        // - React + React Router DOIVENT rester ensemble : Router appelle createContext()
+        //   à l'initialisation du module, React doit donc déjà être défini.
+        // - Supabase et Sentry sont lourds (~170 kB + ~266 kB) et pas nécessaires
+        //   au premier rendu → on les isole.
+        // - Radix UI et Lucide restent dans le chunk principal pour éviter les erreurs
+        //   forwardRef/context déjà rencontrées en session précédente.
+        manualChunks: {
+          "vendor-react": ["react", "react-dom", "react-router-dom", "react-router"],
+          "vendor-supabase": ["@supabase/supabase-js"],
+          "vendor-sentry": ["@sentry/react"],
+        },
       },
     },
   },
