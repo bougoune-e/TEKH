@@ -38,11 +38,13 @@ export function useBackNavigation(
         [isRootScreen, onRootBack]
     );
 
+    // Sentinel unique au montage : assure que le premier back sur root
+    // déclenche popstate au lieu de fermer l'app/PWA directement.
     useEffect(() => {
-        // Push an initial entry so the first back press fires popstate
-        // instead of closing the tab/PWA.
         window.history.pushState(null, "", window.location.href);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+    useEffect(() => {
         window.addEventListener("popstate", handleBack);
         return () => {
             window.removeEventListener("popstate", handleBack);
