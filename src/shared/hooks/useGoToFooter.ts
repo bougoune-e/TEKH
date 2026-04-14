@@ -18,28 +18,19 @@ export function useGoToFooter() {
   const { pathname } = useLocation();
 
   return useCallback(() => {
-    // Si déjà sur la homepage, scroller directement au footer
     if (pathname === "/") {
+      // Déjà sur la homepage : sauter directement au footer
       const el = document.getElementById("footer");
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (el) el.scrollIntoView({ behavior: "auto", block: "start" });
       return;
     }
 
-    // Stratégie : on tente le retour arrière pour laisser le ScrollRestorer (ScrollToTop.tsx)
-    // restaurer la position EXACTE du footer ou de la section vue précédemment.
     if (window.history.length > 1) {
+      // Retour navigateur standard — ScrollRestorer restaure la position exacte
       navigate(-1);
-
-      // Sécurité : si après 300ms on est toujours sur la même page (cas rare où -1 ne bouge pas)
-      // on force le retour vers le footer.
-      setTimeout(() => {
-        if (window.location.pathname !== "/") {
-          navigate("/#footer", { replace: true });
-        }
-      }, 300);
     } else {
-      // Pas d'historique (lien direct externe) : on va à la home au niveau du footer
-      navigate("/#footer", { replace: true });
+      // Deep link : pas d'historique, on revient au top de la homepage
+      navigate("/");
     }
   }, [navigate, pathname]);
 }
