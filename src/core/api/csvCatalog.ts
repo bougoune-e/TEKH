@@ -254,6 +254,7 @@ const CATALOG: Record<string, { storages: number[]; rams: number[] }> = {
   "motorola|motog845g": { storages: [128, 256], rams: [8] },
   "motorola|razr40": { storages: [256], rams: [8] },
   "motorola|razr40ultra": { storages: [128, 512], rams: [8] },
+  "motorola|one5g": { storages: [128], rams: [4] },
   "oneplus|10pro": { storages: [128, 256, 512], rams: [8, 12, 16] },
   "oneplus|10r": { storages: [128, 256], rams: [8, 12] },
   "oneplus|10t": { storages: [128, 256], rams: [8, 16] },
