@@ -10,10 +10,12 @@ function nk(s: string) { return s.toLowerCase().replace(/[^a-z0-9]/g, ""); }
 /**
  * Normalise brand+model en une clé de catalogue.
  * Supprime le préfixe de marque si le modèle commence par lui.
+ * Le "+" est converti en "plus" AVANT la normalisation pour différencier
+ * "Samsung galaxy s9" de "Samsung galaxy s9+" (sinon nk() les rend identiques).
  */
 function makeKey(brand: string, model: string): string {
   const nb = nk(brand);
-  const nm = nk(model);
+  const nm = nk(model.replace(/\+/g, "plus"));
   const modelKey = nm.startsWith(nb) ? nm.slice(nb.length) : nm;
   return `${nb}|${modelKey}`;
 }
@@ -105,6 +107,7 @@ const CATALOG: Record<string, { storages: number[]; rams: number[] }> = {
   "honor|x9b": { storages: [128], rams: [6] },
   "huawei|mate40": { storages: [256], rams: [8, 12] },
   "huawei|mate40pro": { storages: [256, 512], rams: [8, 12] },
+  "huawei|mate40proplus": { storages: [256, 512], rams: [8, 12] },
   "huawei|mate60": { storages: [256, 512], rams: [8, 12] },
   "huawei|mate60pro": { storages: [128, 512, 1024], rams: [6, 12] },
   "huawei|nova10": { storages: [128, 256], rams: [8] },
@@ -127,6 +130,7 @@ const CATALOG: Record<string, { storages: number[]; rams: number[] }> = {
   "huawei|p30pro": { storages: [128, 256, 512], rams: [6, 12] },
   "huawei|p40": { storages: [128, 256], rams: [8] },
   "huawei|p40pro": { storages: [128, 256, 512], rams: [6, 12] },
+  "huawei|p40proplus": { storages: [256, 512], rams: [8, 12] },
   "huawei|p50": { storages: [256], rams: [8] },
   "huawei|p50pocket": { storages: [128, 512], rams: [8] },
   "huawei|p50pro": { storages: [128, 256, 512], rams: [6, 12] },
@@ -513,26 +517,34 @@ const CATALOG: Record<string, { storages: number[]; rams: number[] }> = {
   "samsung|galaxynote10plus": { storages: [256, 512], rams: [6, 8] },
   "samsung|galaxynote20": { storages: [128], rams: [12] },
   "samsung|galaxynote20ultra": { storages: [128, 256, 512], rams: [6, 8] },
-  "samsung|galaxys10": { storages: [128, 256, 512, 1024], rams: [4, 6, 8, 12] },
+  "samsung|galaxys10": { storages: [128, 512, 1024], rams: [8, 12] },
+  "samsung|galaxys10plus": { storages: [128, 512, 1024], rams: [8, 12] },
   "samsung|galaxys105g": { storages: [128, 512], rams: [6, 12] },
   "samsung|galaxys10e": { storages: [64, 256], rams: [4] },
   "samsung|galaxys10lite": { storages: [128, 512], rams: [12] },
-  "samsung|galaxys20": { storages: [128, 256, 512], rams: [6, 8, 12] },
+  "samsung|galaxys20": { storages: [128, 256], rams: [8, 12] },
+  "samsung|galaxys20plus": { storages: [128, 256], rams: [8, 12] },
   "samsung|galaxys20fe": { storages: [128, 256], rams: [8, 12] },
-  "samsung|galaxys20ultra": { storages: [128, 256, 512], rams: [6, 8, 12] },
-  "samsung|galaxys21": { storages: [128, 256, 512], rams: [6, 8, 12] },
-  "samsung|galaxys21fe": { storages: [128, 256, 512], rams: [6, 8, 12] },
-  "samsung|galaxys21ultra": { storages: [128, 256, 512], rams: [6, 8, 12] },
-  "samsung|galaxys22": { storages: [128, 256, 512], rams: [6, 8, 12] },
-  "samsung|galaxys22ultra": { storages: [128, 256, 512], rams: [6, 8, 12] },
-  "samsung|galaxys23": { storages: [128, 256, 512, 1024], rams: [6, 8, 12] },
-  "samsung|galaxys23fe": { storages: [128, 256, 512, 1024], rams: [6, 8, 12] },
-  "samsung|galaxys23ultra": { storages: [128, 256, 512, 1024], rams: [6, 8, 12] },
-  "samsung|galaxys24": { storages: [128, 256, 512, 1024], rams: [6, 8, 12] },
-  "samsung|galaxys24ultra": { storages: [128, 256, 512, 1024], rams: [6, 8, 12] },
-  "samsung|galaxys8": { storages: [64, 128], rams: [6, 8] },
+  "samsung|galaxys20ultra": { storages: [128, 256, 512], rams: [12] },
+  "samsung|galaxys21": { storages: [128, 256], rams: [8] },
+  "samsung|galaxys21plus": { storages: [128, 256], rams: [8] },
+  "samsung|galaxys21fe": { storages: [128, 256], rams: [6, 8] },
+  "samsung|galaxys21ultra": { storages: [128, 256, 512], rams: [8, 12, 16] },
+  "samsung|galaxys22": { storages: [128, 256], rams: [8] },
+  "samsung|galaxys22plus": { storages: [128, 256], rams: [8] },
+  "samsung|galaxys22ultra": { storages: [128, 256, 512, 1024], rams: [8, 12] },
+  "samsung|galaxys23": { storages: [128, 256], rams: [8] },
+  "samsung|galaxys23plus": { storages: [256, 512], rams: [8] },
+  "samsung|galaxys23fe": { storages: [128, 256], rams: [8] },
+  "samsung|galaxys23ultra": { storages: [256, 512, 1024], rams: [8, 12] },
+  "samsung|galaxys24": { storages: [128, 256], rams: [8] },
+  "samsung|galaxys24plus": { storages: [256, 512], rams: [12] },
+  "samsung|galaxys24ultra": { storages: [256, 512, 1024], rams: [12] },
+  "samsung|galaxys8": { storages: [64, 128], rams: [4] },
+  "samsung|galaxys8plus": { storages: [64, 128], rams: [4] },
   "samsung|galaxys8active": { storages: [64], rams: [4] },
-  "samsung|galaxys9": { storages: [32, 64, 128, 256], rams: [2, 3, 4, 6] },
+  "samsung|galaxys9": { storages: [64, 128, 256], rams: [4, 6] },
+  "samsung|galaxys9plus": { storages: [64, 128, 256], rams: [6] },
   "samsung|galaxys9active": { storages: [64], rams: [8] },
   "samsung|galaxyzflip3": { storages: [128, 256], rams: [8, 12] },
   "samsung|galaxyzflip4": { storages: [256, 512], rams: [8, 12] },

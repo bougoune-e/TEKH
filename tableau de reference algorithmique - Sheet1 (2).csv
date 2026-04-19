@@ -1,4 +1,9 @@
-marques,modele_exact,stockages_gb,prix_neuf_en_fcfa,classe_equivalence,ram_gb,annee_sortie
+
+
+
+
+
+Marques,Modèle Exact,Stockages (GB),Prix neuf en FCFA,Classe d'Équivalence ,RAM (GB),Année de sortie
 Apple,iPhone 11,64,110000,C,4,2019
 Apple,iPhone 11,128,125000,C,4,2019
 Apple,iPhone 11,256,140000,C,4,2019
@@ -106,12 +111,12 @@ Apple,iPhone xs,512,235000,D,4,2018
 Apple,iPhone xs max,256,270000,D,4,2018
 Apple,iPhone xs max,512,115000,D,4,2018
 Apple,iPhone7,256,130000,E,2,2016
-Apple,iPhone 7,32,45000,E,2,2016
-Apple,iphone 7,128,60000,E,2,2016
-Apple,iPhone 7 plus,128,150000,E,2,2016
+,iphone 7,32,45000,E,2,
+,iphone 7,128,60000,E,2,
+,iPhone 7 plus,128,150000,E,2,
 Apple,iPhone 7 plus,256,150000,E,3,2016
-Asus,asus rog phone 6,256,350000,E,3,2016
-Asus,asus rog phone 6 pro,512,400000,B,16,2022
+Apple,asus rog phone 6,256,350000,E,3,2016
+,asus rog phone 6 pro,512,400000,B,16,
 Asus,asus rog phone 6 pro,512,400000,B,12,2022
 Asus,asus rog phone 6d ultimate,512,450000,B,16,2022
 Asus,asus rog phone 7,256,420000,B,18,2022
@@ -119,7 +124,7 @@ Asus,asus rog phone 7,512,480000,B,12,2023
 Asus,asus rog phone 7 ultimate,512,550000,B,16,2023
 Asus,asus rog phone 8,256,500000,B,18,2023
 Asus,asus rog phone 8,512,580000,A,12,2024
-Asus,asus rog phone 8,512,580000,A,16,2024
+,asus rog phone 8,512,580000,A,16,
 Asus,asus rog phone 8,256,650000,A,16,2024
 Asus,asus rog phone 8 pro,512,720000,A,16,2024
 Asus,asus rog phone 8 pro,1024,800000,A,24,2024
