@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Home, Compass, Calculator, User, Tag, Settings } from "lucide-react";
+import { Home, Compass, Calculator, User, Tag } from "lucide-react";
 import { useAuth } from "@/features/auth/auth.context";
 import { usePWA } from "@/shared/hooks/usePWA";
 
@@ -18,8 +18,8 @@ export default function BottomNav() {
   ] : [
     { to: "/", label: "Accueil", Icon: Home },
     { to: "/deals", label: "Explorer", Icon: Compass },
+    { to: "/simulateur", label: "Estimer", Icon: Calculator },
     { to: "/prix", label: "Prix", Icon: Tag },
-    { to: "/settings", label: "Paramètres", Icon: Settings },
   ];
 
   const profileActive = pathname === "/profile" || pathname === "/login";

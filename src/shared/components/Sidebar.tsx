@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Home, Compass, LayoutGrid, Settings, User } from 'lucide-react';
+import { Home, Compass, LayoutGrid, Settings, User, Tag } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/ui/tooltip';
 import { useAuth } from '@/features/auth/auth.context';
 import logo from '@/assets/logos/robott.jpeg';
@@ -15,6 +15,7 @@ const Sidebar = () => {
     { icon: Home, label: t('nav.home'), path: '/' },
     { icon: Compass, label: t('nav.deals'), path: '/deals' },
     { icon: LayoutGrid, label: t('nav.upgrade'), path: '/simulateur' },
+    { icon: Tag, label: 'Prix', path: '/prix' },
   ];
 
   const handleProfileClick = () => {
