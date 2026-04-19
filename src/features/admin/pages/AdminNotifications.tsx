@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Bell, Send, Users, CheckCircle2, XCircle, Clock, Smartphone, Zap, RefreshCw, ImagePlus, X } from "lucide-react";
+import { Bell, Send, Users, CheckCircle2, XCircle, Clock, Smartphone, Zap, RefreshCw, ImagePlus, X, Trash2 } from "lucide-react";
 import { Button } from "@/shared/ui/button";
 import { toast } from "sonner";
 import { supabase, uploadImage } from "@/core/api/supabaseApi";
@@ -93,6 +93,8 @@ export default function AdminNotifications() {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [loadingHistory, setLoadingHistory] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [clearingAll, setClearingAll] = useState(false);
 
   useEffect(() => {
     if (!isSupabaseConfigured) { setLoadingHistory(false); return; }
@@ -129,8 +131,8 @@ export default function AdminNotifications() {
       }),
       jwt
         ? fetch(`${API_URL}/api/push/subscribers`, { headers: { Authorization: `Bearer ${jwt}` } })
-            .then(r => r.ok ? r.json() : { subscribers: [] })
-            .catch(() => ({ subscribers: [] }))
+          .then(r => r.ok ? r.json() : { subscribers: [] })
+          .catch(() => ({ subscribers: [] }))
         : Promise.resolve({ subscribers: [] }),
       supabase
         .from("notification_campaigns")
@@ -183,6 +185,36 @@ export default function AdminNotifications() {
       toast.error(e.message || "Échec de l'envoi");
     } finally {
       setSending(false);
+    }
+  }
+
+  async function deleteCampaign(id: string) {
+    setDeletingId(id);
+    try {
+      const { error } = await supabase.from("notification_campaigns").delete().eq("id", id);
+      if (error) throw error;
+      setCampaigns((prev) => prev.filter((c) => c.id !== id));
+      toast.success("Campagne supprimée");
+    } catch (e: any) {
+      toast.error(e.message || "Erreur lors de la suppression");
+    } finally {
+      setDeletingId(null);
+    }
+  }
+
+  async function clearAllCampaigns() {
+    if (!campaigns.length) return;
+    setClearingAll(true);
+    try {
+      const ids = campaigns.map((c) => c.id);
+      const { error } = await supabase.from("notification_campaigns").delete().in("id", ids);
+      if (error) throw error;
+      setCampaigns([]);
+      toast.success("Historique effacé");
+    } catch (e: any) {
+      toast.error(e.message || "Erreur lors de la suppression");
+    } finally {
+      setClearingAll(false);
     }
   }
 
@@ -396,6 +428,16 @@ export default function AdminNotifications() {
           {campaigns.length > 0 && (
             <span className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-full">{campaigns.length}</span>
           )}
+          {campaigns.length > 0 && (
+            <button
+              onClick={clearAllCampaigns}
+              disabled={clearingAll}
+              className="ml-auto flex items-center gap-1.5 text-[11px] font-semibold text-muted-foreground hover:text-rose-500 transition-colors disabled:opacity-40"
+            >
+              <Trash2 className="h-3 w-3" />
+              {clearingAll ? "Suppression..." : "Tout effacer"}
+            </button>
+          )}
         </div>
 
         {loadingHistory ? (
@@ -412,6 +454,7 @@ export default function AdminNotifications() {
             {campaigns.map((c) => {
               const emoji = getContentEmoji(c.title, c.body);
               const rate = c.total_subs > 0 ? Math.round((c.sent_count / c.total_subs) * 100) : 100;
+              const isDeleting = deletingId === c.id;
               return (
                 <div
                   key={c.id}
@@ -428,11 +471,22 @@ export default function AdminNotifications() {
                         <p className="font-black text-[14px] text-foreground leading-tight">
                           {c.title}
                         </p>
-                        <div className="flex items-center gap-1 shrink-0 text-[10px] text-muted-foreground">
-                          <Clock className="h-3 w-3" />
-                          {new Date(c.created_at).toLocaleDateString("fr-FR", {
-                            day: "numeric", month: "short", hour: "2-digit", minute: "2-digit",
-                          })}
+                        <div className="flex items-center gap-2 shrink-0">
+                          <span className="flex items-center gap-1 text-[10px] text-muted-foreground">
+                            <Clock className="h-3 w-3" />
+                            {new Date(c.created_at).toLocaleDateString("fr-FR", {
+                              day: "numeric", month: "short", hour: "2-digit", minute: "2-digit",
+                            })}
+                          </span>
+                          {/* Bouton supprimer campagne */}
+                          <button
+                            onClick={() => deleteCampaign(c.id)}
+                            disabled={isDeleting}
+                            title="Supprimer cette campagne"
+                            className="p-1 rounded-lg hover:bg-rose-500/10 hover:text-rose-500 text-muted-foreground transition-colors disabled:opacity-40"
+                          >
+                            <Trash2 className={`h-3.5 w-3.5 ${isDeleting ? "animate-pulse" : ""}`} />
+                          </button>
                         </div>
                       </div>
                       <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">{c.body}</p>

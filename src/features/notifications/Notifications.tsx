@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { Bell, ArrowLeft, Trash2, ExternalLink, MessageCircle } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -17,14 +17,17 @@ type Campaign = {
   created_at: string;
 };
 
-/* ── localStorage helpers ── */
-const KEY = "tekh_dismissed_notifs";
-const getDismissed = (): Set<string> => {
-  try { return new Set(JSON.parse(localStorage.getItem(KEY) || "[]")); }
+/* ── localStorage helpers — Clé SCOPÉE à l'utilisateur ─────────
+   Chaque utilisateur a sa propre liste de notifications lues.
+   Un nouvel utilisateur ou une nouvelle session repart de zéro.
+─────────────────────────────────────────────────────────────── */
+const getKey = (userId: string) => `tekh_dismissed_notifs_${userId}`;
+const getDismissed = (userId: string): Set<string> => {
+  try { return new Set(JSON.parse(localStorage.getItem(getKey(userId)) || "[]")); }
   catch { return new Set(); }
 };
-const saveDismissed = (s: Set<string>) =>
-  localStorage.setItem(KEY, JSON.stringify([...s]));
+const saveDismissed = (userId: string, s: Set<string>) =>
+  localStorage.setItem(getKey(userId), JSON.stringify([...s]));
 
 /* ── Emoji par mot-clé ── */
 function getEmoji(title: string, body = ""): string {
@@ -172,32 +175,46 @@ export default function NotificationsPage() {
   const [visible, setVisible] = useState<Campaign[]>([]);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState<Campaign | null>(null);
+  // Ref pour stocker l'userId sans déclencher de re-render ni casser les callbacks
+  const userIdRef = useRef<string | null>(null);
 
   useEffect(() => {
     if (!isSupabaseConfigured) { setLoading(false); return; }
-    supabase
-      .from("notification_campaigns")
-      .select("*")
-      .order("created_at", { ascending: false })
-      .limit(50)
-      .then(({ data }) => {
-        const all = data ?? [];
-        setCampaigns(all);
-        const d = getDismissed();
-        setVisible(all.filter((c: Campaign) => !d.has(c.id)));
-      })
-      .finally(() => setLoading(false));
+
+    // Récupérer l'utilisateur connecté AVANT de filtrer les notifs dismissées
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      const uid = user?.id ?? null;
+      userIdRef.current = uid;
+
+      supabase
+        .from("notification_campaigns")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .limit(50)
+        .then(({ data }) => {
+          const all = data ?? [];
+          setCampaigns(all);
+          // Si pas d'utilisateur connecté → on affiche tout sans possibilité de dismiss
+          const d = uid ? getDismissed(uid) : new Set<string>();
+          setVisible(all.filter((c: Campaign) => !d.has(c.id)));
+        })
+        .finally(() => setLoading(false));
+    });
   }, []);
 
   const dismiss = useCallback((id: string) => {
-    const d = getDismissed(); d.add(id); saveDismissed(d);
+    const uid = userIdRef.current;
+    if (!uid) return; // pas de session → on ne persiste pas
+    const d = getDismissed(uid); d.add(id); saveDismissed(uid, d);
     setVisible((p) => p.filter((c) => c.id !== id));
   }, []);
 
   const dismissAll = useCallback(() => {
-    const d = getDismissed();
+    const uid = userIdRef.current;
+    if (!uid) return;
+    const d = getDismissed(uid);
     campaigns.forEach((c) => d.add(c.id));
-    saveDismissed(d);
+    saveDismissed(uid, d);
     setVisible([]);
   }, [campaigns]);
 

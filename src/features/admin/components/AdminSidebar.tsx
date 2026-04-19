@@ -10,16 +10,16 @@ import { useAuth } from "@/features/auth/auth.context";
 import logo from "@/assets/logos/robott.jpeg";
 
 const items = [
-  { to: "/admin",                  label: "Dashboard",      icon: LayoutGrid,  end: true },
-  { to: "/admin/annonces",         label: "Annonces",       icon: Smartphone },
-  { to: "/admin/deals",            label: "Deals",          icon: Handshake },
-  { to: "/admin/users",            label: "Utilisateurs",   icon: Users },
-  { to: "/admin/notifications",    label: "Notifications",  icon: Bell },
-  { to: "/admin/dealbox",          label: "DealBox",        icon: Boxes },
-  { to: "/admin/tekhpoints",       label: "TekhPoints",     icon: Coins },
-  { to: "/admin/categories",       label: "Catégories",     icon: Tags },
-  { to: "/admin/stats",            label: "Stats",          icon: BarChart3 },
-  { to: "/admin/settings",         label: "Paramètres",     icon: Settings },
+  { to: "/admin", label: "Dashboard", icon: LayoutGrid, end: true },
+  { to: "/admin/annonces", label: "Annonces", icon: Smartphone },
+  { to: "/admin/deals", label: "Deals", icon: Handshake },
+  { to: "/admin/users", label: "Utilisateurs", icon: Users },
+  { to: "/admin/notifications", label: "Notifications", icon: Bell },
+  { to: "/admin/dealbox", label: "DealBox", icon: Boxes },
+  { to: "/admin/tekhpoints", label: "TekhPoints", icon: Coins },
+  { to: "/admin/categories", label: "Catégories", icon: Tags },
+  { to: "/admin/stats", label: "Stats", icon: BarChart3 },
+  { to: "/admin/settings", label: "Paramètres", icon: Settings },
 ];
 
 // 5 primary items for the mobile bottom bar; rest are in the drawer
@@ -151,7 +151,7 @@ export const AdminMobileNav = () => {
               </button>
             </div>
 
-            <div className="grid grid-cols-3 gap-2 mb-4">
+            <div className="grid grid-cols-2 gap-2 mb-4">
               {items.map(({ to, label, icon: Icon, end }) => (
                 <NavLink
                   key={to}
@@ -160,7 +160,7 @@ export const AdminMobileNav = () => {
                   onClick={() => setDrawerOpen(false)}
                   className={({ isActive }) =>
                     cn(
-                      "flex flex-col items-center gap-2 p-3 rounded-2xl text-center transition-all",
+                      "flex items-center gap-3 p-3.5 rounded-2xl transition-all",
                       isActive
                         ? "bg-primary/10 text-primary"
                         : "bg-muted/50 text-muted-foreground hover:bg-muted"
@@ -168,7 +168,7 @@ export const AdminMobileNav = () => {
                   }
                 >
                   <Icon className="h-5 w-5 shrink-0" />
-                  <span className="text-[10px] font-black uppercase tracking-wide leading-tight">{label}</span>
+                  <span className="text-[12px] font-black uppercase tracking-wide leading-tight">{label}</span>
                 </NavLink>
               ))}
             </div>
