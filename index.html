@@ -38,7 +38,7 @@
     #splash-screen {
       position: fixed;
       inset: 0;
-      background: #06070a;
+      background: #fafafa;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -50,7 +50,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Glow vert ambiant */
+    /* Glow vert ambiant — plus discret sur fond clair */
     #splash-screen::before {
       content: '';
       position: absolute;
@@ -59,18 +59,18 @@
       width: 520px;
       height: 520px;
       transform: translate(-50%, -55%);
-      background: radial-gradient(circle, rgba(0,255,65,0.09) 0%, transparent 68%);
+      background: radial-gradient(circle, rgba(0, 180, 60, 0.06) 0%, transparent 68%);
       animation: splashGlowPulse 3s ease-in-out infinite;
       pointer-events: none;
     }
 
-    /* Grid subtle dot texture */
+    /* Dot texture subtile en gris clair */
     #splash-screen::after {
       content: '';
       position: absolute;
       inset: 0;
       background-image:
-        radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+        radial-gradient(circle, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
       background-size: 28px 28px;
       pointer-events: none;
     }
@@ -90,18 +90,18 @@
       width: 100px;
       height: 100px;
       border-radius: 24px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0, 0, 0, 0.03);
+      border: 1px solid rgba(0, 0, 0, 0.08);
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
       opacity: 0;
       transform: scale(0.6) translateY(10px);
-      transition: opacity 0.45s cubic-bezier(0.34,1.56,0.64,1),
-                  transform 0.45s cubic-bezier(0.34,1.56,0.64,1),
-                  box-shadow 0.4s ease;
-      box-shadow: 0 0 0 0 rgba(0,255,65,0);
+      transition: opacity 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+        transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.4s ease;
+      box-shadow: 0 0 0 0 rgba(0, 180, 60, 0);
     }
 
     /* Cells reveal — staggered via JS (class added) */
@@ -110,14 +110,25 @@
       transform: scale(1) translateY(0);
     }
 
-    /* Active / hover subtle glow */
-    .splash-cell.shown:nth-child(1) { box-shadow: 0 0 18px rgba(0,200,255,0.12); }
-    .splash-cell.shown:nth-child(2) { box-shadow: 0 0 18px rgba(120,80,255,0.12); }
-    .splash-cell.shown:nth-child(3) { box-shadow: 0 0 18px rgba(0,255,65,0.12); }
-    .splash-cell.shown:nth-child(4) { box-shadow: 0 0 18px rgba(255,140,0,0.12); }
+    /* Glows par cellule — adaptés fond clair */
+    .splash-cell.shown:nth-child(1) {
+      box-shadow: 0 4px 20px rgba(0, 180, 255, 0.15);
+    }
+
+    .splash-cell.shown:nth-child(2) {
+      box-shadow: 0 4px 20px rgba(120, 80, 255, 0.15);
+    }
+
+    .splash-cell.shown:nth-child(3) {
+      box-shadow: 0 4px 20px rgba(0, 180, 60, 0.15);
+    }
+
+    .splash-cell.shown:nth-child(4) {
+      box-shadow: 0 4px 20px rgba(255, 140, 0, 0.15);
+    }
 
     /* Each lottie container fills the cell */
-    .splash-cell > div {
+    .splash-cell>div {
       width: 80px;
       height: 80px;
     }
@@ -132,7 +143,7 @@
       gap: 8px;
       opacity: 0;
       transform: translateY(12px);
-      animation: splashBrandIn 0.55s cubic-bezier(0.16,1,0.3,1) 1.4s forwards;
+      animation: splashBrandIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 1.4s forwards;
     }
 
     .splash-logo-row {
@@ -146,33 +157,65 @@
       height: 36px;
       border-radius: 10px;
       object-fit: cover;
-      box-shadow: 0 0 0 1px rgba(0,255,65,0.2), 0 0 20px rgba(0,255,65,0.08);
+      box-shadow: 0 0 0 1px rgba(0, 255, 65, 0.2), 0 0 20px rgba(0, 255, 65, 0.08);
     }
 
     .splash-brand-name {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       font-size: 1.8rem;
       font-weight: 900;
-      color: #fff;
+      color: #111111;
       letter-spacing: -0.04em;
       line-height: 1;
     }
 
     .splash-brand-name .brand-plus {
-      color: #00FF41;
-      text-shadow: 0 0 16px rgba(0,255,65,0.5);
+      color: #059669;
+      text-shadow: 0 0 16px rgba(5, 150, 105, 0.25);
     }
 
     .splash-tagline {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       font-size: 0.68rem;
       font-weight: 600;
-      color: rgba(255,255,255,0.35);
+      color: rgba(0, 0, 0, 0.4);
       letter-spacing: 0.14em;
       text-transform: uppercase;
     }
 
-    /* ── Progress bar ── */
+    /* Slogan deux lignes */
+    .splash-slogan {
+      text-align: center;
+      margin-top: 4px;
+    }
+
+    .splash-slogan-line {
+      display: block;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.45);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1.7;
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    .splash-slogan-line.s1 {
+      animation: splashBrandIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.7s forwards;
+    }
+
+    .splash-slogan-line.s2 {
+      animation: splashBrandIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.9s forwards;
+    }
+
+    .splash-slogan-line .hl {
+      color: #059669;
+      font-weight: 800;
+    }
+
+    /* Progress bar */
     .splash-bar-wrap {
       position: absolute;
       bottom: 9%;
@@ -180,7 +223,7 @@
       transform: translateX(-50%);
       width: 48px;
       height: 2px;
-      background: rgba(255,255,255,0.06);
+      background: rgba(0, 0, 0, 0.08);
       border-radius: 2px;
       overflow: hidden;
       z-index: 1;
@@ -192,7 +235,7 @@
       width: 0%;
       background: linear-gradient(to right, #064e3b, #00FF41);
       border-radius: 2px;
-      animation: splashBarFill 2.2s cubic-bezier(0.4,0,0.2,1) 0.3s forwards;
+      animation: splashBarFill 2.2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
     }
 
     /* ── Exit ── */
@@ -204,17 +247,44 @@
 
     /* ── Keyframes ── */
     @keyframes splashGlowPulse {
-      0%,100% { opacity: 0.7; transform: translate(-50%,-55%) scale(1); }
-      50%      { opacity: 1;   transform: translate(-50%,-55%) scale(1.08); }
+
+      0%,
+      100% {
+        opacity: 0.7;
+        transform: translate(-50%, -55%) scale(1);
+      }
+
+      50% {
+        opacity: 1;
+        transform: translate(-50%, -55%) scale(1.08);
+      }
     }
+
     @keyframes splashBrandIn {
-      to { opacity: 1; transform: translateY(0); }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
+
     @keyframes splashBarAppear {
-      from { opacity: 0; } to { opacity: 1; }
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
     }
+
     @keyframes splashBarFill {
-      from { width: 0%; } to { width: 100%; }
+      from {
+        width: 0%;
+      }
+
+      to {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -224,10 +294,18 @@
 
     <!-- Grille 2×2 des catégories -->
     <div class="splash-grid" id="splash-grid">
-      <div class="splash-cell" id="sc-mobile"><div id="lottie-mobile"></div></div>
-      <div class="splash-cell" id="sc-computer"><div id="lottie-computer"></div></div>
-      <div class="splash-cell" id="sc-apple"><div id="lottie-apple"></div></div>
-      <div class="splash-cell" id="sc-gaming"><div id="lottie-gaming"></div></div>
+      <div class="splash-cell" id="sc-mobile">
+        <div id="lottie-mobile"></div>
+      </div>
+      <div class="splash-cell" id="sc-computer">
+        <div id="lottie-computer"></div>
+      </div>
+      <div class="splash-cell" id="sc-apple">
+        <div id="lottie-apple"></div>
+      </div>
+      <div class="splash-cell" id="sc-gaming">
+        <div id="lottie-gaming"></div>
+      </div>
     </div>
 
     <!-- Brand block -->
@@ -237,10 +315,16 @@
         <span class="splash-brand-name">TΞKΗ<span class="brand-plus">+</span></span>
       </div>
       <span class="splash-tagline">L'échange intelligent d'appareils</span>
+      <div class="splash-slogan">
+        <span class="splash-slogan-line s1">pour une <span class="hl">inclusion numérique</span></span>
+        <span class="splash-slogan-line s2">de qualité <span class="hl">pour tous</span></span>
+      </div>
     </div>
 
     <!-- Barre de progression -->
-    <div class="splash-bar-wrap"><div class="splash-bar"></div></div>
+    <div class="splash-bar-wrap">
+      <div class="splash-bar"></div>
+    </div>
   </div>
 
   <div id="root"></div>
@@ -265,15 +349,15 @@
       if (typeof lottie === 'undefined') return;
 
       var icons = [
-        { id: 'lottie-mobile',   cell: 'sc-mobile',   path: '/assets/lottie/mobile.json' },
-        { id: 'lottie-computer', cell: 'sc-computer',  path: '/assets/lottie/computer.json' },
-        { id: 'lottie-apple',   cell: 'sc-apple',     path: '/assets/lottie/apple.json' },
-        { id: 'lottie-gaming',  cell: 'sc-gaming',    path: '/assets/lottie/gaming.json' },
+        { id: 'lottie-mobile', cell: 'sc-mobile', path: '/assets/lottie/mobile.json' },
+        { id: 'lottie-computer', cell: 'sc-computer', path: '/assets/lottie/computer.json' },
+        { id: 'lottie-apple', cell: 'sc-apple', path: '/assets/lottie/apple.json' },
+        { id: 'lottie-gaming', cell: 'sc-gaming', path: '/assets/lottie/gaming.json' },
       ];
 
-      icons.forEach(function(item, i) {
+      icons.forEach(function (item, i) {
         // Délai staggeré : 0ms, 130ms, 260ms, 390ms
-        setTimeout(function() {
+        setTimeout(function () {
           lottie.loadAnimation({
             container: document.getElementById(item.id),
             renderer: 'svg',
@@ -284,7 +368,7 @@
           // Reveal de la cellule avec un léger décalage après le chargement
           var cell = document.getElementById(item.cell);
           if (cell) {
-            setTimeout(function() { cell.classList.add('shown'); }, 60);
+            setTimeout(function () { cell.classList.add('shown'); }, 60);
           }
         }, i * 130);
       });
