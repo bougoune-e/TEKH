@@ -864,8 +864,8 @@ Samsung,galaxy s21+,512,550000,C,8,2022
 Samsung,galaxy s21+,128,500000,C,12,2022
 Samsung,galaxy s22,256,550000,B,6,2022
 Samsung,galaxy s22,512,600000,B,8,2022
-Samsung,galaxy s22,128,650000,B,12,2022
-Samsung,galaxy s22 ultra,256,700000,B,6,2022
+Samsung,galaxy s22,128,130000,B,12,2022
+Samsung,galaxy s22 ultra,256,250000,B,6,2022
 Samsung,galaxy s22 ultra,512,750000,B,8,2023
 Samsung,galaxy s22 ultra,128,550000,B,12,2023
 Samsung,galaxy s22+,256,600000,B,6,2023
@@ -1435,20 +1435,20 @@ Xiaomi Redmi ,redmi 14c,256,85000,C,8,2024
 Xiaomi Redmi ,redmi 14c,128,90000,C,4,2024
 Xiaomi Redmi ,redmi 15c,256,95000,B,6,2025
 Xiaomi Redmi ,redmi 15c,64,120000,B,4,2025
-Xiaomi Redmi ,redmi note 10,128,140000,E,6,2021
+Xiaomi Redmi ,redmi note 10,128,60000,E,6,2021
 Xiaomi Redmi ,redmi note 10,64,130000,E,4,2021
 Xiaomi Redmi ,redmi note 10 5g,128,150000,E,6,2021
 Xiaomi Redmi ,redmi note 10 5g,64,160000,E,4,2021
-Xiaomi Redmi ,redmi note 10 pro,128,180000,D,6,2021
+Xiaomi Redmi ,redmi note 10 pro,128,85000,D,6,2021
 Xiaomi Redmi ,redmi note 10 pro,64,190000,D,4,2021
-Xiaomi Redmi ,redmi note 10 pro max,128,210000,D,6,2021
+Xiaomi Redmi ,redmi note 10 pro max,128,95000,D,6,2021
 Xiaomi Redmi ,redmi note 10 pro max,64,150000,D,4,2021
 Xiaomi Redmi ,redmi note 10s,128,170000,E,6,2021
 Xiaomi Redmi ,redmi note 10s,64,180000,E,6,2021
 Xiaomi Redmi ,redmi note 11,128,200000,D,8,2022
 Xiaomi Redmi ,redmi note 11,128,250000,D,4,2022
-Xiaomi Redmi ,redmi note 11 pro +,256,280000,D,6,2022
-Xiaomi Redmi ,redmi note 11 pro +,64,220000,D,4,2022
+Xiaomi Redmi ,redmi note 11 pro +,256,160000,D,6,2022
+Xiaomi Redmi ,redmi note 11 pro +,64,90000,D,4,2022
 Xiaomi Redmi ,redmi note 11 pro 5g,128,240000,D,6,2022
 Xiaomi Redmi ,redmi note 11 pro 5g,64,135000 ​,D,4,2022
 Xiaomi Redmi ,redmi note 11s,128,144900,D,6,2022
