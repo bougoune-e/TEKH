@@ -65,13 +65,13 @@ if (!isStandalonePWA || splashAlreadyShown) {
     (window as any).hideSplashScreen();
   }
 } else {
-  // PWA, premier affichage de la session → splash 1.5s max
+  // PWA, premier affichage de la session → splash 2.5s max (Lottie animations)
   sessionStorage.setItem(SPLASH_KEY, '1');
   setTimeout(() => {
     if (typeof (window as any).hideSplashScreen === 'function') {
       (window as any).hideSplashScreen();
     }
-  }, 1500);
+  }, 2500);
 }
 
 // ---------------------------------------------------------------------------
@@ -84,7 +84,7 @@ if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
       .register("/sw-fallback.js", { scope: "/" })
-      .catch(() => {/* SW registration failure is non-fatal */});
+      .catch(() => {/* SW registration failure is non-fatal */ });
   });
 }
 

@@ -29,14 +29,16 @@
   <link rel="icon" href="/src/assets/logos/robott.jpeg" type="image/jpeg" />
   <link rel="apple-touch-icon" href="/src/assets/logos/robott.jpeg" />
   <link rel="manifest" href="/manifest.webmanifest" />
+  <!-- lottie-web CDN — chargé avant React, aucun impact bundle -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
   <style>
-    /* ─────────────────────────────────────────
-       SPLASH SCREEN — Pure Black Premium
-    ───────────────────────────────────────── */
+    /* ================================================
+       SPLASH SCREEN — Lottie Grid Premium
+    ================================================ */
     #splash-screen {
       position: fixed;
       inset: 0;
-      background: #000000;
+      background: #06070a;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -45,139 +47,144 @@
       z-index: 9999;
       transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), filter 0.7s ease;
       overflow: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Ambient green glow blob */
+    /* Glow vert ambiant */
     #splash-screen::before {
       content: '';
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 480px;
-      height: 480px;
-      transform: translate(-50%, -50%);
-      background: radial-gradient(circle, rgba(0, 255, 65, 0.12) 0%, transparent 70%);
+      width: 520px;
+      height: 520px;
+      transform: translate(-50%, -55%);
+      background: radial-gradient(circle, rgba(0,255,65,0.09) 0%, transparent 68%);
       animation: splashGlowPulse 3s ease-in-out infinite;
       pointer-events: none;
     }
 
-    /* Subtle grid texture */
+    /* Grid subtle dot texture */
     #splash-screen::after {
       content: '';
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(to right, rgba(255,255,255,0.025) 1px, transparent 1px);
-      background-size: 52px 52px;
+        radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-size: 28px 28px;
       pointer-events: none;
     }
 
-    /* ── Logo wrapper ── */
-    .splash-logo-wrap {
+    /* ── Lottie 2×2 grid ── */
+    .splash-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 100px);
+      grid-template-rows: repeat(2, 100px);
+      gap: 12px;
+      margin-bottom: 32px;
       position: relative;
       z-index: 1;
-      margin-bottom: 2.5rem;
-      animation: splashLogoIn 0.7s cubic-bezier(0.34, 1.2, 0.64, 1) 0.1s both;
     }
 
-    /* Outer glow ring */
-    .splash-ring {
-      position: absolute;
-      inset: -14px;
-      border-radius: 999px;
-      border: 1.5px solid rgba(0, 255, 65, 0.25);
-      animation: splashRingPulse 2.4s ease-in-out 0.6s infinite;
+    .splash-cell {
+      width: 100px;
+      height: 100px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      opacity: 0;
+      transform: scale(0.6) translateY(10px);
+      transition: opacity 0.45s cubic-bezier(0.34,1.56,0.64,1),
+                  transform 0.45s cubic-bezier(0.34,1.56,0.64,1),
+                  box-shadow 0.4s ease;
+      box-shadow: 0 0 0 0 rgba(0,255,65,0);
     }
 
-    /* Second ring */
-    .splash-ring-2 {
-      position: absolute;
-      inset: -28px;
-      border-radius: 999px;
-      border: 1px solid rgba(0, 255, 65, 0.10);
-      animation: splashRingPulse 2.4s ease-in-out 1s infinite;
+    /* Cells reveal — staggered via JS (class added) */
+    .splash-cell.shown {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+
+    /* Active / hover subtle glow */
+    .splash-cell.shown:nth-child(1) { box-shadow: 0 0 18px rgba(0,200,255,0.12); }
+    .splash-cell.shown:nth-child(2) { box-shadow: 0 0 18px rgba(120,80,255,0.12); }
+    .splash-cell.shown:nth-child(3) { box-shadow: 0 0 18px rgba(0,255,65,0.12); }
+    .splash-cell.shown:nth-child(4) { box-shadow: 0 0 18px rgba(255,140,0,0.12); }
+
+    /* Each lottie container fills the cell */
+    .splash-cell > div {
+      width: 80px;
+      height: 80px;
+    }
+
+    /* ── Brand block below grid ── */
+    .splash-brand-block {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      transform: translateY(12px);
+      animation: splashBrandIn 0.55s cubic-bezier(0.16,1,0.3,1) 1.4s forwards;
+    }
+
+    .splash-logo-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .splash-logo {
-      width: 96px;
-      height: 96px;
-      border-radius: 26px;
-      display: block;
-      position: relative;
-      z-index: 1;
-      box-shadow:
-        0 0 0 1px rgba(0, 255, 65, 0.18),
-        0 0 40px rgba(0, 255, 65, 0.10),
-        0 20px 60px rgba(0, 0, 0, 0.6);
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      object-fit: cover;
+      box-shadow: 0 0 0 1px rgba(0,255,65,0.2), 0 0 20px rgba(0,255,65,0.08);
     }
 
-    /* ── Brand name ── */
-    .splash-brand {
-      position: relative;
-      z-index: 1;
+    .splash-brand-name {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 2.2rem;
+      font-size: 1.8rem;
       font-weight: 900;
-      color: #ffffff;
+      color: #fff;
       letter-spacing: -0.04em;
       line-height: 1;
-      margin-bottom: 1rem;
-      animation: splashBrandIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.55s both;
     }
 
-    .splash-brand .brand-plus {
+    .splash-brand-name .brand-plus {
       color: #00FF41;
-      text-shadow: 0 0 20px rgba(0, 255, 65, 0.6);
+      text-shadow: 0 0 16px rgba(0,255,65,0.5);
     }
 
-    /* ── Slogan — line by line reveal ── */
-    .splash-slogan {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      overflow: hidden;
-    }
-
-    .splash-slogan-line {
-      display: block;
+    .splash-tagline {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 0.78rem;
+      font-size: 0.68rem;
       font-weight: 600;
-      color: rgba(255, 255, 255, 0.45);
-      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      line-height: 1.7;
-      opacity: 0;
-      transform: translateY(10px);
-    }
-
-    .splash-slogan-line.line-1 {
-      animation: splashLineIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.85s forwards;
-    }
-
-    .splash-slogan-line.line-2 {
-      animation: splashLineIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 1.05s forwards;
-    }
-
-    .splash-slogan-line .hl {
-      color: #00FF41;
-      font-weight: 800;
     }
 
     /* ── Progress bar ── */
     .splash-bar-wrap {
       position: absolute;
-      bottom: 10%;
+      bottom: 9%;
       left: 50%;
       transform: translateX(-50%);
-      width: 56px;
+      width: 48px;
       height: 2px;
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255,255,255,0.06);
       border-radius: 2px;
       overflow: hidden;
       z-index: 1;
-      animation: splashBarAppear 0.3s ease 0.7s both;
+      animation: splashBarAppear 0.3s ease 0.5s both;
     }
 
     .splash-bar {
@@ -185,73 +192,55 @@
       width: 0%;
       background: linear-gradient(to right, #064e3b, #00FF41);
       border-radius: 2px;
-      animation: splashBarFill 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.8s forwards;
+      animation: splashBarFill 2.2s cubic-bezier(0.4,0,0.2,1) 0.3s forwards;
     }
 
-    /* ── Animations ── */
+    /* ── Exit ── */
+    .splash-hidden {
+      opacity: 0 !important;
+      filter: blur(14px);
+      pointer-events: none;
+    }
+
+    /* ── Keyframes ── */
     @keyframes splashGlowPulse {
-      0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
-      50%       { opacity: 1;   transform: translate(-50%, -50%) scale(1.1); }
+      0%,100% { opacity: 0.7; transform: translate(-50%,-55%) scale(1); }
+      50%      { opacity: 1;   transform: translate(-50%,-55%) scale(1.08); }
     }
-
-    @keyframes splashLogoIn {
-      from { opacity: 0; transform: scale(0.75) translateY(10px); }
-      to   { opacity: 1; transform: scale(1) translateY(0); }
-    }
-
-    @keyframes splashRingPulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: 0.3; transform: scale(1.06); }
-    }
-
     @keyframes splashBrandIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes splashLineIn {
       to { opacity: 1; transform: translateY(0); }
     }
-
     @keyframes splashBarAppear {
-      from { opacity: 0; }
-      to   { opacity: 1; }
+      from { opacity: 0; } to { opacity: 1; }
     }
-
     @keyframes splashBarFill {
-      from { width: 0%; }
-      to   { width: 100%; }
-    }
-
-    /* ── Exit transition ── */
-    .splash-hidden {
-      opacity: 0;
-      filter: blur(12px);
-      pointer-events: none;
+      from { width: 0%; } to { width: 100%; }
     }
   </style>
 </head>
 
 <body class="bg-background">
   <div id="splash-screen">
-    <div class="splash-logo-wrap">
-      <div class="splash-ring"></div>
-      <div class="splash-ring-2"></div>
-      <img src="/icon.jpeg" alt="TEKH+" class="splash-logo">
+
+    <!-- Grille 2×2 des catégories -->
+    <div class="splash-grid" id="splash-grid">
+      <div class="splash-cell" id="sc-mobile"><div id="lottie-mobile"></div></div>
+      <div class="splash-cell" id="sc-computer"><div id="lottie-computer"></div></div>
+      <div class="splash-cell" id="sc-apple"><div id="lottie-apple"></div></div>
+      <div class="splash-cell" id="sc-gaming"><div id="lottie-gaming"></div></div>
     </div>
 
-    <div class="splash-brand">
-      TΞKΗ<span class="brand-plus">+</span>
+    <!-- Brand block -->
+    <div class="splash-brand-block">
+      <div class="splash-logo-row">
+        <img src="/icon.jpeg" alt="TEKH+" class="splash-logo">
+        <span class="splash-brand-name">TΞKΗ<span class="brand-plus">+</span></span>
+      </div>
+      <span class="splash-tagline">L'échange intelligent d'appareils</span>
     </div>
 
-    <div class="splash-slogan">
-      <span class="splash-slogan-line line-1">pour une <span class="hl">inclusion numérique</span></span>
-      <span class="splash-slogan-line line-2">de qualité <span class="hl">pour tous</span></span>
-    </div>
-
-    <div class="splash-bar-wrap">
-      <div class="splash-bar"></div>
-    </div>
+    <!-- Barre de progression -->
+    <div class="splash-bar-wrap"><div class="splash-bar"></div></div>
   </div>
 
   <div id="root"></div>
@@ -265,10 +254,48 @@
       }
     };
 
-    // Safety fallback: hide after 3.5s if JS fails
+    // Safety fallback: hide after 4s if JS fails
     window.addEventListener('load', () => {
-      setTimeout(window.hideSplashScreen, 3500);
+      setTimeout(window.hideSplashScreen, 4000);
     });
+
+    // ── Lottie loader ──
+    // Ne lance les Lottie que si la lib est disponible (CDN chargé)
+    function initLottieSplash() {
+      if (typeof lottie === 'undefined') return;
+
+      var icons = [
+        { id: 'lottie-mobile',   cell: 'sc-mobile',   path: '/assets/lottie/mobile.json' },
+        { id: 'lottie-computer', cell: 'sc-computer',  path: '/assets/lottie/computer.json' },
+        { id: 'lottie-apple',   cell: 'sc-apple',     path: '/assets/lottie/apple.json' },
+        { id: 'lottie-gaming',  cell: 'sc-gaming',    path: '/assets/lottie/gaming.json' },
+      ];
+
+      icons.forEach(function(item, i) {
+        // Délai staggeré : 0ms, 130ms, 260ms, 390ms
+        setTimeout(function() {
+          lottie.loadAnimation({
+            container: document.getElementById(item.id),
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: item.path,
+          });
+          // Reveal de la cellule avec un léger décalage après le chargement
+          var cell = document.getElementById(item.cell);
+          if (cell) {
+            setTimeout(function() { cell.classList.add('shown'); }, 60);
+          }
+        }, i * 130);
+      });
+    }
+
+    // Attendre que lottie-web soit prêt (CDN async)
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initLottieSplash);
+    } else {
+      initLottieSplash();
+    }
 
     // Masquer le splash immédiatement si l'utilisateur revient en arrière-plan
     // (tab focus ou app foreground après backgrounding en PWA)
