@@ -26,6 +26,32 @@ let cachedProduits: any[] | null = null;
 // In-memory cache for brands and models (survive component remounts, instant second load)
 let cachedBrands: string[] | null = null;
 const cachedModels: Map<string, string[]> = new Map();
+
+// ── localStorage cache helpers (TTL 24h) ────────────────────────────────
+const LS_TTL = 24 * 60 * 60 * 1000; // 24 hours
+const LS_BRANDS_KEY = "tekh:px:brands:v1";
+const LS_MODELS_PFX = "tekh:px:models:v1:";
+
+function lsGet<T>(key: string): T | null {
+  try {
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+    const { ts, data } = JSON.parse(raw);
+    if (Date.now() - ts > LS_TTL) { localStorage.removeItem(key); return null; }
+    return data as T;
+  } catch { return null; }
+}
+function lsSet(key: string, data: unknown) {
+  try { localStorage.setItem(key, JSON.stringify({ ts: Date.now(), data })); } catch { }
+}
+export function getPriceFromCache(brand: string, model: string, storage: number): { prt_fcfa: number; classe_tekh: string | null; annee_sortie: number | null } | null {
+  const key = `tekh:px:price:v1:${brand}|${model}|${storage}`;
+  return lsGet(key);
+}
+export function setPriceCache(brand: string, model: string, storage: number, data: { prt_fcfa: number; classe_tekh: string | null; annee_sortie: number | null }) {
+  const key = `tekh:px:price:v1:${brand}|${model}|${storage}`;
+  lsSet(key, data);
+}
 async function getApiProduits() {
   if (cachedProduits) return cachedProduits;
   try {
@@ -144,32 +170,65 @@ const STATIC_MODELS: Record<string, string[]> = {
 
 export async function fetchBrands(): Promise<string[]> {
   if (cachedBrands) return cachedBrands;
+  // ── localStorage fast-path ─────────────────────────────────────────────
+  const lsBrands = lsGet<string[]>(LS_BRANDS_KEY);
+  if (lsBrands && lsBrands.length > 0) {
+    cachedBrands = lsBrands;
+    // Refresh from Supabase in background (stale-while-revalidate)
+    setTimeout(() => fetchBrands_fromSupabase(), 0);
+    return cachedBrands;
+  }
+  return fetchBrands_fromSupabase();
+}
+async function fetchBrands_fromSupabase(): Promise<string[]> {
   try {
     if (realClient) {
-      const { data, error } = await realClient.from("smartphones").select("marque");
-      if (!error && data && data.length > 0) {
-        const brands = Array.from(new Set(data.map((r: any) => r.marque).filter(Boolean))).sort((a: any, b: any) => a.localeCompare(b, "fr")) as string[];
-        if (brands.length > 0) { cachedBrands = brands; return brands; }
+      const PAGE = 1000;
+      const all: string[] = [];
+      let from = 0;
+      for (;;) {
+        const { data, error } = await realClient.from("smartphones").select("marque").range(from, from + PAGE - 1);
+        if (error || !data?.length) break;
+        all.push(...data.map((r: any) => r.marque));
+        if (data.length < PAGE) break;
+        from += PAGE;
+      }
+      if (all.length > 0) {
+        const brands = Array.from(new Set(all.filter(Boolean))).sort((a: any, b: any) => a.localeCompare(b, "fr")) as string[];
+        if (brands.length > 0) { cachedBrands = brands; lsSet(LS_BRANDS_KEY, brands); return brands; }
       }
     }
     const products = await getApiProduits();
     if (products && products.length > 0) {
       const brands = Array.from(new Set(products.map(getBrandName).filter(Boolean).filter(isAllowedBrand))).sort() as string[];
-      if (brands.length > 0) { cachedBrands = brands; return brands; }
+      if (brands.length > 0) { cachedBrands = brands; lsSet(LS_BRANDS_KEY, brands); return brands; }
     }
   } catch (err) {
     console.warn("[supabaseApi] fetchBrands failed, using STATIC_MODELS", err);
   }
   cachedBrands = Object.keys(STATIC_MODELS);
+  lsSet(LS_BRANDS_KEY, cachedBrands);
   return cachedBrands;
 }
 
 export async function fetchModels(brand: string): Promise<string[]> {
   if (cachedModels.has(brand)) return cachedModels.get(brand)!;
+  // ── localStorage fast-path ─────────────────────────────────────────────
+  const lsKey = `${LS_MODELS_PFX}${brand}`;
+  const lsModels = lsGet<string[]>(lsKey);
+  if (lsModels && lsModels.length > 0) {
+    cachedModels.set(brand, lsModels);
+    setTimeout(() => fetchModels_fromSupabase(brand), 0);
+    return lsModels;
+  }
+  return fetchModels_fromSupabase(brand);
+}
+async function fetchModels_fromSupabase(brand: string): Promise<string[]> {
   try {
     const fromSm = await fetchDistinctModelsFromSmartphones(brand);
     if (fromSm.length > 0) {
       cachedModels.set(brand, fromSm);
+      lsSet(`${LS_MODELS_PFX}${brand}`, fromSm);
       return fromSm;
     }
     const products = await getApiProduits();
@@ -178,12 +237,13 @@ export async function fetchModels(brand: string): Promise<string[]> {
       const fromApi = Array.from(new Set(
         products.filter(p => normalizeLower(getBrandName(p)) === targetBrand).map(getModelName).filter(Boolean)
       )).sort((a: any, b: any) => a.localeCompare(b, "fr")) as string[];
-      if (fromApi.length > 0) { cachedModels.set(brand, fromApi); return fromApi; }
+      if (fromApi.length > 0) { cachedModels.set(brand, fromApi); lsSet(`${LS_MODELS_PFX}${brand}`, fromApi); return fromApi; }
     }
   } catch (err) {
     console.warn("[supabaseApi] fetchModels failed for brand:", brand, err);
   }
   const fallback = STATIC_MODELS[brand] || [];
+  if (fallback.length > 0) lsSet(`${LS_MODELS_PFX}${brand}`, fallback);
   return fallback;
 }
 
