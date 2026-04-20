@@ -235,7 +235,7 @@
       width: 0%;
       background: linear-gradient(to right, #064e3b, #00FF41);
       border-radius: 2px;
-      animation: splashBarFill 2.2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+      animation: splashBarFill 2.9s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
     }
 
     /* ── Exit ── */
@@ -338,9 +338,9 @@
       }
     };
 
-    // Safety fallback: hide after 4s if JS fails
+    // Safety fallback: hide after 5s if JS fails
     window.addEventListener('load', () => {
-      setTimeout(window.hideSplashScreen, 4000);
+      setTimeout(window.hideSplashScreen, 5000);
     });
 
     // ── Lottie loader ──

@@ -65,13 +65,13 @@ if (!isStandalonePWA || splashAlreadyShown) {
     (window as any).hideSplashScreen();
   }
 } else {
-  // PWA, premier affichage de la session → splash 2.5s max (Lottie animations)
+  // PWA, premier affichage de la session → splash 3.2s max (Lottie animations)
   sessionStorage.setItem(SPLASH_KEY, '1');
   setTimeout(() => {
     if (typeof (window as any).hideSplashScreen === 'function') {
       (window as any).hideSplashScreen();
     }
-  }, 2500);
+  }, 3200);
 }
 
 // ---------------------------------------------------------------------------
