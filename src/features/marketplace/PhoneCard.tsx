@@ -2,6 +2,8 @@ import { Button } from "@/shared/ui/button";
 import { Badge } from "@/shared/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader } from "@/shared/ui/card";
 import { Smartphone, MapPin, ShoppingCart, Calendar, Clock, Share2 } from "lucide-react";
+import { useAuth } from "@/features/auth/auth.context";
+import { useAuthNudge } from "@/shared/hooks/useAuthNudge";
 import { cn } from "@/core/api/utils";
 
 /** Format date de publication en relatif par jour civil (évite "Aujourd'hui" pour un post d'hier). */
@@ -89,6 +91,8 @@ const PhoneCard = ({
   const imageCount = images?.length ?? (image ? 1 : 0);
   const navigate = useNavigate();
   const { addToCart } = useCart();
+  const { user } = useAuth();
+  const { triggerNudge } = useAuthNudge();
 
   const handleShare = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -110,6 +114,11 @@ const PhoneCard = ({
     e.preventDefault();
     e.stopPropagation();
     if (!id) return;
+
+    if (!user) {
+      triggerNudge("add_to_cart"); // Non-forced, respecte le cooldown de 5s/72h
+    }
+
     addToCart({ id, brand, model, price, image: mainImage });
     toast.success("Ajouté au panier", {
       description: brand && model ? `${brand} ${model}` : "Article ajouté.",

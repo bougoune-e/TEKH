@@ -1,10 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { useCart } from "@/features/marketplace/cart.context";
 import { Button } from "@/shared/ui/button";
-import { ShoppingCart, Trash2, ArrowRight } from "lucide-react";
+import { ShoppingCart, Trash2, ArrowRight, CreditCard } from "lucide-react";
+import { useAuth } from "@/features/auth/auth.context";
+import { useAuthNudge } from "@/shared/hooks/useAuthNudge";
 
 export default function Panier() {
   const { items, removeFromCart, clearCart } = useCart();
+  const { user } = useAuth();
+  const { triggerNudge } = useAuthNudge();
   const navigate = useNavigate();
 
   return (
@@ -70,9 +74,22 @@ export default function Panier() {
             </ul>
             <div className="flex flex-col gap-3">
               <Button
+                onClick={() => {
+                  if (!user) {
+                    triggerNudge("add_to_cart", true);
+                    return;
+                  }
+                  // Logique de paiement future ici
+                }}
+                className="w-full h-12 rounded-xl font-black bg-[#064e3b] hover:bg-[#065f46] text-white flex items-center justify-center gap-2"
+              >
+                <CreditCard className="w-5 h-5" />
+                Finaliser ma commande
+              </Button>
+              <Button
                 onClick={() => navigate("/deals")}
                 variant="outline"
-                className="w-full rounded-xl font-bold border-2"
+                className="w-full h-12 rounded-xl font-bold border-2"
               >
                 <ArrowRight className="w-4 h-4 mr-2" />
                 Continuer mes achats
