@@ -142,10 +142,6 @@ export default function Profile() {
 
               <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-2">
                 <div className="px-4 py-2 bg-background border border-border/40 rounded-full flex items-center gap-2">
-                  <Package className="h-4 w-4 text-primary" />
-                  <span className="text-xs font-black uppercase tracking-wider">{dbCount ?? myCount} {t('profile.annonces')}</span>
-                </div>
-                <div className="px-4 py-2 bg-background border border-border/40 rounded-full flex items-center gap-2">
                   <ShieldCheck className="h-4 w-4 text-blue-500" />
                   <span className="text-xs font-black uppercase tracking-wider text-blue-500">{t('profile.verified')}</span>
                 </div>

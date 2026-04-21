@@ -37,6 +37,8 @@ import {
   useAppLifecycle,
   useExitConfirmation,
 } from "@/core/navigation";
+import { useAuth } from "@/features/auth/auth.context";
+import { useAuthNudge } from "@/shared/hooks/useAuthNudge";
 
 const Index = lazy(() => import("@/features/home/Index"));
 const NotFound = lazy(() => import("@/features/misc/NotFound"));
@@ -80,6 +82,8 @@ const CommandesPage = lazy(() => import("@/features/settings/Commandes").then((m
 const CommandeDetailPage = lazy(() => import("@/features/settings/Commandes").then((m) => ({ default: m.CommandeDetailPage })));
 const SignupPage = lazy(() => import("@/features/auth/Signup"));
 const AuthCallback = lazy(() => import("@/features/auth/AuthCallback"));
+const ForgotPasswordPage = lazy(() => import("@/features/auth/ForgotPassword"));
+const ResetPasswordPage = lazy(() => import("@/features/auth/ResetPassword"));
 
 const queryClient = new QueryClient();
 
@@ -92,6 +96,22 @@ const PageTransition = ({ children, navType }: { children: React.ReactNode, navT
       {children}
     </div>
   );
+};
+
+// ─── Timed Nudge ──────────────────────────────────────────────────────────────
+const TimedAuthNudge = () => {
+  const { user } = useAuth();
+  const { triggerNudge } = useAuthNudge();
+
+  useEffect(() => {
+    if (user) return;
+    const timer = setTimeout(() => {
+      triggerNudge("timed_browse");
+    }, 180000); // 3 minutes
+    return () => clearTimeout(timer);
+  }, [user, triggerNudge]);
+
+  return null;
 };
 
 const App = () => (
@@ -155,6 +175,7 @@ const NavigationWrapper = () => {
             <AuthSheetProvider>
               <DealsProvider>
                 <CartProvider>
+                  <TimedAuthNudge />
                   <Suspense fallback={<PageLoader />}>
                     <Routes>
                       {/* Routes principales avec Layout */}
@@ -169,12 +190,12 @@ const NavigationWrapper = () => {
                         <Route path="/charte-du-swap" element={<PageTransition navType={navType}><CharteDuSwap /></PageTransition>} />
                         <Route path="/politique-echange-tekhpoints" element={<PageTransition navType={navType}><PolitiqueEchangeTekhPoints /></PageTransition>} />
                         <Route path="/charte-qualite" element={<PageTransition navType={navType}><CharteQualitePage /></PageTransition>} />
-                        <Route path="/post" element={<PageTransition navType={navType}><SimulatorPage /></PageTransition>} />
-                        <Route path="/mes-publications" element={<PageTransition navType={navType}><MyPosts /></PageTransition>} />
                         <Route path="/profile" element={<ProtectedRoute><PageTransition navType={navType}><Profile /></PageTransition></ProtectedRoute>} />
                         <Route path="/search" element={<PageTransition navType={navType}><SearchPage /></PageTransition>} />
                         <Route path="/login" element={<PageTransition navType={navType}><Login /></PageTransition>} />
                         <Route path="/signup" element={<PageTransition navType={navType}><SignupPage /></PageTransition>} />
+                        <Route path="/forgot-password" element={<PageTransition navType={navType}><ForgotPasswordPage /></PageTransition>} />
+                        <Route path="/reset-password" element={<PageTransition navType={navType}><ResetPasswordPage /></PageTransition>} />
                         <Route path="/auth/callback" element={<AuthCallback />} />
                         <Route path="/a-propos" element={<PageTransition navType={navType}><APropos /></PageTransition>} />
                         <Route path="/aide-et-faq" element={<PageTransition navType={navType}><AideEtFaq /></PageTransition>} />

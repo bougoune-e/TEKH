@@ -14,6 +14,7 @@ import { toast } from "@/shared/hooks/use-toast";
 import { uploadImage, insertDeal, getCurrentUser, fetchBrands, fetchModels, fetchStorages, fetchAllStorages, fetchAllRams, fetchRams } from "@/core/api/supabaseApi";
 import { analyzeImageForScreen, type VisionAnalyzeResult } from "@/core/api/main_api";
 import { isSupabaseConfigured } from "@/core/api/supabaseClient";
+import { useAuth } from "@/features/auth/auth.context";
 import { useAuthSheet } from "@/features/auth/AuthSheet";
 
 const BRANDS = ["Apple", "Samsung", "Xiaomi", "Infinix", "Tecno", "Google", "Huawei", "OnePlus", "Oppo", "Vivo"];
@@ -21,13 +22,19 @@ const CONDITIONS = ["Neuf", "Très bon", "Bon", "Moyen"] as const;
 
 export default function PublishPage() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const { addDeal } = useDeals();
 
-  const [images, setImages] = useState<string[]>([]);
-  const [imageFiles, setImageFiles] = useState<File[]>([]);
-  const [brand, setBrand] = useState<string>("");
-  const [model, setModel] = useState<string>("");
-  const [storage, setStorage] = useState<number | "">("");
+  // 🛡️ Securité : Seul l'admin peut accéder à cette page
+  useEffect(() => {
+    const adminEmails = (import.meta.env.VITE_ADMIN_EMAILS as string || "")
+      .split(",")
+      .map((e) => e.trim().toLowerCase());
+
+    if (!user || !adminEmails.includes(user.email?.toLowerCase() || "")) {
+      navigate("/", { replace: true });
+    }
+  }, [user, navigate]);
   const [ram, setRam] = useState<number | "">("");
   const [brands, setBrands] = useState<string[]>([]);
   const [models, setModels] = useState<string[]>([]);

@@ -1,0 +1,649 @@
+╔══════════════════════════════════════════════════════════════════╗
+║     AUDIT COMPLET SECTION PRIX — TEKH+                          ║
+╚══════════════════════════════════════════════════════════════════╝
+Date : 20/04/2026 22:29:48
+DB   : 1999 enregistrements au total
+CSV  : 1521 lignes de référence
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. ENREGISTREMENTS DB AVEC PRIX NUL/ZÉRO : 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ✅ Tous les enregistrements DB ont un prix non nul.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+2. VARIANTES PRÉSENTES DANS CSV MAIS ABSENTES DE LA DB : 287
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  📱  (5 variantes manquantes)
+  -----------------------------------------------------------------
+    • asus rog phone 6 pro | 512GB | Classe B | 16GB RAM
+      → Prix CSV : 400 000 FCFA
+    • asus rog phone 8 | 512GB | Classe A | 16GB RAM
+      → Prix CSV : 580 000 FCFA
+    • iphone 7 | 32GB | Classe E | 2GB RAM
+      → Prix CSV : 45 000 FCFA
+    • iphone 7 | 128GB | Classe E | 2GB RAM
+      → Prix CSV : 60 000 FCFA
+    • iphone 7 plus | 128GB | Classe E | 2GB RAM
+      → Prix CSV : 150 000 FCFA
+
+  📱 APPLE (1 variantes manquantes)
+  -----------------------------------------------------------------
+    • asus rog phone 6 | 256GB | Classe E | 3GB RAM | (2016)
+      → Prix CSV : 350 000 FCFA
+
+  📱 GOOGLE PIXEL (53 variantes manquantes)
+  -----------------------------------------------------------------
+    • google pixel | 64GB | Classe F | 6GB RAM | (2020)
+      → Prix CSV : 55 000 FCFA
+    • google pixel | 128GB | Classe F | 6GB RAM | (2020)
+      → Prix CSV : 50 000 FCFA
+    • google pixel 2 | 64GB | Classe E | 6GB RAM | (2017)
+      → Prix CSV : 65 000 FCFA
+    • google pixel 2 | 128GB | Classe E | 6GB RAM | (2017)
+      → Prix CSV : 60 000 FCFA
+    • google pixel 2 xl | 64GB | Classe E | 6GB RAM | (2017)
+      → Prix CSV : 60 000 FCFA
+    • google pixel 2 xl | 128GB | Classe E | 6GB RAM | (2017)
+      → Prix CSV : 70 000 FCFA
+    • google pixel 3 | 64GB | Classe E | 6GB RAM | (2018)
+      → Prix CSV : 75 000 FCFA
+    • google pixel 3 | 128GB | Classe E | 6GB RAM | (2018)
+      → Prix CSV : 65 000 FCFA
+    • google pixel 3 xl | 64GB | Classe E | 6GB RAM | (2018)
+      → Prix CSV : 50 000 FCFA
+    • google pixel 3 xl | 128GB | Classe E | 6GB RAM | (2018)
+      → Prix CSV : 85 000 FCFA
+    • google pixel 3a | 64GB | Classe E | 6GB RAM | (2018)
+      → Prix CSV : 55 000 FCFA
+    • google pixel 3a xl | 64GB | Classe E | 6GB RAM | (2018)
+      → Prix CSV : 70 000 FCFA
+    • google pixel 4 | 64GB | Classe D | 6GB RAM | (2019)
+      → Prix CSV : 110 000 FCFA
+    • google pixel 4 | 128GB | Classe D | 6GB RAM | (2019)
+      → Prix CSV : 80 000 FCFA
+    • google pixel 4 xl | 64GB | Classe D | 6GB RAM | (2019)
+      → Prix CSV : 90 000 FCFA
+    • google pixel 4 xl | 128GB | Classe D | 6GB RAM | (2019)
+      → Prix CSV : 140 000 FCFA
+    • google pixel 4a | 128GB | Classe D | 8GB RAM | (2019)
+      → Prix CSV : 110 000 FCFA
+    • google pixel 4a (5g) | 128GB | Classe D | 8GB RAM | (2019)
+      → Prix CSV : 120 000 FCFA
+    • google pixel 5 | 128GB | Classe D | 8GB RAM | (2020)
+      → Prix CSV : 130 000 FCFA
+    • google pixel 5a (5g) | 128GB | Classe C | 6GB RAM | (2020)
+      → Prix CSV : 95 000 FCFA
+    • google pixel 6 | 128GB | Classe C | 12GB RAM | (2021)
+      → Prix CSV : 140 000 FCFA
+    • google pixel 6 | 256GB | Classe C | 6GB RAM | (2021)
+      → Prix CSV : 110 000 FCFA
+    • google pixel 6 pro | 128GB | Classe C | 6GB RAM | (2021)
+      → Prix CSV : 115 000 FCFA
+    • google pixel 6 pro | 256GB | Classe C | 12GB RAM | (2021)
+      → Prix CSV : 160 000 FCFA
+    • google pixel 6 pro | 512GB | Classe C | 12GB RAM | (2021)
+      → Prix CSV : 185 000 FCFA
+    • google pixel 6a | 128GB | Classe C | 8GB RAM | (2021)
+      → Prix CSV : 105 000 FCFA
+    • google pixel 7 | 128GB | Classe B | 12GB RAM | (2022)
+      → Prix CSV : 145 000 FCFA
+    • google pixel 7 | 256GB | Classe B | 8GB RAM | (2022)
+      → Prix CSV : 125 000 FCFA
+    • google pixel 7 pro | 128GB | Classe B | 8GB RAM | (2022)
+      → Prix CSV : 140 000 FCFA
+    • google pixel 7 pro | 256GB | Classe B | 12GB RAM | (2022)
+      → Prix CSV : 165 000 FCFA
+    • google pixel 7 pro | 512GB | Classe B | 12GB RAM | (2022)
+      → Prix CSV : 185 000 FCFA
+    • google pixel 7a | 128GB | Classe B | 8GB RAM | (2022)
+      → Prix CSV : 200 000 FCFA
+    • google pixel 8 | 128GB | Classe A | 12GB RAM | (2023)
+      → Prix CSV : 300 000 FCFA
+    • google pixel 8 | 256GB | Classe A | 8GB RAM | (2023)
+      → Prix CSV : 230 000 FCFA
+    • google pixel 8 pro | 128GB | Classe A | 8GB RAM | (2023)
+      → Prix CSV : 220 000 FCFA
+    • google pixel 8 pro | 256GB | Classe A | 12GB RAM | (2023)
+      → Prix CSV : 350 000 FCFA
+    • google pixel 8 pro | 512GB | Classe A | 12GB RAM | (2023)
+      → Prix CSV : 400 000 FCFA
+    • google pixel 8 pro | 1024GB | Classe A | 12GB RAM | (2023)
+      → Prix CSV : 450 000 FCFA
+    • google pixel 8a | 128GB | Classe A | 6GB RAM | (2023)
+      → Prix CSV : 350 000 FCFA
+    • google pixel 8a | 256GB | Classe A | 8GB RAM | (2023)
+      → Prix CSV : 260 000 FCFA
+    • google pixel 9 | 128GB | Classe A | 12GB RAM | (2024)
+      → Prix CSV : 500 000 FCFA
+    • google pixel 9 | 256GB | Classe A | 6GB RAM | (2024)
+      → Prix CSV : 400 000 FCFA
+    • google pixel 9 pro | 256GB | Classe A | 12GB RAM | (2024)
+      → Prix CSV : 550 000 FCFA
+    • google pixel 9 pro | 512GB | Classe A | 12GB RAM | (2024)
+      → Prix CSV : 600 000 FCFA
+    • google pixel 9 pro | 1024GB | Classe A | 12GB RAM | (2024)
+      → Prix CSV : 650 000 FCFA
+    • google pixel 9 pro fold | 128GB | Classe A | 12GB RAM | (2024)
+      → Prix CSV : 550 000 FCFA
+    • google pixel 9 pro fold | 512GB | Classe A | 12GB RAM | (2024)
+      → Prix CSV : 750 000 FCFA
+    • google pixel 9 pro fold | 1024GB | Classe A | 12GB RAM | (2024)
+      → Prix CSV : 800 000 FCFA
+    • google pixel 9 pro xl | 32GB | Classe A | 6GB RAM | (2024)
+      → Prix CSV : 50 000 FCFA
+    • google pixel 9 pro xl | 256GB | Classe A | 12GB RAM | (2024)
+      → Prix CSV : 600 000 FCFA
+    • google pixel 9 pro xl | 512GB | Classe A | 12GB RAM | (2024)
+      → Prix CSV : 650 000 FCFA
+    • google pixel 9 pro xl | 1024GB | Classe A | 12GB RAM | (2024)
+      → Prix CSV : 700 000 FCFA
+    • google pixel xl | 128GB | Classe F | 6GB RAM | (2020)
+      → Prix CSV : 55 000 FCFA
+
+  📱 HONOR (1 variantes manquantes)
+  -----------------------------------------------------------------
+    • honor x9b | 128GB | Classe B | 6GB RAM | (2023)
+      → Prix CSV : 250 000 FCFA
+
+  📱 HUAWEI (5 variantes manquantes)
+  -----------------------------------------------------------------
+    • huawei mate 60 pro | 512GB | Classe A | 12GB RAM | (2023)
+      → Prix CSV : 600 000 FCFA
+    • huawei mate 60 pro | 1024GB | Classe A | 12GB RAM | (2023)
+      → Prix CSV : 650 000 FCFA
+    • huawei pura 70 | 256GB | Classe A | 12GB RAM | (2024)
+      → Prix CSV : 550 000 FCFA
+    • huawei pura 70 pro | 512GB | Classe A | 12GB RAM | (2024)
+      → Prix CSV : 600 000 FCFA
+    • huawei pura 70 ultra | 1024GB | Classe A | 12GB RAM | (2024)
+      → Prix CSV : 750 000 FCFA
+
+  📱 MOTOROLA (2 variantes manquantes)
+  -----------------------------------------------------------------
+    • motorola edge 50 pro | 256GB | Classe A | 12GB RAM | (2020)
+      → Prix CSV : 220 000 FCFA
+    • motorola edge 50 pro | 512GB | Classe A | 12GB RAM | (2020)
+      → Prix CSV : 240 000 FCFA
+
+  📱 ONE PLUS (71 variantes manquantes)
+  -----------------------------------------------------------------
+    • oneplus 10 pro | 128GB | Classe B | 8GB RAM | (2022)
+      → Prix CSV : 300 000 FCFA
+    • oneplus 10 pro | 256GB | Classe B | 12GB RAM | (2022)
+      → Prix CSV : 400 000 FCFA
+    • oneplus 10 pro | 512GB | Classe B | 16GB RAM | (2022)
+      → Prix CSV : 450 000 FCFA
+    • oneplus 10r | 128GB | Classe B | 8GB RAM | (2022)
+      → Prix CSV : 320 000 FCFA
+    • oneplus 10r | 256GB | Classe B | 12GB RAM | (2022)
+      → Prix CSV : 350 000 FCFA
+    • oneplus 10t | 128GB | Classe B | 8GB RAM | (2022)
+      → Prix CSV : 450 000 FCFA
+    • oneplus 10t | 256GB | Classe B | 16GB RAM | (2022)
+      → Prix CSV : 370 000 FCFA
+    • oneplus 11 | 128GB | Classe A | 8GB RAM | (2023)
+      → Prix CSV : 400 000 FCFA
+    • oneplus 11 | 256GB | Classe A | 12GB RAM | (2023)
+      → Prix CSV : 500 000 FCFA
+    • oneplus 11 | 512GB | Classe A | 16GB RAM | (2023)
+      → Prix CSV : 550 000 FCFA
+    • oneplus 11r | 256GB | Classe B | 16GB RAM | (2023)
+      → Prix CSV : 450 000 FCFA
+    • oneplus 12 | 128GB | Classe A | 12GB RAM | (2023)
+      → Prix CSV : 500 000 FCFA
+    • oneplus 12 | 512GB | Classe A | 16GB RAM | (2023)
+      → Prix CSV : 600 000 FCFA
+    • oneplus 12 | 1024GB | Classe A | 24GB RAM | (2023)
+      → Prix CSV : 650 000 FCFA
+    • oneplus 12r | 16GB | Classe A | 8GB RAM | (2024)
+      → Prix CSV : 40 000 FCFA
+    • oneplus 12r | 256GB | Classe A | 16GB RAM | (2024)
+      → Prix CSV : 550 000 FCFA
+    • oneplus 2 | 64GB | Classe F | 3GB RAM | (2015)
+      → Prix CSV : 45 000 FCFA
+    • oneplus 3 | 64GB | Classe F | 6GB RAM | (2016)
+      → Prix CSV : 55 000 FCFA
+    • oneplus 3t | 64GB | Classe F | 6GB RAM | (2016)
+      → Prix CSV : 50 000 FCFA
+    • oneplus 3t | 128GB | Classe F | 8GB RAM | (2016)
+      → Prix CSV : 45 000 FCFA
+    • oneplus 5 | 64GB | Classe F | 6GB RAM | (2017)
+      → Prix CSV : 60 000 FCFA
+    • oneplus 5 | 128GB | Classe F | 8GB RAM | (2017)
+      → Prix CSV : 55 000 FCFA
+    • oneplus 5t | 64GB | Classe F | 6GB RAM | (2017)
+      → Prix CSV : 55 000 FCFA
+    • oneplus 5t | 128GB | Classe F | 8GB RAM | (2017)
+      → Prix CSV : 50 000 FCFA
+    • oneplus 6 | 128GB | Classe E | 8GB RAM | (2018)
+      → Prix CSV : 60 000 FCFA
+    • oneplus 6 | 256GB | Classe E | 8GB RAM | (2018)
+      → Prix CSV : 65 000 FCFA
+    • oneplus 6t | 256GB | Classe E | 8GB RAM | (2018)
+      → Prix CSV : 60 000 FCFA
+    • oneplus 6t | 512GB | Classe E | 12GB RAM | (2018)
+      → Prix CSV : 65 000 FCFA
+    • oneplus 6t mclaren | 128GB | Classe E | 10GB RAM | (2018)
+      → Prix CSV : 60 000 FCFA
+    • oneplus 7 | 128GB | Classe D | 6GB RAM | (2019)
+      → Prix CSV : 70 000 FCFA
+    • oneplus 7 | 256GB | Classe D | 8GB RAM | (2019)
+      → Prix CSV : 65 000 FCFA
+    • oneplus 7 pro | 256GB | Classe D | 8GB RAM | (2019)
+      → Prix CSV : 75 000 FCFA
+    • oneplus 7 pro | 512GB | Classe D | 12GB RAM | (2019)
+      → Prix CSV : 65 000 FCFA
+    • oneplus 7 pro 5g | 128GB | Classe D | 12GB RAM | (2019)
+      → Prix CSV : 75 000 FCFA
+    • oneplus 7t | 128GB | Classe D | 8GB RAM | (2019)
+      → Prix CSV : 70 000 FCFA
+    • oneplus 7t | 256GB | Classe D | 8GB RAM | (2019)
+      → Prix CSV : 80 000 FCFA
+    • oneplus 7t pro | 256GB | Classe D | 12GB RAM | (2019)
+      → Prix CSV : 75 000 FCFA
+    • oneplus 7t pro mclaren | 128GB | Classe D | 12GB RAM | (2019)
+      → Prix CSV : 85 000 FCFA
+    • oneplus 8 | 128GB | Classe C | 8GB RAM | (2020)
+      → Prix CSV : 80 000 FCFA
+    • oneplus 8 | 256GB | Classe C | 12GB RAM | (2020)
+      → Prix CSV : 120 000 FCFA
+    • oneplus 8 pro | 128GB | Classe C | 12GB RAM | (2020)
+      → Prix CSV : 90 000 FCFA
+    • oneplus 8 pro | 256GB | Classe C | 12GB RAM | (2020)
+      → Prix CSV : 85 000 FCFA
+    • oneplus 8t | 128GB | Classe C | 8GB RAM | (2020)
+      → Prix CSV : 85 000 FCFA
+    • oneplus 8t | 256GB | Classe C | 12GB RAM | (2020)
+      → Prix CSV : 80 000 FCFA
+    • oneplus 9 | 128GB | Classe B | 8GB RAM | (2021)
+      → Prix CSV : 95 000 FCFA
+    • oneplus 9 | 256GB | Classe B | 12GB RAM | (2021)
+      → Prix CSV : 90 000 FCFA
+    • oneplus 9 pro | 128GB | Classe B | 12GB RAM | (2021)
+      → Prix CSV : 110 000 FCFA
+    • oneplus 9 pro | 256GB | Classe B | 12GB RAM | (2021)
+      → Prix CSV : 100 000 FCFA
+    • oneplus 9rt | 128GB | Classe B | 8GB RAM | (2021)
+      → Prix CSV : 130 000 FCFA
+    • oneplus 9rt | 256GB | Classe B | 12GB RAM | (2021)
+      → Prix CSV : 120 000 FCFA
+    • oneplus nord | 128GB | Classe D | 8GB RAM | (2020)
+      → Prix CSV : 110 000 FCFA
+    • oneplus nord | 256GB | Classe D | 12GB RAM | (2020)
+      → Prix CSV : 140 000 FCFA
+    • oneplus nord 2 | 128GB | Classe C | 8GB RAM | (2021)
+      → Prix CSV : 120 000 FCFA
+    • oneplus nord 2 | 256GB | Classe C | 12GB RAM | (2021)
+      → Prix CSV : 150 000 FCFA
+    • oneplus nord 2t | 128GB | Classe C | 8GB RAM | (2022)
+      → Prix CSV : 173 000 FCFA
+    • oneplus nord 2t | 256GB | Classe C | 12GB RAM | (2022)
+      → Prix CSV : 130 000 FCFA
+    • oneplus nord 3 | 128GB | Classe B | 8GB RAM | (2023)
+      → Prix CSV : 95 000 FCFA
+    • oneplus nord 3 | 256GB | Classe B | 16GB RAM | (2023)
+      → Prix CSV : 90 000 FCFA
+    • oneplus nord ce 2 | 64GB | Classe D | 8GB RAM | (2022)
+      → Prix CSV : 105 000 FCFA
+    • oneplus nord ce 2 | 256GB | Classe D | 12GB RAM | (2022)
+      → Prix CSV : 100 000 FCFA
+    • oneplus nord ce 2 lite | 128GB | Classe D | 8GB RAM | (2022)
+      → Prix CSV : 105 000 FCFA
+    • oneplus nord ce 3 | 128GB | Classe B | 8GB RAM | (2023)
+      → Prix CSV : 120 000 FCFA
+    • oneplus nord ce 3 | 256GB | Classe B | 8GB RAM | (2023)
+      → Prix CSV : 115 000 FCFA
+    • oneplus nord ce 3 lite | 128GB | Classe B | 6GB RAM | (2023)
+      → Prix CSV : 115 000 FCFA
+    • oneplus nord ce 3 lite | 256GB | Classe B | 8GB RAM | (2023)
+      → Prix CSV : 110 000 FCFA
+    • oneplus nord ce 4 | 16GB | Classe A | 6GB RAM | (2024)
+      → Prix CSV : 35 000 FCFA
+    • oneplus nord ce 4 | 256GB | Classe A | 8GB RAM | (2024)
+      → Prix CSV : 120 000 FCFA
+    • oneplus one | 64GB | Classe F | 3GB RAM | (2014)
+      → Prix CSV : 120 000 FCFA
+    • oneplus one | 256GB | Classe F | 3GB RAM | (2014)
+      → Prix CSV : 450 000 FCFA
+    • oneplus open | 256GB | Classe A | 12GB RAM | (2023)
+      → Prix CSV : 150 000 FCFA
+    • oneplus open | 512GB | Classe A | 16GB RAM | (2023)
+      → Prix CSV : 500 000 FCFA
+
+  📱 OPPO (1 variantes manquantes)
+  -----------------------------------------------------------------
+    • oppo reno 12 | 256GB | Classe A | 8GB RAM | (2030)
+      → Prix CSV : 350 000 FCFA
+
+  📱 REALME (3 variantes manquantes)
+  -----------------------------------------------------------------
+    • realme 12 pro+ | 256GB | Classe A | 12GB RAM | (2024)
+      → Prix CSV : 380 000 FCFA
+    • realme gt 6 | 256GB | Classe A | 6GB RAM | (2019)
+      → Prix CSV : 250 000 FCFA
+    • realme gt 6 | 512GB | Classe A | 12GB RAM | (2019)
+      → Prix CSV : 950 000 FCFA
+
+  📱 SAMSUNG (1 variantes manquantes)
+  -----------------------------------------------------------------
+    • samsung galaxy a05s | 128GB | Classe C | 6GB RAM | (2020)
+      → Prix CSV : 87 000 FCFA
+
+  📱 TECNO (27 variantes manquantes)
+  -----------------------------------------------------------------
+    • camon 11 pro | 64GB | Classe F | 3GB RAM | (2018)
+      → Prix CSV : 80 000 FCFA
+    • camon 12 | 64GB | Classe F | 3GB RAM | (2019)
+      → Prix CSV : 70 000 FCFA
+    • camon 12 pro | 64GB | Classe F | 4GB RAM | (2019)
+      → Prix CSV : 90 000 FCFA
+    • camon 15 | 64GB | Classe F | 4GB RAM | (2020)
+      → Prix CSV : 85 000 FCFA
+    • camon 15 premier | 128GB | Classe F | 4GB RAM | (2020)
+      → Prix CSV : 110 000 FCFA
+    • camon 16 premier | 128GB | Classe E | 4GB RAM | (2020)
+      → Prix CSV : 115 000 FCFA
+    • camon 16 pro | 128GB | Classe E | 4GB RAM | (2020)
+      → Prix CSV : 105 000 FCFA
+    • camon 17 | 128GB | Classe D | 4GB RAM | (2021)
+      → Prix CSV : 125 000 FCFA
+    • camon 17 pro | 128GB | Classe D | 4GB RAM | (2021)
+      → Prix CSV : 130 000 FCFA
+    • camon 18 | 128GB | Classe C | 4GB RAM | (2021)
+      → Prix CSV : 135 000 FCFA
+    • camon 18 p | 128GB | Classe C | 4GB RAM | (2021)
+      → Prix CSV : 150 000 FCFA
+    • camon 19 | 128GB | Classe C | 6GB RAM | (2022)
+      → Prix CSV : 160 000 FCFA
+    • camon 20 pro 5g | 256GB | Classe B | 6GB RAM | (2023)
+      → Prix CSV : 220 000 FCFA
+    • camon 30 | 256GB | Classe A | 6GB RAM | (2024)
+      → Prix CSV : 240 000 FCFA
+    • phantom x | 256GB | Classe C | 6GB RAM | (2021)
+      → Prix CSV : 300 000 FCFA
+    • phantom x2 | 256GB | Classe B | 2GB RAM | (2022)
+      → Prix CSV : 450 000 FCFA
+    • pop 3 plus | 16GB | Classe F | 2GB RAM | (2019)
+      → Prix CSV : 32 000 FCFA
+    • pop 4 | 32GB | Classe F | 2GB RAM | (2020)
+      → Prix CSV : 35 000 FCFA
+    • pop 6 | 32GB | Classe E | 3GB RAM | (2022)
+      → Prix CSV : 45 000 FCFA
+    • pop 7 | 64GB | Classe D | 4GB RAM | (2023)
+      → Prix CSV : 53 000 FCFA
+    • pop 8 | 64GB | Classe C | 4GB RAM | (2023)
+      → Prix CSV : 57 000 FCFA
+    • pop 9 | 64GB | Classe B | 3GB RAM | (2024)
+      → Prix CSV : 75 000 FCFA
+    • pova 5 | 128GB | Classe B | 4GB RAM | (2023)
+      → Prix CSV : 120 000 FCFA
+    • pova 5 pro | 128GB | Classe B | 4GB RAM | (2023)
+      → Prix CSV : 150 000 FCFA
+    • pova 6 pro | 256GB | Classe A | 4GB RAM | (2021)
+      → Prix CSV : 170 000 FCFA
+    • tecno spark 40 | 128GB | Classe A | 6GB RAM | (2021)
+      → Prix CSV : 260 000 FCFA
+    • tecno spark 40 pro+ | 128GB | Classe A | 3GB RAM | (2021)
+      → Prix CSV : 250 000 FCFA
+
+  📱 XIAOMI POCO (61 variantes manquantes)
+  -----------------------------------------------------------------
+    • poco c65 | 128GB | Classe D | 6GB RAM | (2023)
+      → Prix CSV : 350 000 FCFA
+    • poco c65 | 256GB | Classe D | 8GB RAM | (2023)
+      → Prix CSV : 95 000 FCFA
+    • poco f4 | 128GB | Classe C | 8GB RAM | (2023)
+      → Prix CSV : 420 000 FCFA
+    • poco f4 | 256GB | Classe C | 8GB RAM | (2023)
+      → Prix CSV : 400 000 FCFA
+    • poco f4 gt | 256GB | Classe C | 8GB RAM | (2023)
+      → Prix CSV : 470 000 FCFA
+    • poco f5 | 256GB | Classe B | 6GB RAM | (2023)
+      → Prix CSV : 550 000 FCFA
+    • poco f5 pro | 128GB | Classe B | 12GB RAM | (2023)
+      → Prix CSV : 550 000 FCFA
+    • poco f5 pro | 512GB | Classe B | 8GB RAM | (2023)
+      → Prix CSV : 600 000 FCFA
+    • poco f6 | 256GB | Classe A | 8GB RAM | (2024)
+      → Prix CSV : 600 000 FCFA
+    • poco f6 | 512GB | Classe A | 12GB RAM | (2024)
+      → Prix CSV : 650 000 FCFA
+    • poco f6 pro | 64GB | Classe A | 4GB RAM | (2024)
+      → Prix CSV : 120 000 FCFA
+    • poco f6 pro | 128GB | Classe A | 6GB RAM | (2024)
+      → Prix CSV : 750 000 FCFA
+    • poco f6 pro | 512GB | Classe A | 4GB RAM | (2024)
+      → Prix CSV : 700 000 FCFA
+    • poco m2 | 64GB | Classe F | 4GB RAM | (2024)
+      → Prix CSV : 160 000 FCFA
+    • poco m2 | 128GB | Classe F | 6GB RAM | (2024)
+      → Prix CSV : 140 000 FCFA
+    • poco m2 pro | 64GB | Classe F | 4GB RAM | (2024)
+      → Prix CSV : 150 000 FCFA
+    • poco m2 pro | 128GB | Classe F | 6GB RAM | (2024)
+      → Prix CSV : 180 000 FCFA
+    • poco m3 | 64GB | Classe F | 4GB RAM | (2018)
+      → Prix CSV : 190 000 FCFA
+    • poco m3 | 128GB | Classe F | 6GB RAM | (2024)
+      → Prix CSV : 170 000 FCFA
+    • poco m3 pro 5g | 64GB | Classe E | 8GB RAM | (2018)
+      → Prix CSV : 200 000 FCFA
+    • poco m3 pro 5g | 128GB | Classe E | 6GB RAM | (2018)
+      → Prix CSV : 210 000 FCFA
+    • poco m4 5g | 128GB | Classe D | 4GB RAM | (2018)
+      → Prix CSV : 220 000 FCFA
+    • poco m4 5g | 256GB | Classe D | 6GB RAM | (2019)
+      → Prix CSV : 230 000 FCFA
+    • poco m4 pro 4g | 64GB | Classe D | 4GB RAM | (2019)
+      → Prix CSV : 240 000 FCFA
+    • poco m4 pro 5g | 64GB | Classe D | 4GB RAM | (2019)
+      → Prix CSV : 170 000 FCFA
+    • poco m4 pro 5g | 128GB | Classe D | 6GB RAM | (2019)
+      → Prix CSV : 260 000 FCFA
+    • poco m5 | 64GB | Classe D | 6GB RAM | (2020)
+      → Prix CSV : 200 000 FCFA
+    • poco m5 | 128GB | Classe D | 6GB RAM | (2019)
+      → Prix CSV : 190 000 FCFA
+    • poco m5 s | 128GB | Classe D | 8GB RAM | (2020)
+      → Prix CSV : 220 000 FCFA
+    • poco m6 4g | 128GB | Classe C | 6GB RAM | (2020)
+      → Prix CSV : 220 000 FCFA
+    • poco m6 4g | 256GB | Classe C | 8GB RAM | (2020)
+      → Prix CSV : 230 000 FCFA
+    • poco m6 5g | 128GB | Classe C | 12GB RAM | (2020)
+      → Prix CSV : 250 000 FCFA
+    • poco m6 5g | 256GB | Classe C | 8GB RAM | (2020)
+      → Prix CSV : 240 000 FCFA
+    • poco m6 pro 4g | 128GB | Classe C | 12GB RAM | (2024)
+      → Prix CSV : 260 000 FCFA
+    • poco m6 pro 4g | 256GB | Classe C | 6GB RAM | (2020)
+      → Prix CSV : 270 000 FCFA
+    • poco m6 pro 4g | 512GB | Classe C | 8GB RAM | (2064)
+      → Prix CSV : 290 000 FCFA
+    • poco m6 pro 5g | 128GB | Classe C | 6GB RAM | (2023)
+      → Prix CSV : 280 000 FCFA
+    • poco m6 pro 5g | 256GB | Classe C | 6GB RAM | (2023)
+      → Prix CSV : 280 000 FCFA
+    • poco m6 pro 5g | 512GB | Classe C | 8GB RAM | (2023)
+      → Prix CSV : 300 000 FCFA
+    • poco m7 | 128GB | Classe A | 4GB RAM | (2025)
+      → Prix CSV : 310 000 FCFA
+    • poco m7 | 256GB | Classe A | 8GB RAM | (2025)
+      → Prix CSV : 300 000 FCFA
+    • poco m7 pro 5g | 64GB | Classe A | 8GB RAM | (2025)
+      → Prix CSV : 180 000 FCFA
+    • poco m7 pro 5g | 256GB | Classe A | 6GB RAM | (2025)
+      → Prix CSV : 330 000 FCFA
+    • poco x2 | 128GB | Classe F | 6GB RAM | (2020)
+      → Prix CSV : 200 000 FCFA
+    • poco x2 | 256GB | Classe F | 8GB RAM | (2020)
+      → Prix CSV : 230 000 FCFA
+    • poco x3 gt | 64GB | Classe D | 6GB RAM | (2021)
+      → Prix CSV : 130 000 FCFA
+    • poco x3 gt | 256GB | Classe D | 6GB RAM | (2021)
+      → Prix CSV : 247 000 FCFA
+    • poco x3 nfc | 128GB | Classe E | 8GB RAM | (2020)
+      → Prix CSV : 149 900 FCFA
+    • poco x3 pro | 128GB | Classe E | 6GB RAM | (2021)
+      → Prix CSV : 250 000 FCFA
+    • poco x3 pro | 256GB | Classe E | 8GB RAM | (2021)
+      → Prix CSV : 193 000 FCFA
+    • poco x4 gt | 128GB | Classe C | 6GB RAM | (2022)
+      → Prix CSV : 300 000 FCFA
+    • poco x4 gt | 256GB | Classe C | 8GB RAM | (2022)
+      → Prix CSV : 280 000 FCFA
+    • poco x4 pro 5g | 128GB | Classe C | 6GB RAM | (2022)
+      → Prix CSV : 320 000 FCFA
+    • poco x4 pro 5g | 256GB | Classe C | 8GB RAM | (2022)
+      → Prix CSV : 330 000 FCFA
+    • poco x5 5g | 128GB | Classe C | 8GB RAM | (2023)
+      → Prix CSV : 380 000 FCFA
+    • poco x5 5g | 256GB | Classe C | 8GB RAM | (2023)
+      → Prix CSV : 350 000 FCFA
+    • poco x5 pro 5g | 256GB | Classe B | 12GB RAM | (2023)
+      → Prix CSV : 420 000 FCFA
+    • poco x6 5g | 256GB | Classe B | 3GB RAM | (2024)
+      → Prix CSV : 550 000 FCFA
+    • poco x6 5g | 512GB | Classe B | 12GB RAM | (2024)
+      → Prix CSV : 500 000 FCFA
+    • poco x6 pro 5g | 32GB | Classe B | 6GB RAM | (2024)
+      → Prix CSV : 55 000 FCFA
+    • poco x6 pro 5g | 512GB | Classe B | 4GB RAM | (2024)
+      → Prix CSV : 600 000 FCFA
+
+  📱 XIAOMI REDMI (56 variantes manquantes)
+  -----------------------------------------------------------------
+    • redmi 12c | 64GB | Classe E | 6GB RAM | (2023)
+      → Prix CSV : 60 000 FCFA
+    • redmi 12c | 128GB | Classe E | 8GB RAM | (2023)
+      → Prix CSV : 65 000 FCFA
+    • redmi 13c | 128GB | Classe D | 6GB RAM | (2023)
+      → Prix CSV : 80 000 FCFA
+    • redmi 13c | 256GB | Classe D | 8GB RAM | (2023)
+      → Prix CSV : 75 000 FCFA
+    • redmi 14c | 128GB | Classe C | 4GB RAM | (2024)
+      → Prix CSV : 90 000 FCFA
+    • redmi 14c | 256GB | Classe C | 8GB RAM | (2024)
+      → Prix CSV : 85 000 FCFA
+    • redmi 15c | 64GB | Classe B | 4GB RAM | (2025)
+      → Prix CSV : 120 000 FCFA
+    • redmi 15c | 256GB | Classe B | 6GB RAM | (2025)
+      → Prix CSV : 95 000 FCFA
+    • redmi note 10 | 64GB | Classe E | 4GB RAM | (2021)
+      → Prix CSV : 130 000 FCFA
+    • redmi note 10 | 128GB | Classe E | 6GB RAM | (2021)
+      → Prix CSV : 140 000 FCFA
+    • redmi note 10 5g | 64GB | Classe E | 4GB RAM | (2021)
+      → Prix CSV : 160 000 FCFA
+    • redmi note 10 5g | 128GB | Classe E | 6GB RAM | (2021)
+      → Prix CSV : 150 000 FCFA
+    • redmi note 10 pro | 64GB | Classe D | 4GB RAM | (2021)
+      → Prix CSV : 190 000 FCFA
+    • redmi note 10 pro | 128GB | Classe D | 6GB RAM | (2021)
+      → Prix CSV : 180 000 FCFA
+    • redmi note 10 pro max | 64GB | Classe D | 4GB RAM | (2021)
+      → Prix CSV : 150 000 FCFA
+    • redmi note 10 pro max | 128GB | Classe D | 6GB RAM | (2021)
+      → Prix CSV : 210 000 FCFA
+    • redmi note 10s | 64GB | Classe E | 6GB RAM | (2021)
+      → Prix CSV : 180 000 FCFA
+    • redmi note 10s | 128GB | Classe E | 6GB RAM | (2021)
+      → Prix CSV : 170 000 FCFA
+    • redmi note 11 | 128GB | Classe D | 8GB RAM | (2022)
+      → Prix CSV : 200 000 FCFA
+    • redmi note 11 pro + | 64GB | Classe D | 4GB RAM | (2022)
+      → Prix CSV : 220 000 FCFA
+    • redmi note 11 pro + | 256GB | Classe D | 6GB RAM | (2022)
+      → Prix CSV : 280 000 FCFA
+    • redmi note 11 pro 5g | 64GB | Classe D | 4GB RAM | (2022)
+      → Prix CSV : 135 000 FCFA
+    • redmi note 11 pro 5g | 128GB | Classe D | 6GB RAM | (2022)
+      → Prix CSV : 240 000 FCFA
+    • redmi note 11s | 64GB | Classe D | 8GB RAM | (2022)
+      → Prix CSV : 230 000 FCFA
+    • redmi note 11s | 128GB | Classe D | 6GB RAM | (2022)
+      → Prix CSV : 144 900 FCFA
+    • redmi note 12 | 128GB | Classe C | 6GB RAM | (2023)
+      → Prix CSV : 300 000 FCFA
+    • redmi note 12 | 256GB | Classe C | 6GB RAM | (2023)
+      → Prix CSV : 330 000 FCFA
+    • redmi note 12 5g | 128GB | Classe C | 8GB RAM | (2023)
+      → Prix CSV : 250 000 FCFA
+    • redmi note 12 pro 5g | 256GB | Classe C | 6GB RAM | (2023)
+      → Prix CSV : 270 000 FCFA
+    • redmi note 12 pro+ | 128GB | Classe C | 6GB RAM | (2023)
+      → Prix CSV : 290 000 FCFA
+    • redmi note 12s | 128GB | Classe C | 6GB RAM | (2023)
+      → Prix CSV : 310 000 FCFA
+    • redmi note 12s | 256GB | Classe C | 8GB RAM | (2023)
+      → Prix CSV : 280 000 FCFA
+    • redmi note 13 4g | 128GB | Classe B | 12GB RAM | (2024)
+      → Prix CSV : 350 000 FCFA
+    • redmi note 13 4g | 256GB | Classe B | 8GB RAM | (2024)
+      → Prix CSV : 340 000 FCFA
+    • redmi note 13 5g | 256GB | Classe B | 8GB RAM | (2024)
+      → Prix CSV : 380 000 FCFA
+    • redmi note 13 5g | 512GB | Classe B | 12GB RAM | (2024)
+      → Prix CSV : 400 000 FCFA
+    • redmi note 13 pro 4g | 256GB | Classe B | 8GB RAM | (2024)
+      → Prix CSV : 520 000 FCFA
+    • redmi note 13 pro 4g | 512GB | Classe B | 12GB RAM | (2024)
+      → Prix CSV : 480 000 FCFA
+    • redmi note 13 pro 5g | 256GB | Classe B | 3GB RAM | (2024)
+      → Prix CSV : 90 000 FCFA
+    • redmi note 13 pro 5g | 512GB | Classe B | 12GB RAM | (2024)
+      → Prix CSV : 80 000 FCFA
+    • redmi note 13 pro+ 5g | 32GB | Classe B | 4GB RAM | (2024)
+      → Prix CSV : 130 000 FCFA
+    • redmi note 13 pro+ 5g | 512GB | Classe B | 4GB RAM | (2024)
+      → Prix CSV : 110 000 FCFA
+    • redmi note 7 | 64GB | Classe F | 6GB RAM | (2019)
+      → Prix CSV : 95 000 FCFA
+    • redmi note 7 pro | 32GB | Classe F | 4GB RAM | (2019)
+      → Prix CSV : 130 000 FCFA
+    • redmi note 7 pro | 128GB | Classe F | 6GB RAM | (2019)
+      → Prix CSV : 120 000 FCFA
+    • redmi note 8 | 64GB | Classe F | 6GB RAM | (2019)
+      → Prix CSV : 140 000 FCFA
+    • redmi note 8 | 128GB | Classe F | 4GB RAM | (2019)
+      → Prix CSV : 150 000 FCFA
+    • redmi note 8 pro | 64GB | Classe F | 4GB RAM | (2019)
+      → Prix CSV : 120 000 FCFA
+    • redmi note 8 pro | 128GB | Classe F | 6GB RAM | (2019)
+      → Prix CSV : 145 000 FCFA
+    • redmi note 9 | 64GB | Classe F | 4GB RAM | (2020)
+      → Prix CSV : 140 000 FCFA
+    • redmi note 9 | 128GB | Classe F | 6GB RAM | (2020)
+      → Prix CSV : 140 000 FCFA
+    • redmi note 9 pro | 64GB | Classe F | 4GB RAM | (2020)
+      → Prix CSV : 170 000 FCFA
+    • redmi note 9 pro | 128GB | Classe F | 6GB RAM | (2020)
+      → Prix CSV : 160 000 FCFA
+    • redmi note 9 pro max | 64GB | Classe F | 6GB RAM | (2020)
+      → Prix CSV : 150 000 FCFA
+    • redmi note 9 pro max | 128GB | Classe F | 6GB RAM | (2020)
+      → Prix CSV : 190 000 FCFA
+    • redmi note 9s | 128GB | Classe F | 8GB RAM | (2020)
+      → Prix CSV : 170 000 FCFA
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+3. RÉSUMÉ PAR MARQUE — Variantes CSV manquantes dans la DB
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Marque                    Nb variantes manquantes  
+-------------------------------------------------------
+                          5                        
+apple                     1                        
+google pixel              53                       
+honor                     1                        
+huawei                    5                        
+motorola                  2                        
+one plus                  71                       
+oppo                      1                        
+realme                    3                        
+samsung                   1                        
+tecno                     27                       
+xiaomi poco               61                       
+xiaomi redmi              56                       
+
+  Total variantes manquantes : 287

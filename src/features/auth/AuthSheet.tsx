@@ -21,8 +21,8 @@ interface AuthSheetContextValue {
 }
 
 const AuthSheetContext = createContext<AuthSheetContextValue>({
-  showAuth: () => {},
-  hideAuth: () => {},
+  showAuth: () => { },
+  hideAuth: () => { },
 });
 
 export function useAuthSheet() {
@@ -55,9 +55,9 @@ export function AuthSheetProvider({ children }: { children: ReactNode }) {
 // ─── Modal ────────────────────────────────────────────────────────────────────
 
 const PERKS = [
-  { icon: Smartphone, text: "Simulez un échange en quelques clics" },
-  { icon: ShieldCheck, text: "Publiez et gérez vos annonces" },
-  { icon: Zap, text: "Accédez à votre historique & TekhPoints" },
+  { icon: Smartphone, text: "Estime la valeur de ton téléphone en 2 min" },
+  { icon: ShieldCheck, text: "Accède à ton historique d'échanges & TekhPoints" },
+  { icon: Zap, text: "Reçois des offres personnalisées via WhatsApp" },
 ];
 
 function AuthSheetModal({ reason, onClose }: { reason?: string; onClose: () => void }) {

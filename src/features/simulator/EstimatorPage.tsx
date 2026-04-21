@@ -37,6 +37,8 @@ import { loadJson, saveJson } from "@/core/pwa/tekhSession";
 import { analyzePhoneImage, type PhoneAnalysisResult } from "@/core/api/analyzePhone";
 import { assessConditionWithCache } from "@/core/api/assessCondition";
 import { isSupabaseConfigured } from "@/core/api/supabaseClient";
+import { useAuth } from "@/features/auth/auth.context";
+import { useAuthNudge } from "@/shared/hooks/useAuthNudge";
 
 // ─── Session schema v2 ────────────────────────────────────────────────────────
 interface EstimatorSessionV2 {
@@ -87,6 +89,8 @@ export default function EstimatorPage() {
   const location = useLocation();
   const { setLastSimulation } = useDeals();
   const isPWA = usePWA();
+  const { user } = useAuth();
+  const { triggerNudge } = useAuthNudge();
   const returnToDealId = (location.state as { returnToDealId?: string } | null)?.returnToDealId;
 
   // Identity
@@ -594,6 +598,10 @@ export default function EstimatorPage() {
                       {adjustedFinalPrice > 0 && (
                         <Button
                           onClick={() => {
+                            if (!user) {
+                              triggerNudge("save_estimation");
+                              return;
+                            }
                             setStep("satisfaction");
                             window.scrollTo({ top: 0, behavior: "smooth" });
                           }}

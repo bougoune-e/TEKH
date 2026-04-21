@@ -1,0 +1,12 @@
+AUDIT SECTION PRIX — Modèles sans prix dans la DB
+
+Date: 2026-04-20T22:28:20.182Z
+Total sans prix: 0 / 1999 enregistrements
+
+================================================================================
+
+================================================================================
+
+Résumé:
+  • Modèles sans prix ET avec estimation CSV : 0
+  • Modèles sans prix ET sans estimation CSV  : 0

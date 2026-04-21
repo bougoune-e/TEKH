@@ -1,0 +1,2540 @@
+[
+  {
+    "marque": "Apple",
+    "modele": "iPhone 7 plus",
+    "variante": "128GB",
+    "prt_fcfa": 150000,
+    "classe_tekh": "E",
+    "annee_sortie": null,
+    "ram": 2
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel",
+    "variante": "128GB",
+    "prt_fcfa": 50000,
+    "classe_tekh": "F",
+    "annee_sortie": 2020,
+    "ram": 6
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel",
+    "variante": "64GB",
+    "prt_fcfa": 55000,
+    "classe_tekh": "F",
+    "annee_sortie": 2020,
+    "ram": 6
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 2",
+    "variante": "128GB",
+    "prt_fcfa": 60000,
+    "classe_tekh": "E",
+    "annee_sortie": 2017,
+    "ram": 6
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 2",
+    "variante": "64GB",
+    "prt_fcfa": 65000,
+    "classe_tekh": "E",
+    "annee_sortie": 2017,
+    "ram": 6
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 2 xl",
+    "variante": "128GB",
+    "prt_fcfa": 70000,
+    "classe_tekh": "E",
+    "annee_sortie": 2017,
+    "ram": 6
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 2 xl",
+    "variante": "64GB",
+    "prt_fcfa": 60000,
+    "classe_tekh": "E",
+    "annee_sortie": 2017,
+    "ram": 6
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 3",
+    "variante": "128GB",
+    "prt_fcfa": 65000,
+    "classe_tekh": "E",
+    "annee_sortie": 2018,
+    "ram": 6
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 3",
+    "variante": "64GB",
+    "prt_fcfa": 75000,
+    "classe_tekh": "E",
+    "annee_sortie": 2018,
+    "ram": 6
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 3 xl",
+    "variante": "128GB",
+    "prt_fcfa": 85000,
+    "classe_tekh": "E",
+    "annee_sortie": 2018,
+    "ram": 6
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 3 xl",
+    "variante": "64GB",
+    "prt_fcfa": 50000,
+    "classe_tekh": "E",
+    "annee_sortie": 2018,
+    "ram": 6
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 3a",
+    "variante": "64GB",
+    "prt_fcfa": 55000,
+    "classe_tekh": "E",
+    "annee_sortie": 2018,
+    "ram": 6
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 3a xl",
+    "variante": "64GB",
+    "prt_fcfa": 70000,
+    "classe_tekh": "E",
+    "annee_sortie": 2018,
+    "ram": 6
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 4",
+    "variante": "128GB",
+    "prt_fcfa": 80000,
+    "classe_tekh": "D",
+    "annee_sortie": 2019,
+    "ram": 6
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 4",
+    "variante": "64GB",
+    "prt_fcfa": 110000,
+    "classe_tekh": "D",
+    "annee_sortie": 2019,
+    "ram": 6
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 4 xl",
+    "variante": "128GB",
+    "prt_fcfa": 140000,
+    "classe_tekh": "D",
+    "annee_sortie": 2019,
+    "ram": 6
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 4 xl",
+    "variante": "64GB",
+    "prt_fcfa": 90000,
+    "classe_tekh": "D",
+    "annee_sortie": 2019,
+    "ram": 6
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 4a",
+    "variante": "128GB",
+    "prt_fcfa": 110000,
+    "classe_tekh": "D",
+    "annee_sortie": 2019,
+    "ram": 8
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 4a (5g)",
+    "variante": "128GB",
+    "prt_fcfa": 120000,
+    "classe_tekh": "D",
+    "annee_sortie": 2019,
+    "ram": 8
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 5",
+    "variante": "128GB",
+    "prt_fcfa": 130000,
+    "classe_tekh": "D",
+    "annee_sortie": 2020,
+    "ram": 8
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 5a (5g)",
+    "variante": "128GB",
+    "prt_fcfa": 95000,
+    "classe_tekh": "C",
+    "annee_sortie": 2020,
+    "ram": 6
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 6",
+    "variante": "256GB",
+    "prt_fcfa": 110000,
+    "classe_tekh": "C",
+    "annee_sortie": 2021,
+    "ram": 6
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 6",
+    "variante": "128GB",
+    "prt_fcfa": 140000,
+    "classe_tekh": "C",
+    "annee_sortie": 2021,
+    "ram": 12
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 6 pro",
+    "variante": "256GB",
+    "prt_fcfa": 160000,
+    "classe_tekh": "C",
+    "annee_sortie": 2021,
+    "ram": 12
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 6 pro",
+    "variante": "512GB",
+    "prt_fcfa": 185000,
+    "classe_tekh": "C",
+    "annee_sortie": 2021,
+    "ram": 12
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 6 pro",
+    "variante": "128GB",
+    "prt_fcfa": 115000,
+    "classe_tekh": "C",
+    "annee_sortie": 2021,
+    "ram": 6
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 6a",
+    "variante": "128GB",
+    "prt_fcfa": 105000,
+    "classe_tekh": "C",
+    "annee_sortie": 2021,
+    "ram": 8
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 7",
+    "variante": "256GB",
+    "prt_fcfa": 125000,
+    "classe_tekh": "B",
+    "annee_sortie": 2022,
+    "ram": 8
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 7",
+    "variante": "128GB",
+    "prt_fcfa": 145000,
+    "classe_tekh": "B",
+    "annee_sortie": 2022,
+    "ram": 12
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 7 pro",
+    "variante": "256GB",
+    "prt_fcfa": 165000,
+    "classe_tekh": "B",
+    "annee_sortie": 2022,
+    "ram": 12
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 7 pro",
+    "variante": "512GB",
+    "prt_fcfa": 185000,
+    "classe_tekh": "B",
+    "annee_sortie": 2022,
+    "ram": 12
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 7 pro",
+    "variante": "128GB",
+    "prt_fcfa": 140000,
+    "classe_tekh": "B",
+    "annee_sortie": 2022,
+    "ram": 8
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 7a",
+    "variante": "128GB",
+    "prt_fcfa": 200000,
+    "classe_tekh": "B",
+    "annee_sortie": 2022,
+    "ram": 8
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 8",
+    "variante": "256GB",
+    "prt_fcfa": 230000,
+    "classe_tekh": "A",
+    "annee_sortie": 2023,
+    "ram": 8
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 8",
+    "variante": "128GB",
+    "prt_fcfa": 300000,
+    "classe_tekh": "A",
+    "annee_sortie": 2023,
+    "ram": 12
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 8 pro",
+    "variante": "256GB",
+    "prt_fcfa": 350000,
+    "classe_tekh": "A",
+    "annee_sortie": 2023,
+    "ram": 12
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 8 pro",
+    "variante": "512GB",
+    "prt_fcfa": 400000,
+    "classe_tekh": "A",
+    "annee_sortie": 2023,
+    "ram": 12
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 8 pro",
+    "variante": "1024GB",
+    "prt_fcfa": 450000,
+    "classe_tekh": "A",
+    "annee_sortie": 2023,
+    "ram": 12
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 8 pro",
+    "variante": "128GB",
+    "prt_fcfa": 220000,
+    "classe_tekh": "A",
+    "annee_sortie": 2023,
+    "ram": 8
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 8a",
+    "variante": "256GB",
+    "prt_fcfa": 260000,
+    "classe_tekh": "A",
+    "annee_sortie": 2023,
+    "ram": 8
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 8a",
+    "variante": "128GB",
+    "prt_fcfa": 350000,
+    "classe_tekh": "A",
+    "annee_sortie": 2023,
+    "ram": 6
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 9",
+    "variante": "256GB",
+    "prt_fcfa": 400000,
+    "classe_tekh": "A",
+    "annee_sortie": 2024,
+    "ram": 6
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 9",
+    "variante": "128GB",
+    "prt_fcfa": 500000,
+    "classe_tekh": "A",
+    "annee_sortie": 2024,
+    "ram": 12
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 9 pro",
+    "variante": "256GB",
+    "prt_fcfa": 700000,
+    "classe_tekh": "A",
+    "annee_sortie": 2024,
+    "ram": 12
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 9 pro",
+    "variante": "512GB",
+    "prt_fcfa": 600000,
+    "classe_tekh": "A",
+    "annee_sortie": 2024,
+    "ram": 12
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 9 pro",
+    "variante": "1024GB",
+    "prt_fcfa": 650000,
+    "classe_tekh": "A",
+    "annee_sortie": 2024,
+    "ram": 12
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 9 pro fold",
+    "variante": "512GB",
+    "prt_fcfa": 750000,
+    "classe_tekh": "A",
+    "annee_sortie": 2024,
+    "ram": 12
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 9 pro fold",
+    "variante": "1024GB",
+    "prt_fcfa": 800000,
+    "classe_tekh": "A",
+    "annee_sortie": 2024,
+    "ram": 12
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 9 pro fold",
+    "variante": "128GB",
+    "prt_fcfa": 550000,
+    "classe_tekh": "A",
+    "annee_sortie": 2024,
+    "ram": 12
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 9 pro xl",
+    "variante": "256GB",
+    "prt_fcfa": 600000,
+    "classe_tekh": "A",
+    "annee_sortie": 2024,
+    "ram": 12
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 9 pro xl",
+    "variante": "512GB",
+    "prt_fcfa": 650000,
+    "classe_tekh": "A",
+    "annee_sortie": 2024,
+    "ram": 12
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 9 pro xl",
+    "variante": "1024GB",
+    "prt_fcfa": 700000,
+    "classe_tekh": "A",
+    "annee_sortie": 2024,
+    "ram": 12
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel 9 pro xl",
+    "variante": "32GB",
+    "prt_fcfa": 50000,
+    "classe_tekh": "A",
+    "annee_sortie": 2024,
+    "ram": 6
+  },
+  {
+    "marque": "Google Pixel",
+    "modele": "google pixel xl",
+    "variante": "128GB",
+    "prt_fcfa": 150000,
+    "classe_tekh": "F",
+    "annee_sortie": 2020,
+    "ram": 6
+  },
+  {
+    "marque": "Honor",
+    "modele": "honor x9b",
+    "variante": "128GB",
+    "prt_fcfa": 250000,
+    "classe_tekh": "B",
+    "annee_sortie": 2023,
+    "ram": 6
+  },
+  {
+    "marque": "Huawei",
+    "modele": "huawei mate 60 pro",
+    "variante": "512GB",
+    "prt_fcfa": 680000,
+    "classe_tekh": "A",
+    "annee_sortie": 2023,
+    "ram": 12
+  },
+  {
+    "marque": "Huawei",
+    "modele": "huawei mate 60 pro",
+    "variante": "1024GB",
+    "prt_fcfa": 650000,
+    "classe_tekh": "A",
+    "annee_sortie": 2023,
+    "ram": 12
+  },
+  {
+    "marque": "Huawei",
+    "modele": "huawei pura 70",
+    "variante": "256GB",
+    "prt_fcfa": 550000,
+    "classe_tekh": "A",
+    "annee_sortie": 2024,
+    "ram": 12
+  },
+  {
+    "marque": "Huawei",
+    "modele": "huawei pura 70 pro",
+    "variante": "512GB",
+    "prt_fcfa": 700000,
+    "classe_tekh": "A",
+    "annee_sortie": 2024,
+    "ram": 12
+  },
+  {
+    "marque": "Huawei",
+    "modele": "huawei pura 70 ultra",
+    "variante": "1024GB",
+    "prt_fcfa": 750000,
+    "classe_tekh": "A",
+    "annee_sortie": 2024,
+    "ram": 12
+  },
+  {
+    "marque": "Motorola",
+    "modele": "motorola edge 50 pro",
+    "variante": "256GB",
+    "prt_fcfa": 220000,
+    "classe_tekh": "A",
+    "annee_sortie": 2020,
+    "ram": 12
+  },
+  {
+    "marque": "Motorola",
+    "modele": "motorola edge 50 pro",
+    "variante": "512GB",
+    "prt_fcfa": 250000,
+    "classe_tekh": "A",
+    "annee_sortie": 2020,
+    "ram": 12
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 10 pro",
+    "variante": "256GB",
+    "prt_fcfa": 400000,
+    "classe_tekh": "B",
+    "annee_sortie": 2022,
+    "ram": 12
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 10 pro",
+    "variante": "512GB",
+    "prt_fcfa": 450000,
+    "classe_tekh": "B",
+    "annee_sortie": 2022,
+    "ram": 16
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 10 pro",
+    "variante": "128GB",
+    "prt_fcfa": 300000,
+    "classe_tekh": "B",
+    "annee_sortie": 2022,
+    "ram": 8
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 10r",
+    "variante": "256GB",
+    "prt_fcfa": 350000,
+    "classe_tekh": "B",
+    "annee_sortie": 2022,
+    "ram": 12
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 10r",
+    "variante": "128GB",
+    "prt_fcfa": 320000,
+    "classe_tekh": "B",
+    "annee_sortie": 2022,
+    "ram": 8
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 10t",
+    "variante": "256GB",
+    "prt_fcfa": 370000,
+    "classe_tekh": "B",
+    "annee_sortie": 2022,
+    "ram": 16
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 10t",
+    "variante": "128GB",
+    "prt_fcfa": 450000,
+    "classe_tekh": "B",
+    "annee_sortie": 2022,
+    "ram": 8
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 11",
+    "variante": "256GB",
+    "prt_fcfa": 500000,
+    "classe_tekh": "A",
+    "annee_sortie": 2023,
+    "ram": 12
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 11",
+    "variante": "512GB",
+    "prt_fcfa": 550000,
+    "classe_tekh": "A",
+    "annee_sortie": 2023,
+    "ram": 16
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 11",
+    "variante": "128GB",
+    "prt_fcfa": 400000,
+    "classe_tekh": "A",
+    "annee_sortie": 2023,
+    "ram": 8
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 11r",
+    "variante": "256GB",
+    "prt_fcfa": 550000,
+    "classe_tekh": "B",
+    "annee_sortie": 2023,
+    "ram": 16
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 12",
+    "variante": "512GB",
+    "prt_fcfa": 600000,
+    "classe_tekh": "A",
+    "annee_sortie": 2023,
+    "ram": 16
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 12",
+    "variante": "1024GB",
+    "prt_fcfa": 650000,
+    "classe_tekh": "A",
+    "annee_sortie": 2023,
+    "ram": 24
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 12",
+    "variante": "128GB",
+    "prt_fcfa": 500000,
+    "classe_tekh": "A",
+    "annee_sortie": 2023,
+    "ram": 12
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 12r",
+    "variante": "256GB",
+    "prt_fcfa": 550000,
+    "classe_tekh": "A",
+    "annee_sortie": 2024,
+    "ram": 16
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 12r",
+    "variante": "16GB",
+    "prt_fcfa": 40000,
+    "classe_tekh": "A",
+    "annee_sortie": 2024,
+    "ram": 8
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 2",
+    "variante": "64GB",
+    "prt_fcfa": 50000,
+    "classe_tekh": "F",
+    "annee_sortie": 2015,
+    "ram": 3
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 3",
+    "variante": "64GB",
+    "prt_fcfa": 55000,
+    "classe_tekh": "F",
+    "annee_sortie": 2016,
+    "ram": 6
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 3t",
+    "variante": "128GB",
+    "prt_fcfa": 45000,
+    "classe_tekh": "F",
+    "annee_sortie": 2016,
+    "ram": 8
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 3t",
+    "variante": "64GB",
+    "prt_fcfa": 50000,
+    "classe_tekh": "F",
+    "annee_sortie": 2016,
+    "ram": 6
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 5",
+    "variante": "128GB",
+    "prt_fcfa": 55000,
+    "classe_tekh": "F",
+    "annee_sortie": 2017,
+    "ram": 8
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 5",
+    "variante": "64GB",
+    "prt_fcfa": 60000,
+    "classe_tekh": "F",
+    "annee_sortie": 2017,
+    "ram": 6
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 5t",
+    "variante": "128GB",
+    "prt_fcfa": 50000,
+    "classe_tekh": "F",
+    "annee_sortie": 2017,
+    "ram": 8
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 5t",
+    "variante": "64GB",
+    "prt_fcfa": 55000,
+    "classe_tekh": "F",
+    "annee_sortie": 2017,
+    "ram": 6
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 6",
+    "variante": "128GB",
+    "prt_fcfa": 60000,
+    "classe_tekh": "E",
+    "annee_sortie": 2018,
+    "ram": 8
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 6",
+    "variante": "256GB",
+    "prt_fcfa": 65000,
+    "classe_tekh": "E",
+    "annee_sortie": 2018,
+    "ram": 8
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 6t",
+    "variante": "256GB",
+    "prt_fcfa": 70000,
+    "classe_tekh": "E",
+    "annee_sortie": 2018,
+    "ram": 8
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 6t",
+    "variante": "512GB",
+    "prt_fcfa": 65000,
+    "classe_tekh": "E",
+    "annee_sortie": 2018,
+    "ram": 12
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 6t mclaren",
+    "variante": "128GB",
+    "prt_fcfa": 60000,
+    "classe_tekh": "E",
+    "annee_sortie": 2018,
+    "ram": 10
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 7",
+    "variante": "256GB",
+    "prt_fcfa": 65000,
+    "classe_tekh": "D",
+    "annee_sortie": 2019,
+    "ram": 8
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 7",
+    "variante": "128GB",
+    "prt_fcfa": 70000,
+    "classe_tekh": "D",
+    "annee_sortie": 2019,
+    "ram": 6
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 7 pro",
+    "variante": "256GB",
+    "prt_fcfa": 75000,
+    "classe_tekh": "D",
+    "annee_sortie": 2019,
+    "ram": 8
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 7 pro",
+    "variante": "512GB",
+    "prt_fcfa": 65000,
+    "classe_tekh": "D",
+    "annee_sortie": 2019,
+    "ram": 12
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 7 pro 5g",
+    "variante": "128GB",
+    "prt_fcfa": 75000,
+    "classe_tekh": "D",
+    "annee_sortie": 2019,
+    "ram": 12
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 7t",
+    "variante": "256GB",
+    "prt_fcfa": 80000,
+    "classe_tekh": "D",
+    "annee_sortie": 2019,
+    "ram": 8
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 7t",
+    "variante": "128GB",
+    "prt_fcfa": 70000,
+    "classe_tekh": "D",
+    "annee_sortie": 2019,
+    "ram": 8
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 7t pro",
+    "variante": "256GB",
+    "prt_fcfa": 80000,
+    "classe_tekh": "D",
+    "annee_sortie": 2019,
+    "ram": 12
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 7t pro mclaren",
+    "variante": "128GB",
+    "prt_fcfa": 85000,
+    "classe_tekh": "D",
+    "annee_sortie": 2019,
+    "ram": 12
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 8",
+    "variante": "256GB",
+    "prt_fcfa": 120000,
+    "classe_tekh": "C",
+    "annee_sortie": 2020,
+    "ram": 12
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 8",
+    "variante": "128GB",
+    "prt_fcfa": 80000,
+    "classe_tekh": "C",
+    "annee_sortie": 2020,
+    "ram": 8
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 8 pro",
+    "variante": "256GB",
+    "prt_fcfa": 85000,
+    "classe_tekh": "C",
+    "annee_sortie": 2020,
+    "ram": 12
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 8 pro",
+    "variante": "128GB",
+    "prt_fcfa": 90000,
+    "classe_tekh": "C",
+    "annee_sortie": 2020,
+    "ram": 12
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 8t",
+    "variante": "256GB",
+    "prt_fcfa": 80000,
+    "classe_tekh": "C",
+    "annee_sortie": 2020,
+    "ram": 12
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 8t",
+    "variante": "128GB",
+    "prt_fcfa": 85000,
+    "classe_tekh": "C",
+    "annee_sortie": 2020,
+    "ram": 8
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 9",
+    "variante": "256GB",
+    "prt_fcfa": 90000,
+    "classe_tekh": "B",
+    "annee_sortie": 2021,
+    "ram": 12
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 9",
+    "variante": "128GB",
+    "prt_fcfa": 95000,
+    "classe_tekh": "B",
+    "annee_sortie": 2021,
+    "ram": 8
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 9 pro",
+    "variante": "256GB",
+    "prt_fcfa": 100000,
+    "classe_tekh": "B",
+    "annee_sortie": 2021,
+    "ram": 12
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 9 pro",
+    "variante": "128GB",
+    "prt_fcfa": 110000,
+    "classe_tekh": "B",
+    "annee_sortie": 2021,
+    "ram": 12
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 9rt",
+    "variante": "256GB",
+    "prt_fcfa": 120000,
+    "classe_tekh": "B",
+    "annee_sortie": 2021,
+    "ram": 12
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus 9rt",
+    "variante": "128GB",
+    "prt_fcfa": 130000,
+    "classe_tekh": "B",
+    "annee_sortie": 2021,
+    "ram": 8
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus nord",
+    "variante": "256GB",
+    "prt_fcfa": 140000,
+    "classe_tekh": "D",
+    "annee_sortie": 2020,
+    "ram": 12
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus nord",
+    "variante": "128GB",
+    "prt_fcfa": 110000,
+    "classe_tekh": "D",
+    "annee_sortie": 2020,
+    "ram": 8
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus nord 2",
+    "variante": "256GB",
+    "prt_fcfa": 150000,
+    "classe_tekh": "C",
+    "annee_sortie": 2021,
+    "ram": 12
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus nord 2",
+    "variante": "128GB",
+    "prt_fcfa": 120000,
+    "classe_tekh": "C",
+    "annee_sortie": 2021,
+    "ram": 8
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus nord 2t",
+    "variante": "256GB",
+    "prt_fcfa": 130000,
+    "classe_tekh": "C",
+    "annee_sortie": 2022,
+    "ram": 12
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus nord 2t",
+    "variante": "128GB",
+    "prt_fcfa": 173000,
+    "classe_tekh": "C",
+    "annee_sortie": 2022,
+    "ram": 8
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus nord 3",
+    "variante": "256GB",
+    "prt_fcfa": 90000,
+    "classe_tekh": "B",
+    "annee_sortie": 2023,
+    "ram": 16
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus nord 3",
+    "variante": "128GB",
+    "prt_fcfa": 95000,
+    "classe_tekh": "B",
+    "annee_sortie": 2023,
+    "ram": 8
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus nord ce 2",
+    "variante": "256GB",
+    "prt_fcfa": 100000,
+    "classe_tekh": "D",
+    "annee_sortie": 2022,
+    "ram": 12
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus nord ce 2",
+    "variante": "64GB",
+    "prt_fcfa": 105000,
+    "classe_tekh": "D",
+    "annee_sortie": 2022,
+    "ram": 8
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus nord ce 2 lite",
+    "variante": "128GB",
+    "prt_fcfa": 110000,
+    "classe_tekh": "D",
+    "annee_sortie": 2022,
+    "ram": 8
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus nord ce 3",
+    "variante": "256GB",
+    "prt_fcfa": 115000,
+    "classe_tekh": "B",
+    "annee_sortie": 2023,
+    "ram": 8
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus nord ce 3",
+    "variante": "128GB",
+    "prt_fcfa": 120000,
+    "classe_tekh": "B",
+    "annee_sortie": 2023,
+    "ram": 8
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus nord ce 3 lite",
+    "variante": "256GB",
+    "prt_fcfa": 110000,
+    "classe_tekh": "B",
+    "annee_sortie": 2023,
+    "ram": 8
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus nord ce 3 lite",
+    "variante": "128GB",
+    "prt_fcfa": 115000,
+    "classe_tekh": "B",
+    "annee_sortie": 2023,
+    "ram": 6
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus nord ce 4",
+    "variante": "256GB",
+    "prt_fcfa": 120000,
+    "classe_tekh": "A",
+    "annee_sortie": 2024,
+    "ram": 8
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus nord ce 4",
+    "variante": "16GB",
+    "prt_fcfa": 35000,
+    "classe_tekh": "A",
+    "annee_sortie": 2024,
+    "ram": 6
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus one",
+    "variante": "64GB",
+    "prt_fcfa": 120000,
+    "classe_tekh": "F",
+    "annee_sortie": 2014,
+    "ram": 3
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus one",
+    "variante": "256GB",
+    "prt_fcfa": 450000,
+    "classe_tekh": "F",
+    "annee_sortie": 2014,
+    "ram": 3
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus open",
+    "variante": "512GB",
+    "prt_fcfa": 500000,
+    "classe_tekh": "A",
+    "annee_sortie": 2023,
+    "ram": 16
+  },
+  {
+    "marque": "One Plus",
+    "modele": "oneplus open",
+    "variante": "256GB",
+    "prt_fcfa": 150000,
+    "classe_tekh": "A",
+    "annee_sortie": 2023,
+    "ram": 12
+  },
+  {
+    "marque": "Oppo",
+    "modele": "oppo reno 12",
+    "variante": "256GB",
+    "prt_fcfa": 350000,
+    "classe_tekh": "A",
+    "annee_sortie": 2030,
+    "ram": 8
+  },
+  {
+    "marque": "Realme",
+    "modele": "realme 12 pro+",
+    "variante": "256GB",
+    "prt_fcfa": 400000,
+    "classe_tekh": "A",
+    "annee_sortie": 2024,
+    "ram": 12
+  },
+  {
+    "marque": "Realme",
+    "modele": "realme gt 6",
+    "variante": "512GB",
+    "prt_fcfa": 950000,
+    "classe_tekh": "A",
+    "annee_sortie": 2019,
+    "ram": 12
+  },
+  {
+    "marque": "Realme",
+    "modele": "realme gt 6",
+    "variante": "256GB",
+    "prt_fcfa": 250000,
+    "classe_tekh": "A",
+    "annee_sortie": 2019,
+    "ram": 6
+  },
+  {
+    "marque": "Samsung",
+    "modele": "Samsung galaxy a05s",
+    "variante": "128GB",
+    "prt_fcfa": 87000,
+    "classe_tekh": "C",
+    "annee_sortie": 2020,
+    "ram": 6
+  },
+  {
+    "marque": "Tecno",
+    "modele": "camon 11 pro",
+    "variante": "64GB",
+    "prt_fcfa": 80000,
+    "classe_tekh": "F",
+    "annee_sortie": 2018,
+    "ram": 3
+  },
+  {
+    "marque": "Tecno",
+    "modele": "camon 12",
+    "variante": "64GB",
+    "prt_fcfa": 70000,
+    "classe_tekh": "F",
+    "annee_sortie": 2019,
+    "ram": 3
+  },
+  {
+    "marque": "Tecno",
+    "modele": "camon 12 pro",
+    "variante": "64GB",
+    "prt_fcfa": 90000,
+    "classe_tekh": "F",
+    "annee_sortie": 2019,
+    "ram": 4
+  },
+  {
+    "marque": "Tecno",
+    "modele": "camon 15",
+    "variante": "64GB",
+    "prt_fcfa": 85000,
+    "classe_tekh": "F",
+    "annee_sortie": 2020,
+    "ram": 4
+  },
+  {
+    "marque": "Tecno",
+    "modele": "camon 15 premier",
+    "variante": "128GB",
+    "prt_fcfa": 110000,
+    "classe_tekh": "F",
+    "annee_sortie": 2020,
+    "ram": 4
+  },
+  {
+    "marque": "Tecno",
+    "modele": "camon 16 premier",
+    "variante": "128GB",
+    "prt_fcfa": 115000,
+    "classe_tekh": "E",
+    "annee_sortie": 2020,
+    "ram": 4
+  },
+  {
+    "marque": "Tecno",
+    "modele": "camon 16 pro",
+    "variante": "128GB",
+    "prt_fcfa": 105000,
+    "classe_tekh": "E",
+    "annee_sortie": 2020,
+    "ram": 4
+  },
+  {
+    "marque": "Tecno",
+    "modele": "camon 17",
+    "variante": "128GB",
+    "prt_fcfa": 125000,
+    "classe_tekh": "D",
+    "annee_sortie": 2021,
+    "ram": 4
+  },
+  {
+    "marque": "Tecno",
+    "modele": "camon 17 pro",
+    "variante": "128GB",
+    "prt_fcfa": 130000,
+    "classe_tekh": "D",
+    "annee_sortie": 2021,
+    "ram": 4
+  },
+  {
+    "marque": "Tecno",
+    "modele": "camon 18",
+    "variante": "128GB",
+    "prt_fcfa": 135000,
+    "classe_tekh": "C",
+    "annee_sortie": 2021,
+    "ram": 4
+  },
+  {
+    "marque": "Tecno",
+    "modele": "camon 18 p",
+    "variante": "128GB",
+    "prt_fcfa": 150000,
+    "classe_tekh": "C",
+    "annee_sortie": 2021,
+    "ram": 4
+  },
+  {
+    "marque": "Tecno",
+    "modele": "camon 19",
+    "variante": "128GB",
+    "prt_fcfa": 160000,
+    "classe_tekh": "C",
+    "annee_sortie": 2022,
+    "ram": 6
+  },
+  {
+    "marque": "Tecno",
+    "modele": "camon 20 pro 5g",
+    "variante": "256GB",
+    "prt_fcfa": 230000,
+    "classe_tekh": "B",
+    "annee_sortie": 2023,
+    "ram": 6
+  },
+  {
+    "marque": "Tecno",
+    "modele": "camon 30",
+    "variante": "256GB",
+    "prt_fcfa": 240000,
+    "classe_tekh": "A",
+    "annee_sortie": 2024,
+    "ram": 6
+  },
+  {
+    "marque": "Tecno",
+    "modele": "phantom x",
+    "variante": "256GB",
+    "prt_fcfa": 300000,
+    "classe_tekh": "C",
+    "annee_sortie": 2021,
+    "ram": 6
+  },
+  {
+    "marque": "Tecno",
+    "modele": "phantom x2",
+    "variante": "256GB",
+    "prt_fcfa": 450000,
+    "classe_tekh": "B",
+    "annee_sortie": 2022,
+    "ram": 2
+  },
+  {
+    "marque": "Tecno",
+    "modele": "pop 3 plus",
+    "variante": "16GB",
+    "prt_fcfa": 32000,
+    "classe_tekh": "F",
+    "annee_sortie": 2019,
+    "ram": 2
+  },
+  {
+    "marque": "Tecno",
+    "modele": "pop 4",
+    "variante": "32GB",
+    "prt_fcfa": 35000,
+    "classe_tekh": "F",
+    "annee_sortie": 2020,
+    "ram": 2
+  },
+  {
+    "marque": "Tecno",
+    "modele": "pop 6",
+    "variante": "32GB",
+    "prt_fcfa": 46000,
+    "classe_tekh": "E",
+    "annee_sortie": 2022,
+    "ram": 3
+  },
+  {
+    "marque": "Tecno",
+    "modele": "pop 7",
+    "variante": "64GB",
+    "prt_fcfa": 53000,
+    "classe_tekh": "D",
+    "annee_sortie": 2023,
+    "ram": 4
+  },
+  {
+    "marque": "Tecno",
+    "modele": "pop 8",
+    "variante": "64GB",
+    "prt_fcfa": 58000,
+    "classe_tekh": "C",
+    "annee_sortie": 2023,
+    "ram": 3
+  },
+  {
+    "marque": "Tecno",
+    "modele": "pop 9",
+    "variante": "64GB",
+    "prt_fcfa": 75000,
+    "classe_tekh": "B",
+    "annee_sortie": 2024,
+    "ram": 3
+  },
+  {
+    "marque": "Tecno",
+    "modele": "pova 5",
+    "variante": "128GB",
+    "prt_fcfa": 120000,
+    "classe_tekh": "B",
+    "annee_sortie": 2023,
+    "ram": 4
+  },
+  {
+    "marque": "Tecno",
+    "modele": "pova 5 pro",
+    "variante": "128GB",
+    "prt_fcfa": 150000,
+    "classe_tekh": "B",
+    "annee_sortie": 2023,
+    "ram": 4
+  },
+  {
+    "marque": "Tecno",
+    "modele": "pova 6 pro",
+    "variante": "256GB",
+    "prt_fcfa": 170000,
+    "classe_tekh": "A",
+    "annee_sortie": 2021,
+    "ram": 4
+  },
+  {
+    "marque": "Tecno",
+    "modele": "tecno spark 40",
+    "variante": "128GB",
+    "prt_fcfa": 260000,
+    "classe_tekh": "A",
+    "annee_sortie": 2021,
+    "ram": 6
+  },
+  {
+    "marque": "Tecno",
+    "modele": "tecno spark 40 pro+",
+    "variante": "128GB",
+    "prt_fcfa": 250000,
+    "classe_tekh": "A",
+    "annee_sortie": 2021,
+    "ram": 3
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco c65",
+    "variante": "256GB",
+    "prt_fcfa": 95000,
+    "classe_tekh": "D",
+    "annee_sortie": 2023,
+    "ram": 8
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco c65",
+    "variante": "128GB",
+    "prt_fcfa": 350000,
+    "classe_tekh": "D",
+    "annee_sortie": 2023,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco f4",
+    "variante": "256GB",
+    "prt_fcfa": 400000,
+    "classe_tekh": "C",
+    "annee_sortie": 2023,
+    "ram": 8
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco f4",
+    "variante": "128GB",
+    "prt_fcfa": 420000,
+    "classe_tekh": "C",
+    "annee_sortie": 2023,
+    "ram": 8
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco f4 gt",
+    "variante": "256GB",
+    "prt_fcfa": 500000,
+    "classe_tekh": "C",
+    "annee_sortie": 2023,
+    "ram": 12
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco f5",
+    "variante": "256GB",
+    "prt_fcfa": 550000,
+    "classe_tekh": "B",
+    "annee_sortie": 2023,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco f5 pro",
+    "variante": "512GB",
+    "prt_fcfa": 600000,
+    "classe_tekh": "B",
+    "annee_sortie": 2023,
+    "ram": 8
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco f5 pro",
+    "variante": "128GB",
+    "prt_fcfa": 550000,
+    "classe_tekh": "B",
+    "annee_sortie": 2023,
+    "ram": 12
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco f6",
+    "variante": "256GB",
+    "prt_fcfa": 650000,
+    "classe_tekh": "A",
+    "annee_sortie": 2024,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco f6",
+    "variante": "512GB",
+    "prt_fcfa": 650000,
+    "classe_tekh": "A",
+    "annee_sortie": 2024,
+    "ram": 12
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco f6 pro",
+    "variante": "512GB",
+    "prt_fcfa": 700000,
+    "classe_tekh": "A",
+    "annee_sortie": 2024,
+    "ram": 4
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco f6 pro",
+    "variante": "128GB",
+    "prt_fcfa": 750000,
+    "classe_tekh": "A",
+    "annee_sortie": 2024,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco f6 pro",
+    "variante": "64GB",
+    "prt_fcfa": 120000,
+    "classe_tekh": "A",
+    "annee_sortie": 2024,
+    "ram": 4
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco m2",
+    "variante": "128GB",
+    "prt_fcfa": 140000,
+    "classe_tekh": "F",
+    "annee_sortie": 2024,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco m2",
+    "variante": "64GB",
+    "prt_fcfa": 160000,
+    "classe_tekh": "F",
+    "annee_sortie": 2024,
+    "ram": 4
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco m2 pro",
+    "variante": "128GB",
+    "prt_fcfa": 180000,
+    "classe_tekh": "F",
+    "annee_sortie": 2024,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco m2 pro",
+    "variante": "64GB",
+    "prt_fcfa": 150000,
+    "classe_tekh": "F",
+    "annee_sortie": 2024,
+    "ram": 4
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco m3",
+    "variante": "128GB",
+    "prt_fcfa": 170000,
+    "classe_tekh": "F",
+    "annee_sortie": 2024,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco m3",
+    "variante": "64GB",
+    "prt_fcfa": 190000,
+    "classe_tekh": "F",
+    "annee_sortie": 2018,
+    "ram": 4
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco m3 pro 5g",
+    "variante": "128GB",
+    "prt_fcfa": 210000,
+    "classe_tekh": "E",
+    "annee_sortie": 2018,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco m3 pro 5g",
+    "variante": "64GB",
+    "prt_fcfa": 200000,
+    "classe_tekh": "E",
+    "annee_sortie": 2018,
+    "ram": 8
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco m4 5g",
+    "variante": "128GB",
+    "prt_fcfa": 220000,
+    "classe_tekh": "D",
+    "annee_sortie": 2018,
+    "ram": 4
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco m4 5g",
+    "variante": "256GB",
+    "prt_fcfa": 230000,
+    "classe_tekh": "D",
+    "annee_sortie": 2019,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco m4 pro 4g",
+    "variante": "64GB",
+    "prt_fcfa": 240000,
+    "classe_tekh": "D",
+    "annee_sortie": 2019,
+    "ram": 4
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco m4 pro 5g",
+    "variante": "128GB",
+    "prt_fcfa": 260000,
+    "classe_tekh": "D",
+    "annee_sortie": 2019,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco m4 pro 5g",
+    "variante": "64GB",
+    "prt_fcfa": 170000,
+    "classe_tekh": "D",
+    "annee_sortie": 2019,
+    "ram": 4
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco m5",
+    "variante": "128GB",
+    "prt_fcfa": 190000,
+    "classe_tekh": "D",
+    "annee_sortie": 2019,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco m5",
+    "variante": "64GB",
+    "prt_fcfa": 200000,
+    "classe_tekh": "D",
+    "annee_sortie": 2020,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco m5 s",
+    "variante": "128GB",
+    "prt_fcfa": 220000,
+    "classe_tekh": "D",
+    "annee_sortie": 2020,
+    "ram": 8
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco m6 4g",
+    "variante": "256GB",
+    "prt_fcfa": 230000,
+    "classe_tekh": "C",
+    "annee_sortie": 2020,
+    "ram": 8
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco m6 4g",
+    "variante": "128GB",
+    "prt_fcfa": 220000,
+    "classe_tekh": "C",
+    "annee_sortie": 2020,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco m6 5g",
+    "variante": "256GB",
+    "prt_fcfa": 240000,
+    "classe_tekh": "C",
+    "annee_sortie": 2020,
+    "ram": 8
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco m6 5g",
+    "variante": "128GB",
+    "prt_fcfa": 250000,
+    "classe_tekh": "C",
+    "annee_sortie": 2020,
+    "ram": 12
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco m6 pro 4g",
+    "variante": "256GB",
+    "prt_fcfa": 270000,
+    "classe_tekh": "C",
+    "annee_sortie": 2020,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco m6 pro 4g",
+    "variante": "512GB",
+    "prt_fcfa": 290000,
+    "classe_tekh": "C",
+    "annee_sortie": 2064,
+    "ram": 8
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco m6 pro 4g",
+    "variante": "128GB",
+    "prt_fcfa": 260000,
+    "classe_tekh": "C",
+    "annee_sortie": 2024,
+    "ram": 12
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco m6 pro 5g",
+    "variante": "256GB",
+    "prt_fcfa": 280000,
+    "classe_tekh": "C",
+    "annee_sortie": 2023,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco m6 pro 5g",
+    "variante": "512GB",
+    "prt_fcfa": 300000,
+    "classe_tekh": "C",
+    "annee_sortie": 2023,
+    "ram": 8
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco m6 pro 5g",
+    "variante": "128GB",
+    "prt_fcfa": 280000,
+    "classe_tekh": "C",
+    "annee_sortie": 2023,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco m7",
+    "variante": "256GB",
+    "prt_fcfa": 300000,
+    "classe_tekh": "A",
+    "annee_sortie": 2025,
+    "ram": 8
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco m7",
+    "variante": "128GB",
+    "prt_fcfa": 310000,
+    "classe_tekh": "A",
+    "annee_sortie": 2025,
+    "ram": 4
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco m7 pro 5g",
+    "variante": "256GB",
+    "prt_fcfa": 330000,
+    "classe_tekh": "A",
+    "annee_sortie": 2025,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco m7 pro 5g",
+    "variante": "64GB",
+    "prt_fcfa": 180000,
+    "classe_tekh": "A",
+    "annee_sortie": 2025,
+    "ram": 8
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco x2",
+    "variante": "128GB",
+    "prt_fcfa": 200000,
+    "classe_tekh": "F",
+    "annee_sortie": 2020,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco x2",
+    "variante": "256GB",
+    "prt_fcfa": 230000,
+    "classe_tekh": "F",
+    "annee_sortie": 2020,
+    "ram": 8
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco x3 gt",
+    "variante": "256GB",
+    "prt_fcfa": 247000,
+    "classe_tekh": "D",
+    "annee_sortie": 2021,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco x3 gt",
+    "variante": "64GB",
+    "prt_fcfa": 130000,
+    "classe_tekh": "D",
+    "annee_sortie": 2021,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco x3 nfc",
+    "variante": "128GB",
+    "prt_fcfa": 180000,
+    "classe_tekh": "E",
+    "annee_sortie": 2020,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco x3 pro",
+    "variante": "256GB",
+    "prt_fcfa": 193000,
+    "classe_tekh": "E",
+    "annee_sortie": 2021,
+    "ram": 8
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco x3 pro",
+    "variante": "128GB",
+    "prt_fcfa": 250000,
+    "classe_tekh": "E",
+    "annee_sortie": 2021,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco x4 gt",
+    "variante": "256GB",
+    "prt_fcfa": 280000,
+    "classe_tekh": "C",
+    "annee_sortie": 2022,
+    "ram": 8
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco x4 gt",
+    "variante": "128GB",
+    "prt_fcfa": 300000,
+    "classe_tekh": "C",
+    "annee_sortie": 2022,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco x4 pro 5g",
+    "variante": "256GB",
+    "prt_fcfa": 330000,
+    "classe_tekh": "C",
+    "annee_sortie": 2022,
+    "ram": 8
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco x4 pro 5g",
+    "variante": "128GB",
+    "prt_fcfa": 320000,
+    "classe_tekh": "C",
+    "annee_sortie": 2022,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco x5 5g",
+    "variante": "256GB",
+    "prt_fcfa": 350000,
+    "classe_tekh": "C",
+    "annee_sortie": 2023,
+    "ram": 8
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco x5 5g",
+    "variante": "128GB",
+    "prt_fcfa": 380000,
+    "classe_tekh": "C",
+    "annee_sortie": 2023,
+    "ram": 8
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco x5 pro 5g",
+    "variante": "256GB",
+    "prt_fcfa": 450000,
+    "classe_tekh": "B",
+    "annee_sortie": 2023,
+    "ram": 8
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco x6 5g",
+    "variante": "512GB",
+    "prt_fcfa": 500000,
+    "classe_tekh": "B",
+    "annee_sortie": 2024,
+    "ram": 12
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco x6 5g",
+    "variante": "256GB",
+    "prt_fcfa": 550000,
+    "classe_tekh": "B",
+    "annee_sortie": 2024,
+    "ram": 3
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco x6 pro 5g",
+    "variante": "512GB",
+    "prt_fcfa": 600000,
+    "classe_tekh": "B",
+    "annee_sortie": 2024,
+    "ram": 4
+  },
+  {
+    "marque": "Xiaomi Poco",
+    "modele": "poco x6 pro 5g",
+    "variante": "32GB",
+    "prt_fcfa": 55000,
+    "classe_tekh": "B",
+    "annee_sortie": 2024,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi 12c",
+    "variante": "64GB",
+    "prt_fcfa": 60000,
+    "classe_tekh": "E",
+    "annee_sortie": 2023,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi 12c",
+    "variante": "128GB",
+    "prt_fcfa": 70000,
+    "classe_tekh": "E",
+    "annee_sortie": 2023,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi 13c",
+    "variante": "256GB",
+    "prt_fcfa": 75000,
+    "classe_tekh": "D",
+    "annee_sortie": 2023,
+    "ram": 8
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi 13c",
+    "variante": "128GB",
+    "prt_fcfa": 80000,
+    "classe_tekh": "D",
+    "annee_sortie": 2023,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi 14c",
+    "variante": "256GB",
+    "prt_fcfa": 85000,
+    "classe_tekh": "C",
+    "annee_sortie": 2024,
+    "ram": 8
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi 14c",
+    "variante": "128GB",
+    "prt_fcfa": 90000,
+    "classe_tekh": "C",
+    "annee_sortie": 2024,
+    "ram": 4
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi 15c",
+    "variante": "256GB",
+    "prt_fcfa": 95000,
+    "classe_tekh": "B",
+    "annee_sortie": 2025,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi 15c",
+    "variante": "64GB",
+    "prt_fcfa": 120000,
+    "classe_tekh": "B",
+    "annee_sortie": 2025,
+    "ram": 4
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 10",
+    "variante": "128GB",
+    "prt_fcfa": 60000,
+    "classe_tekh": "E",
+    "annee_sortie": 2021,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 10",
+    "variante": "64GB",
+    "prt_fcfa": 130000,
+    "classe_tekh": "E",
+    "annee_sortie": 2021,
+    "ram": 4
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 10 5g",
+    "variante": "128GB",
+    "prt_fcfa": 150000,
+    "classe_tekh": "E",
+    "annee_sortie": 2021,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 10 5g",
+    "variante": "64GB",
+    "prt_fcfa": 160000,
+    "classe_tekh": "E",
+    "annee_sortie": 2021,
+    "ram": 4
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 10 pro",
+    "variante": "128GB",
+    "prt_fcfa": 85000,
+    "classe_tekh": "D",
+    "annee_sortie": 2021,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 10 pro",
+    "variante": "64GB",
+    "prt_fcfa": 190000,
+    "classe_tekh": "D",
+    "annee_sortie": 2021,
+    "ram": 4
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 10 pro max",
+    "variante": "128GB",
+    "prt_fcfa": 95000,
+    "classe_tekh": "D",
+    "annee_sortie": 2021,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 10 pro max",
+    "variante": "64GB",
+    "prt_fcfa": 150000,
+    "classe_tekh": "D",
+    "annee_sortie": 2021,
+    "ram": 4
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 10s",
+    "variante": "128GB",
+    "prt_fcfa": 170000,
+    "classe_tekh": "E",
+    "annee_sortie": 2021,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 10s",
+    "variante": "64GB",
+    "prt_fcfa": 180000,
+    "classe_tekh": "E",
+    "annee_sortie": 2021,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 11",
+    "variante": "128GB",
+    "prt_fcfa": 250000,
+    "classe_tekh": "D",
+    "annee_sortie": 2022,
+    "ram": 4
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 11 pro +",
+    "variante": "256GB",
+    "prt_fcfa": 160000,
+    "classe_tekh": "D",
+    "annee_sortie": 2022,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 11 pro +",
+    "variante": "64GB",
+    "prt_fcfa": 90000,
+    "classe_tekh": "D",
+    "annee_sortie": 2022,
+    "ram": 4
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 11 pro 5g",
+    "variante": "128GB",
+    "prt_fcfa": 240000,
+    "classe_tekh": "D",
+    "annee_sortie": 2022,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 11 pro 5g",
+    "variante": "64GB",
+    "prt_fcfa": 135000,
+    "classe_tekh": "D",
+    "annee_sortie": 2022,
+    "ram": 4
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 11s",
+    "variante": "128GB",
+    "prt_fcfa": 144900,
+    "classe_tekh": "D",
+    "annee_sortie": 2022,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 11s",
+    "variante": "64GB",
+    "prt_fcfa": 230000,
+    "classe_tekh": "D",
+    "annee_sortie": 2022,
+    "ram": 8
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 12",
+    "variante": "128GB",
+    "prt_fcfa": 350000,
+    "classe_tekh": "C",
+    "annee_sortie": 2023,
+    "ram": 8
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 12",
+    "variante": "256GB",
+    "prt_fcfa": 330000,
+    "classe_tekh": "C",
+    "annee_sortie": 2023,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 12 5g",
+    "variante": "128GB",
+    "prt_fcfa": 250000,
+    "classe_tekh": "C",
+    "annee_sortie": 2023,
+    "ram": 8
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 12 pro 5g",
+    "variante": "256GB",
+    "prt_fcfa": 270000,
+    "classe_tekh": "C",
+    "annee_sortie": 2023,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 12 pro+",
+    "variante": "128GB",
+    "prt_fcfa": 290000,
+    "classe_tekh": "C",
+    "annee_sortie": 2023,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 12s",
+    "variante": "256GB",
+    "prt_fcfa": 280000,
+    "classe_tekh": "C",
+    "annee_sortie": 2023,
+    "ram": 8
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 12s",
+    "variante": "128GB",
+    "prt_fcfa": 310000,
+    "classe_tekh": "C",
+    "annee_sortie": 2023,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 13 4g",
+    "variante": "256GB",
+    "prt_fcfa": 340000,
+    "classe_tekh": "B",
+    "annee_sortie": 2024,
+    "ram": 8
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 13 4g",
+    "variante": "128GB",
+    "prt_fcfa": 350000,
+    "classe_tekh": "B",
+    "annee_sortie": 2024,
+    "ram": 12
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 13 5g",
+    "variante": "256GB",
+    "prt_fcfa": 440000,
+    "classe_tekh": "B",
+    "annee_sortie": 2024,
+    "ram": 8
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 13 5g",
+    "variante": "512GB",
+    "prt_fcfa": 400000,
+    "classe_tekh": "B",
+    "annee_sortie": 2024,
+    "ram": 12
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 13 pro 4g",
+    "variante": "512GB",
+    "prt_fcfa": 480000,
+    "classe_tekh": "B",
+    "annee_sortie": 2024,
+    "ram": 12
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 13 pro 4g",
+    "variante": "256GB",
+    "prt_fcfa": 520000,
+    "classe_tekh": "B",
+    "annee_sortie": 2024,
+    "ram": 8
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 13 pro 5g",
+    "variante": "512GB",
+    "prt_fcfa": 80000,
+    "classe_tekh": "B",
+    "annee_sortie": 2024,
+    "ram": 12
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 13 pro 5g",
+    "variante": "256GB",
+    "prt_fcfa": 90000,
+    "classe_tekh": "B",
+    "annee_sortie": 2024,
+    "ram": 3
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 13 pro+ 5g",
+    "variante": "512GB",
+    "prt_fcfa": 110000,
+    "classe_tekh": "B",
+    "annee_sortie": 2024,
+    "ram": 4
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 13 pro+ 5g",
+    "variante": "32GB",
+    "prt_fcfa": 130000,
+    "classe_tekh": "B",
+    "annee_sortie": 2024,
+    "ram": 4
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 7",
+    "variante": "64GB",
+    "prt_fcfa": 105000,
+    "classe_tekh": "F",
+    "annee_sortie": 2019,
+    "ram": 3
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 7 pro",
+    "variante": "128GB",
+    "prt_fcfa": 120000,
+    "classe_tekh": "F",
+    "annee_sortie": 2019,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 7 pro",
+    "variante": "32GB",
+    "prt_fcfa": 130000,
+    "classe_tekh": "F",
+    "annee_sortie": 2019,
+    "ram": 4
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 8",
+    "variante": "128GB",
+    "prt_fcfa": 150000,
+    "classe_tekh": "F",
+    "annee_sortie": 2019,
+    "ram": 4
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 8",
+    "variante": "64GB",
+    "prt_fcfa": 160000,
+    "classe_tekh": "F",
+    "annee_sortie": 2019,
+    "ram": 4
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 8 pro",
+    "variante": "128GB",
+    "prt_fcfa": 145000,
+    "classe_tekh": "F",
+    "annee_sortie": 2019,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 8 pro",
+    "variante": "64GB",
+    "prt_fcfa": 120000,
+    "classe_tekh": "F",
+    "annee_sortie": 2019,
+    "ram": 4
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 9",
+    "variante": "128GB",
+    "prt_fcfa": 140000,
+    "classe_tekh": "F",
+    "annee_sortie": 2020,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 9",
+    "variante": "64GB",
+    "prt_fcfa": 140000,
+    "classe_tekh": "F",
+    "annee_sortie": 2020,
+    "ram": 4
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 9 pro",
+    "variante": "128GB",
+    "prt_fcfa": 160000,
+    "classe_tekh": "F",
+    "annee_sortie": 2020,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 9 pro",
+    "variante": "64GB",
+    "prt_fcfa": 170000,
+    "classe_tekh": "F",
+    "annee_sortie": 2020,
+    "ram": 4
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 9 pro max",
+    "variante": "128GB",
+    "prt_fcfa": 190000,
+    "classe_tekh": "F",
+    "annee_sortie": 2020,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 9 pro max",
+    "variante": "64GB",
+    "prt_fcfa": 150000,
+    "classe_tekh": "F",
+    "annee_sortie": 2020,
+    "ram": 6
+  },
+  {
+    "marque": "Xiaomi Redmi",
+    "modele": "redmi note 9s",
+    "variante": "128GB",
+    "prt_fcfa": 450000,
+    "classe_tekh": "F",
+    "annee_sortie": 2020,
+    "ram": 8
+  }
+]

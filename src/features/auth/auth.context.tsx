@@ -54,21 +54,43 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return;
     }
     let unsub: (() => void) | undefined;
-    supabase.auth.getSession().then(({ data }) => {
-      setUser(data.session?.user ?? null);
-      setLoading(false);
+
+    // Initial session restore
+    supabase.auth.getSession().then(async ({ data }) => {
+      if (data.session?.user) {
+        setUser(data.session.user);
+        setLoading(false);
+      } else {
+        // Fallback: PKCE flow exchanges code asynchronously on WebView
+        // Try getUser() which forces a token refresh if a session cookie exists
+        try {
+          const { data: { user: u } } = await supabase.auth.getUser();
+          setUser(u ?? null);
+        } catch {
+          setUser(null);
+        }
+        setLoading(false);
+      }
     });
-    // Après OAuth redirect, les tokens arrivent dans le hash ; un 2e getSession après un court délai
-    // aide sur mobile/WebView où le hash est parfois traité après le premier rendu.
+
+    // After OAuth/PKCE redirect, tokens may arrive after first render on mobile
+    // Wait longer than before to allow code exchange to complete in WebView
     const t = isSupabaseConfigured
       ? window.setTimeout(() => {
         supabase.auth.getSession().then(({ data }) => {
           if (data.session?.user) setUser(data.session.user);
         });
-      }, 800)
+      }, 1500)
       : 0;
+
     const { data } = supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user ?? null);
+
+      // Redirect to /reset-password when user clicks password reset email link
+      if (event === 'PASSWORD_RECOVERY') {
+        window.location.href = '/reset-password';
+        return;
+      }
 
       // Redirection automatique admin après callback OAuth Google
       if (

@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { fetchBrands, fetchModels, getAvailableVariants } from "@/core/api/supabaseApi";
+import { useState, useEffect, useRef } from "react";
+import { fetchBrands, fetchModels, getAvailableVariants, getPriceFromCache, setPriceCache } from "@/core/api/supabaseApi";
 import { lookupCsvVariants } from "@/core/api/csvCatalog";
 import { calculerEstimation } from "@/core/api/pricing";
 import { getPhoneSpecs } from "./phoneSpecs";
@@ -82,15 +82,17 @@ export default function PrixPage() {
 
   const [device, setDevice] = useState<DeviceRow | null>(null);
   const [loading, setLoading] = useState(false);
+  // Ref to cancel stale background refreshes
+  const priceReqId = useRef(0);
 
   useEffect(() => {
-    fetchBrands().then(setBrands).catch(() => {});
+    fetchBrands().then(setBrands).catch(() => { });
   }, []);
 
   useEffect(() => {
     if (!brand) return;
     setModel(""); setStorage(""); setDevice(null);
-    fetchModels(brand).then(setModels).catch(() => {});
+    fetchModels(brand).then(setModels).catch(() => { });
   }, [brand]);
 
   useEffect(() => {
@@ -112,6 +114,46 @@ export default function PrixPage() {
 
   useEffect(() => {
     if (!brand || !model || storage === "") { setDevice(null); return; }
+
+    // ── 1. Instant cache hit ─────────────────────────────────────────────
+    const reqId = ++priceReqId.current;
+    const cached = getPriceFromCache(brand, model, Number(storage));
+    if (cached) {
+      setDevice({
+        prt_fcfa: cached.prt_fcfa,
+        annee_sortie: cached.annee_sortie,
+        specs: null,
+        classe_tekh: cached.classe_tekh,
+      });
+      setLoading(false);
+      // Background revalidate (silent, no spinner)
+      supabase
+        .from("smartphones")
+        .select("prt_fcfa, annee_sortie, specs, classe_tekh")
+        .eq("marque", brand)
+        .ilike("modele", model)
+        .ilike("variante", `${storage}GB`)
+        .not("prt_fcfa", "is", null)
+        .order("prt_updated_at", { ascending: false })
+        .limit(1)
+        .single()
+        .then(({ data }) => {
+          if (reqId !== priceReqId.current) return; // stale
+          if (data) {
+            const d = data as DeviceRow;
+            setDevice(d);
+            setPriceCache(brand, model, Number(storage), {
+              prt_fcfa: d.prt_fcfa,
+              classe_tekh: d.classe_tekh,
+              annee_sortie: d.annee_sortie,
+            });
+          }
+        })
+        .catch(() => { });
+      return;
+    }
+
+    // ── 2. No cache: fetch from Supabase with spinner ────────────────────
     setLoading(true);
     supabase
       .from("smartphones")
@@ -124,8 +166,17 @@ export default function PrixPage() {
       .limit(1)
       .single()
       .then(({ data }) => {
-        setDevice(data as DeviceRow ?? null);
+        if (reqId !== priceReqId.current) return; // stale
+        const d = data as DeviceRow ?? null;
+        setDevice(d);
         setLoading(false);
+        if (d?.prt_fcfa) {
+          setPriceCache(brand, model, Number(storage), {
+            prt_fcfa: d.prt_fcfa,
+            classe_tekh: d.classe_tekh,
+            annee_sortie: d.annee_sortie,
+          });
+        }
       })
       .catch(() => setLoading(false));
   }, [brand, model, storage]);
@@ -140,9 +191,9 @@ export default function PrixPage() {
 
   const vrtResults = device?.prt_fcfa
     ? CONDITIONS.map((c) => ({
-        ...c,
-        vrt: calculerEstimation(device.prt_fcfa, brand, device.annee_sortie, c.diag, model),
-      }))
+      ...c,
+      vrt: calculerEstimation(device.prt_fcfa, brand, device.annee_sortie, c.diag, model),
+    }))
     : null;
 
   const hasSpecs = Object.keys(staticSpecs).length > 0 || ram;
@@ -257,35 +308,35 @@ export default function PrixPage() {
 
           {/* ── 2. Fiche technique ───────────────────────────────────────── */}
           {hasSpecs && (
-          <div className="rounded-2xl border-2 border-slate-100 bg-white overflow-hidden shadow-sm">
-            <div className="px-4 py-1">
-              <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 pt-3 pb-1">Fiche technique</p>
-              {staticSpecs.processeur && <SpecItem icon={Cpu} label="Processeur" value={staticSpecs.processeur} />}
-              <SpecItem icon={Layers} label="RAM" value={ram ? `${ram} Go` : undefined} />
-              <SpecItem icon={Layers} label="Stockage" value={storage ? `${storage} Go` : undefined} />
-              {staticSpecs.ecran_pouces && (
-                <SpecItem icon={Monitor} label="Écran" value={`${staticSpecs.ecran_pouces}${staticSpecs.ecran_type ? ` · ${staticSpecs.ecran_type}` : ""}`} />
-              )}
-              {staticSpecs.batterie_mah && (
-                <SpecItem icon={Battery} label="Batterie" value={`${staticSpecs.batterie_mah.toLocaleString("fr-FR")} mAh${staticSpecs.charge_w ? ` · Charge ${staticSpecs.charge_w}W` : ""}`} />
-              )}
-              {staticSpecs.camera_principale && (
-                <SpecItem icon={Camera} label="Caméra principale" value={staticSpecs.camera_principale} />
-              )}
-              {staticSpecs.camera_selfie && (
-                <SpecItem icon={Camera} label="Caméra frontale" value={staticSpecs.camera_selfie} />
-              )}
-              {reseau && (
-                <SpecItem icon={Wifi} label="Réseau" value={reseau} />
-              )}
-              {staticSpecs.sim_slots && (
-                <SpecItem icon={Smartphone} label="Slots SIM" value={`Dual SIM (${staticSpecs.sim_slots} nano-SIM)`} />
-              )}
-              {staticSpecs.os && (
-                <SpecItem icon={Zap} label="Système" value={staticSpecs.os} />
-              )}
+            <div className="rounded-2xl border-2 border-slate-100 bg-white overflow-hidden shadow-sm">
+              <div className="px-4 py-1">
+                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 pt-3 pb-1">Fiche technique</p>
+                {staticSpecs.processeur && <SpecItem icon={Cpu} label="Processeur" value={staticSpecs.processeur} />}
+                <SpecItem icon={Layers} label="RAM" value={ram ? `${ram} Go` : undefined} />
+                <SpecItem icon={Layers} label="Stockage" value={storage ? `${storage} Go` : undefined} />
+                {staticSpecs.ecran_pouces && (
+                  <SpecItem icon={Monitor} label="Écran" value={`${staticSpecs.ecran_pouces}${staticSpecs.ecran_type ? ` · ${staticSpecs.ecran_type}` : ""}`} />
+                )}
+                {staticSpecs.batterie_mah && (
+                  <SpecItem icon={Battery} label="Batterie" value={`${staticSpecs.batterie_mah.toLocaleString("fr-FR")} mAh${staticSpecs.charge_w ? ` · Charge ${staticSpecs.charge_w}W` : ""}`} />
+                )}
+                {staticSpecs.camera_principale && (
+                  <SpecItem icon={Camera} label="Caméra principale" value={staticSpecs.camera_principale} />
+                )}
+                {staticSpecs.camera_selfie && (
+                  <SpecItem icon={Camera} label="Caméra frontale" value={staticSpecs.camera_selfie} />
+                )}
+                {reseau && (
+                  <SpecItem icon={Wifi} label="Réseau" value={reseau} />
+                )}
+                {staticSpecs.sim_slots && (
+                  <SpecItem icon={Smartphone} label="Slots SIM" value={`Dual SIM (${staticSpecs.sim_slots} nano-SIM)`} />
+                )}
+                {staticSpecs.os && (
+                  <SpecItem icon={Zap} label="Système" value={staticSpecs.os} />
+                )}
+              </div>
             </div>
-          </div>
           )}
 
         </div>

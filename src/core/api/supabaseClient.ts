@@ -7,10 +7,14 @@ export const isSupabaseConfigured = Boolean(SUPABASE_URL && SUPABASE_ANON_KEY);
 
 export const supabase: SupabaseClient | null = isSupabaseConfigured
   ? createClient(SUPABASE_URL!, SUPABASE_ANON_KEY!, {
-      auth: {
-        persistSession: true,
-        autoRefreshToken: true,
-        detectSessionInUrl: true,
-      },
-    })
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true,
+      // Clé stable indépendante du projet Supabase (critique pour WebView Android)
+      storageKey: 'tekh-auth',
+      // PKCE = obligatoire pour OAuth mobile/WebView, plus sécurisé que implicit
+      flowType: 'pkce',
+    },
+  })
   : null;
