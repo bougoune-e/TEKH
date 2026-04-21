@@ -116,7 +116,8 @@ const PhoneCard = ({
     if (!id) return;
 
     if (!user) {
-      triggerNudge("add_to_cart"); // Non-forced, respecte le cooldown de 5s/72h
+      triggerNudge("add_to_cart", true);
+      return; // Bloque l'ajout — l'utilisateur doit se connecter d'abord
     }
 
     addToCart({ id, brand, model, price, image: mainImage });
