@@ -39,6 +39,7 @@ import { assessConditionWithCache } from "@/core/api/assessCondition";
 import { isSupabaseConfigured } from "@/core/api/supabaseClient";
 import { useAuth } from "@/features/auth/auth.context";
 import { useAuthNudge } from "@/shared/hooks/useAuthNudge";
+import { useToast } from "@/shared/hooks/use-toast";
 
 // ─── Session schema v2 ────────────────────────────────────────────────────────
 interface EstimatorSessionV2 {
@@ -91,6 +92,7 @@ export default function EstimatorPage() {
   const isPWA = usePWA();
   const { user } = useAuth();
   const { triggerNudge } = useAuthNudge();
+  const { toast } = useToast();
   const returnToDealId = (location.state as { returnToDealId?: string } | null)?.returnToDealId;
 
   // Identity
@@ -595,7 +597,7 @@ export default function EstimatorPage() {
                         </div>
                       )}
 
-                      {adjustedFinalPrice > 0 && (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pb-2">
                         <Button
                           onClick={() => {
                             if (!user) {
@@ -605,14 +607,27 @@ export default function EstimatorPage() {
                             setStep("satisfaction");
                             window.scrollTo({ top: 0, behavior: "smooth" });
                           }}
-                          className="group w-full h-16 rounded-[1.5rem] bg-[#00FF41] hover:bg-[#00D737] text-black font-black text-lg uppercase tracking-tighter italic shadow-xl shadow-[#00FF41]/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                          className="group h-16 rounded-[1.5rem] bg-[#00FF41] hover:bg-[#00D737] text-black font-black text-lg uppercase tracking-tighter italic shadow-xl shadow-[#00FF41]/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
                         >
                           <span className="relative z-10 flex items-center gap-2">
                             Valider cette offre
                             <ArrowRightLeft className="w-5 h-5 group-hover:rotate-180 transition-transform duration-500" />
                           </span>
                         </Button>
-                      )}
+                        <Button
+                          variant="outline"
+                          onClick={() => {
+                            if (!user) {
+                              triggerNudge("save_estimation");
+                              return;
+                            }
+                            toast({ title: "Estimation sauvegardée", description: "Vous la retrouverez dans votre historique." });
+                          }}
+                          className="h-16 rounded-[1.5rem] border-2 font-black text-lg uppercase tracking-tighter hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"
+                        >
+                          Sauvegarder
+                        </Button>
+                      </div>
 
                       {returnToDealId && adjustedFinalPrice > 0 && (
                         <Button

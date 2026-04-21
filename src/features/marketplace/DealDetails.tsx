@@ -4,18 +4,20 @@ import { useDeals } from "@/features/marketplace/deals.context";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/card";
 import { Button } from "@/shared/ui/button";
 import { Badge } from "@/shared/ui/badge";
-import { Phone as PhoneIcon, MessageCircle, Mail, ChevronLeft, MapPin, ShieldCheck, Smartphone, Facebook, Calendar, ChevronRight, ChevronLeft as ChevronLeftIcon, X, ZoomIn } from "lucide-react";
+import { Phone as PhoneIcon, MessageCircle, Mail, ChevronLeft, MapPin, ShieldCheck, Smartphone, Facebook, Calendar, ChevronRight, ChevronLeft as ChevronLeftIcon, X, ZoomIn, Share2 } from "lucide-react";
 import SwapGapWidget from "@/features/marketplace/SwapGapWidget";
 import { CertificationDetails } from "@/features/marketplace/DealboxComponents";
 import { cn } from "@/core/api/utils";
 import { useAuth } from "@/features/auth/auth.context";
 import { useAuthNudge } from "@/shared/hooks/useAuthNudge";
+import { useToast } from "@/shared/hooks/use-toast";
 
 export default function DealDetails() {
   const { id } = useParams<{ id: string }>();
   const { deals } = useDeals();
   const { user } = useAuth();
   const { triggerNudge } = useAuthNudge();
+  const { toast } = useToast();
   const deal = useMemo(() => deals.find((d) => d.id === id), [deals, id]);
   const [showPhone, setShowPhone] = useState(false);
   const [imageIndex, setImageIndex] = useState(0);
@@ -87,6 +89,20 @@ export default function DealDetails() {
   const waShareHref = phoneDigits ? `https://wa.me/?text=${encodeURIComponent(shareMsg)}` : `https://wa.me/?text=${encodeURIComponent(shareMsg)}`;
   const mailHref = deal.contactEmail ? `mailto:${deal.contactEmail}` : undefined;
 
+  const handleShare = async () => {
+    const shareData = {
+      title: `TEKH+ | ${deal.title || deal.brand + " " + deal.model}`,
+      text: `Regarde ce deal sur TEKH+ : ${deal.price.toLocaleString()} FCFA`,
+      url: window.location.href,
+    };
+    if (navigator.share) {
+      try { await navigator.share(shareData); } catch { }
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      toast({ title: "Lien copié !", description: "Le lien a été copié dans votre presse-papiers." });
+    }
+  };
+
   return (
     <>
       <section className="py-10 pb-28 md:pb-10">
@@ -95,6 +111,9 @@ export default function DealDetails() {
             <Link to="/deals" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
               <ChevronLeft className="h-4 w-4" /> Retour
             </Link>
+            <Button variant="ghost" size="sm" onClick={handleShare} className="rounded-full gap-2">
+              <Share2 className="h-4 w-4" /> Partager
+            </Button>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">

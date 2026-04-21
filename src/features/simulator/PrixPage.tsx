@@ -59,13 +59,13 @@ interface DeviceRow {
 
 function SpecItem({ icon: Icon, label, value }: { icon: React.ElementType; label: string; value: string | number | undefined }) {
   return (
-    <div className="flex items-center gap-3 py-3 border-b border-slate-100 last:border-0">
-      <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center shrink-0">
-        <Icon className="w-4 h-4 text-slate-500" />
+    <div className="flex items-center gap-3 py-3 border-b border-slate-100 dark:border-zinc-800 last:border-0">
+      <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-zinc-800 flex items-center justify-center shrink-0">
+        <Icon className="w-4 h-4 text-slate-500 dark:text-slate-400" />
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-[11px] text-slate-400 uppercase tracking-widest font-bold leading-none mb-0.5">{label}</p>
-        <p className="text-sm font-semibold text-slate-900 truncate">{value ?? "—"}</p>
+        <p className="text-[11px] text-slate-400 dark:text-zinc-500 uppercase tracking-widest font-bold leading-none mb-0.5">{label}</p>
+        <p className="text-sm font-semibold text-slate-900 dark:text-zinc-100 truncate">{value ?? "—"}</p>
       </div>
     </div>
   );
@@ -203,8 +203,8 @@ export default function PrixPage() {
     <div className="max-w-lg mx-auto pb-24">
       {/* Header */}
       <div className="px-4 pt-6 pb-4">
-        <h1 className="text-2xl font-black tracking-tighter">Prix de reprise</h1>
-        <p className="text-sm text-slate-500 mt-1">Estimez la valeur de votre smartphone en quelques secondes.</p>
+        <h1 className="text-2xl font-black tracking-tighter text-foreground">Prix de reprise</h1>
+        <p className="text-sm text-slate-500 dark:text-zinc-400 mt-1">Estimez la valeur de votre smartphone en quelques secondes.</p>
       </div>
 
       {/* Selectors */}
@@ -217,7 +217,7 @@ export default function PrixPage() {
           <div key={i} className="space-y-1">
             <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 px-1">{label}</p>
             <Select value={value} onValueChange={onChange as any} disabled={disabled}>
-              <SelectTrigger className="h-12 rounded-xl border-2 border-slate-200 bg-white font-semibold text-sm">
+              <SelectTrigger className="h-12 rounded-xl border-2 border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 font-semibold text-sm text-foreground">
                 <SelectValue placeholder={placeholder} />
               </SelectTrigger>
               <SelectContent>
@@ -239,8 +239,8 @@ export default function PrixPage() {
       )}
 
       {!loading && storage !== "" && !device && brand && model && (
-        <div className="mx-4 mt-6 p-4 rounded-xl bg-slate-50 border border-slate-200 text-center">
-          <p className="text-sm text-slate-500">Prix non disponible pour cette configuration.</p>
+        <div className="mx-4 mt-6 p-4 rounded-xl bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 text-center">
+          <p className="text-sm text-slate-500 dark:text-zinc-400">Prix non disponible pour cette configuration.</p>
         </div>
       )}
 
@@ -248,55 +248,55 @@ export default function PrixPage() {
         <div className="px-4 mt-6 space-y-4">
 
           {/* ── 1. Identité + Prix de rachat ─────────────────────────────── */}
-          <div className="rounded-2xl border-2 border-slate-100 bg-white overflow-hidden shadow-sm">
+          <div className="rounded-2xl border-2 border-slate-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden shadow-sm">
 
             {/* En-tête identité */}
-            <div className="px-4 py-4 border-b border-slate-100 flex items-start justify-between gap-3">
+            <div className="px-4 py-4 border-b border-slate-100 dark:border-zinc-800 flex items-start justify-between gap-3">
               <div>
                 <div className="flex items-center gap-2 flex-wrap mb-1">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">{brand}</span>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500">{brand}</span>
                   {device.classe_tekh && (
-                    <Badge variant="outline" className="text-[10px] font-black px-1.5 py-0 h-4 border-slate-300">Classe {device.classe_tekh}</Badge>
+                    <Badge variant="outline" className="text-[10px] font-black px-1.5 py-0 h-4 border-slate-300 dark:border-zinc-700 text-foreground">Classe {device.classe_tekh}</Badge>
                   )}
                   {reseau && (
                     <Badge className={`text-[10px] font-black px-1.5 py-0 h-4 ${is5g ? "bg-purple-600" : "bg-slate-600"}`}>{reseau}</Badge>
                   )}
                 </div>
-                <h2 className="text-lg font-black leading-tight">{model}</h2>
+                <h2 className="text-lg font-black leading-tight text-foreground">{model}</h2>
                 <div className="flex items-center gap-2 mt-1 flex-wrap">
-                  <span className="text-xs text-slate-500 font-medium">{storage} Go</span>
-                  {ram && <><span className="text-slate-300">·</span><span className="text-xs text-slate-500 font-medium">{ram} Go RAM</span></>}
-                  {device.annee_sortie && <><span className="text-slate-300">·</span><span className="text-xs text-slate-500 font-medium">{device.annee_sortie} {ageLabel && `(${ageLabel})`}</span></>}
+                  <span className="text-xs text-slate-500 dark:text-zinc-400 font-medium">{storage} Go</span>
+                  {ram && <><span className="text-slate-300 dark:text-zinc-700">·</span><span className="text-xs text-slate-500 dark:text-zinc-400 font-medium">{ram} Go RAM</span></>}
+                  {device.annee_sortie && <><span className="text-slate-300 dark:text-zinc-700">·</span><span className="text-xs text-slate-500 dark:text-zinc-400 font-medium">{device.annee_sortie} {ageLabel && `(${ageLabel})`}</span></>}
                 </div>
               </div>
-              <div className="w-14 h-14 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center shrink-0">
-                <Smartphone className="w-7 h-7 text-slate-300" />
+              <div className="w-14 h-14 rounded-xl bg-slate-50 dark:bg-zinc-800/50 border border-slate-100 dark:border-zinc-800 flex items-center justify-center shrink-0">
+                <Smartphone className="w-7 h-7 text-slate-300 dark:text-zinc-600" />
               </div>
             </div>
 
             {/* Prix de référence */}
-            <div className="px-4 pt-4 pb-3 border-b border-slate-100">
-              <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Prix de référence (marché occasion)</p>
-              <p className="text-3xl font-black mt-1 tracking-tight">{fmt(device.prt_fcfa)}</p>
+            <div className="px-4 pt-4 pb-3 border-b border-slate-100 dark:border-zinc-800">
+              <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500">Prix de référence (marché occasion)</p>
+              <p className="text-3xl font-black mt-1 tracking-tight text-foreground">{fmt(device.prt_fcfa)}</p>
             </div>
 
             {/* Prix de reprise selon état */}
             <div className="px-4 py-2">
-              <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 pt-2 pb-1">Prix de reprise TΞKΗ+ selon l'état</p>
+              <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 pt-2 pb-1">Prix de reprise TΞKΗ+ selon l'état</p>
               {vrtResults?.map(({ label, desc, icon: Icon, color, bg, dot, vrt }) => (
-                <div key={label} className={`rounded-xl border px-4 py-3 mb-2 flex items-center justify-between gap-3 ${bg}`}>
+                <div key={label} className={`rounded-xl border px-4 py-3 mb-2 flex items-center justify-between gap-3 ${bg} dark:bg-zinc-800 dark:border-zinc-700`}>
                   <div className="flex items-center gap-3 min-w-0">
                     <div className={`w-2 h-2 rounded-full shrink-0 ${dot}`} />
                     <div className="min-w-0">
-                      <p className="text-sm font-black leading-tight">{label}</p>
-                      <p className="text-[11px] text-slate-500 leading-tight mt-0.5 truncate">{desc}</p>
+                      <p className="text-sm font-black leading-tight text-foreground">{label}</p>
+                      <p className="text-[11px] text-slate-500 dark:text-zinc-400 leading-tight mt-0.5 truncate">{desc}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-1 shrink-0">
                     <span className={`text-base font-black ${color}`}>
                       {vrt > 0 ? fmt(vrt) : <span className="text-red-500 text-sm">Refusé</span>}
                     </span>
-                    <ChevronRight className="w-4 h-4 text-slate-300" />
+                    <ChevronRight className="w-4 h-4 text-slate-300 dark:text-zinc-600" />
                   </div>
                 </div>
               ))}
@@ -308,9 +308,9 @@ export default function PrixPage() {
 
           {/* ── 2. Fiche technique ───────────────────────────────────────── */}
           {hasSpecs && (
-            <div className="rounded-2xl border-2 border-slate-100 bg-white overflow-hidden shadow-sm">
+            <div className="rounded-2xl border-2 border-slate-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden shadow-sm">
               <div className="px-4 py-1">
-                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 pt-3 pb-1">Fiche technique</p>
+                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 pt-3 pb-1">Fiche technique</p>
                 {staticSpecs.processeur && <SpecItem icon={Cpu} label="Processeur" value={staticSpecs.processeur} />}
                 <SpecItem icon={Layers} label="RAM" value={ram ? `${ram} Go` : undefined} />
                 <SpecItem icon={Layers} label="Stockage" value={storage ? `${storage} Go` : undefined} />

@@ -1,7 +1,7 @@
 import { Button } from "@/shared/ui/button";
 import { Badge } from "@/shared/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader } from "@/shared/ui/card";
-import { Smartphone, MapPin, ShoppingCart, Calendar, Clock } from "lucide-react";
+import { Smartphone, MapPin, ShoppingCart, Calendar, Clock, Share2 } from "lucide-react";
 import { cn } from "@/core/api/utils";
 
 /** Format date de publication en relatif par jour civil (évite "Aujourd'hui" pour un post d'hier). */
@@ -90,6 +90,22 @@ const PhoneCard = ({
   const navigate = useNavigate();
   const { addToCart } = useCart();
 
+  const handleShare = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const shareData = {
+      title: `TEKH+ | ${brand} ${model}`,
+      text: `Regarde ce deal : ${price.toLocaleString()} FCFA`,
+      url: `${window.location.origin}/deal/${id}`,
+    };
+    if (navigator.share) {
+      try { await navigator.share(shareData); } catch { }
+    } else {
+      navigator.clipboard.writeText(`${window.location.origin}/deal/${id}`);
+      toast.success("Lien copié !");
+    }
+  };
+
   const handleCartClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -140,6 +156,25 @@ const PhoneCard = ({
           <Badge className={cn("absolute top-1.5 left-1.5 z-10 font-medium border-none shadow-sm", compact ? "text-[8px] px-1.5 py-0" : "top-3 left-3 text-[9px]", tagClasses(tag))}>
             {tag}
           </Badge>
+        )}
+        {/* Bouton Partage — style CoinAfrique (en haut à droite sur l'image) */}
+        {!compact && (
+          <button
+            onClick={handleShare}
+            className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 dark:bg-black/40 backdrop-blur-md flex items-center justify-center text-foreground hover:scale-110 active:scale-95 transition-all z-20"
+            aria-label="Partager"
+          >
+            <Share2 className="h-4 w-4" />
+          </button>
+        )}
+        {compact && (
+          <button
+            onClick={handleShare}
+            className="absolute top-1 right-1 w-6 h-6 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white active:scale-90 transition-all z-20"
+            aria-label="Partager"
+          >
+            <Share2 className="h-3 w-3" />
+          </button>
         )}
       </div>
 
