@@ -601,7 +601,7 @@ export default function EstimatorPage() {
                         <Button
                           onClick={() => {
                             if (!user) {
-                              triggerNudge("save_estimation");
+                              triggerNudge("save_estimation", true);
                               return;
                             }
                             setStep("satisfaction");
@@ -618,7 +618,7 @@ export default function EstimatorPage() {
                           variant="outline"
                           onClick={() => {
                             if (!user) {
-                              triggerNudge("save_estimation");
+                              triggerNudge("save_estimation", true);
                               return;
                             }
                             toast({ title: "Estimation sauvegardée", description: "Vous la retrouverez dans votre historique." });

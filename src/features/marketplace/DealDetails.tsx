@@ -235,7 +235,7 @@ export default function DealDetails() {
                 <div className="space-y-3">
                   <Button size="lg" variant="default" className="w-full justify-center gap-2 h-11 bg-foreground text-background hover:opacity-90" onClick={() => {
                     if (!user) {
-                      triggerNudge("contact_seller");
+                      triggerNudge("contact_seller", true);
                       return;
                     }
                     setShowPhone(true);

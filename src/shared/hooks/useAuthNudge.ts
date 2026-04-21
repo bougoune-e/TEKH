@@ -9,7 +9,8 @@ import { useCallback } from "react";
 import { useAuthSheet } from "@/features/auth/AuthSheet";
 
 const STORAGE_KEY = "tekh:nudge_last_shown";
-const COOLDOWN_MS = 72 * 60 * 60 * 1000; // 72 heures
+const IS_DEV = import.meta.env.DEV;
+const COOLDOWN_MS = IS_DEV ? 5000 : 72 * 60 * 60 * 1000; // 5s en dev, 72h en prod
 
 export type NudgeContext =
     | "save_estimation"  // Résultat estimateur — sauvegarder
@@ -52,8 +53,13 @@ export function useAuthNudge() {
     const triggerNudge = useCallback(
         (context: NudgeContext, force = false) => {
             const elapsed = Date.now() - getLastShown();
-            if (!force && elapsed < COOLDOWN_MS) return; // Cooldown actif
+            // On bypass le cooldown si `force` est true (action explicite utilisateur)
+            if (!force && elapsed < COOLDOWN_MS) {
+                console.log(`[AuthNudge] Cooldown actif (${Math.round((COOLDOWN_MS - elapsed) / 1000)}s restants).`);
+                return;
+            }
 
+            console.log(`[AuthNudge] Affichage du nudge: ${context}`);
             setLastShown();
             showAuth(NUDGE_MESSAGES[context]);
         },
