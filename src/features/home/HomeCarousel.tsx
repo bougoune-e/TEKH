@@ -31,7 +31,7 @@ const STATIC_SLIDES = [
     badge: "Nouveau",
     title: "Les derniers modèles",
     highlight: "sont arrivés.",
-    desc: "iPhone 15, Galaxy S24... Profite des meilleurs deals du moment.",
+    desc: "iPhone 17, Galaxy S26, Samsung A56, Tecno Spark Slim... Profite des meilleurs deals.",
     cta: "Voir les offres",
     path: "/deals",
     icon: <Smartphone className="w-4 h-4" />,
@@ -67,7 +67,7 @@ export const HomeCarousel = () => {
         .then(({ data }) => {
           if (data?.length) setAnnonces(data.filter((a) => a.images?.length > 0));
         })
-        .catch(() => {});
+        .catch(() => { });
     });
   }, []);
 
