@@ -5,9 +5,9 @@
         ],
         "target": {
             "namespace": "android_app",
-            "package_name": "com.tekhplus.twa",
+            "package_name": "com.onrender.tekh_1.twa",
             "sha256_cert_fingerprints": [
-                "VOTRE_EMPREINTE_SHA256_ICI"
+                "cb:64:6c:71:a9:6a:b9:e5:2d:21:7e:0b:87:eb:59:0d:fb:69:39:ad:8c:88:13:c8:84:d7:a7:68:7e:3d:09:9f"
             ]
         }
     }
