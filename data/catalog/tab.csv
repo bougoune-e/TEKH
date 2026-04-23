@@ -124,61 +124,6 @@ Asus,asus rog phone 8,256,650000,A,16,2024
 Asus,asus rog phone 8 pro,512,720000,A,16,2024
 Asus,asus rog phone 8 pro,1024,800000,A,24,2024
 Asus,asus rog phone 8 pro,32,45000,A,24,2024
-Google Pixel,google pixel,128,50000,F,6,2020
-Google Pixel,google pixel,64,55000,F,6,2020
-Google Pixel,google pixel 2,128,38000,E,6,2017
-Google Pixel,google pixel 2,64,26000,E,6,2017
-Google Pixel,google pixel 2 xl,128,52000,E,6,2017
-Google Pixel,google pixel 2 xl,64,45000,E,6,2017
-Google Pixel,google pixel 3,128,48000,E,6,2018
-Google Pixel,google pixel 3,64,35000,E,6,2018
-Google Pixel,google pixel 3 xl,128,63000,E,6,2018
-Google Pixel,google pixel 3 xl,64,52000,E,6,2018
-Google Pixel,google pixel 3a,64,42000,E,6,2018
-Google Pixel,google pixel 3a xl,64,57000,E,6,2018
-Google Pixel,google pixel 4,128,65000,D,6,2019
-Google Pixel,google pixel 4,64,45000,D,6,2019
-Google Pixel,google pixel 4 xl,128,75000,D,6,2019
-Google Pixel,google pixel 4 xl,64,66000,D,6,2019
-Google Pixel,google pixel 4a,128,46000,D,8,2019
-Google Pixel,google pixel 4a (5g),128,52000,D,8,2019
-Google Pixel,google pixel 5,128,130000,D,8,2020
-Google Pixel,google pixel 5a (5g),128,95000,C,6,2020
-Google Pixel,google pixel 6,256,110000,C,6,2021
-Google Pixel,google pixel 6,128,140000,C,12,2021
-Google Pixel,google pixel 6 pro,256,160000,C,12,2021
-Google Pixel,google pixel 6 pro,512,185000,C,12,2021
-Google Pixel,google pixel 6 pro,128,115000,C,6,2021
-Google Pixel,google pixel 6a,128,105000,C,8,2021
-Google Pixel,google pixel 7,256,125000,B,8,2022
-Google Pixel,google pixel 7,128,145000,B,12,2022
-Google Pixel,google pixel 7 pro,256,165000,B,12,2022
-Google Pixel,google pixel 7 pro,512,185000,B,12,2022
-Google Pixel,google pixel 7 pro,128,140000,B,8,2022
-Google Pixel,google pixel 7a,128,200000,B,8,2022
-Google Pixel,google pixel 8,256,230000,A,8,2023
-Google Pixel,google pixel 8,128,300000,A,12,2023
-Google Pixel,google pixel 8 pro,256,350000,A,12,2023
-Google Pixel,google pixel 8 pro,512,400000,A,12,2023
-Google Pixel,google pixel 8 pro,1024,450000,A,12,2023
-Google Pixel,google pixel 8 pro,128,220000,A,8,2023
-Google Pixel,google pixel 8a,256,260000,A,8,2023
-Google Pixel,google pixel 8a,128,350000,A,6,2023
-Google Pixel,google pixel 9,256,400000,A,6,2024
-Google Pixel,google pixel 9,128,500000,A,12,2024
-Google Pixel,google pixel 9 pro,256,550000,A,12,2024
-Google Pixel,google pixel 9 pro,512,600000,A,12,2024
-Google Pixel,google pixel 9 pro,1024,650000,A,12,2024
-Google Pixel,google pixel 9 pro,256,700000,A,12,2024
-Google Pixel,google pixel 9 pro fold,512,750000,A,12,2024
-Google Pixel,google pixel 9 pro fold,1024,800000,A,12,2024
-Google Pixel,google pixel 9 pro fold,128,550000,A,12,2024
-Google Pixel,google pixel 9 pro xl,256,600000,A,12,2024
-Google Pixel,google pixel 9 pro xl,512,650000,A,12,2024
-Google Pixel,google pixel 9 pro xl,1024,700000,A,12,2024
-Google Pixel,google pixel 9 pro xl,32,50000,A,6,2024
-Google Pixel,google pixel xl,128,55000,F,6,2020
-Google Pixel,google pixel xl,128,150000,F,6,2020
 Honor,honor 70,256,180000,C,8,2022
 Honor,honor 70,128,200000,C,6,2022
 Honor,honor 80,256,230000,B,8,2022
@@ -1520,10 +1465,6 @@ OnePlus,oneplus 15 5g,512,735000,A,16,2026
 OnePlus,oneplus 15r,512,630000,A,12,2026
 OnePlus,oneplus 13,256,580000,A,12,2026
 OnePlus,oneplus 13,512,660000,A,16,2026
-Google Pixel,google pixel 10 pro,256,695000,A,16,2026
-Google Pixel,google pixel 10 pro,512,695000,A,16,2026
-Google Pixel,google pixel 10,128,405000,A,12,2026
-Google Pixel,google pixel 10,256,460000,A,12,2026
 Motorola,motorola edge 60 ultra,512,590000,A,12,2026
 Motorola,motorola edge 60 fusion,256,280000,A,8,2026
 Motorola,motorola edge 60 fusion,256,320000,A,12,2026
@@ -1533,3 +1474,61 @@ Infinix,infinix note 50 pro,256,165000,A,8,2026
 Infinix,infinix hot 60 pro plus,256,250000,B,16,2026
 Infinix,infinix smart 10,64,55000,F,3,2026
 Infinix,infinix smart 10,128,75000,F,4,2026
+Google Pixel,google pixel,128,25000,F,4,2016
+Google Pixel,google pixel xl,128,16000,F,4,2016
+Google Pixel,google pixel 2,64,26000,E,4,2017
+Google Pixel,google pixel 2,128,38000,E,4,2017
+Google Pixel,google pixel 2 xl,64,45000,E,4,2017
+Google Pixel,google pixel 2 xl,128,52000,E,6,2017
+Google Pixel,google pixel 3,64,35000,E,4,2018
+Google Pixel,google pixel 3,128,48000,E,4,2018
+Google Pixel,google pixel 3 xl,64,52000,E,4,2018
+Google Pixel,google pixel 3 xl,128,63000,E,6,2018
+Google Pixel,google pixel 3a,64,42000,E,6,2018
+Google Pixel,google pixel 3a xl,64,57000,E,6,2018
+Google Pixel,google pixel 4,64,45000,D,6,2019
+Google Pixel,google pixel 4,128,65000,D,6,2019
+Google Pixel,google pixel 4 xl,64,66000,D,6,2019
+Google Pixel,google pixel 4 xl,128,75000,D,6,2019
+Google Pixel,google pixel 4a,128,46000,D,6,2019
+Google Pixel,google pixel 4a (5g),128,52000,D,6,2019
+Google Pixel,google pixel 5,128,130000,D,8,2020
+Google Pixel,google pixel 5a (5g),128,95000,C,6,2020
+Google Pixel,google pixel 6,128,140000,C,12,2021
+Google Pixel,google pixel 6,256,110000,C,6,2021
+Google Pixel,google pixel 6 pro,128,115000,C,6,2021
+Google Pixel,google pixel 6 pro,256,160000,C,12,2021
+Google Pixel,google pixel 6 pro,512,185000,C,12,2021
+Google Pixel,google pixel 6a,128,105000,C,8,2021
+Google Pixel,google pixel 7,128,145000,B,12,2022
+Google Pixel,google pixel 7,256,125000,B,8,2022
+Google Pixel,google pixel 7 pro,128,140000,B,8,2022
+Google Pixel,google pixel 7 pro,256,165000,B,12,2022
+Google Pixel,google pixel 7 pro,512,185000,B,12,2022
+Google Pixel,google pixel 7a,128,200000,B,8,2022
+Google Pixel,google pixel 8,128,300000,A,12,2023
+Google Pixel,google pixel 8,256,230000,A,8,2023
+Google Pixel,google pixel 8 pro,128,220000,A,8,2023
+Google Pixel,google pixel 8 pro,256,350000,A,12,2023
+Google Pixel,google pixel 8 pro,512,400000,A,12,2023
+Google Pixel,google pixel 8 pro,1024,450000,A,12,2023
+Google Pixel,google pixel 8a,128,185000,A,8,2023
+Google Pixel,google pixel 8a,256,260000,A,8,2023
+Google Pixel,google pixel 9,128,267000,A,12,2024
+Google Pixel,google pixel 9,256,278000,A,12,2024
+Google Pixel,google pixel 9 pro,256,420000,A,16,2024
+Google Pixel,google pixel 9 pro,512,480000,A,16,2024
+Google Pixel,google pixel 9 pro,1024,515000,A,16,2024
+Google Pixel,google pixel 9 pro xl,128,378000,A,16,2024
+Google Pixel,google pixel 9 pro xl,256,350000,A,16,2024
+Google Pixel,google pixel 9 pro xl,512,382000,A,16,2024
+Google Pixel,google pixel 9 pro xl,1024,417000,A,16,2024
+Google Pixel,google pixel 9 pro fold,128,220000,A,16,2024
+Google Pixel,google pixel 9 pro fold,512,300000,A,16,2024
+Google Pixel,google pixel 9 pro fold,1024,320000,A,16,2024
+Google Pixel,google pixel 9a,128,265000,A,8,2024
+Google Pixel,google pixel 9a,256,325000,A,8,2024
+Google Pixel,google pixel 10,128,405000,A,12,2026
+Google Pixel,google pixel 10,256,460000,A,12,2026
+Google Pixel,google pixel 10 pro,256,695000,A,16,2026
+Google Pixel,google pixel 10 pro,512,695000,A,16,2026
