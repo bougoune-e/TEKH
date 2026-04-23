@@ -1,6 +1,6 @@
 {
   "packageId": "com.tekhplus.twa",
-  "host": "tekhplus.com",
+  "host": "www.tekhplus.com",
   "name": "TEKH+",
   "launcherName": "TEKH+",
   "display": "standalone",
@@ -33,7 +33,7 @@
   "enableSiteSettingsShortcut": true,
   "isChromeOSOnly": false,
   "isMetaQuest": false,
-  "fullScopeUrl": "https://tekhplus.com/",
+  "fullScopeUrl": "https://www.tekhplus.com/",
   "minSdkVersion": 21,
   "orientation": "portrait",
   "fingerprints": [],

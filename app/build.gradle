@@ -22,7 +22,7 @@ plugins {
 
 def twaManifest = [
     applicationId: 'com.tekhplus.twa',
-    hostName: 'tekhplus.com', // The domain being opened in the TWA.
+    hostName: 'www.tekhplus.com', // The domain being opened in the TWA.
     launchUrl: '/', // The start path for the TWA. Must be relative to the domain.
     name: 'TEKH+', // The application name.
     launcherName: 'TEKH+', // The name shown on the Android Launcher.
@@ -81,7 +81,7 @@ android {
 
         
             // This is used by Meta Quest.
-            resValue "string", "fullScopeUrl", 'https://tekhplus.com/'
+            resValue "string", "fullScopeUrl", 'https://www.tekhplus.com/'
         
 
         
