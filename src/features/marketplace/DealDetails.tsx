@@ -233,7 +233,7 @@ export default function DealDetails() {
                   <div className="text-sm text-muted-foreground">Contactez le vendeur pour finaliser l'échange</div>
                 </CardHeader>
                 <div className="space-y-3">
-                  <Button size="lg" variant="default" className="w-full justify-center gap-2 h-11 bg-foreground text-background hover:opacity-90" onClick={() => {
+                  <Button size="lg" variant="default" className="w-full justify-center gap-2 h-11" onClick={() => {
                     if (!user) {
                       triggerNudge("contact_seller", true);
                       return;
@@ -277,8 +277,10 @@ export default function DealDetails() {
                       <MessageCircle className="h-4 w-4 mr-1 text-white" /> Whatsapp
                     </a>
                   </Button>
-                  <Button size="sm" variant="default" className="rounded-full bg-[#1877F2] hover:bg-[#166FE0] text-white" aria-label="Partager sur Facebook">
-                    <Facebook className="h-4 w-4 mr-1 text-white" /> Facebook
+                  <Button asChild size="sm" variant="default" className="rounded-full bg-[#1877F2] hover:bg-[#166FE0] text-white">
+                    <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`} target="_blank" rel="noopener noreferrer" aria-label="Partager sur Facebook">
+                      <Facebook className="h-4 w-4 mr-1 text-white" /> Facebook
+                    </a>
                   </Button>
                   <Button size="sm" variant="default" className="rounded-full bg-black hover:bg-zinc-800 text-white dark:bg-white dark:hover:bg-zinc-200 dark:text-black gap-1.5" asChild aria-label="Partager sur X (anciennement Twitter)">
                     <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`${deal.title || deal.brand + " " + deal.model} sur TEKH+`)}`} target="_blank" rel="noopener noreferrer">

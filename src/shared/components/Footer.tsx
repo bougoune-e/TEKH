@@ -141,7 +141,7 @@ const Footer = () => {
           <div>
             <h3 className="font-bold mb-4 text-foreground">Réseaux sociaux & Contact</h3>
             <div className="flex items-center gap-3 mb-4">
-              <a href="https://web.facebook.com/profile.php?id=61587680237623" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="h-9 w-9 inline-flex items-center justify-center rounded-lg border border-border hover:bg-accent transition-smooth">
+              <a href="https://www.facebook.com/profile.php?id=61587680237623" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="h-9 w-9 inline-flex items-center justify-center rounded-lg border border-border hover:bg-accent transition-smooth">
                 <Facebook className="h-4 w-4 text-[#1877F2]" />
               </a>
               <a href="https://www.tiktok.com/@tekh228?_r=1&_t=ZS-94xayuFa6LN" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="h-9 w-9 p-1.5 inline-flex items-center justify-center rounded-lg border border-border hover:bg-accent dark:bg-white dark:hover:bg-white transition-smooth">
