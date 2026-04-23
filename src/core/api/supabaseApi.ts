@@ -183,15 +183,23 @@ export async function fetchBrands(): Promise<string[]> {
 async function fetchBrands_fromSupabase(): Promise<string[]> {
   try {
     if (realClient) {
-      // Une seule requête : toutes les marques en un shot (colonne légère, ~20 valeurs distinctes)
-      const { data, error } = await realClient
-        .from("smartphones")
-        .select("marque")
-        .not("marque", "is", null)
-        .order("marque")
-        .range(0, 9999);
-      if (!error && data?.length) {
-        const brands = Array.from(new Set(data.map((r: any) => r.marque).filter(Boolean)))
+      // Pagination — PostgREST cap à 1000 lignes, on boucle pour tout récupérer
+      const PAGE = 1000;
+      const all: string[] = [];
+      let from = 0;
+      for (;;) {
+        const { data, error } = await realClient
+          .from("smartphones")
+          .select("marque")
+          .not("marque", "is", null)
+          .range(from, from + PAGE - 1);
+        if (error || !data?.length) break;
+        all.push(...data.map((r: any) => r.marque));
+        if (data.length < PAGE) break;
+        from += PAGE;
+      }
+      if (all.length > 0) {
+        const brands = Array.from(new Set(all.filter(Boolean)))
           .sort((a: any, b: any) => a.localeCompare(b, "fr")) as string[];
         if (brands.length > 0) { cachedBrands = brands; lsSet(LS_BRANDS_KEY, brands); return brands; }
       }

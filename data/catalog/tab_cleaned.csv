@@ -450,77 +450,77 @@ Motorola,motorola razr 40,256,200000,A,8,2023
 Motorola,motorola razr 40 ultra,512,230000,A,8,2023
 Motorola,motorola razr 40 ultra,128,350000,A,8,2023
 Motorola,motorola one 5g,128,45000,D,4,2020
-One Plus,oneplus 10 pro,256,400000,B,12,2022
-One Plus,oneplus 10 pro,512,450000,B,16,2022
-One Plus,oneplus 10 pro,128,300000,B,8,2022
-One Plus,oneplus 10r,256,350000,B,12,2022
-One Plus,oneplus 10r,128,320000,B,8,2022
-One Plus,oneplus 10t,256,370000,B,16,2022
-One Plus,oneplus 10t,128,450000,B,8,2022
-One Plus,oneplus 11,256,500000,A,12,2023
-One Plus,oneplus 11,512,550000,A,16,2023
-One Plus,oneplus 11,128,400000,A,8,2023
-One Plus,oneplus 11r,256,550000,B,16,2023
-One Plus,oneplus 12,512,600000,A,16,2023
-One Plus,oneplus 12,1024,650000,A,24,2023
-One Plus,oneplus 12,128,500000,A,12,2023
-One Plus,oneplus 12r,256,550000,A,16,2024
-One Plus,oneplus 12r,16,40000,A,8,2024
-One Plus,oneplus 2,64,50000,F,3,2015
-One Plus,oneplus 3,64,55000,F,6,2016
-One Plus,oneplus 3t,128,45000,F,8,2016
-One Plus,oneplus 3t,64,50000,F,6,2016
-One Plus,oneplus 5,128,55000,F,8,2017
-One Plus,oneplus 5,64,60000,F,6,2017
-One Plus,oneplus 5t,128,50000,F,8,2017
-One Plus,oneplus 5t,64,55000,F,6,2017
-One Plus,oneplus 6,128,60000,E,8,2018
-One Plus,oneplus 6,256,65000,E,8,2018
-One Plus,oneplus 6t,256,70000,E,8,2018
-One Plus,oneplus 6t,512,65000,E,12,2018
-One Plus,oneplus 6t mclaren,128,60000,E,10,2018
-One Plus,oneplus 7,256,65000,D,8,2019
-One Plus,oneplus 7,128,70000,D,6,2019
-One Plus,oneplus 7 pro,256,75000,D,8,2019
-One Plus,oneplus 7 pro,512,65000,D,12,2019
-One Plus,oneplus 7 pro 5g,128,75000,D,12,2019
-One Plus,oneplus 7t,256,80000,D,8,2019
-One Plus,oneplus 7t,128,70000,D,8,2019
-One Plus,oneplus 7t pro,256,80000,D,12,2019
-One Plus,oneplus 7t pro mclaren,128,85000,D,12,2019
-One Plus,oneplus 8,256,120000,C,12,2020
-One Plus,oneplus 8,128,80000,C,8,2020
-One Plus,oneplus 8 pro,256,85000,C,12,2020
-One Plus,oneplus 8 pro,128,90000,C,12,2020
-One Plus,oneplus 8t,256,80000,C,12,2020
-One Plus,oneplus 8t,128,85000,C,8,2020
-One Plus,oneplus 9,256,90000,B,12,2021
-One Plus,oneplus 9,128,95000,B,8,2021
-One Plus,oneplus 9 pro,256,100000,B,12,2021
-One Plus,oneplus 9 pro,128,110000,B,12,2021
-One Plus,oneplus 9rt,256,120000,B,12,2021
-One Plus,oneplus 9rt,128,130000,B,8,2021
-One Plus,oneplus nord,256,140000,D,12,2020
-One Plus,oneplus nord,128,110000,D,8,2020
-One Plus,oneplus nord 2,256,150000,C,12,2021
-One Plus,oneplus nord 2,128,120000,C,8,2021
-One Plus,oneplus nord 2t,256,130000,C,12,2022
-One Plus,oneplus nord 2t,128,173000,C,8,2022
-One Plus,oneplus nord 3,256,90000,B,16,2023
-One Plus,oneplus nord 3,128,95000,B,8,2023
-One Plus,oneplus nord ce 2,256,100000,D,12,2022
-One Plus,oneplus nord ce 2,64,105000,D,8,2022
-One Plus,oneplus nord ce 2 lite,128,110000,D,8,2022
-One Plus,oneplus nord ce 3,256,115000,B,8,2023
-One Plus,oneplus nord ce 3,128,120000,B,8,2023
-One Plus,oneplus nord ce 3 lite,256,110000,B,8,2023
-One Plus,oneplus nord ce 3 lite,128,115000,B,6,2023
-One Plus,oneplus nord ce 4,256,120000,A,8,2024
-One Plus,oneplus nord ce 4,16,35000,A,6,2024
-One Plus,oneplus one,64,120000,F,3,2014
-One Plus,oneplus one,256,450000,F,3,2014
-One Plus,oneplus open,512,500000,A,16,2023
-One Plus,oneplus open,256,150000,A,12,2023
+OnePlus,oneplus 10 pro,256,400000,B,12,2022
+OnePlus,oneplus 10 pro,512,450000,B,16,2022
+OnePlus,oneplus 10 pro,128,300000,B,8,2022
+OnePlus,oneplus 10r,256,350000,B,12,2022
+OnePlus,oneplus 10r,128,320000,B,8,2022
+OnePlus,oneplus 10t,256,370000,B,16,2022
+OnePlus,oneplus 10t,128,450000,B,8,2022
+OnePlus,oneplus 11,256,500000,A,12,2023
+OnePlus,oneplus 11,512,550000,A,16,2023
+OnePlus,oneplus 11,128,400000,A,8,2023
+OnePlus,oneplus 11r,256,550000,B,16,2023
+OnePlus,oneplus 12,512,600000,A,16,2023
+OnePlus,oneplus 12,1024,650000,A,24,2023
+OnePlus,oneplus 12,128,500000,A,12,2023
+OnePlus,oneplus 12r,256,550000,A,16,2024
+OnePlus,oneplus 12r,16,40000,A,8,2024
+OnePlus,oneplus 2,64,50000,F,3,2015
+OnePlus,oneplus 3,64,55000,F,6,2016
+OnePlus,oneplus 3t,128,45000,F,8,2016
+OnePlus,oneplus 3t,64,50000,F,6,2016
+OnePlus,oneplus 5,128,55000,F,8,2017
+OnePlus,oneplus 5,64,60000,F,6,2017
+OnePlus,oneplus 5t,128,50000,F,8,2017
+OnePlus,oneplus 5t,64,55000,F,6,2017
+OnePlus,oneplus 6,128,60000,E,8,2018
+OnePlus,oneplus 6,256,65000,E,8,2018
+OnePlus,oneplus 6t,256,70000,E,8,2018
+OnePlus,oneplus 6t,512,65000,E,12,2018
+OnePlus,oneplus 6t mclaren,128,60000,E,10,2018
+OnePlus,oneplus 7,256,65000,D,8,2019
+OnePlus,oneplus 7,128,70000,D,6,2019
+OnePlus,oneplus 7 pro,256,75000,D,8,2019
+OnePlus,oneplus 7 pro,512,65000,D,12,2019
+OnePlus,oneplus 7 pro 5g,128,75000,D,12,2019
+OnePlus,oneplus 7t,256,80000,D,8,2019
+OnePlus,oneplus 7t,128,70000,D,8,2019
+OnePlus,oneplus 7t pro,256,80000,D,12,2019
+OnePlus,oneplus 7t pro mclaren,128,85000,D,12,2019
+OnePlus,oneplus 8,256,120000,C,12,2020
+OnePlus,oneplus 8,128,80000,C,8,2020
+OnePlus,oneplus 8 pro,256,85000,C,12,2020
+OnePlus,oneplus 8 pro,128,90000,C,12,2020
+OnePlus,oneplus 8t,256,80000,C,12,2020
+OnePlus,oneplus 8t,128,85000,C,8,2020
+OnePlus,oneplus 9,256,90000,B,12,2021
+OnePlus,oneplus 9,128,95000,B,8,2021
+OnePlus,oneplus 9 pro,256,100000,B,12,2021
+OnePlus,oneplus 9 pro,128,110000,B,12,2021
+OnePlus,oneplus 9rt,256,120000,B,12,2021
+OnePlus,oneplus 9rt,128,130000,B,8,2021
+OnePlus,oneplus nord,256,140000,D,12,2020
+OnePlus,oneplus nord,128,110000,D,8,2020
+OnePlus,oneplus nord 2,256,150000,C,12,2021
+OnePlus,oneplus nord 2,128,120000,C,8,2021
+OnePlus,oneplus nord 2t,256,130000,C,12,2022
+OnePlus,oneplus nord 2t,128,173000,C,8,2022
+OnePlus,oneplus nord 3,256,90000,B,16,2023
+OnePlus,oneplus nord 3,128,95000,B,8,2023
+OnePlus,oneplus nord ce 2,256,100000,D,12,2022
+OnePlus,oneplus nord ce 2,64,105000,D,8,2022
+OnePlus,oneplus nord ce 2 lite,128,110000,D,8,2022
+OnePlus,oneplus nord ce 3,256,115000,B,8,2023
+OnePlus,oneplus nord ce 3,128,120000,B,8,2023
+OnePlus,oneplus nord ce 3 lite,256,110000,B,8,2023
+OnePlus,oneplus nord ce 3 lite,128,115000,B,6,2023
+OnePlus,oneplus nord ce 4,256,120000,A,8,2024
+OnePlus,oneplus nord ce 4,16,35000,A,6,2024
+OnePlus,oneplus one,64,120000,F,3,2014
+OnePlus,oneplus one,256,450000,F,3,2014
+OnePlus,oneplus open,512,500000,A,16,2023
+OnePlus,oneplus open,256,150000,A,12,2023
 Oppo,find x5,512,150000,B,12,2022
 Oppo,find x5,256,150000,B,12,2023
 Oppo,find x5 pro,512,170000,B,12,2023
