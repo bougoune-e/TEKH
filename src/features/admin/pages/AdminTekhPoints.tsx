@@ -77,19 +77,11 @@ export default function AdminTekhPoints() {
 
     setSubmitting(true);
     try {
-      const { error } = await supabase!.from("tekh_point_credits").insert({
-        user_id: selectedUserId,
-        amount_fcfa: reliquatFcfa,
-        expires_at: expiresAt.toISOString(),
-        status: "active",
-        metadata: {
-          motif,
-          points_computed: points,
-          credited_by_admin: true,
-          credited_at: new Date().toISOString(),
-        },
+      const { data, error } = await supabase!.functions.invoke("credit-tekhpoints", {
+        body: { user_id: selectedUserId, amount_fcfa: reliquatFcfa, motif },
       });
       if (error) throw error;
+      if (data?.error) throw new Error(data.error);
       const profile = profiles.find(p => p.id === selectedUserId);
       toast.success(`${points} TekhPoints crédités à ${profile?.full_name || "l'utilisateur"} (${fmt(reliquatFcfa)})`);
       setShowForm(false);
