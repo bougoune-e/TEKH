@@ -449,12 +449,8 @@ Motorola ,motorola edge 50 pro,512,240000,A,12,2020
 Motorola ,motorola edge 50 pro,512,250000,A,12,2020
 Motorola ,motorola edge 50 ultra,1024,270000,A,12,2020
 Motorola ,motorola edge 50 ultra,128,195000,A,8,2020
-Motorola ,motorola edge 60 fusion,256,215000,A,12,2020
-Motorola ,motorola edge 60 fusion,256,230000,A,12,2020
 Motorola ,motorola edge 60 pro,512,250000,A,12,2020
 Motorola ,motorola edge 60 pro,512,260000,A,12,2020
-Motorola ,motorola edge 60 ultra,1024,280000,A,12,2020
-Motorola ,motorola edge 60 ultra,256,90000,A,12,2020
 Motorola ,motorola edge+ (2020),128,150000,D,8,2020
 Motorola ,motorola edge+ (2022),256,170000,B,12,2022
 Motorola ,motorola edge+ (2022),512,190000,B,12,2022
@@ -1520,3 +1516,20 @@ ZTE,zte blade v40 vita,128,170000,E,12,2021
 ZTE,zte blade v40 vita,128,200000,E,12,2021
 ZTE,zte blade v50 design,256,230000,C,12,2023
 ZTE,zte blade v50 design,512,250000,C,,2023
+OnePlus,oneplus 15 5g,512,735000,A,16,2026
+OnePlus,oneplus 15r,512,630000,A,12,2026
+OnePlus,oneplus 13,256,580000,A,12,2026
+OnePlus,oneplus 13,512,660000,A,16,2026
+Google Pixel,google pixel 10 pro,256,695000,A,16,2026
+Google Pixel,google pixel 10 pro,512,695000,A,16,2026
+Google Pixel,google pixel 10,128,405000,A,12,2026
+Google Pixel,google pixel 10,256,460000,A,12,2026
+Motorola,motorola edge 60 ultra,512,590000,A,12,2026
+Motorola,motorola edge 60 fusion,256,280000,A,8,2026
+Motorola,motorola edge 60 fusion,256,320000,A,12,2026
+Motorola,moto g (2026),128,145000,A,4,2026
+Infinix,infinix zero 50 ultra,512,350000,A,12,2026
+Infinix,infinix note 50 pro,256,165000,A,8,2026
+Infinix,infinix hot 60 pro plus,256,250000,B,16,2026
+Infinix,infinix smart 10,64,55000,F,3,2026
+Infinix,infinix smart 10,128,75000,F,4,2026
