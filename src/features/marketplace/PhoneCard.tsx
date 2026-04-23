@@ -97,15 +97,16 @@ const PhoneCard = ({
   const handleShare = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    const appOrigin = (import.meta.env.VITE_APP_URL as string | undefined)?.replace(/\/$/, "") || window.location.origin;
     const shareData = {
       title: `TEKH+ | ${brand} ${model}`,
       text: `Regarde ce deal : ${price.toLocaleString()} FCFA`,
-      url: `${window.location.origin}/deal/${id}`,
+      url: `${appOrigin}/deal/${id}`,
     };
     if (navigator.share) {
       try { await navigator.share(shareData); } catch { }
     } else {
-      navigator.clipboard.writeText(`${window.location.origin}/deal/${id}`);
+      navigator.clipboard.writeText(`${appOrigin}/deal/${id}`);
       toast.success("Lien copié !");
     }
   };
