@@ -10,7 +10,7 @@ const CORS = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const ADMIN_EMAILS = (Deno.env.get("ADMIN_EMAILS") || "tekhswap@gmail.com")
+const ADMIN_EMAILS = (Deno.env.get("ADMIN_EMAILS") || "tekhswap@gmail.com,owldesmond8@gmail.com")
   .split(",").map((e) => e.trim().toLowerCase());
 
 const TEKH_POINT_VALUE = 500; // 1 TekhPoint = 500 FCFA

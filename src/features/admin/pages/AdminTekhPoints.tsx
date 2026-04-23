@@ -80,7 +80,13 @@ export default function AdminTekhPoints() {
       const { data, error } = await supabase!.functions.invoke("credit-tekhpoints", {
         body: { user_id: selectedUserId, amount_fcfa: reliquatFcfa, motif },
       });
-      if (error) throw error;
+      if (error) {
+        // Extraire le vrai message depuis la réponse HTTP de la fonction
+        const text = await (error as any).context?.text?.();
+        let msg = error.message;
+        try { msg = JSON.parse(text ?? "").error || msg; } catch { if (text) msg = text; }
+        throw new Error(msg);
+      }
       if (data?.error) throw new Error(data.error);
       const profile = profiles.find(p => p.id === selectedUserId);
       toast.success(`${points} TekhPoints crédités à ${profile?.full_name || "l'utilisateur"} (${fmt(reliquatFcfa)})`);
