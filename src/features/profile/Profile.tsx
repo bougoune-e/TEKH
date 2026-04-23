@@ -3,13 +3,14 @@ import { Card, CardContent } from "@/shared/ui/card";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { Label } from "@/shared/ui/label";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/shared/ui/sheet";
 import { useTranslation } from "react-i18next";
 import { useDeals } from "@/features/marketplace/deals.context";
 import { useAuth } from "@/features/auth/auth.context";
-import { uploadAvatar, upsertProfile, supabase, ensureProfileForUser, countDealsByOwner, fetchTekhPointsSummary } from "@/core/api/supabaseApi";
+import { uploadAvatar, upsertProfile, supabase, ensureProfileForUser, countDealsByOwner, fetchTekhPointsSummary, TekhPointsSummary } from "@/core/api/supabaseApi";
 import { isSupabaseConfigured } from "@/core/api/supabaseClient";
 import UserAvatar from "@/shared/components/UserAvatar";
-import { LogOut, Camera, Package, ShieldCheck, ShoppingCart, ChevronRight, Coins } from "lucide-react";
+import { LogOut, Camera, Package, ShieldCheck, ShoppingCart, ChevronRight, Coins, Clock, Info } from "lucide-react";
 import { toast } from "@/shared/hooks/use-toast";
 import MotionRings from "@/shared/components/MotionRings";
 import { useCart } from "@/features/marketplace/cart.context";
@@ -27,7 +28,8 @@ export default function Profile() {
   const [saving, setSaving] = useState(false);
   const fileRef = useRef<HTMLInputElement | null>(null);
   const [dbCount, setDbCount] = useState<number | null>(null);
-  const [tekhPoints, setTekhPoints] = useState<{ balanceFcfa: number; nextExpiry: string | null } | null>(null);
+  const [tekhPoints, setTekhPoints] = useState<TekhPointsSummary | null>(null);
+  const [tekhSheet, setTekhSheet] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -41,8 +43,8 @@ export default function Profile() {
         ensureProfileForUser(user).catch(() => { });
         countDealsByOwner(user.id).then(setDbCount).catch(() => { });
         fetchTekhPointsSummary(user.id)
-          .then((s) => setTekhPoints({ balanceFcfa: s.balanceFcfa, nextExpiry: s.nextExpiry }))
-          .catch(() => setTekhPoints({ balanceFcfa: 0, nextExpiry: null }));
+          .then(setTekhPoints)
+          .catch(() => setTekhPoints({ balanceFcfa: 0, points: 0, nextExpiry: null, activeLines: 0, lines: [] }));
       }
     }
   }, [user]);
@@ -153,34 +155,105 @@ export default function Profile() {
         {/* TekhPoints */}
         <section className="space-y-3">
           <h2 className="text-xs font-black uppercase tracking-widest text-muted-foreground px-1">TekhPoints</h2>
-          <Link
-            to="/politique-echange-tekhpoints"
-            className="flex items-center justify-between p-5 bg-gradient-to-br from-[#064e3b]/10 to-[#059669]/5 dark:from-[#059669]/20 dark:to-transparent border border-[#064e3b]/20 dark:border-[#059669]/30 rounded-2xl hover:shadow-md transition-all group"
+          <button
+            type="button"
+            onClick={() => setTekhSheet(true)}
+            className="w-full flex items-center justify-between p-5 bg-gradient-to-br from-[#064e3b]/10 to-[#059669]/5 dark:from-[#059669]/20 dark:to-transparent border border-[#064e3b]/20 dark:border-[#059669]/30 rounded-2xl hover:shadow-md transition-all group text-left"
           >
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-[#064e3b]/15 dark:bg-[#059669]/25 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-xl bg-[#064e3b]/15 dark:bg-[#059669]/25 flex items-center justify-center shrink-0">
                 <Coins className="h-6 w-6 text-[#064e3b] dark:text-[#34d399]" />
               </div>
               <div>
-                <p className="font-black text-foreground">Solde TekhPoints</p>
-                <p className="text-lg font-black text-[#064e3b] dark:text-[#34d399]">
-                  {(tekhPoints?.balanceFcfa ?? 0).toLocaleString("fr-FR")}{" "}
-                  <span className="text-xs font-bold text-muted-foreground">FCFA</span>
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Solde TekhPoints</p>
+                <p className="text-2xl font-black text-[#064e3b] dark:text-[#34d399] leading-tight">
+                  {tekhPoints?.points ?? 0}
+                  <span className="text-sm font-bold text-muted-foreground ml-1.5">pts</span>
                 </p>
-                {tekhPoints?.nextExpiry && (
-                  <p className="text-[10px] text-muted-foreground font-semibold mt-0.5">
-                    Prochaine échéance :{" "}
-                    {new Date(tekhPoints.nextExpiry).toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" })}
-                  </p>
-                )}
-                {!tekhPoints?.nextExpiry && (tekhPoints?.balanceFcfa ?? 0) === 0 && (
-                  <p className="text-[10px] text-muted-foreground font-medium mt-0.5">Aucun crédit actif — voir la politique d&apos;échange.</p>
-                )}
+                <p className="text-[11px] text-muted-foreground font-medium mt-0.5">
+                  {(tekhPoints?.balanceFcfa ?? 0) > 0
+                    ? `≈ ${(tekhPoints!.balanceFcfa).toLocaleString("fr-FR")} FCFA`
+                    : "Aucun crédit actif"}
+                </p>
               </div>
             </div>
-            <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-[#064e3b] shrink-0" />
-          </Link>
+            <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-[#064e3b] shrink-0 transition-colors" />
+          </button>
         </section>
+
+        {/* Sheet détail TekhPoints */}
+        <Sheet open={tekhSheet} onOpenChange={setTekhSheet}>
+          <SheetContent side="bottom" className="rounded-t-2xl max-h-[85vh] overflow-y-auto">
+            <SheetHeader className="mb-4">
+              <SheetTitle className="flex items-center gap-2 text-[#064e3b] dark:text-[#34d399]">
+                <Coins className="h-5 w-5" /> Mes TekhPoints
+              </SheetTitle>
+            </SheetHeader>
+
+            {/* Solde total */}
+            <div className="flex items-center justify-between p-4 bg-gradient-to-br from-[#064e3b]/10 to-[#059669]/5 dark:from-[#059669]/15 dark:to-transparent rounded-2xl border border-[#064e3b]/15 dark:border-[#059669]/25 mb-5">
+              <div>
+                <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wide">Total disponible</p>
+                <p className="text-3xl font-black text-[#064e3b] dark:text-[#34d399] leading-tight">
+                  {tekhPoints?.points ?? 0}
+                  <span className="text-base font-bold text-muted-foreground ml-2">pts</span>
+                </p>
+                <p className="text-sm text-muted-foreground font-medium mt-0.5">
+                  = {(tekhPoints?.balanceFcfa ?? 0).toLocaleString("fr-FR")} FCFA
+                </p>
+              </div>
+              <div className="w-14 h-14 rounded-2xl bg-[#064e3b]/15 dark:bg-[#059669]/25 flex items-center justify-center">
+                <Coins className="h-7 w-7 text-[#064e3b] dark:text-[#34d399]" />
+              </div>
+            </div>
+
+            {/* Lignes de crédit */}
+            {(tekhPoints?.lines?.length ?? 0) > 0 ? (
+              <div className="space-y-2 mb-5">
+                <p className="text-xs font-black uppercase tracking-widest text-muted-foreground px-1 mb-2">Détail des crédits actifs</p>
+                {tekhPoints!.lines.map((line) => {
+                  const pts = Math.floor(line.amount_fcfa / 500);
+                  const expiry = new Date(line.expires_at).toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" });
+                  const daysLeft = Math.ceil((new Date(line.expires_at).getTime() - Date.now()) / 86400000);
+                  return (
+                    <div key={line.id} className="flex items-center justify-between p-3.5 bg-card border border-border/50 rounded-xl">
+                      <div className="min-w-0">
+                        <p className="text-sm font-semibold text-foreground truncate">{line.motif}</p>
+                        <p className="text-xs text-muted-foreground mt-0.5 flex items-center gap-1">
+                          <Clock className="h-3 w-3 shrink-0" />
+                          Expire le {expiry}
+                          {daysLeft <= 14 && (
+                            <span className="ml-1 text-amber-500 font-bold">({daysLeft}j restants)</span>
+                          )}
+                        </p>
+                      </div>
+                      <div className="text-right shrink-0 ml-3">
+                        <p className="text-base font-black text-[#064e3b] dark:text-[#34d399]">{pts} pts</p>
+                        <p className="text-[10px] text-muted-foreground">{line.amount_fcfa.toLocaleString("fr-FR")} FCFA</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center py-8 text-center gap-2 mb-4">
+                <Coins className="h-10 w-10 text-muted-foreground/40" />
+                <p className="text-sm font-semibold text-muted-foreground">Aucun crédit actif</p>
+                <p className="text-xs text-muted-foreground/70">Les points sont crédités après une transaction validée.</p>
+              </div>
+            )}
+
+            {/* Lien politique */}
+            <Link
+              to="/politique-echange-tekhpoints"
+              onClick={() => setTekhSheet(false)}
+              className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground transition-colors py-2 px-1"
+            >
+              <Info className="h-3.5 w-3.5 shrink-0" />
+              Voir la politique d&apos;échange TekhPoints
+            </Link>
+          </SheetContent>
+        </Sheet>
 
         {/* Espace personnel : Mon panier */}
         <section className="space-y-3">

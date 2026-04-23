@@ -696,35 +696,54 @@ export async function deleteProfile(id: string) {
 }
 
 /** Solde TekhPoints (crédits actifs non expirés) — table `tekh_point_credits`. */
-export type TekhPointsSummary = {
-  balanceFcfa: number;
-  nextExpiry: string | null;
-  activeLines: number;
+export type TekhPointsCreditLine = {
+  id: string;
+  amount_fcfa: number;
+  expires_at: string;
+  motif: string;
 };
 
+export type TekhPointsSummary = {
+  balanceFcfa: number;
+  points: number;
+  nextExpiry: string | null;
+  activeLines: number;
+  lines: TekhPointsCreditLine[];
+};
+
+const TEKH_POINT_VALUE = 500;
+
 export async function fetchTekhPointsSummary(userId: string): Promise<TekhPointsSummary> {
-  if (!realClient) return { balanceFcfa: 0, nextExpiry: null, activeLines: 0 };
+  const empty = { balanceFcfa: 0, points: 0, nextExpiry: null, activeLines: 0, lines: [] };
+  if (!realClient) return empty;
   const now = new Date().toISOString();
   const { data, error } = await realClient
     .from("tekh_point_credits")
-    .select("amount_fcfa, expires_at")
+    .select("id, amount_fcfa, expires_at, metadata")
     .eq("user_id", userId)
     .eq("status", "active")
-    .gt("expires_at", now);
+    .gt("expires_at", now)
+    .order("expires_at", { ascending: true });
 
   if (error || !data?.length) {
     if (import.meta.env.DEV && error) console.warn("[tekh_points]", error.message);
-    return { balanceFcfa: 0, nextExpiry: null, activeLines: 0 };
+    return empty;
   }
 
   const balanceFcfa = data.reduce((s, r) => s + (Number(r.amount_fcfa) || 0), 0);
-  const sorted = [...data].sort(
-    (a, b) => new Date(a.expires_at).getTime() - new Date(b.expires_at).getTime()
-  );
+  const lines: TekhPointsCreditLine[] = data.map((r) => ({
+    id: r.id,
+    amount_fcfa: Number(r.amount_fcfa) || 0,
+    expires_at: r.expires_at,
+    motif: (r.metadata as any)?.motif || "Crédit",
+  }));
+
   return {
     balanceFcfa,
-    nextExpiry: sorted[0]?.expires_at ?? null,
+    points: Math.floor(balanceFcfa / TEKH_POINT_VALUE),
+    nextExpiry: data[0]?.expires_at ?? null,
     activeLines: data.length,
+    lines,
   };
 }
 
