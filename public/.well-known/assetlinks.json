@@ -5,6 +5,18 @@
         ],
         "target": {
             "namespace": "android_app",
+            "package_name": "com.onrender.tekh_1.twa",
+            "sha256_cert_fingerprints": [
+                "CB:64:6C:71:A9:6A:B9:E5:2D:21:7E:0B:87:EB:59:0D:FB:69:39:AD:8C:88:13:C8:84:D7:A7:68:7E:3D:09:9F"
+            ]
+        }
+    },
+    {
+        "relation": [
+            "delegate_permission/common.handle_all_urls"
+        ],
+        "target": {
+            "namespace": "android_app",
             "package_name": "com.tekhplus.twa",
             "sha256_cert_fingerprints": [
                 "CB:64:6C:71:A9:6A:B9:E5:2D:21:7E:0B:87:EB:59:0D:FB:69:39:AD:8C:88:13:C8:84:D7:A7:68:7E:3D:09:9F"
