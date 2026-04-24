@@ -92,18 +92,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return;
       }
 
-      // Redirection automatique admin après connexion (OAuth ou Password)
-      if (
-        event === "SIGNED_IN" &&
-        session?.user &&
-        !window.location.pathname.startsWith("/admin")
-      ) {
-        const email = (session.user.email || session.user.user_metadata?.email || "").trim().toLowerCase();
-        if (isAdminEmail(email)) {
-          console.log("[AuthProvider] Admin detected, redirecting to /admin");
-          window.location.replace("/admin");
-        }
-      }
+      // Redirection spécifique (ex: PASSWORD_RECOVERY) gérée ici.
+      // La redirection Admin est désormais gérée par Login.tsx et AuthCallback.tsx 
+      // pour éviter les conflits entre APK Standard et APK Admin.
     });
     unsub = () => data?.subscription?.unsubscribe?.();
     return () => {
