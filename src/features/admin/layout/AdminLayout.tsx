@@ -67,15 +67,8 @@ function AdminFAB() {
 }
 
 const AdminLayout = () => {
-  // Swap manifest → admin version so "Add to Home Screen" installs the admin app
-  useEffect(() => {
-    const link = document.querySelector<HTMLLinkElement>('link[rel="manifest"]');
-    const prev = link?.getAttribute("href") ?? "/manifest.webmanifest";
-    link?.setAttribute("href", "/admin-manifest.webmanifest");
-    return () => {
-      link?.setAttribute("href", prev);
-    };
-  }, []);
+  // Manifest swapping was removed to avoid PWA instability 
+  // between separated APKs (Standard/Admin) on the same domain.
 
   return (
     <div className="min-h-dvh flex bg-background">

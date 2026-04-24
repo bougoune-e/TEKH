@@ -9,7 +9,6 @@ console.log("✓ Toutes les lignes Google Pixel supprimées");
 // 2. Données canoniques propres
 const rows = [
   // ── 2016 ──────────────────────────────────────────────
-  { modele:"Google Pixel",         variante:"128GB",  prt_fcfa:25000,  classe_tekh:"F", specs:{ram:4},  annee_sortie:2016 },
   { modele:"Google Pixel XL",      variante:"128GB",  prt_fcfa:16000,  classe_tekh:"F", specs:{ram:4},  annee_sortie:2016 },
   // ── 2017 ──────────────────────────────────────────────
   { modele:"Google Pixel 2",       variante:"64GB",   prt_fcfa:26000,  classe_tekh:"E", specs:{ram:4},  annee_sortie:2017 },
@@ -72,10 +71,20 @@ const rows = [
   { modele:"Google Pixel 9a",      variante:"128GB",  prt_fcfa:265000, classe_tekh:"A", specs:{ram:8},  annee_sortie:2024 },
   { modele:"Google Pixel 9a",      variante:"256GB",  prt_fcfa:325000, classe_tekh:"A", specs:{ram:8},  annee_sortie:2024 },
   // ── 2026 ──────────────────────────────────────────────
-  { modele:"Google Pixel 10",      variante:"128GB",  prt_fcfa:405000, classe_tekh:"A", specs:{ram:12}, annee_sortie:2026 },
-  { modele:"Google Pixel 10",      variante:"256GB",  prt_fcfa:460000, classe_tekh:"A", specs:{ram:12}, annee_sortie:2026 },
-  { modele:"Google Pixel 10 Pro",  variante:"256GB",  prt_fcfa:695000, classe_tekh:"A", specs:{ram:16}, annee_sortie:2026 },
-  { modele:"Google Pixel 10 Pro",  variante:"512GB",  prt_fcfa:695000, classe_tekh:"A", specs:{ram:16}, annee_sortie:2026 },
+  { modele:"Google Pixel 10",         variante:"128GB",  prt_fcfa:540000,  classe_tekh:"A", specs:{ram:12}, annee_sortie:2026 },
+  { modele:"Google Pixel 10",         variante:"256GB",  prt_fcfa:580000,  classe_tekh:"A", specs:{ram:12}, annee_sortie:2026 },
+  { modele:"Google Pixel 10 Pro",     variante:"128GB",  prt_fcfa:695000,  classe_tekh:"A", specs:{ram:16}, annee_sortie:2026 },
+  { modele:"Google Pixel 10 Pro",     variante:"256GB",  prt_fcfa:740000,  classe_tekh:"A", specs:{ram:16}, annee_sortie:2026 },
+  { modele:"Google Pixel 10 Pro",     variante:"512GB",  prt_fcfa:790000,  classe_tekh:"A", specs:{ram:16}, annee_sortie:2026 },
+  { modele:"Google Pixel 10 Pro",     variante:"1TB",    prt_fcfa:850000,  classe_tekh:"A", specs:{ram:16}, annee_sortie:2026 },
+  { modele:"Google Pixel 10 Pro XL",  variante:"256GB",  prt_fcfa:850000,  classe_tekh:"A", specs:{ram:16}, annee_sortie:2026 },
+  { modele:"Google Pixel 10 Pro XL",  variante:"512GB",  prt_fcfa:910000,  classe_tekh:"A", specs:{ram:16}, annee_sortie:2026 },
+  { modele:"Google Pixel 10 Pro XL",  variante:"1TB",    prt_fcfa:970000,  classe_tekh:"A", specs:{ram:16}, annee_sortie:2026 },
+  { modele:"Google Pixel 10 Pro Fold",variante:"256GB",  prt_fcfa:1200000, classe_tekh:"A", specs:{ram:16}, annee_sortie:2026 },
+  { modele:"Google Pixel 10 Pro Fold",variante:"512GB",  prt_fcfa:1300000, classe_tekh:"A", specs:{ram:16}, annee_sortie:2026 },
+  { modele:"Google Pixel 10 Pro Fold",variante:"1TB",    prt_fcfa:1400000, classe_tekh:"A", specs:{ram:16}, annee_sortie:2026 },
+  { modele:"Google Pixel 10a",        variante:"128GB",  prt_fcfa:570000,  classe_tekh:"A", specs:{ram:8},  annee_sortie:2026 },
+  { modele:"Google Pixel 10a",        variante:"256GB",  prt_fcfa:610000,  classe_tekh:"A", specs:{ram:8},  annee_sortie:2026 },
 ].map(r => ({ ...r, marque: "Google Pixel" }));
 
 const { error: insErr } = await c.from("smartphones").insert(rows);

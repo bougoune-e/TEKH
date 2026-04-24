@@ -35,10 +35,17 @@ function isAdmin(user: any): boolean {
 
 export default function AdminRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
+  const currentPath = window.location.pathname;
 
   if (loading) return <div className="p-8 text-center">Chargement...</div>;
-  if (!user) return <Navigate to="/login?from=admin" replace />;
-  if (!isAdmin(user)) return <Navigate to="/admin-denied" replace />;
+
+  if (!user) {
+    return <Navigate to={`/login?redirect_to=${encodeURIComponent(currentPath)}`} replace />;
+  }
+
+  if (!isAdmin(user)) {
+    return <Navigate to={`/admin-denied?email=${encodeURIComponent(user.email || "")}`} replace />;
+  }
 
   return <>{children}</>;
 }

@@ -1396,7 +1396,6 @@ Infinix,infinix note 50 pro,256,165000,A,8,2026
 Infinix,infinix hot 60 pro plus,256,250000,B,16,2026
 Infinix,infinix smart 10,64,55000,F,3,2026
 Infinix,infinix smart 10,128,75000,F,4,2026
-Google Pixel,google pixel,128,25000,F,4,2016
 Google Pixel,google pixel xl,128,16000,F,4,2016
 Google Pixel,google pixel 2,64,26000,E,4,2017
 Google Pixel,google pixel 2,128,38000,E,4,2017
@@ -1450,7 +1449,17 @@ Google Pixel,google pixel 9 pro fold,512,300000,A,16,2024
 Google Pixel,google pixel 9 pro fold,1024,320000,A,16,2024
 Google Pixel,google pixel 9a,128,265000,A,8,2024
 Google Pixel,google pixel 9a,256,325000,A,8,2024
-Google Pixel,google pixel 10,128,405000,A,12,2026
-Google Pixel,google pixel 10,256,460000,A,12,2026
-Google Pixel,google pixel 10 pro,256,695000,A,16,2026
-Google Pixel,google pixel 10 pro,512,695000,A,16,2026
+Google Pixel,google pixel 10,128,540000,A,12,2026
+Google Pixel,google pixel 10,256,580000,A,12,2026
+Google Pixel,google pixel 10 pro,128,695000,A,16,2026
+Google Pixel,google pixel 10 pro,256,740000,A,16,2026
+Google Pixel,google pixel 10 pro,512,790000,A,16,2026
+Google Pixel,google pixel 10 pro,1024,850000,A,16,2026
+Google Pixel,google pixel 10 pro xl,256,850000,A,16,2026
+Google Pixel,google pixel 10 pro xl,512,910000,A,16,2026
+Google Pixel,google pixel 10 pro xl,1024,970000,A,16,2026
+Google Pixel,google pixel 10 pro fold,256,1200000,A,16,2026
+Google Pixel,google pixel 10 pro fold,512,1300000,A,16,2026
+Google Pixel,google pixel 10 pro fold,1024,1400000,A,16,2026
+Google Pixel,google pixel 10a,128,570000,A,8,2026
+Google Pixel,google pixel 10a,256,610000,A,8,2026

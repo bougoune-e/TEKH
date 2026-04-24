@@ -17,18 +17,18 @@
         \"relation\": [\"delegate_permission/common.handle_all_urls\"],
         \"target\": {
             \"namespace\": \"web\",
-            \"site\": \"https://tekh-1.onrender.com\"
+            \"site\": \"https://www.tekhplus.com\"
         }
     }]
     
   </string>
     <string name="fallbackType" translatable="false">customtabs</string>
-    <string name="fullScopeUrl" translatable="false">https://tekh-1.onrender.com/</string>
+    <string name="fullScopeUrl" translatable="false">https://www.tekhplus.com/</string>
     <string name="generatorApp" translatable="false">bubblewrap-cli</string>
-    <string name="hostName" translatable="false">tekh-1.onrender.com</string>
-    <string name="launchUrl" translatable="false">https://tekh-1.onrender.com/</string>
+    <string name="hostName" translatable="false">www.tekhplus.com</string>
+    <string name="launchUrl" translatable="false">https://www.tekhplus.com/</string>
     <string name="launcherName" translatable="false">TEKH+</string>
     <string name="orientation" translatable="false">portrait</string>
-    <string name="providerAuthority" translatable="false">com.onrender.tekh_1.twa.fileprovider</string>
+    <string name="providerAuthority" translatable="false">com.tekhplus.twa.fileprovider</string>
     <string name="webManifestUrl" translatable="false">https://tekh-1.onrender.com/manifest.webmanifest</string>
 </resources>

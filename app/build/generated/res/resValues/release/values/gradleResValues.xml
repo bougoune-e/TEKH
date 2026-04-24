@@ -28,19 +28,19 @@
     <!-- Value from default config. -->
     <string name="fallbackType" translatable="false">customtabs</string>
     <!-- Value from default config. -->
-    <string name="fullScopeUrl" translatable="false">https://tekh-1.onrender.com/</string>
+    <string name="fullScopeUrl" translatable="false">https://www.tekhplus.com/</string>
     <!-- Value from default config. -->
     <string name="generatorApp" translatable="false">bubblewrap-cli</string>
     <!-- Value from default config. -->
-    <string name="hostName" translatable="false">tekh-1.onrender.com</string>
+    <string name="hostName" translatable="false">www.tekhplus.com</string>
     <!-- Value from default config. -->
-    <string name="launchUrl" translatable="false">https://tekh-1.onrender.com/</string>
+    <string name="launchUrl" translatable="false">https://www.tekhplus.com/</string>
     <!-- Value from default config. -->
     <string name="launcherName" translatable="false">TEKH+</string>
     <!-- Value from default config. -->
     <string name="orientation" translatable="false">portrait</string>
     <!-- Value from default config. -->
-    <string name="providerAuthority" translatable="false">com.onrender.tekh_1.twa.fileprovider</string>
+    <string name="providerAuthority" translatable="false">com.tekhplus.twa.fileprovider</string>
     <!-- Value from default config. -->
     <string name="webManifestUrl" translatable="false">https://tekh-1.onrender.com/manifest.webmanifest</string>
 

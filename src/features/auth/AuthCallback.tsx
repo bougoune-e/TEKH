@@ -31,7 +31,7 @@ export default function AuthCallback() {
                 if (retry.data.session?.user) {
                     setStatus("Bienvenue !");
                     await new Promise((r) => setTimeout(r, 600));
-                    redirectUser(retry.data.session.user);
+                    redirectUser();
                     return;
                 }
                 // No session — send back to login
@@ -43,16 +43,13 @@ export default function AuthCallback() {
 
             setStatus("Bienvenue !");
             await new Promise((r) => setTimeout(r, 600));
-            redirectUser(data.session.user);
+            redirectUser();
         };
 
-        const redirectUser = async (user: any) => {
-            const { isAdmin } = await import("@/features/auth/AdminRoute");
-            if (isAdmin(user)) {
-                navigate("/admin", { replace: true });
-            } else {
-                navigate("/profile", { replace: true });
-            }
+        const redirectUser = async () => {
+            const params = new URLSearchParams(window.location.search);
+            const redirectTo = params.get("redirect_to") || "/profile";
+            navigate(redirectTo, { replace: true });
         };
 
         handleCallback();

@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.onrender.tekh_1.twa.app-mergeReleaseResources-23:/values-vi/values-vi.xml",
+            "outputFile": "com.tekhplus.twa.app-mergeReleaseResources-23:/values-vi/values-vi.xml",
             "map": [
                 {
                     "source": "/home/kizerbo/.gradle/caches/8.11.1/transforms/be57bd43967b699c12a0f6b8bd2f21c6/transformed/browser-1.9.0-alpha04/res/values-vi/values-vi.xml",

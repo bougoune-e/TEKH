@@ -4,7 +4,7 @@
     "type": "COMPATIBLE_SCREEN_MANIFEST",
     "kind": "Directory"
   },
-  "applicationId": "com.onrender.tekh_1.twa",
+  "applicationId": "com.tekhplus.twa",
   "variantName": "release",
   "elements": []
 }

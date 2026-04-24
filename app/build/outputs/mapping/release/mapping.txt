@@ -3,8 +3,8 @@
 # min_api: 21
 # common_typos_disable
 # {"id":"com.android.tools.r8.mapping","version":"2.2"}
-# pg_map_id: 8c440c2
-# pg_map_hash: SHA-256 8c440c2c5d468d8d353121a512e2952c2957f090661834cdb7919ec20b89792d
+# pg_map_id: 88abc7b
+# pg_map_hash: SHA-256 88abc7bb7ff7b8343d5c8210142c5edab0a176685c4c6ed6e3ea376dea315aa7
 android.support.customtabs.ICustomTabsCallback -> a.a:
 # {"id":"sourceFile","fileName":"ICustomTabsCallback.java"}
     java.lang.String DESCRIPTOR -> a
@@ -24606,15 +24606,15 @@ com.google.common.collect.UnmodifiableListIterator -> M.s:
     1:4:void <init>():34:34 -> <init>
     1:6:void add(java.lang.Object):46:46 -> add
     1:6:void set(java.lang.Object):59:59 -> set
-com.onrender.tekh_1.twa.Application -> com.onrender.tekh_1.twa.Application:
+com.tekhplus.twa.Application -> com.tekhplus.twa.Application:
 # {"id":"sourceFile","fileName":"Application.java"}
     1:4:void <init>():20:20 -> <init>
     1:4:void onCreate():26:26 -> onCreate
-com.onrender.tekh_1.twa.DelegationService -> com.onrender.tekh_1.twa.DelegationService:
+com.tekhplus.twa.DelegationService -> com.tekhplus.twa.DelegationService:
 # {"id":"sourceFile","fileName":"DelegationService.java"}
     1:4:void <init>():5:5 -> <init>
     1:4:void onCreate():9:9 -> onCreate
-com.onrender.tekh_1.twa.LauncherActivity -> com.onrender.tekh_1.twa.LauncherActivity:
+com.tekhplus.twa.LauncherActivity -> com.tekhplus.twa.LauncherActivity:
 # {"id":"sourceFile","fileName":"LauncherActivity.java"}
     1:4:void <init>():25:25 -> <init>
     1:5:android.net.Uri getLaunchingUrl():48:48 -> i

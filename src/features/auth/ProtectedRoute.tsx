@@ -9,9 +9,12 @@ type Props = { children: React.ReactNode };
  */
 const ProtectedRoute = ({ children }: Props) => {
   const { user, loading } = useAuth();
+  const currentPath = window.location.pathname;
 
-  if (loading) return null; // AuthProvider shows nothing while loading
-  if (!user) return <Navigate to="/login" replace />;
+  if (loading) return null;
+  if (!user) {
+    return <Navigate to={`/login?redirect_to=${encodeURIComponent(currentPath)}`} replace />;
+  }
 
   return <>{children}</>;
 };

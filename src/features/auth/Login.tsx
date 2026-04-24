@@ -72,8 +72,9 @@ export default function Login() {
     }
 
     if (data?.user) {
-      const { isAdmin } = await import("@/features/auth/AdminRoute");
-      navigate(isAdmin(data.user) ? "/admin" : "/profile");
+      const params = new URLSearchParams(window.location.search);
+      const redirectTo = params.get("redirect_to") || "/profile";
+      navigate(redirectTo, { replace: true });
     } else {
       setLoading(false);
     }
