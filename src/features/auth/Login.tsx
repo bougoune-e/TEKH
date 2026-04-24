@@ -34,8 +34,10 @@ export default function Login() {
       // En prod: VITE_APP_URL si définie, sinon l’origine. L’URL doit être dans Supabase → Auth → URL Configuration → Redirect URLs.
       const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
       const baseUrl = isLocal ? window.location.origin : ((import.meta.env.VITE_APP_URL as string) || window.location.origin);
-      // La redirection admin est gérée automatiquement dans auth.context après le callback OAuth
-      const redirectTo = `${baseUrl.replace(/\/$/, "")}/auth/callback`;
+      const params = new URLSearchParams(window.location.search);
+      const redirectToParam = params.get("redirect_to");
+      const redirectTo = `${baseUrl.replace(/\/$/, "")}/auth/callback${redirectToParam ? `?redirect_to=${encodeURIComponent(redirectToParam)}` : ""}`;
+
       const { error: oauthError } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {

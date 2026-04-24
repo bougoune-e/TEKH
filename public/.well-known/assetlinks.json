@@ -19,7 +19,19 @@
             "namespace": "android_app",
             "package_name": "com.tekhplus.twa",
             "sha256_cert_fingerprints": [
-                "14:DB:84:A7:9F:AD:A7:03:97:8C:45:5D:B4:29:B7:AF:47:C2:28:5E:26:25:C3:03:B9:E0:12:A1:FE:72:62:6C"
+                "C3:F8:E3:29:71:A7:91:3B:E7:77:E1:0D:ED:7D:59:63:CB:BB:05:8B:9B:9C:14:2D:EB:94:4F:F8:A5:4A:DA:20"
+            ]
+        }
+    },
+    {
+        "relation": [
+            "delegate_permission/common.handle_all_urls"
+        ],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "com.tekhplus.twa.admin",
+            "sha256_cert_fingerprints": [
+                "C3:F8:E3:29:71:A7:91:3B:E7:77:E1:0D:ED:7D:59:63:CB:BB:05:8B:9B:9C:14:2D:EB:94:4F:F8:A5:4A:DA:20"
             ]
         }
     }
