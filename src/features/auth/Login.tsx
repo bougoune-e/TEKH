@@ -72,10 +72,8 @@ export default function Login() {
     }
 
     if (data?.user) {
-      const userEmail = (data.user as any)?.email?.trim().toLowerCase() ?? "";
-      const adminEmails = (import.meta.env.VITE_ADMIN_EMAILS as string || "")
-        .split(",").map((e: string) => e.trim().toLowerCase()).filter(Boolean);
-      navigate(adminEmails.includes(userEmail) ? "/admin" : "/profile");
+      const { isAdmin } = await import("@/features/auth/AdminRoute");
+      navigate(isAdmin(data.user) ? "/admin" : "/profile");
     } else {
       setLoading(false);
     }

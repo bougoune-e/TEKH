@@ -461,7 +461,7 @@ app.post("/api/push/send", async (req, res) => {
     return res.status(403).json({ error: "Accès réservé aux admins" });
   }
 
-  const { title, body, url, tag, dealId } = req.body || {};
+  const { title, body, url, tag, dealId, image } = req.body || {};
   if (!title?.trim() || !body?.trim()) {
     return res.status(400).json({ error: "title et body sont requis" });
   }
@@ -477,6 +477,7 @@ app.post("/api/push/send", async (req, res) => {
     url: url || "/deals",
     tag: tag || "tekh-push",
     dealId: dealId || null,
+    image: image || null,
   });
 
   let sent = 0, failed = 0;
@@ -506,6 +507,7 @@ app.post("/api/push/send", async (req, res) => {
     failed_count: failed,
     total_subs: (subs || []).length,
     sent_by: user.email,
+    image_url: image || null,
   }).then(() => { }).catch(() => { });
 
   console.log(`[PUSH] Envoyé: ${sent}/${(subs || []).length}, échecs: ${failed}`);

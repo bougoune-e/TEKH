@@ -10,6 +10,7 @@ type Campaign = {
   title: string;
   body: string;
   url: string;
+  image_url?: string;
   sent_count: number;
   failed_count: number;
   total_subs: number;
@@ -169,7 +170,12 @@ export default function AdminNotifications() {
       const res = await fetch(`${API_URL}/api/push/send`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${jwt}` },
-        body: JSON.stringify({ title: title.trim(), body: body.trim(), url, ...(image.trim() && { image: image.trim() }) }),
+        body: JSON.stringify({
+          title: title.trim(),
+          body: body.trim(),
+          url,
+          image: image.trim() || null
+        }),
       });
 
       const json = await res.json();
@@ -461,9 +467,13 @@ export default function AdminNotifications() {
                   className="rounded-2xl border border-border/50 bg-card p-4"
                 >
                   <div className="flex items-start gap-3">
-                    {/* Emoji badge */}
-                    <div className="w-10 h-10 rounded-2xl bg-muted/60 flex items-center justify-center text-xl shrink-0 shadow-sm">
-                      {emoji}
+                    {/* Image or Emoji badge */}
+                    <div className="w-10 h-10 rounded-2xl bg-muted/60 flex items-center justify-center text-xl shrink-0 shadow-sm relative overflow-hidden">
+                      {c.image_url ? (
+                        <img src={c.image_url} alt="" className="w-full h-full object-cover" />
+                      ) : (
+                        emoji
+                      )}
                     </div>
 
                     <div className="flex-1 min-w-0">

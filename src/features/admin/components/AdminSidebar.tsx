@@ -27,7 +27,9 @@ const PRIMARY = items.slice(0, 4);
 
 /* ── Desktop sidebar ─────────────────────────────── */
 export const AdminDesktopSidebar = () => {
-  const { signOut } = useAuth();
+  const { user, signOut } = useAuth();
+  const role = user?.app_metadata?.role || user?.user_metadata?.role || "ADMIN";
+
   const handleLogout = async () => {
     localStorage.removeItem("tekh:nav-snapshot");
     await signOut();
@@ -41,7 +43,7 @@ export const AdminDesktopSidebar = () => {
         <img src={logo} alt="TΞKΗ+ Admin" className="w-8 h-8 rounded-lg object-cover" />
         <div>
           <div className="text-sm font-black tracking-tight text-foreground">TΞKΗ+ Admin</div>
-          <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">{getRole()}</div>
+          <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">{role}</div>
         </div>
       </div>
 

@@ -8,18 +8,29 @@ const ADMIN_EMAILS = (import.meta.env.VITE_ADMIN_EMAILS as string || "")
 
 function isAdmin(user: any): boolean {
   if (!user) return false;
-  const appMeta = (user as any)?.app_metadata || {};
-  if (appMeta.role === "ADMIN" || appMeta.role === "admin") return true;
-  const userMeta = (user as any)?.user_metadata || {};
-  if (userMeta.role === "ADMIN" || userMeta.role === "admin") return true;
-  const u = user as any;
-  const email = (u?.email || u?.user_metadata?.email || "").trim().toLowerCase();
 
-  const isMatch = email ? ADMIN_EMAILS.includes(email) : false;
-  if (!isMatch) {
-    console.warn("[AdminAuth] Access denied for:", email, "Expected one of:", ADMIN_EMAILS);
+  const email = (user.email || user.user_metadata?.email || "").trim().toLowerCase();
+  const appMeta = user.app_metadata || {};
+  const userMeta = user.user_metadata || {};
+
+  const hasAdminRole =
+    appMeta.role?.toUpperCase() === "ADMIN" ||
+    userMeta.role?.toUpperCase() === "ADMIN";
+
+  const isEmailListed = email ? ADMIN_EMAILS.includes(email) : false;
+
+  if (isEmailListed || hasAdminRole) {
+    if (import.meta.env.DEV) {
+      console.log("[AdminAuth] Access granted for:", email, { hasAdminRole, isEmailListed });
+    }
+    return true;
   }
-  return isMatch;
+
+  console.warn("[AdminAuth] Access denied for:", email || "no-email", {
+    expectedEmails: ADMIN_EMAILS,
+    userRoles: { app: appMeta.role, user: userMeta.role }
+  });
+  return false;
 }
 
 export default function AdminRoute({ children }: { children: React.ReactNode }) {

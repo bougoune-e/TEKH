@@ -11,6 +11,7 @@ type Campaign = {
   title: string;
   body: string;
   url: string;
+  image_url?: string;
   sent_count: number;
   failed_count: number;
   total_subs: number;
@@ -89,7 +90,13 @@ function DetailView({
   };
 
   const handleLink = () => {
-    if (c.url && c.url !== "/deals") window.location.assign(c.url);
+    if (c.url) {
+      if (c.url.startsWith("http")) {
+        window.open(c.url, "_blank");
+      } else {
+        navigate(c.url);
+      }
+    }
   };
 
   return (
@@ -107,12 +114,26 @@ function DetailView({
 
       {/* Contenu scrollable */}
       <div className="flex-1 overflow-y-auto pb-36">
-        {/* Hero card — grand emoji sur fond dégradé */}
-        <div className="mx-4 mt-4 rounded-3xl overflow-hidden bg-gradient-to-br from-[#064e3b] to-[#052e16] flex flex-col items-center justify-center py-10 gap-2">
-          <span className="text-6xl drop-shadow-lg">{emoji}</span>
-          <span className="text-[10px] font-black uppercase tracking-[0.25em] text-emerald-400/60 mt-1">
-            TEKH+ Notification
-          </span>
+        {/* Hero Area — Image ou Emoji */}
+        <div className="mx-4 mt-4 rounded-3xl overflow-hidden bg-gradient-to-br from-[#064e3b] to-[#052e16] flex flex-col items-center justify-center min-h-[180px] relative group">
+          {c.image_url ? (
+            <>
+              <img
+                src={c.image_url}
+                alt={c.title}
+                className="w-full h-full object-cover absolute inset-0"
+              />
+              <div className="absolute inset-0 bg-black/20" />
+              <span className="relative z-10 text-4xl drop-shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">{emoji}</span>
+            </>
+          ) : (
+            <>
+              <span className="text-6xl drop-shadow-lg">{emoji}</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.25em] text-emerald-400/60 mt-1">
+                TEKH+ Notification
+              </span>
+            </>
+          )}
         </div>
 
         {/* Date */}

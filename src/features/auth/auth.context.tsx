@@ -92,15 +92,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return;
       }
 
-      // Redirection automatique admin après callback OAuth Google
+      // Redirection automatique admin après connexion (OAuth ou Password)
       if (
         event === "SIGNED_IN" &&
         session?.user &&
-        _isOAuthReturn &&
         !window.location.pathname.startsWith("/admin")
       ) {
-        const email = (session.user.email || session.user.user_metadata?.email || "").toLowerCase();
+        const email = (session.user.email || session.user.user_metadata?.email || "").trim().toLowerCase();
         if (isAdminEmail(email)) {
+          console.log("[AuthProvider] Admin detected, redirecting to /admin");
           window.location.replace("/admin");
         }
       }

@@ -46,9 +46,9 @@ export default function AuthCallback() {
             redirectUser(data.session.user);
         };
 
-        const redirectUser = (user: any) => {
-            const email = (user.email || user.user_metadata?.email || "").toLowerCase();
-            if (ADMIN_EMAILS.includes(email)) {
+        const redirectUser = async (user: any) => {
+            const { isAdmin } = await import("@/features/auth/AdminRoute");
+            if (isAdmin(user)) {
                 navigate("/admin", { replace: true });
             } else {
                 navigate("/profile", { replace: true });
