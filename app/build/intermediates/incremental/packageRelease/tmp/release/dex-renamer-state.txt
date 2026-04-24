@@ -1,4 +1,4 @@
-#Thu Apr 23 13:26:16 GMT 2026
+#Fri Apr 24 18:27:50 GMT 2026
 base.0=/home/kizerbo/TEKH/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
 renamed.0=classes.dex
 path.0=classes.dex

@@ -4,7 +4,7 @@
     "type": "LINKED_RESOURCES_BINARY_FORMAT",
     "kind": "Directory"
   },
-  "applicationId": "com.tekhplus.twa",
+  "applicationId": "com.tekhplus.twa.admin",
   "variantName": "release",
   "elements": [
     {

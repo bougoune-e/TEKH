@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.tekhplus.twa",
+  "applicationId": "com.tekhplus.twa.admin",
   "variantName": "release",
   "elements": [
     {

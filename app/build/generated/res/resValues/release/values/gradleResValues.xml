@@ -8,9 +8,9 @@
     <!-- Value from default config. -->
     <bool name="enableSiteSettingsShortcut">true</bool>
     <!-- Value from default config. -->
-    <color name="backgroundColor">#FFFFFF</color>
+    <color name="backgroundColor">#000000</color>
     <!-- Value from default config. -->
-    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimary">#000000</color>
     <!-- Value from default config. -->
     <color name="colorPrimaryDark">#000000</color>
     <!-- Value from default config. -->
@@ -24,7 +24,7 @@
     <!-- Value from default config. -->
     <integer name="splashScreenFadeOutDuration">300</integer>
     <!-- Value from default config. -->
-    <string name="appName" translatable="false">TEKH+</string>
+    <string name="appName" translatable="false">TEKH+ Admin</string>
     <!-- Value from default config. -->
     <string name="fallbackType" translatable="false">customtabs</string>
     <!-- Value from default config. -->
@@ -34,14 +34,14 @@
     <!-- Value from default config. -->
     <string name="hostName" translatable="false">www.tekhplus.com</string>
     <!-- Value from default config. -->
-    <string name="launchUrl" translatable="false">https://www.tekhplus.com/</string>
+    <string name="launchUrl" translatable="false">https://www.tekhplus.com/admin</string>
     <!-- Value from default config. -->
-    <string name="launcherName" translatable="false">TEKH+</string>
+    <string name="launcherName" translatable="false">TEKH+ Admin</string>
     <!-- Value from default config. -->
     <string name="orientation" translatable="false">portrait</string>
     <!-- Value from default config. -->
-    <string name="providerAuthority" translatable="false">com.tekhplus.twa.fileprovider</string>
+    <string name="providerAuthority" translatable="false">com.tekhplus.twa.admin.fileprovider</string>
     <!-- Value from default config. -->
-    <string name="webManifestUrl" translatable="false">https://tekh-1.onrender.com/manifest.webmanifest</string>
+    <string name="webManifestUrl" translatable="false">https://www.tekhplus.com/manifest.webmanifest</string>
 
 </resources>

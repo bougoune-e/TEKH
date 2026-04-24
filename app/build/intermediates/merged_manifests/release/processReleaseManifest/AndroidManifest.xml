@@ -22,7 +22,7 @@
      the abbreviated format.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.tekhplus.twa"
+    package="com.tekhplus.twa.admin"
     android:versionCode="2"
     android:versionName="2" >
 
@@ -43,10 +43,10 @@
     </queries>
 
     <permission
-        android:name="com.tekhplus.twa.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+        android:name="com.tekhplus.twa.admin.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.tekhplus.twa.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+    <uses-permission android:name="com.tekhplus.twa.admin.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
 
     <application
         android:name="com.tekhplus.twa.Application"
@@ -181,7 +181,7 @@
 
         <provider
             android:name="androidx.startup.InitializationProvider"
-            android:authorities="com.tekhplus.twa.androidx-startup"
+            android:authorities="com.tekhplus.twa.admin.androidx-startup"
             android:exported="false" >
             <meta-data
                 android:name="androidx.emoji2.text.EmojiCompatInitializer"
