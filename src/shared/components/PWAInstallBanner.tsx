@@ -8,7 +8,14 @@ import {
   triggerPWAInstall,
 } from "@/core/pwa/pwaInstall";
 
-const THREE_DAYS = 3 * 24 * 60 * 60 * 1000;
+const ONE_DAY = 24 * 60 * 60 * 1000;
+
+/** Safari sur iOS = seul browser capable d'installer une PWA sur Apple */
+function isSafariBrowser() {
+  const ua = navigator.userAgent;
+  // Safari contient "Safari" mais PAS "Chrome", "CriOS", "FxiOS", "GSA"
+  return /Safari/.test(ua) && !/Chrome|CriOS|FxiOS|GSA|OPiOS/.test(ua);
+}
 
 /* ── Guide iOS ── bottom sheet avec étapes visuelles ── */
 function IOSGuide({ onClose }: { onClose: () => void }) {
@@ -131,10 +138,12 @@ const PWAInstallBanner = () => {
     if (isStandalonePWA()) return;
 
     const dismissedAt = localStorage.getItem("pwa_dismissed_at");
-    if (dismissedAt && Date.now() - Number(dismissedAt) < THREE_DAYS) return;
+    if (dismissedAt && Date.now() - Number(dismissedAt) < ONE_DAY) return;
 
     if (ios) {
-      const t = setTimeout(() => setShowIOS(true), 3000);
+      // N'afficher que dans Safari — Chrome/Firefox iOS ne peuvent pas installer
+      if (!isSafariBrowser()) return;
+      const t = setTimeout(() => setShowIOS(true), 2000);
       return () => clearTimeout(t);
     }
 
@@ -143,7 +152,8 @@ const PWAInstallBanner = () => {
     } else {
       return onPromptAvailable(() => setShowAndroid(true));
     }
-  }, [ios]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleInstall = async () => {
     const outcome = await triggerPWAInstall();

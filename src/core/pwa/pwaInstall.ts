@@ -39,9 +39,17 @@ export function isStandalonePWA() {
   );
 }
 
-/** True if the device is iOS (Safari install is manual). */
+/** True if the device is iOS (Safari install is manual).
+ *  iOS 13+ on iPad reports macOS in the UA — we add touch-point fallback.
+ */
 export function isIOSDevice() {
-  return /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+  const ua = navigator.userAgent;
+  // Classic iPhone/iPod check
+  if (/iPhone|iPod/.test(ua) && !(window as any).MSStream) return true;
+  // iPad iOS 13+ reports itself as "Macintosh" but has touch
+  if (/iPad/.test(ua)) return true;
+  if (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1) return true;
+  return false;
 }
 
 /**
