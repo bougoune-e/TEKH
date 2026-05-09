@@ -2,7 +2,19 @@
  * TEKH+ — Moteur de pricing (source de vérité métier)
  * VRT = PRT × C_marque × C_age × C_etat × C_batterie × C_marche × C_securite + Bonus
  * Puis × C_châssis (0.85 si abîmé). Plancher : VRT < 5% du PRT → reprise refusée (0).
+ *
+ * Arrondi : tous les montants sont arrondis AU MILLIER INFÉRIEUR (Math.floor / 1000).
+ * → Prix ronds, payables en espèces, et toujours en faveur du client.
  */
+
+/**
+ * Arrondit un montant brut au millier FCFA inférieur.
+ * Ex : 56 040 → 56 000 | 128 140 → 128 000 | 64 780 → 64 000
+ * Le client gagne toujours la différence (max 999 FCFA, < 1 % de marge).
+ */
+export function arrondirPrix(montant: number): number {
+  return Math.floor(montant / 1000) * 1000;
+}
 
 export const VRT_FLOOR_RATIO = 0.05;
 export const C_MARCHE = 0.85;
@@ -115,14 +127,14 @@ function getCoefficientBatterie(b: BatterieTekh): number {
 
 /** Bonus additifs, plafonné à +7,5 % du VRT avant bonus */
 function applyBonus(vrtBeforeBonus: number, bonus?: TekhBonusInput): number {
-  if (!bonus) return Math.round(vrtBeforeBonus);
+  if (!bonus) return arrondirPrix(vrtBeforeBonus);
   let p = 0;
   if (bonus.boiteEtAccessoiresComplets) p += 0.03;
   if (bonus.compatible5g) p += 0.02;
   if (bonus.debloqueTousOperateurs) p += 0.015;
   if (bonus.factureAchatOriginale) p += 0.01;
   p = Math.min(0.075, p);
-  return Math.round(vrtBeforeBonus * (1 + p));
+  return arrondirPrix(vrtBeforeBonus * (1 + p));
 }
 
 /**
@@ -214,7 +226,7 @@ export function calculerEstimation(
   vrt = applyBonus(vrt, diag.bonus);
 
   if (vrt < prt * VRT_FLOOR_RATIO) return 0;
-  return Math.round(vrt);
+  return arrondirPrix(vrt);
 }
 
 export interface SwapGapResult {
@@ -293,13 +305,14 @@ export function getSwapGap(
   const excédentUtilisateur = vrtUtilisateur - prtCible;
 
   if (gap >= 0) {
+    const amountToPay = arrondirPrix(gap);
     return {
       gap,
       blocked: false,
-      amountToPay: gap,
+      amountToPay,
       tekhPointsCredited: 0,
       downgradeAbsorbed: false,
-      formatted: fmt(gap),
+      formatted: fmt(amountToPay),
       isUpgrade: true,
     };
   }
@@ -316,7 +329,7 @@ export function getSwapGap(
     };
   }
 
-  const tekhPointsCredited = Math.round(excédentUtilisateur);
+  const tekhPointsCredited = arrondirPrix(excédentUtilisateur);
 
   return {
     gap,
