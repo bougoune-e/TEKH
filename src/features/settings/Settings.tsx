@@ -3,7 +3,6 @@ import {
     Globe,
     Sun,
     Moon,
-    Monitor,
     LogOut,
     ChevronRight,
     Camera,
@@ -48,7 +47,7 @@ export default function SettingsPage() {
     useEffect(() => {
         if (!isPushSupported() || getNotificationPermission() !== "granted") return;
         if (!user?.id) return;
-        subscribeToPush(user.id).catch(() => {});
+        subscribeToPush(user.id).catch(() => { });
     }, [user?.id]);
 
     const savePassionBio = async () => {
@@ -101,24 +100,23 @@ export default function SettingsPage() {
     const themeOptions = [
         { value: "light", label: "Clair", icon: Sun },
         { value: "dark", label: "Sombre", icon: Moon },
-        { value: "system", label: "Auto", icon: Monitor },
     ];
 
     const navSections = [
         {
             title: t('settings.navigate', 'Activités'),
             items: [
-                { icon: List,       label: t('settings.history', 'Historique'),  desc: t('settings.history_desc', 'Transactions passées'),   path: "/historique" },
-                { icon: Package,    label: t('settings.orders', 'Commandes'),    desc: t('settings.orders_desc', 'Achats en cours'),          path: "/commandes" },
-                { icon: CreditCard, label: t('settings.payment', 'Paiement'),    desc: t('settings.payment_desc', 'Méthodes de paiement'),    path: "/panier" },
-                { icon: MapPin,     label: t('settings.addresses', 'Adresses'),  desc: t('settings.addresses_desc', 'Lieux de réception'),    path: "/profile" },
+                { icon: List, label: t('settings.history', 'Historique'), desc: t('settings.history_desc', 'Transactions passées'), path: "/historique" },
+                { icon: Package, label: t('settings.orders', 'Commandes'), desc: t('settings.orders_desc', 'Achats en cours'), path: "/commandes" },
+                { icon: CreditCard, label: t('settings.payment', 'Paiement'), desc: t('settings.payment_desc', 'Méthodes de paiement'), path: "/panier" },
+                { icon: MapPin, label: t('settings.addresses', 'Adresses'), desc: t('settings.addresses_desc', 'Lieux de réception'), path: "/profile" },
             ],
         },
         {
             title: t('settings.preferences', 'Préférences'),
             items: [
-                { icon: Bell,     label: t('settings.alerts', 'Notifications'), desc: pushGranted ? 'Activées' : t('settings.alerts_desc', 'Alertes et offres'), path: "/notifications" },
-                { icon: LifeBuoy, label: t('settings.support', 'Support'),      desc: t('settings.support_desc', 'Aide & assistance'),  path: "/contact" },
+                { icon: Bell, label: t('settings.alerts', 'Notifications'), desc: pushGranted ? 'Activées' : t('settings.alerts_desc', 'Alertes et offres'), path: "/notifications" },
+                { icon: LifeBuoy, label: t('settings.support', 'Support'), desc: t('settings.support_desc', 'Aide & assistance'), path: "/contact" },
             ],
         },
     ];
@@ -249,11 +247,10 @@ export default function SettingsPage() {
                                             key={value}
                                             onClick={() => setTheme(value as any)}
                                             title={label}
-                                            className={`w-8 h-7 rounded-lg flex items-center justify-center transition-all ${
-                                                theme === value
+                                            className={`w-8 h-7 rounded-lg flex items-center justify-center transition-all ${theme === value
                                                     ? "bg-background text-foreground shadow-sm"
                                                     : "text-muted-foreground hover:text-foreground"
-                                            }`}
+                                                }`}
                                         >
                                             <Icon className="w-3.5 h-3.5" strokeWidth={1.8} />
                                         </button>
@@ -274,11 +271,10 @@ export default function SettingsPage() {
                                         <button
                                             key={l}
                                             onClick={() => changeLanguage(l)}
-                                            className={`px-3 h-7 rounded-lg text-xs font-bold uppercase tracking-wide transition-all ${
-                                                lang === l
+                                            className={`px-3 h-7 rounded-lg text-xs font-bold uppercase tracking-wide transition-all ${lang === l
                                                     ? "bg-background text-foreground shadow-sm"
                                                     : "text-muted-foreground hover:text-foreground"
-                                            }`}
+                                                }`}
                                         >
                                             {l}
                                         </button>
@@ -311,11 +307,10 @@ export default function SettingsPage() {
                                             else toast.success("Notifications activées !");
                                             setPushLoading(false);
                                         }}
-                                        className={`rounded-xl h-8 px-4 text-xs font-bold border-0 ${
-                                            pushGranted
+                                        className={`rounded-xl h-8 px-4 text-xs font-bold border-0 ${pushGranted
                                                 ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 cursor-default pointer-events-none"
                                                 : "bg-foreground text-background hover:opacity-90"
-                                        }`}
+                                            }`}
                                     >
                                         {pushLoading ? "…" : pushGranted ? "Activé" : "Activer"}
                                     </Button>
