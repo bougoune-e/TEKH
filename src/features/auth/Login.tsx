@@ -76,7 +76,13 @@ export default function Login() {
     if (data?.user) {
       const params = new URLSearchParams(window.location.search);
       const redirectTo = params.get("redirect_to") || "/profile";
-      navigate(redirectTo, { replace: true });
+
+      // Hard reload for /admin so Chrome registers the new Admin PWA manifest
+      if (redirectTo.startsWith("/admin")) {
+        window.location.replace(redirectTo);
+      } else {
+        navigate(redirectTo, { replace: true });
+      }
     } else {
       setLoading(false);
     }
