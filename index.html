@@ -31,7 +31,13 @@
   <link rel="icon" href="/src/assets/logos/robott.jpeg" type="image/jpeg" />
   <link rel="apple-touch-icon" href="/icon-512.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/icon-512.png" />
-  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="manifest" id="app-manifest" href="/manifest.webmanifest" />
+  <script>
+    // Set admin manifest if loading directly into /admin
+    if (window.location.pathname.startsWith('/admin')) {
+      document.getElementById('app-manifest').href = '/admin-manifest.webmanifest';
+    }
+  </script>
   <!-- lottie-web CDN — chargé avant React, aucun impact bundle -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
   <style>

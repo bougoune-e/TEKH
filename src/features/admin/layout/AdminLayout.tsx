@@ -67,8 +67,13 @@ function AdminFAB() {
 }
 
 const AdminLayout = () => {
-  // Manifest swapping was removed to avoid PWA instability 
-  // between separated APKs (Standard/Admin) on the same domain.
+  useEffect(() => {
+    // Inject the admin manifest dynamically so the browser's PWA heuristics pick up "TEKH+ Admin"
+    const link = document.getElementById("app-manifest") as HTMLLinkElement;
+    if (link && link.href !== window.location.origin + "/admin-manifest.webmanifest") {
+      link.href = "/admin-manifest.webmanifest";
+    }
+  }, []);
 
   return (
     <div className="min-h-dvh flex bg-background">
