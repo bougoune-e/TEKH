@@ -37,80 +37,82 @@ const Layout = () => {
       sessionStorage.removeItem(AUTH_REDIRECT_KEY);
       navigate("/admin", { replace: true });
     }
-    // App route ensures standard manifest
-    useEffect(() => {
-      const link = document.getElementById("app-manifest") as HTMLLinkElement;
-      if (link && link.href !== window.location.origin + "/manifest.webmanifest") {
-        link.href = "/manifest.webmanifest";
-      }
-    }, []);
+  }, [user, location.pathname, navigate]);
 
-    return (
-      <div className={`flex min-h-[100dvh] bg-background text-foreground transition-colors overflow-x-hidden ${isPWA ? 'mode-pwa' : ''} pt-safe pb-safe`}>
-        {/* Background tech ambiance — web uniquement, très subtil */}
-        {!isPWA && (
-          <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
-            <img
-              src="/header/header-2.png"
-              alt=""
-              className="absolute w-full h-full object-cover"
-              style={{ opacity: 0.022, filter: "blur(40px) saturate(1.4)", transform: "scale(1.1)" }}
-            />
-            <div className="absolute inset-0 bg-background/80" />
-          </div>
-        )}
-        <Sidebar />
-        <PWAInstallBanner />
-        <div className={`flex-1 flex flex-col md:pl-16 relative min-w-0 md:pb-0 ${isPWA ? "pb-28" : "pb-20"}`}>
-          {/* Header — transparent en haut de la homepage, opaque ailleurs */}
-          <header className={`sticky top-0 z-40 w-full transition-all duration-300 pt-safe shrink-0 ${isHomepage && !scrolled && !isPWA
-            ? "border-transparent bg-transparent"
-            : "border-b border-border/5 bg-background/95 backdrop-blur-xl"
-            }`}>
-            <div className="w-full px-4 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between gap-3">
-              {/* Branding / Logo Area */}
-              <div className="flex items-center gap-3">
-                <Link
-                  to={isPWA ? "/settings" : "/"}
-                  className="md:hidden shrink-0 p-2 hover:bg-white/5 rounded-full transition-all group/settings active:scale-95"
-                >
-                  {isPWA ? (
-                    <SettingsIcon className="h-6 w-6 text-foreground group-hover/settings:text-primary" strokeWidth={2} />
-                  ) : (
-                    <div className="h-10 w-10 rounded-xl overflow-hidden border border-border/10 flex items-center justify-center">
-                      <img src={logo} alt="TΞKΗ+" className="h-full w-full object-cover" />
-                    </div>
-                  )}
-                </Link>
-              </div>
+  // App route ensures standard manifest
+  useEffect(() => {
+    const link = document.getElementById("app-manifest") as HTMLLinkElement;
+    if (link && link.href !== window.location.origin + "/manifest.webmanifest") {
+      link.href = "/manifest.webmanifest";
+    }
+  }, []);
 
-              {/* Barre de recherche centrée, fluide */}
-              <div className="flex-1 min-w-0 max-w-xl mx-auto">
-                <SearchBar />
-              </div>
-
-              {/* Actions */}
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => navigate("/notifications")}
-                  className="relative p-2 hover:bg-white/5 rounded-full transition-all group/bell active:scale-90"
-                >
-                  <Bell className="h-[24px] w-[24px] text-foreground group-hover/bell:text-primary" strokeWidth={2} />
-                </button>
-              </div>
-            </div>
-          </header>
-
-          <main className="flex-1 min-w-0 w-full">
-            <Outlet />
-          </main>
-          {/* Web: footer on all pages. PWA: footer on home page only */}
-          {(!isPWA || isHomepage) && <Footer />}
+  return (
+    <div className={`flex min-h-[100dvh] bg-background text-foreground transition-colors overflow-x-hidden ${isPWA ? 'mode-pwa' : ''} pt-safe pb-safe`}>
+      {/* Background tech ambiance — web uniquement, très subtil */}
+      {!isPWA && (
+        <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
+          <img
+            src="/header/header-2.png"
+            alt=""
+            className="absolute w-full h-full object-cover"
+            style={{ opacity: 0.022, filter: "blur(40px) saturate(1.4)", transform: "scale(1.1)" }}
+          />
+          <div className="absolute inset-0 bg-background/80" />
         </div>
-        <NewVersionBanner />
-        <BottomNav />
-      </div>
-    );
-  };
+      )}
+      <Sidebar />
+      <PWAInstallBanner />
+      <div className={`flex-1 flex flex-col md:pl-16 relative min-w-0 md:pb-0 ${isPWA ? "pb-28" : "pb-20"}`}>
+        {/* Header — transparent en haut de la homepage, opaque ailleurs */}
+        <header className={`sticky top-0 z-40 w-full transition-all duration-300 pt-safe shrink-0 ${isHomepage && !scrolled && !isPWA
+          ? "border-transparent bg-transparent"
+          : "border-b border-border/5 bg-background/95 backdrop-blur-xl"
+          }`}>
+          <div className="w-full px-4 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between gap-3">
+            {/* Branding / Logo Area */}
+            <div className="flex items-center gap-3">
+              <Link
+                to={isPWA ? "/settings" : "/"}
+                className="md:hidden shrink-0 p-2 hover:bg-white/5 rounded-full transition-all group/settings active:scale-95"
+              >
+                {isPWA ? (
+                  <SettingsIcon className="h-6 w-6 text-foreground group-hover/settings:text-primary" strokeWidth={2} />
+                ) : (
+                  <div className="h-10 w-10 rounded-xl overflow-hidden border border-border/10 flex items-center justify-center">
+                    <img src={logo} alt="TΞKΗ+" className="h-full w-full object-cover" />
+                  </div>
+                )}
+              </Link>
+            </div>
 
-  export default Layout;
+            {/* Barre de recherche centrée, fluide */}
+            <div className="flex-1 min-w-0 max-w-xl mx-auto">
+              <SearchBar />
+            </div>
+
+            {/* Actions */}
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => navigate("/notifications")}
+                className="relative p-2 hover:bg-white/5 rounded-full transition-all group/bell active:scale-90"
+              >
+                <Bell className="h-[24px] w-[24px] text-foreground group-hover/bell:text-primary" strokeWidth={2} />
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <main className="flex-1 min-w-0 w-full">
+          <Outlet />
+        </main>
+        {/* Web: footer on all pages. PWA: footer on home page only */}
+        {(!isPWA || isHomepage) && <Footer />}
+      </div>
+      <NewVersionBanner />
+      <BottomNav />
+    </div>
+  );
+};
+
+export default Layout;
