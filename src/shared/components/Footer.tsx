@@ -162,6 +162,14 @@ const Footer = () => {
 
         <div className="border-t border-border/50 mt-8 pt-8 text-center text-sm text-muted-foreground">
           <p>&copy; {currentYear} TΞKΗ+. Tous droits réservés.</p>
+          <p className="mt-2 text-xs text-muted-foreground/70 max-w-xl mx-auto leading-relaxed">
+            Le site tekhplus.com (TΞKΗ+) est une plateforme en cours de déploiement à Lomé, Togo.
+            Le service est actuellement édité à titre personnel par son fondateur dans le cadre d'un lancement de projet.
+            Pour toute question :{" "}
+            <a href="mailto:tekhswap@gmail.com" className="hover:text-primary transition-colors underline underline-offset-2">
+              tekhswap@gmail.com
+            </a>.
+          </p>
         </div>
       </div>
     </footer>

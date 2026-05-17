@@ -23,11 +23,11 @@ const MentionsLegales = () => {
           <section>
             <h2 className="text-2xl font-black mb-4 uppercase tracking-tight text-primary">1. Éditeur du Site</h2>
             <p>
-              Le site TΞKΗ+ est édité par la société <strong className="text-black dark:text-white">TEKH SOLUTIONS</strong>,
-              Société à Responsabilité Limitée (SARL) au capital de 1 000 000 FCFA.
-              <br />Siège social : Quartier Agoè, Lomé, Togo.
-              <br />Immatriculation : RCCM TG-LOM 2024 B XXXX.
-              <br />Directeur de la publication : Kizerbo Desmond.
+              Le site <strong className="text-black dark:text-white">tekhplus.com (TΞKΗ+)</strong> est une plateforme numérique
+              en cours de déploiement à Lomé, Togo. Le service est actuellement édité à titre personnel par son fondateur
+              dans le cadre d'un lancement de projet. L'entité juridique n'est pas encore officiellement enregistrée.
+              <br />Pour toute question, contactez-nous à{" "}
+              <a href="mailto:tekhswap@gmail.com" className="text-primary underline">tekhswap@gmail.com</a>.
             </p>
           </section>
 
