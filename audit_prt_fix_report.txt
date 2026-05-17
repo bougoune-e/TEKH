@@ -1,0 +1,18 @@
+╔══════════════════════════════════════════════════════════════════╗
+║     AUDIT PRT MANQUANTS + FIX iPhone XS Max 64GB — TEKH+        ║
+╚══════════════════════════════════════════════════════════════════╝
+Date : 17/05/2026 10:25:14
+DB   : 2251 enregistrements au total
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. MODÈLES SANS PRT (prt_fcfa null ou 0) : 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ✅ Tous les enregistrements ont un prt_fcfa > 0.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+2. BILAN iPhone XS Max 64GB
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Variantes XS Max trouvées (toutes): 2
+  Variante 64GB spécifique: ABSENTE
+  Action: INSERTION ✅ RÉUSSIE
+  prt_fcfa fixé à: 50000 FCFA
