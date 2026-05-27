@@ -95,7 +95,7 @@ const corsOptions = {
       callback(null, true);
     } else {
       console.warn(`[CORS] Rejected origin: ${origin}`);
-      callback(null, true); // Allow all for now
+      callback(new Error("CORS origin not allowed"));
     }
   },
   methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],

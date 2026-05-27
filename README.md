@@ -21,7 +21,8 @@ This is the frontend for the TEKH project, a React application built with Vite, 
 
 ## Backend
 
-The backend is located in a separate repository. Make sure to run the backend server for full functionality.
+The backend code is available in this repository under `tekh_backend/backend`.
+Run it for full functionality when working locally.
 
 ## Features
 
