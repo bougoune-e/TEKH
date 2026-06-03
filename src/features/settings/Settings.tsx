@@ -248,8 +248,8 @@ export default function SettingsPage() {
                                             onClick={() => setTheme(value as any)}
                                             title={label}
                                             className={`w-8 h-7 rounded-lg flex items-center justify-center transition-all ${theme === value
-                                                    ? "bg-background text-foreground shadow-sm"
-                                                    : "text-muted-foreground hover:text-foreground"
+                                                ? "bg-background text-foreground shadow-sm"
+                                                : "text-muted-foreground hover:text-foreground"
                                                 }`}
                                         >
                                             <Icon className="w-3.5 h-3.5" strokeWidth={1.8} />
@@ -272,8 +272,8 @@ export default function SettingsPage() {
                                             key={l}
                                             onClick={() => changeLanguage(l)}
                                             className={`px-3 h-7 rounded-lg text-xs font-bold uppercase tracking-wide transition-all ${lang === l
-                                                    ? "bg-background text-foreground shadow-sm"
-                                                    : "text-muted-foreground hover:text-foreground"
+                                                ? "bg-background text-foreground shadow-sm"
+                                                : "text-muted-foreground hover:text-foreground"
                                                 }`}
                                         >
                                             {l}
@@ -298,18 +298,25 @@ export default function SettingsPage() {
                                     </div>
                                     <Button
                                         size="sm"
-                                        disabled={pushLoading || pushGranted}
+                                        disabled={pushLoading}
                                         onClick={async () => {
+                                            if (!user?.id) {
+                                                const { toast } = await import("sonner");
+                                                toast.error("Veuillez vous connecter pour activer les notifications.");
+                                                return;
+                                            }
+                                            if (pushGranted) return;
+
                                             setPushLoading(true);
                                             const { toast } = await import("sonner");
-                                            const err = await subscribeToPush(user?.id ?? null);
+                                            const err = await subscribeToPush(user.id);
                                             if (err) toast.error(err);
                                             else toast.success("Notifications activées !");
                                             setPushLoading(false);
                                         }}
                                         className={`rounded-xl h-8 px-4 text-xs font-bold border-0 ${pushGranted
-                                                ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 cursor-default pointer-events-none"
-                                                : "bg-foreground text-background hover:opacity-90"
+                                            ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 cursor-default pointer-events-none"
+                                            : "bg-foreground text-background hover:opacity-90"
                                             }`}
                                     >
                                         {pushLoading ? "…" : pushGranted ? "Activé" : "Activer"}
