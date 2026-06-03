@@ -1,6 +1,7 @@
 import offerImg from "@/assets/illustrations/deals/offer.png";
 import fcfaImg from "@/assets/illustrations/deals/fcfa.jpg";
 import swapImg from "@/assets/illustrations/deals/swap.jpeg";
+import { ArrowRight } from "lucide-react";
 
 /** SVG coche de validation — noire sur fond vert */
 const ValidationSVG = () => (
@@ -44,7 +45,7 @@ const ExchangeProcess = () => {
                 {/* Grille responsive: 2 colonnes mobile, 4 desktop */}
                 <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4 items-start">
                     {steps.map((step, idx) => (
-                        <div key={idx} className="space-y-2 group">
+                        <div key={idx} className="relative space-y-2 group">
                             <div className="relative h-20 md:h-28 rounded-[14px] overflow-hidden border-2 border-black dark:border-white shadow-md group-hover:scale-[1.03] transition-transform duration-400">
                                 <img src={step.img} alt={step.title} className="w-full h-full object-cover" />
                                 <div className="absolute top-1 left-1 h-5 w-5 bg-black dark:bg-white text-white dark:text-black rounded-md flex items-center justify-center font-black text-[10px] shadow">
@@ -57,6 +58,12 @@ const ExchangeProcess = () => {
                                     {step.desc}
                                 </p>
                             </div>
+                            {/* Directional arrow for mobile (only between 1-2 and 3-4 in 2x2 grid) */}
+                            {idx % 2 === 0 && (
+                                <div className="absolute -right-3 top-8 md:hidden z-20 text-primary animate-pulse">
+                                    <ArrowRight size={16} strokeWidth={3} />
+                                </div>
+                            )}
                         </div>
                     ))}
 

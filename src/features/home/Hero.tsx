@@ -37,7 +37,7 @@ const Hero = () => {
                 </div>
               </div>
 
-              <h1 className="text-2xl md:text-5xl lg:text-7xl xl:text-8xl font-black leading-[1.1] tracking-tighter text-black dark:text-white">
+              <h1 className="text-2xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-[1.1] tracking-tighter text-black dark:text-white">
                 <span className="block mb-1">Change ton</span>
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-black via-primary to-black dark:from-white dark:via-primary dark:to-white">téléphone,</span>
                 <br />

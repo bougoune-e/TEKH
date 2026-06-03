@@ -30,7 +30,7 @@ export default function BottomNav() {
       ? "h-[74px] bg-background/98 backdrop-blur-2xl border-t border-border/20 px-4 pb-safe shadow-[0_-4px_24px_rgb(0,0,0,0.08)]"
       : "h-[74px] bg-background/95 backdrop-blur-xl border-t border-border/10 px-2 pb-safe"
       }`}>
-      <div className={`flex items-center h-full max-w-md mx-auto justify-around`}>
+      <div className="flex items-center h-full max-w-md mx-auto justify-around touch-none">
         {navItems.map(({ to, label, Icon, isFocal }) => {
           const active = pathname === to;
 
@@ -55,7 +55,7 @@ export default function BottomNav() {
             <Link
               key={to}
               to={to}
-              className={`flex flex-col items-center justify-center gap-1 transition-all duration-300 h-full ${isPWA
+              className={`flex flex-col items-center justify-center gap-1 transition-all duration-300 h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset rounded-lg ${isPWA
                 ? `active:scale-95 ${active ? "text-primary" : "text-black dark:text-foreground/60"}`
                 : `flex-1 active:scale-90 ${active ? "text-primary" : "text-black dark:text-foreground/60"}`
                 }`}
@@ -76,7 +76,8 @@ export default function BottomNav() {
         {/* 👤 Compte — même icône Lucide User que les autres */}
         <button
           onClick={() => navigate(profilePath)}
-          className={`flex flex-col items-center justify-center gap-1 transition-all duration-300 h-full ${isPWA
+          aria-label="Mon Compte"
+          className={`flex flex-col items-center justify-center gap-1 transition-all duration-300 h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset rounded-lg ${isPWA
             ? `active:scale-95 ${profileActive ? "text-primary" : "text-black dark:text-foreground/60"}`
             : `flex-1 active:scale-90 ${profileActive ? "text-primary" : "text-black dark:text-foreground/60"}`
             }`}
