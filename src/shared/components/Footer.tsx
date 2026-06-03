@@ -104,16 +104,16 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <img src={logo} alt="TΞKΗ+" className="h-8 w-8 rounded-md ring-1 ring-border" />
-              <span className="text-lg font-bold tracking-tight">TΞKΗ+</span>
+              <img src={logo} alt="TΞKΗ+" className="h-9 w-9 rounded-xl ring-1 ring-border" />
+              <span className="text-xl font-black tracking-tighter text-black dark:text-white">TΞKΗ+</span>
             </div>
-            <p className="text-muted-foreground text-sm leading-relaxed">
+            <p className="text-muted-foreground text-sm leading-relaxed font-medium">
               TΞKΗ+ : L'échange intelligent d'appareils électroniques. Passez à la vitesse supérieure, en toute simplicité.
             </p>
           </div>
 
           <div>
-            <h3 className="font-bold mb-4 text-foreground">Navigation rapide</h3>
+            <h3 className="text-[11px] font-black uppercase tracking-[0.15em] text-foreground/50 mb-5">Navigation rapide</h3>
             <nav>
               <ul className="space-y-2.5 text-sm">
                 <li><Link to="/a-propos" className="text-muted-foreground hover:text-primary transition-smooth font-medium inline-block">À Propos de Nous</Link></li>
@@ -125,7 +125,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="font-bold mb-4 text-foreground">Informations légales</h3>
+            <h3 className="text-[11px] font-black uppercase tracking-[0.15em] text-foreground/50 mb-5">Informations légales</h3>
             <ul className="space-y-2.5 text-sm">
               <li><Link to="/charte-qualite" className="text-muted-foreground hover:text-primary transition-smooth font-medium">Charte Qualité</Link></li>
               <li><Link to="/charte-du-swap" className="text-muted-foreground hover:text-primary transition-smooth font-medium">Charte du SWAP</Link></li>
@@ -139,19 +139,19 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="font-bold mb-4 text-foreground">Réseaux sociaux & Contact</h3>
-            <div className="flex items-center gap-3 mb-4">
-              <a href="https://www.facebook.com/profile.php?id=61587680237623" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="h-9 w-9 inline-flex items-center justify-center rounded-lg border border-border hover:bg-accent transition-smooth">
-                <Facebook className="h-4 w-4 text-[#1877F2]" />
+            <h3 className="text-[11px] font-black uppercase tracking-[0.15em] text-foreground/50 mb-5">Réseaux sociaux &amp; Contact</h3>
+            <div className="flex items-center gap-3 mb-5">
+              <a href="https://www.facebook.com/profile.php?id=61587680237623" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="h-10 w-10 inline-flex items-center justify-center rounded-xl border border-border hover:bg-accent hover:border-primary/20 transition-all">
+                <Facebook className="h-5 w-5 text-[#1877F2]" />
               </a>
-              <a href="https://www.tiktok.com/@tekh228?_r=1&_t=ZS-94xayuFa6LN" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="h-9 w-9 p-1.5 inline-flex items-center justify-center rounded-lg border border-border hover:bg-accent dark:bg-white dark:hover:bg-white transition-smooth">
-                <TikTokIcon className="h-4 w-4 text-black" />
+              <a href="https://www.tiktok.com/@tekh228?_r=1&_t=ZS-94xayuFa6LN" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="h-10 w-10 p-1.5 inline-flex items-center justify-center rounded-xl border border-border hover:bg-accent transition-all">
+                <TikTokIcon className="h-5 w-5 text-black dark:text-white" />
               </a>
-              <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="h-9 w-9 inline-flex items-center justify-center rounded-lg border border-border hover:bg-accent transition-smooth">
-                <Instagram className="h-4 w-4 text-[#E4405F]" />
+              <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="h-10 w-10 inline-flex items-center justify-center rounded-xl border border-border hover:bg-accent hover:border-primary/20 transition-all">
+                <Instagram className="h-5 w-5 text-[#E4405F]" />
               </a>
-              <a href={waHref} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="h-9 w-9 inline-flex items-center justify-center rounded-lg border border-border hover:bg-accent transition-smooth">
-                <WhatsAppIcon className="h-4 w-4 text-[#25D366]" />
+              <a href={waHref} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="h-10 w-10 inline-flex items-center justify-center rounded-xl border border-border hover:bg-accent hover:border-primary/20 transition-all">
+                <WhatsAppIcon className="h-5 w-5 text-[#25D366]" />
               </a>
             </div>
             <a href="mailto:tekhswap@gmail.com" className="text-sm inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-smooth">

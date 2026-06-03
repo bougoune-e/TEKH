@@ -137,7 +137,7 @@ export const HomeCarousel = () => {
                 </span>
               ) : null}
               <button
-                onClick={() => navigate("/deals")}
+                onClick={() => navigate(`/deals/${a.id}`)}
                 className="flex items-center gap-2 bg-white text-black px-5 py-2.5 rounded-full font-black text-sm hover:scale-105 active:scale-95 transition-all shadow-lg"
               >
                 Voir le deal

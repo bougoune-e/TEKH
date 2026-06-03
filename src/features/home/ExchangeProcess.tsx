@@ -52,8 +52,8 @@ const ExchangeProcess = () => {
                                 </div>
                             </div>
                             <div>
-                                <h3 className="text-[11px] md:text-sm font-black text-black dark:text-white leading-tight">{step.title}</h3>
-                                <p className="text-[9px] md:text-xs font-bold text-slate-500 dark:text-slate-400 leading-snug">
+                                <h3 className="text-xs md:text-sm font-black text-black dark:text-white leading-tight">{step.title}</h3>
+                                <p className="text-[11px] md:text-xs font-medium text-slate-500 dark:text-slate-400 leading-snug">
                                     {step.desc}
                                 </p>
                             </div>
@@ -70,13 +70,13 @@ const ExchangeProcess = () => {
                             <div className="absolute top-1 left-1 h-5 w-5 bg-black text-white rounded-md flex items-center justify-center font-black text-[10px] shadow border border-white/20">
                                 4
                             </div>
-                            <span className="mt-1 px-2 py-0.5 bg-black text-white rounded-full font-black text-[7px] md:text-[9px] uppercase tracking-widest">
+                            <span className="mt-1 px-2 py-0.5 bg-black text-white rounded-full font-black text-[10px] md:text-xs uppercase tracking-widest">
                                 Terminé !
                             </span>
                         </div>
                         <div>
-                            <h3 className="text-[11px] md:text-sm font-black text-black dark:text-white leading-tight">Deal Validé</h3>
-                            <p className="text-[9px] md:text-xs font-bold text-slate-500 dark:text-slate-400 leading-snug">
+                            <h3 className="text-xs md:text-sm font-black text-black dark:text-white leading-tight">Deal Validé</h3>
+                            <p className="text-[11px] md:text-xs font-medium text-slate-500 dark:text-slate-400 leading-snug">
                                 Échange finalisé, appareil prêt.
                             </p>
                         </div>

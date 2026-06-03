@@ -15,8 +15,8 @@ const AboutSection = () => {
                   L'Échange,<br /><span className="text-[#064e3b] dark:text-[#059669]">pas la vente.</span>
                 </h2>
               </div>
-              <p className="text-xl text-slate-600 dark:text-zinc-400 font-bold leading-relaxed">
-                Sur TΞKΗ+, vous n'achetez pas. Vous n'vendez pas. Vous <strong className="text-black dark:text-white">échangez</strong>. C'est la finalité absolue, le cœur battant de la plateforme — un troc intelligent, certifié et équitable pour l'Afrique.
+              <p className="text-lg text-slate-600 dark:text-zinc-400 font-medium leading-relaxed">
+                Sur TΞKΗ+, vous n'achetez pas. Vous ne vendez pas. Vous <strong className="text-black dark:text-white font-black">échangez</strong>. C'est la finalité absolue, le cœur battant de la plateforme — un troc intelligent, certifié et équitable pour l'Afrique.
               </p>
             </div>
             <div className="relative group p-8 rounded-[40px] border-2 border-[#064e3b] dark:border-[#059669] shadow-2xl overflow-hidden bg-[#064e3b] dark:bg-[#059669]">
@@ -31,14 +31,14 @@ const AboutSection = () => {
           <div className="grid md:grid-cols-3 gap-8">
             <div className="p-8 rounded-[32px] bg-white dark:bg-zinc-900 border-2 border-black dark:border-white hover:-translate-y-2 transition-all duration-500 shadow-xl">
               <h3 className="text-2xl font-black mb-4 uppercase tracking-tight text-[#064e3b] dark:text-[#059669]">Notre Mission</h3>
-              <p className="text-slate-600 dark:text-zinc-400 font-bold leading-relaxed">
+              <p className="text-slate-600 dark:text-zinc-400 font-medium leading-relaxed">
                 Permettre à chaque citoyen d'<strong className="text-black dark:text-white">échanger</strong> son appareil contre un modèle supérieur, sans débourser le prix du neuf. L'échange est notre moteur — pas la transaction commerciale classique.
               </p>
             </div>
 
             <div className="p-8 rounded-[32px] bg-white dark:bg-zinc-900 border-2 border-black dark:border-white hover:-translate-y-2 transition-all duration-500 shadow-xl">
               <h3 className="text-2xl font-black mb-4 uppercase tracking-tight text-[#064e3b] dark:text-[#059669]">Notre Vision</h3>
-              <p className="text-slate-600 dark:text-zinc-400 font-bold leading-relaxed">
+              <p className="text-slate-600 dark:text-zinc-400 font-medium leading-relaxed">
                 Faire du <strong className="text-black dark:text-white">SWAP</strong> le réflexe numéro un en Afrique. Quand votre téléphone vieillit, vous ne le jetez pas, vous ne le vendez pas — vous l'échangez via TΞKΗ+, certifié DEALBOX, en toute sécurité.
               </p>
             </div>
@@ -48,23 +48,23 @@ const AboutSection = () => {
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
                   <span className="h-2 w-2 rounded-full mt-2 shrink-0 bg-[#064e3b] dark:bg-[#059669]" />
-                  <span className="text-slate-600 dark:text-zinc-400 font-bold"><strong className="text-black dark:text-white">L'Échange d'abord</strong> — jamais la vente sèche</span>
+                  <span className="text-slate-600 dark:text-zinc-400 font-medium"><strong className="text-black dark:text-white">L'Échange d'abord</strong> — jamais la vente sèche</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="h-2 w-2 rounded-full mt-2 shrink-0 bg-[#064e3b] dark:bg-[#059669]" />
-                  <span className="text-slate-600 dark:text-zinc-400 font-bold">Équité & Transparence du SWAP</span>
+                  <span className="text-slate-600 dark:text-zinc-400 font-medium">Équité & Transparence du SWAP</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="h-2 w-2 rounded-full mt-2 shrink-0 bg-[#064e3b] dark:bg-[#059669]" />
-                  <span className="text-slate-600 dark:text-zinc-400 font-bold">Responsabilité Écologique</span>
+                  <span className="text-slate-600 dark:text-zinc-400 font-medium">Responsabilité Écologique</span>
                 </li>
               </ul>
             </div>
           </div>
 
           {/* Bloc manifeste — L'échange comme philosophie */}
-          <div className="space-y-12 font-bold leading-relaxed text-lg">
-            <section className="space-y-4">
+          <div className="space-y-16 font-medium leading-relaxed text-lg">
+            <section className="space-y-6">
               <h3 className="text-3xl font-black text-black dark:text-white">Pourquoi l'échange et non la vente ?</h3>
               <p className="text-slate-600 dark:text-zinc-400">
                 La vente crée une transaction à sens unique. L'<strong className="text-black dark:text-white">échange</strong> crée une relation d'équité. Sur TΞKΗ+, vous apportez votre appareil, notre algorithme calcule sa valeur réelle, et vous repartez avec un appareil supérieur — la différence de valeur est compensée de façon transparente et certifiée.
@@ -74,7 +74,7 @@ const AboutSection = () => {
               </p>
             </section>
 
-            <section className="space-y-4 p-10 bg-black dark:bg-white rounded-[40px] shadow-2xl">
+            <section className="space-y-6 p-10 bg-black dark:bg-white rounded-[40px] shadow-2xl">
               <h3 className="text-3xl font-black text-white dark:text-black">L'Impact de l'Échange</h3>
               <p className="opacity-80 text-white dark:text-black">
                 Chaque SWAP réalisé via TΞKΗ+ évite la production d'un nouvel appareil, économise des ressources naturelles critiques (Lithium, Cobalt, Terres rares) et réduit massivement l'empreinte carbone. L'échange n'est pas seulement intelligent — il est <strong className="text-white dark:text-black">responsable</strong>.

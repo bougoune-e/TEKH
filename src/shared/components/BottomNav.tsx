@@ -27,8 +27,8 @@ export default function BottomNav() {
 
   return (
     <nav className={`fixed bottom-0 left-0 right-0 z-50 md:hidden transition-all duration-300 ${isPWA
-      ? "h-[74px] bg-background/95 backdrop-blur-2xl border-t border-border/10 px-4 pb-safe shadow-[0_-8px_30px_rgb(0,0,0,0.12)]"
-      : "h-[74px] bg-background/90 backdrop-blur-xl border-t border-border/5 px-2 pb-safe"
+      ? "h-[74px] bg-background/98 backdrop-blur-2xl border-t border-border/20 px-4 pb-safe shadow-[0_-4px_24px_rgb(0,0,0,0.08)]"
+      : "h-[74px] bg-background/95 backdrop-blur-xl border-t border-border/10 px-2 pb-safe"
       }`}>
       <div className={`flex items-center h-full max-w-md mx-auto justify-around`}>
         {navItems.map(({ to, label, Icon, isFocal }) => {
@@ -56,7 +56,7 @@ export default function BottomNav() {
               key={to}
               to={to}
               className={`flex flex-col items-center justify-center gap-1 transition-all duration-300 h-full ${isPWA
-                ? `active:scale-95 ${active ? "text-primary" : "text-black dark:text-foreground/40"}`
+                ? `active:scale-95 ${active ? "text-primary" : "text-black dark:text-foreground/60"}`
                 : `flex-1 active:scale-90 ${active ? "text-primary" : "text-black dark:text-foreground/60"}`
                 }`}
             >
@@ -77,7 +77,7 @@ export default function BottomNav() {
         <button
           onClick={() => navigate(profilePath)}
           className={`flex flex-col items-center justify-center gap-1 transition-all duration-300 h-full ${isPWA
-            ? `active:scale-95 ${profileActive ? "text-primary" : "text-black dark:text-foreground/40"}`
+            ? `active:scale-95 ${profileActive ? "text-primary" : "text-black dark:text-foreground/60"}`
             : `flex-1 active:scale-90 ${profileActive ? "text-primary" : "text-black dark:text-foreground/60"}`
             }`}
         >

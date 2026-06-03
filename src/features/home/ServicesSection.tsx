@@ -49,7 +49,7 @@ const services = [
     icon: Code,
     emoji: "💻",
     color: "bg-zinc-900",
-    borderColor: "border-[#064e3b]",
+    borderColor: "border-[#064e3b]/20 dark:border-zinc-800",
   },
 ];
 
@@ -84,10 +84,10 @@ const ServicesSection = () => {
                 <div className={`w-11 h-11 sm:w-14 sm:h-14 rounded-full flex items-center justify-center mb-2 sm:mb-3 shrink-0 ${s.color}`}>
                   <s.icon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
                 </div>
-                <span className="text-[10px] sm:text-xs font-black text-[#0a0a0a] dark:text-white uppercase tracking-tight sm:tracking-widest leading-tight line-clamp-3 break-words px-0.5">
+                <span className="text-[11px] sm:text-xs font-black text-[#0a0a0a] dark:text-white uppercase tracking-tight sm:tracking-wider leading-tight line-clamp-3 break-words px-0.5">
                   {s.title}
                 </span>
-                <p className="text-[9px] sm:text-[10px] font-bold text-[#404040] dark:text-zinc-400 mt-1 line-clamp-2 leading-snug">
+                <p className="text-xs font-medium text-[#404040] dark:text-zinc-400 mt-1 line-clamp-2 leading-snug">
                   {s.shortDesc}
                 </p>
               </button>
@@ -99,7 +99,7 @@ const ServicesSection = () => {
               <Link
                 key={s.id}
                 to={servicePaths[s.id] || "/a-propos#services"}
-                className={`rounded-2xl border-2 ${s.borderColor} bg-white dark:bg-zinc-900 p-8 shadow-lg hover:shadow-xl transition-all duration-300 group block text-left`}
+                className="rounded-3xl border-2 border-[#064e3b]/20 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-8 shadow-sm hover:shadow-lg hover:border-[#064e3b]/40 dark:hover:border-zinc-700 transition-all duration-300 group block text-left"
               >
                 <div className="flex items-center gap-4 mb-6">
                   <span className="text-4xl" aria-hidden>{s.emoji}</span>

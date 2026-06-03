@@ -1,8 +1,4 @@
 import { Smartphone, Search, ArrowRightLeft, CheckCircle } from "lucide-react";
-import offerImg from "@/assets/illustrations/deals/offer.png";
-import fcfaImg from "@/assets/illustrations/deals/fcfa.jpg";
-import swapImg from "@/assets/illustrations/deals/swap.jpeg";
-import badgeImg from "@/assets/illustrations/deals/badge.svg";
 
 const HowItWorks = () => {
   const steps = [
@@ -19,7 +15,7 @@ const HowItWorks = () => {
     {
       icon: Smartphone,
       title: "Négociation & sécurité",
-      description: "Discutez via la messagerie et sécurisez la compensation via SWAP Wallet (aucun échange hors plateforme n'est couvert)",
+      description: "Discutez via la messagerie et sécurisez la compensation via SWAP Wallet",
     },
     {
       icon: CheckCircle,
@@ -28,50 +24,61 @@ const HowItWorks = () => {
     },
   ];
 
+  const nums = ["01", "02", "03", "04"];
+
   return (
-    <section id="how-it-works" className="py-16 md:py-24">
+    <section id="how-it-works" className="py-16 md:py-24 bg-background overflow-hidden">
       <div className="container mx-auto px-4">
-        <div className="text-center space-y-4 mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
-            Comment ça <span className="text-primary">marche ?</span>
+        <div className="text-center space-y-3 mb-14">
+          <p className="text-xs font-black uppercase tracking-[0.2em] text-primary/70">Processus</p>
+          <h2 className="text-3xl md:text-5xl font-black tracking-tighter text-black dark:text-white">
+            Comment ça <span className="text-primary italic">marche ?</span>
           </h2>
-          <p className="text-lg text-foreground max-w-2xl mx-auto">
+          <p className="text-base text-muted-foreground max-w-xl mx-auto font-medium">
             Un processus simple et transparent en 4 étapes
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {steps.map((step, index) => {
             const Icon = step.icon;
+            const isLast = index === steps.length - 1;
             return (
-              <div key={index} className="relative">
-                <div className="flex flex-col items-center text-center space-y-4">
+              <div key={index} className="relative group">
+                {/* Connector line between steps (desktop only) */}
+                {!isLast && (
+                  <div className="hidden lg:block absolute top-10 left-[calc(50%+44px)] w-[calc(100%-88px)] border-t-2 border-dashed border-border/60 z-0" />
+                )}
+
+                <div className="relative flex flex-col items-center text-center space-y-4 z-10">
+                  {/* Icon box with background number */}
                   <div className="relative">
-                    <div className="relative bg-card p-5 rounded-2xl shadow-card border border-border">
-                      <Icon className="h-8 w-8 text-primary" />
+                    {/* Giant step number — background watermark */}
+                    <span
+                      className="absolute -top-3 -left-3 text-[80px] font-black leading-none select-none pointer-events-none"
+                      style={{ color: 'currentColor', opacity: 0.04 }}
+                      aria-hidden="true"
+                    >
+                      {nums[index]}
+                    </span>
+                    {/* Icon container */}
+                    <div className="relative w-20 h-20 bg-card border-2 border-border rounded-3xl flex items-center justify-center shadow-sm group-hover:border-primary/30 group-hover:shadow-md transition-all duration-300">
+                      <Icon className="h-9 w-9 text-primary" strokeWidth={1.75} />
                     </div>
+                    {/* Step badge */}
+                    <span className="absolute -top-2 -right-2 h-6 w-6 rounded-full bg-primary text-white dark:text-black text-[10px] font-black flex items-center justify-center shadow-md">
+                      {index + 1}
+                    </span>
                   </div>
-                  
-                  <div className="space-y-2">
-                    <div className="text-sm font-semibold text-foreground">Étape {index + 1}</div>
-                    <h3 className="text-xl font-bold text-foreground">{step.title}</h3>
-                    <p className="text-foreground leading-relaxed">{step.description}</p>
+
+                  <div className="space-y-1.5 px-2">
+                    <h3 className="text-base font-black text-black dark:text-white tracking-tight">{step.title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed font-medium">{step.description}</p>
                   </div>
                 </div>
               </div>
             );
           })}
-        </div>
-
-        {/* Séquence deals: miniatures (offer → fcfa → swap → badge) */}
-        <div className="hidden md:flex items-center justify-center gap-8 mt-12">
-          <img src={offerImg} alt="Offres de deals" className="h-32 w-auto rounded-2xl border border-border/50 shadow-card" />
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground"><path d="M9 18l6-6-6-6"/></svg>
-          <img src={fcfaImg} alt="CFA" className="h-28 w-auto rounded-2xl border border-border/50 shadow-card" />
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground"><path d="M9 18l6-6-6-6"/></svg>
-          <img src={swapImg} alt="Échange direct" className="h-32 w-auto rounded-2xl border border-border/50 shadow-card" />
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground"><path d="M9 18l6-6-6-6"/></svg>
-          <img src={badgeImg} alt="Échange réussi" className="h-28 w-auto rounded-2xl border border-border/50 shadow-card" />
         </div>
       </div>
     </section>
