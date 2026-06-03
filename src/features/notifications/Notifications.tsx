@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback, useRef } from "react";
-import { Bell, ArrowLeft, Trash2, ExternalLink, MessageCircle } from "lucide-react";
+import { Bell, ArrowLeft, Trash2, ExternalLink, MessageCircle, RefreshCw, LogIn } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/core/api/supabaseApi";
 import { isSupabaseConfigured } from "@/core/api/supabaseClient";
@@ -82,6 +83,7 @@ function fullDate(iso: string): string {
 function DetailView({
   c, onBack, onDismiss,
 }: { c: Campaign; onBack: () => void; onDismiss: (id: string) => void }) {
+  const navigate = useNavigate();
   const emoji = getEmoji(c.title, c.body);
 
   const handleWhatsApp = () => {
@@ -195,33 +197,52 @@ export default function NotificationsPage() {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [visible, setVisible] = useState<Campaign[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [notAuthenticated, setNotAuthenticated] = useState(false);
   const [selected, setSelected] = useState<Campaign | null>(null);
   // Ref pour stocker l'userId sans déclencher de re-render ni casser les callbacks
   const userIdRef = useRef<string | null>(null);
 
-  useEffect(() => {
+  const loadNotifications = useCallback(() => {
     if (!isSupabaseConfigured) { setLoading(false); return; }
+    setLoading(true);
+    setError(false);
+    setNotAuthenticated(false);
 
-    // Récupérer l'utilisateur connecté AVANT de filtrer les notifs dismissées
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      const uid = user?.id ?? null;
-      userIdRef.current = uid;
+    // 1) Vérifier l'authentification d'abord
+    supabase.auth.getUser()
+      .then((r: any) => r.data?.user ?? null)
+      .catch(() => null)
+      .then((user: any) => {
+        const uid = user?.id ?? null;
+        userIdRef.current = uid;
 
-      supabase
-        .from("notification_campaigns")
-        .select("*")
-        .order("created_at", { ascending: false })
-        .limit(50)
-        .then(({ data }) => {
-          const all = data ?? [];
-          setCampaigns(all);
-          // Si pas d'utilisateur connecté → on affiche tout sans possibilité de dismiss
-          const d = uid ? getDismissed(uid) : new Set<string>();
-          setVisible(all.filter((c: Campaign) => !d.has(c.id)));
-        })
-        .finally(() => setLoading(false));
-    });
+        // Pas d'utilisateur connecté → ne pas charger les campagnes
+        if (!uid) {
+          setNotAuthenticated(true);
+          setLoading(false);
+          return;
+        }
+
+        // 2) Utilisateur connecté → charger les campagnes
+        supabase
+          .from("notification_campaigns")
+          .select("*")
+          .order("created_at", { ascending: false })
+          .limit(50)
+          .then(({ data, error: fetchErr }: any) => {
+            if (fetchErr) { setError(true); return; }
+            const all = (data ?? []) as Campaign[];
+            setCampaigns(all);
+            const d = getDismissed(uid);
+            setVisible(all.filter((c) => !d.has(c.id)));
+          })
+          .catch(() => setError(true))
+          .finally(() => setLoading(false));
+      });
   }, []);
+
+  useEffect(() => { loadNotifications(); }, [loadNotifications]);
 
   const dismiss = useCallback((id: string) => {
     const uid = userIdRef.current;
@@ -303,8 +324,48 @@ export default function NotificationsPage() {
           </div>
         )}
 
+        {/* Not authenticated — login prompt */}
+        {!loading && notAuthenticated && (
+          <div className="flex flex-col items-center justify-center py-20 gap-3">
+            <div className="w-14 h-14 rounded-3xl bg-primary/10 flex items-center justify-center">
+              <Bell className="w-6 h-6 text-primary/50" />
+            </div>
+            <p className="text-sm font-bold text-foreground">Connectez-vous</p>
+            <p className="text-xs text-muted-foreground text-center max-w-[220px] leading-relaxed">
+              Créez un compte ou connectez-vous pour recevoir les alertes deals et offres TEKH+.
+            </p>
+            <Link
+              to="/login"
+              className="mt-2 flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-[#064e3b] dark:bg-[#059669] text-white text-xs font-bold hover:opacity-90 active:scale-[0.97] transition-all shadow-lg"
+            >
+              <LogIn className="w-3.5 h-3.5" />
+              Se connecter
+            </Link>
+          </div>
+        )}
+
+        {/* Error */}
+        {!loading && !notAuthenticated && error && (
+          <div className="flex flex-col items-center justify-center py-20 gap-3">
+            <div className="w-14 h-14 rounded-3xl bg-rose-500/10 flex items-center justify-center">
+              <Bell className="w-6 h-6 text-rose-500/50" />
+            </div>
+            <p className="text-sm font-bold text-foreground">Erreur de chargement</p>
+            <p className="text-xs text-muted-foreground text-center max-w-[220px] leading-relaxed">
+              Impossible de récupérer les notifications. Vérifiez votre connexion.
+            </p>
+            <button
+              onClick={loadNotifications}
+              className="mt-2 flex items-center gap-2 px-4 py-2 rounded-xl bg-primary/10 text-primary text-xs font-bold hover:bg-primary/20 transition-colors"
+            >
+              <RefreshCw className="w-3.5 h-3.5" />
+              Réessayer
+            </button>
+          </div>
+        )}
+
         {/* Empty */}
-        {!loading && visible.length === 0 && (
+        {!loading && !notAuthenticated && !error && visible.length === 0 && (
           <div className="flex flex-col items-center justify-center py-20 gap-3">
             <div className="w-14 h-14 rounded-3xl bg-muted/40 flex items-center justify-center">
               <Bell className="w-6 h-6 text-muted-foreground/30" />
