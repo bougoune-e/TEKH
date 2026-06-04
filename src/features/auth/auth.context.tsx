@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "@/core/api/supabaseApi";
 import { isSupabaseConfigured } from "@/core/api/supabaseClient";
+import { getStoredReferralCode, registerReferee } from "@/core/api/referral";
 
 interface AuthValue {
   user: any | null;
@@ -90,6 +91,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (event === 'PASSWORD_RECOVERY') {
         window.location.href = '/reset-password';
         return;
+      }
+
+      // Handle referral registration on first sign in/up
+      if (event === "SIGNED_IN" && session?.user) {
+        const code = getStoredReferralCode();
+        if (code) {
+          registerReferee(session.user.id, code).catch(console.error);
+        }
       }
 
       // Redirection spécifique (ex: PASSWORD_RECOVERY) gérée ici.

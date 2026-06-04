@@ -84,6 +84,7 @@ const SignupPage = lazy(() => import("@/features/auth/Signup"));
 const AuthCallback = lazy(() => import("@/features/auth/AuthCallback"));
 const ForgotPasswordPage = lazy(() => import("@/features/auth/ForgotPassword"));
 const ResetPasswordPage = lazy(() => import("@/features/auth/ResetPassword"));
+const InvitePage = lazy(() => import("@/features/auth/InvitePage"));
 
 const queryClient = new QueryClient();
 
@@ -218,6 +219,7 @@ const NavigationWrapper = () => {
                         <Route path="/formation" element={<PageTransition navType={navType}><FormationTech /></PageTransition>} />
                         <Route path="/dev-web" element={<PageTransition navType={navType}><DevWebMobile /></PageTransition>} />
                         <Route path="/prix" element={<PageTransition navType={navType}><PrixPage /></PageTransition>} />
+                        <Route path="/invite" element={<PageTransition navType={navType}><InvitePage /></PageTransition>} />
                       </Route>
 
                       {/* Route Admin Exclusive */}

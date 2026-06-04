@@ -8,9 +8,10 @@ import { useTranslation } from "react-i18next";
 import { useDeals } from "@/features/marketplace/deals.context";
 import { useAuth } from "@/features/auth/auth.context";
 import { uploadAvatar, upsertProfile, supabase, ensureProfileForUser, countDealsByOwner, fetchTekhPointsSummary, TekhPointsSummary } from "@/core/api/supabaseApi";
+import { getUserImpactStats, getUserReferralCode } from "@/core/api/referral";
 import { isSupabaseConfigured } from "@/core/api/supabaseClient";
 import UserAvatar from "@/shared/components/UserAvatar";
-import { LogOut, Camera, Package, ShieldCheck, ShoppingCart, ChevronRight, Coins, Clock, Info } from "lucide-react";
+import { LogOut, Camera, Package, ShieldCheck, ShoppingCart, ChevronRight, Coins, Clock, Info, TreePine, Share2, Copy, Sparkles, TrendingUp } from "lucide-react";
 import { toast } from "@/shared/hooks/use-toast";
 import MotionRings from "@/shared/components/MotionRings";
 import { useCart } from "@/features/marketplace/cart.context";
@@ -30,6 +31,8 @@ export default function Profile() {
   const [dbCount, setDbCount] = useState<number | null>(null);
   const [tekhPoints, setTekhPoints] = useState<TekhPointsSummary | null>(null);
   const [tekhSheet, setTekhSheet] = useState(false);
+  const [impactStats, setImpactStats] = useState<any>(null);
+  const [referralCode, setReferralCode] = useState<string | null>(null);
 
   useEffect(() => {
     if (user) {
@@ -45,6 +48,9 @@ export default function Profile() {
         fetchTekhPointsSummary(user.id)
           .then(setTekhPoints)
           .catch(() => setTekhPoints({ balanceFcfa: 0, points: 0, nextExpiry: null, activeLines: 0, lines: [] }));
+
+        getUserImpactStats(user.id).then(setImpactStats);
+        getUserReferralCode(user.id).then(setReferralCode);
       }
     }
   }, [user]);
@@ -96,6 +102,17 @@ export default function Profile() {
       await supabase.auth.signOut();
     } catch { }
     window.location.href = "/login";
+  };
+
+  const handleShare = () => {
+    if (!referralCode) return;
+    const url = `https://tekh.app/invite?ref=${referralCode}`;
+    navigator.clipboard.writeText(url).then(() => {
+      toast({
+        title: "Lien copié !",
+        description: "Partagez ce lien pour parrainer vos proches.",
+      });
+    });
   };
 
   return (
@@ -179,6 +196,81 @@ export default function Profile() {
             </div>
             <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-[#064e3b] shrink-0 transition-colors" />
           </button>
+        </section>
+
+        {/* Mon Impact ESG & Parrainage */}
+        <section className="space-y-3">
+          <div className="flex items-center justify-between px-1">
+            <h2 className="text-xs font-black uppercase tracking-widest text-muted-foreground">Mon Impact Éco</h2>
+            {impactStats?.co2Saved > 0 && (
+              <span className="flex items-center gap-1 text-[10px] font-black text-emerald-500 uppercase italic">
+                <TrendingUp className="h-3 w-3" /> Score en hausse
+              </span>
+            )}
+          </div>
+
+          <div className="bg-card border border-border/60 rounded-[2rem] overflow-hidden relative shadow-lg">
+            {/* Background Effect */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full -mr-16 -mt-16 blur-2xl" />
+
+            <div className="p-6 sm:p-8 space-y-6 relative">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+                <div className="flex items-center gap-5">
+                  <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center shrink-0 border border-emerald-500/20">
+                    <TreePine className="h-7 w-7 text-emerald-600 dark:text-emerald-400" />
+                  </div>
+                  <div>
+                    <p className="text-2xl font-black text-foreground leading-tight">
+                      {impactStats?.co2Saved?.toFixed(1) ?? "0.0"}
+                      <span className="text-sm font-bold text-muted-foreground ml-1.5 uppercase tracking-tighter">kg CO₂</span>
+                    </p>
+                    <p className="text-[11px] text-muted-foreground font-bold uppercase tracking-widest mt-0.5 mt-1">Émissions de carbone économisées</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <div className="bg-background border border-border/60 rounded-2xl p-3 px-4 flex flex-col items-center justify-center min-w-[100px]">
+                    <p className="text-xl font-black text-foreground leading-none">{impactStats?.convertedCount ?? 0}</p>
+                    <p className="text-[9px] text-muted-foreground font-black uppercase tracking-tighter mt-1">Filleuls actifs</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Progress Bar towards reward */}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="h-3.5 w-3.5 text-amber-500" />
+                    <span className="text-[10px] font-black uppercase tracking-widest text-foreground">Objectif Récompense</span>
+                  </div>
+                  <span className="text-[10px] font-black text-muted-foreground">{impactStats?.convertedCount ?? 0} / 5</span>
+                </div>
+                <div className="h-3 bg-muted/30 rounded-full overflow-hidden border border-border/20">
+                  <div
+                    className="h-full bg-gradient-to-r from-emerald-500 to-blue-500 transition-all duration-1000 ease-out"
+                    style={{ width: `${Math.min(100, ((impactStats?.convertedCount ?? 0) / 5) * 100)}%` }}
+                  />
+                </div>
+                <p className="text-[9px] text-muted-foreground font-medium italic">
+                  {impactStats?.remainingToGoal > 0
+                    ? `Plus que ${impactStats.remainingToGoal} parrainage${impactStats.remainingToGoal > 1 ? 's' : ''} pour débloquer votre avantage premium.`
+                    : "Félicitations ! Vous êtes éligible à votre récompense TEKH+."}
+                </p>
+              </div>
+
+              {/* Share Action */}
+              <div className="pt-2">
+                <button
+                  onClick={handleShare}
+                  className="w-full h-14 bg-black dark:bg-white text-white dark:text-black rounded-2xl font-black text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all shadow-xl group"
+                >
+                  <Share2 className="h-4 w-4 group-hover:rotate-12 transition-transform" />
+                  Inviter & Gagner
+                  <Copy className="h-3.5 w-3.5 opacity-50 ml-1" />
+                </button>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* Sheet détail TekhPoints */}
