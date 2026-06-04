@@ -1,0 +1,312 @@
+Moto G Play (2026) (2026) - 4 Go/64 Go : 77 000 FCFA
+Moto G Play (2026) (2026) - 4 Go/128 Go : 84 500 FCFA
+Moto G Power (2026) (2026) - 8 Go/128 Go : 125 000 FCFA
+Moto G 5G (2026) (2026) - 4 Go/128 Go : 107 000 FCFA
+Edge (2025) (2025) - 8 Go/256 Go : 68 000 FCFA
+Edge 60 (2025) - 8 Go/256 Go : 165 000 FCFA
+Edge 60 Fusion (2025) - 8 Go/256 Go : 86 000 FCFA
+Edge 60 Neo (2025) - 6 Go/128 Go : 135 000 FCFA
+Edge 60 Stylus (2025) - 8 Go/256 Go : 155 000 FCFA
+Edge 60 Pro (2025) - 8 Go/256 Go : 220 000 FCFA
+Edge 70 (2025) - 8 Go/256 Go : 230 000 FCFA
+Razr 60 (Razr 2025) (2025) - 8 Go/256 Go : 215 000 FCFA
+Razr 60 Ultra (Razr+ 2025) (2025) - 16 Go/512 Go : 240 000 FCFA
+Razr 60 Ultra (Razr+ 2025) (2025) - 16 Go/1 TB : 300 000 FCFA
+Moto G (2025) (2025) - 4 Go/64 Go : 95 000 FCFA
+Moto G (2025) (2025) - 4 Go/128 Go : 102 500 FCFA
+Moto G Power (2025) (2025) - 8 Go/128 Go : 125 000 FCFA
+Moto G Stylus 5G (2025) (2025) - 8 Go/128 Go : 145 000 FCFA
+Moto G Stylus 5G (2025) (2025) - 8 Go/256 Go : 157 500 FCFA
+Moto G06 (2025) - 4 Go/128 Go : 85 000 FCFA
+Moto G06 Power (2025) - 4 Go/128 Go : 95 000 FCFA
+Moto G96 (2025) - 8 Go/128 Go : 160 000 FCFA
+Moto G96 (2025) - 8 Go/256 Go : 172 500 FCFA
+ThinkPhone 25 (2025) - 12 Go/256 Go : 250 000 FCFA
+ThinkPhone 25 (2025) - 12 Go/512 Go : 280 000 FCFA
+Edge (2024) (2024) - 8 Go/256 Go : 68 000 FCFA
+Edge 50 (2024) - 8 Go/256 Go : 162 000 FCFA
+Edge 50 Fusion (2024) - 8 / 12 Go/128 Go : 56 000 FCFA
+Edge 50 Fusion (2024) - 8 / 12 Go/256 Go : 68 500 FCFA
+Edge 50 Neo (2024) - 8 / 12 Go/256 Go : 64 000 FCFA
+Edge 50 Pro (2024) - 12 Go/256 Go : 167 269 FCFA
+Edge 50 Pro (2024) - 12 Go/512 Go : 197 269 FCFA
+Edge 50 Ultra (2024) - 12 Go/256 Go : 231 405 FCFA
+Edge 50 Ultra (2024) - 12 Go/512 Go : 261 405 FCFA
+Razr 50 (Razr 2024) (2024) - 8 / 12 Go/256 Go : 217 879 FCFA
+Razr 50 (Razr 2024) (2024) - 8 / 12 Go/512 Go : 247 879 FCFA
+Razr 50 Ultra (Razr+ 2024) (2024) - 8 / 12 Go/256 Go : 226 305 FCFA
+Razr 50 Ultra (Razr+ 2024) (2024) - 8 / 12 Go/512 Go : 256 305 FCFA
+Moto G (2024) (2024) - 4 Go/128 Go : 80 000 FCFA
+Moto G Play (2024) (2024) - 4 Go/64 Go : 70 000 FCFA
+Moto G Play (2024) (2024) - 4 Go/128 Go : 77 500 FCFA
+Moto G Power (2024) (2024) - 8 Go/128 Go : 110 000 FCFA
+Moto G Stylus 5G (2024) (2024) - 8 Go/128 Go : 130 000 FCFA
+Moto G Stylus 5G (2024) (2024) - 8 Go/256 Go : 142 500 FCFA
+Moto G04 (2024) - 4 Go/64 Go : 65 000 FCFA
+Moto G04 (2024) - 4 Go/128 Go : 72 500 FCFA
+Moto G04s (2024) - 4 Go/64 Go : 70 000 FCFA
+Moto G04s (2024) - 4 Go/128 Go : 77 500 FCFA
+Moto G05 (2024) - 4 Go/64 Go : 75 000 FCFA
+Moto G05 (2024) - 4 Go/128 Go : 82 500 FCFA
+Moto G15 (2024) - 4 / 8 Go/128 Go : 85 000 FCFA
+Moto G15 Power (2024) - 4 / 8 Go/128 Go : 105 000 FCFA
+Moto G15 Power (2024) - 4 / 8 Go/256 Go : 117 500 FCFA
+Moto G24 (2024) - 4 / 8 Go/128 Go : 85 000 FCFA
+Moto G24 (2024) - 4 / 8 Go/256 Go : 97 500 FCFA
+Moto G24 Power (2024) - 4 / 8 Go/128 Go : 95 000 FCFA
+Moto G24 Power (2024) - 4 / 8 Go/256 Go : 107 500 FCFA
+Moto G35 (2024) - 4 / 8 Go/128 Go : 110 000 FCFA
+Moto G35 (2024) - 4 / 8 Go/256 Go : 122 500 FCFA
+Moto G45 (2024) - 4 / 8 Go/128 Go : 125 000 FCFA
+Moto G45 (2024) - 4 / 8 Go/256 Go : 137 500 FCFA
+Moto G55 (2024) - 8 Go/128 Go : 140 000 FCFA
+Moto G55 (2024) - 8 Go/256 Go : 152 500 FCFA
+Moto G64 (2024) - 8 Go/128 Go : 150 000 FCFA
+Moto G64 (2024) - 8 Go/256 Go : 162 500 FCFA
+Moto G75 (2024) - 8 Go/128 Go : 175 000 FCFA
+Moto G75 (2024) - 8 Go/256 Go : 187 500 FCFA
+Moto G85 (2024) - 8 / 12 Go/256 Go : 125 332 FCFA
+Moto E14 (2024) - 2 Go/64 Go : 45 000 FCFA
+Moto E15 (2024) - 4 Go/64 Go : 55 000 FCFA
+Moto E15 (2024) - 4 Go/128 Go : 62 500 FCFA
+Moto S50 (2024) - 8 Go/256 Go : 195 000 FCFA
+Moto X50 Ultra (2024) - 16 Go/512 Go : 380 000 FCFA
+Edge (2023) (2023) - 8 Go/256 Go : 68 000 FCFA
+Edge 40 (2023) - 8 Go/256 Go : 72 000 FCFA
+Edge 40 Neo (2023) - 8 / 12 Go/256 Go : 60 000 FCFA
+Edge 40 Pro (Edge+ 2023 US) (2023) - 12 Go/256 Go : 84 000 FCFA
+Edge 40 Pro (Edge+ 2023 US) (2023) - 12 Go/512 Go : 114 000 FCFA
+Razr 40 (Razr 2023) (2023) - 8 Go/256 Go : 66 000 FCFA
+Razr 40 Ultra (Razr+ 2023) (2023) - 8 / 12 Go/256 Go : 92 000 FCFA
+Razr 40 Ultra (Razr+ 2023) (2023) - 8 / 12 Go/512 Go : 122 000 FCFA
+Moto G (2023) (2023) - 4 Go/64 Go : 75 000 FCFA
+Moto G (2023) (2023) - 4 Go/128 Go : 82 500 FCFA
+Moto G Play (2023) (2023) - 3 Go/32 Go : 55 000 FCFA
+Moto G Power 5G (2023) (2023) - 6 Go/128 Go : 90 000 FCFA
+Moto G Stylus 5G (2023) (2023) - 4 / 6 Go/64 Go : 107 500 FCFA
+Moto G Stylus 5G (2023) (2023) - 4 / 6 Go/128 Go : 115 000 FCFA
+Moto G Stylus 5G (2023) (2023) - 4 / 6 Go/256 Go : 127 500 FCFA
+Moto G14 (2023) - 4 / 8 Go/128 Go : 32 000 FCFA
+Moto G14 (2023) - 4 / 8 Go/256 Go : 44 500 FCFA
+Moto G23 (2023) - 4 / 8 Go/64 Go : 32 000 FCFA
+Moto G23 (2023) - 4 / 8 Go/128 Go : 39 500 FCFA
+Moto G34 (2023) - 4 Go/64 Go : 72 500 FCFA
+Moto G34 (2023) - 4 Go/128 Go : 80 000 FCFA
+Moto G53 (2023) - 4 / 6 Go/128 Go : 95 000 FCFA
+Moto G53 (2023) - 4 / 6 Go/256 Go : 107 500 FCFA
+Moto G54 (2023) - 8 Go/128 Go : 133 520 FCFA
+Moto G54 (2023) - 8 Go/256 Go : 146 020 FCFA
+Moto G73 (2023) - 8 Go/256 Go : 120 000 FCFA
+Moto G84 (2023) - 8 / 12 Go/256 Go : 113 809 FCFA
+ThinkPhone (2023) (2023) - 8 / 12 Go/128 Go : 220 983 FCFA
+ThinkPhone (2023) (2023) - 8 / 12 Go/256 Go : 233 483 FCFA
+ThinkPhone (2023) (2023) - 8 / 12 Go/512 Go : 263 483 FCFA
+Edge (2022) (2022) - 8 Go/128 Go : 60 000 FCFA
+Edge (2022) (2022) - 8 Go/256 Go : 72 500 FCFA
+Edge+ (2022) (2022) - 8 / 12 Go/128 Go : 60 000 FCFA
+Edge+ (2022) (2022) - 8 / 12 Go/256 Go : 72 500 FCFA
+Edge 30 (2022) - 8 Go/128 Go : 48 000 FCFA
+Edge 30 (2022) - 8 Go/256 Go : 60 500 FCFA
+Edge 30 Fusion (2022) - 8 / 12 Go/128 Go : 56 000 FCFA
+Edge 30 Fusion (2022) - 8 / 12 Go/256 Go : 68 500 FCFA
+Edge 30 Neo (2022) - 8 Go/128 Go : 52 000 FCFA
+Edge 30 Neo (2022) - 8 Go/256 Go : 64 500 FCFA
+Edge 30 Pro (2022) - 8 / 12 Go/128 Go : 80 000 FCFA
+Edge 30 Pro (2022) - 8 / 12 Go/256 Go : 92 500 FCFA
+Edge 30 Ultra (2022) - 8 / 12 Go/128 Go : 64 000 FCFA
+Edge 30 Ultra (2022) - 8 / 12 Go/256 Go : 76 500 FCFA
+Edge 30 Ultra (2022) - 8 / 12 Go/512 Go : 106 500 FCFA
+Moto G (2022) (2022) - 4 Go/64 Go : 60 000 FCFA
+Moto G (2022) (2022) - 4 Go/128 Go : 67 500 FCFA
+Moto G Play (2022) (2022) - 3 Go/32 Go : 55 000 FCFA
+Moto G Power (2022) (2022) - 4 / 6 Go/64 Go : 65 000 FCFA
+Moto G Power (2022) (2022) - 4 / 6 Go/128 Go : 72 500 FCFA
+Moto G Power (2022) (2022) - 4 / 6 Go/256 Go : 85 000 FCFA
+Moto G Stylus (2022) (2022) - 6 Go/128 Go : 75 000 FCFA
+Moto G Stylus 5G (2022) (2022) - 6 / 8 Go/128 Go : 85 000 FCFA
+Moto G Stylus 5G (2022) (2022) - 6 / 8 Go/256 Go : 97 500 FCFA
+Moto G13 (2022) - 4 Go/128 Go : 30 000 FCFA
+Moto G22 (2022) - 4 Go/64 Go : 55 000 FCFA
+Moto G22 (2022) - 4 Go/128 Go : 62 500 FCFA
+Moto G32 (2022) - 4 / 6 / 8 Go/64 Go : 34 000 FCFA
+Moto G32 (2022) - 4 / 6 / 8 Go/128 Go : 41 500 FCFA
+Moto G32 (2022) - 4 / 6 / 8 Go/256 Go : 54 000 FCFA
+Moto G42 (2022) - 4 Go/64 Go : 65 000 FCFA
+Moto G42 (2022) - 4 Go/128 Go : 72 500 FCFA
+Moto G52 (2022) - 4 / 6 Go/128 Go : 75 000 FCFA
+Moto G52 (2022) - 4 / 6 Go/256 Go : 87 500 FCFA
+Moto G62 5G (2022) - 4 / 6 / 8 Go/64 Go : 80 000 FCFA
+Moto G62 5G (2022) - 4 / 6 / 8 Go/128 Go : 87 500 FCFA
+Moto G71s (2022) - 8 Go/128 Go : 95 000 FCFA
+Moto G72 (2022) - 6 / 8 Go/128 Go : 90 000 FCFA
+Moto G72 (2022) - 6 / 8 Go/256 Go : 102 500 FCFA
+Moto G82 5G (2022) - 6 Go/128 Go : 100 000 FCFA
+Moto E13 (2022) - 2 Go/64 Go : 14 000 FCFA
+Moto E22 / E22i (2022) - 4 Go/64 Go : 40 000 FCFA
+Moto E32 (2022) - 4 Go/64 Go : 45 000 FCFA
+Moto E32s (2022) - 4 Go/64 Go : 50 000 FCFA
+Edge 20 (2021) - 8 Go/128 Go : 36 000 FCFA
+Edge 20 (2021) - 8 Go/256 Go : 48 500 FCFA
+Edge 20 Fusion (2021) - 6 Go/128 Go : 32 000 FCFA
+Edge 20 Fusion (2021) - 6 Go/256 Go : 44 500 FCFA
+Edge 20 Lite (2021) - 6 Go/128 Go : 52 000 FCFA
+Edge 20 Lite (2021) - 6 Go/256 Go : 64 500 FCFA
+Edge 20 Pro (2021) - 12 Go/128 Go : 56 000 FCFA
+Edge 20 Pro (2021) - 12 Go/256 Go : 68 500 FCFA
+Edge (2021) (2021) - 6 Go/128 Go : 60 000 FCFA
+Edge (2021) (2021) - 6 Go/256 Go : 72 500 FCFA
+Edge S / Moto G100 (2021) - 8 / 12 Go/128 Go : 102 000 FCFA
+Edge S / Moto G100 (2021) - 8 / 12 Go/256 Go : 114 500 FCFA
+Moto G10 (2021) - 4 Go/64 Go : 94 500 FCFA
+Moto G10 (2021) - 4 Go/128 Go : 102 000 FCFA
+Moto G20 (2021) - 4 Go/64 Go : 45 000 FCFA
+Moto G20 (2021) - 4 Go/128 Go : 52 500 FCFA
+Moto G30 (2021) - 4 / 6 Go/64 Go : 50 000 FCFA
+Moto G30 (2021) - 4 / 6 Go/128 Go : 57 500 FCFA
+Moto G31 (2021) - 4 / 6 Go/64 Go : 55 000 FCFA
+Moto G31 (2021) - 4 / 6 Go/128 Go : 62 500 FCFA
+Moto G40 Fusion (2021) - 6 Go/128 Go : 75 000 FCFA
+Moto G50 (2021) - 4 / 6 Go/64 Go : 55 000 FCFA
+Moto G50 (2021) - 4 / 6 Go/128 Go : 62 500 FCFA
+Moto G60 (2021) - 6 Go/128 Go : 80 000 FCFA
+Moto G60s (2021) - 6 Go/128 Go : 75 000 FCFA
+Moto G71 5G (2021) - 6 / 8 Go/128 Go : 85 000 FCFA
+Moto G71 5G (2021) - 6 / 8 Go/256 Go : 97 500 FCFA
+Moto G200 5G (2021) - 8 Go/128 Go : 52 500 FCFA
+Moto G200 5G (2021) - 8 Go/256 Go : 65 000 FCFA
+Moto G Play (2021) (2021) - 3 Go/32 Go : 35 000 FCFA
+Moto G Power (2021) (2021) - 4 Go/64 Go : 50 000 FCFA
+Moto G Stylus (2021) (2021) - 4 Go/128 Go : 55 000 FCFA
+Moto G Stylus 5G (2021) (2021) - 6 Go/128 Go : 65 000 FCFA
+Moto G Stylus 5G (2021) (2021) - 6 Go/256 Go : 77 500 FCFA
+Razr 5G (2020/2021) (2021) - 8 Go/256 Go : 155 000 FCFA
+Moto E20 (2021) - 2 Go/32 Go : 16 000 FCFA
+Moto E30 (2021) - 2 Go/32 Go : 35 000 FCFA
+Moto E40 (2021) - 4 Go/64 Go : 45 000 FCFA
+Edge (2020) (2020) - 6 Go/128 Go : 60 000 FCFA
+Edge (2020) (2020) - 6 Go/256 Go : 72 500 FCFA
+Edge+ (2020) (2020) - 12 Go/256 Go : 68 000 FCFA
+Moto G Fast (2020) - 3 Go/32 Go : 35 000 FCFA
+Moto G Pro (2020) - 4 Go/128 Go : 60 000 FCFA
+Moto G Power (2020) (2020) - 4 Go/64 Go : 45 000 FCFA
+Moto G Play (2020) (2020) - 2 Go/32 Go : 30 000 FCFA
+Moto G Stylus (2020) (2020) - 4 Go/128 Go : 55 000 FCFA
+Moto G8 (2020) - 4 Go/64 Go : 105 332 FCFA
+Moto G8 Plus (2020) - 4 Go/64 Go : 45 000 FCFA
+Moto G8 Plus (2020) - 4 Go/128 Go : 52 500 FCFA
+Moto G8 Power (2020) - 4 Go/64 Go : 45 000 FCFA
+Moto G8 Power Lite (2020) - 4 Go/64 Go : 45 000 FCFA
+Moto G9 (2020) - 4 Go/64 Go : 152 500 FCFA
+Moto G9 (2020) - 4 Go/128 Go : 160 000 FCFA
+Moto G9 Play (2020) - 4 Go/64 Go : 45 000 FCFA
+Moto G9 Plus (2020) - 4 Go/128 Go : 60 000 FCFA
+Moto G9 Power (2020) - 4 Go/128 Go : 55 000 FCFA
+Motorola Razr (2020) (2020) - 8 Go/256 Go : 120 000 FCFA
+Moto One 5G Ace (2020) - 4 / 6 Go/64 Go : 55 000 FCFA
+Moto One 5G Ace (2020) - 4 / 6 Go/128 Go : 62 500 FCFA
+Moto E7 (2020) - 2 Go/32 Go : 30 000 FCFA
+Moto E7 Plus (2020) - 4 Go/64 Go : 40 000 FCFA
+Moto E6s (2020) - 2 / 4 Go/32 Go : 35 000 FCFA
+Moto E6s (2020) - 2 / 4 Go/64 Go : 35 000 FCFA
+Moto E6i (2020) - 2 Go/32 Go : 25 000 FCFA
+Moto G7 (2019) - 4 Go/64 Go : 167 500 FCFA
+Moto G7 Plus (2019) - 4 Go/64 Go : 35 000 FCFA
+Moto G7 Power (2019) - 3 / 4 Go/32 Go : 35 000 FCFA
+Moto G7 Power (2019) - 3 / 4 Go/64 Go : 35 000 FCFA
+Moto G7 Play (2019) - 2 Go/32 Go : 25 000 FCFA
+Moto G8 (indien) (2019) - 4 Go/64 Go : 35 000 FCFA
+Moto Z4 (2019) - 4 / 6 Go/64 Go : 45 000 FCFA
+Moto Z4 (2019) - 4 / 6 Go/128 Go : 52 500 FCFA
+Moto One Action (2019) - 4 Go/128 Go : 45 000 FCFA
+Moto One Vision (2019) - 4 Go/128 Go : 50 000 FCFA
+Moto One Zoom (2019) - 4 Go/128 Go : 60 000 FCFA
+Moto One Power (2019) - 4 Go/64 Go : 40 000 FCFA
+Moto One Macro (2019) - 4 Go/64 Go : 35 000 FCFA
+Moto One Hyper (2019) - 4 Go/128 Go : 55 000 FCFA
+Moto E6 (2019) - 2 Go/16 Go : 35 000 FCFA
+Moto E6 (2019) - 2 Go/32 Go : 35 000 FCFA
+Moto E6 Plus (2019) - 2 / 4 Go/32 Go : 25 000 FCFA
+Moto E6 Plus (2019) - 2 / 4 Go/64 Go : 25 000 FCFA
+Moto E6 Play (2019) - 2 Go/32 Go : 25 000 FCFA
+Moto E5 Play Go (2019) - 1 Go/16 Go : 15 000 FCFA
+Moto G6 (2018) - 3 / 4 Go/32 Go : 142 500 FCFA
+Moto G6 (2018) - 3 / 4 Go/64 Go : 142 500 FCFA
+Moto G6 Plus (2018) - 4 / 6 Go/64 Go : 30 000 FCFA
+Moto G6 Plus (2018) - 4 / 6 Go/128 Go : 37 500 FCFA
+Moto G6 Play (2018) - 2 / 3 Go/16 Go : 20 000 FCFA
+Moto G6 Play (2018) - 2 / 3 Go/32 Go : 20 000 FCFA
+Moto G7 (1ère gén.) (2018) - 4 Go/64 Go : 30 000 FCFA
+Moto Z3 (2018) - 4 / 6 Go/32 Go : 35 000 FCFA
+Moto Z3 (2018) - 4 / 6 Go/64 Go : 35 000 FCFA
+Moto Z3 (2018) - 4 / 6 Go/128 Go : 42 500 FCFA
+Moto Z3 Play (2018) - 4 / 6 Go/32 Go : 30 000 FCFA
+Moto Z3 Play (2018) - 4 / 6 Go/64 Go : 30 000 FCFA
+Moto One (2018) - 3 Go/32 Go : 55 000 FCFA
+Moto One (2018) - 3 Go/64 Go : 55 000 FCFA
+Moto One Power (2018) - 4 Go/64 Go : 40 000 FCFA
+Moto E5 (2018) - 2 / 3 Go/16 Go : 15 000 FCFA
+Moto E5 (2018) - 2 / 3 Go/32 Go : 15 000 FCFA
+Moto E5 Plus (2018) - 3 Go/32 Go : 25 000 FCFA
+Moto E5 Play (2018) - 2 Go/16 Go : 15 000 FCFA
+Moto X4 (2018) - 3 / 4 / 6 Go/32 Go : 30 000 FCFA
+Moto X4 (2018) - 3 / 4 / 6 Go/64 Go : 30 000 FCFA
+Moto X4 (2018) - 3 / 4 / 6 Go/128 Go : 37 500 FCFA
+Moto G5 (2017) - 2 / 3 Go/16 Go : 126 020 FCFA
+Moto G5 (2017) - 2 / 3 Go/32 Go : 126 020 FCFA
+Moto G5 Plus (2017) - 2 / 3 / 4 Go/16 Go : 20 000 FCFA
+Moto G5 Plus (2017) - 2 / 3 / 4 Go/32 Go : 20 000 FCFA
+Moto G5 Plus (2017) - 2 / 3 / 4 Go/64 Go : 20 000 FCFA
+Moto G5s (2017) - 3 Go/32 Go : 20 000 FCFA
+Moto G5s Plus (2017) - 3 / 4 Go/32 Go : 20 000 FCFA
+Moto G5s Plus (2017) - 3 / 4 Go/64 Go : 20 000 FCFA
+Moto Z2 Force (2017) - 4 / 6 Go/32 Go : 30 000 FCFA
+Moto Z2 Force (2017) - 4 / 6 Go/64 Go : 30 000 FCFA
+Moto Z2 Force (2017) - 4 / 6 Go/128 Go : 37 500 FCFA
+Moto Z2 Play (2017) - 3 / 4 Go/32 Go : 25 000 FCFA
+Moto Z2 Play (2017) - 3 / 4 Go/64 Go : 25 000 FCFA
+Moto E4 (2017) - 2 Go/16 Go : 45 000 FCFA
+Moto E4 Plus (2017) - 3 Go/16 Go : 15 000 FCFA
+Moto E4 Plus (2017) - 3 Go/32 Go : 15 000 FCFA
+Moto C (2017) - 1 Go/8 Go : 15 000 FCFA
+Moto C (2017) - 1 Go/16 Go : 15 000 FCFA
+Moto C Plus (2017) - 1 / 2 Go/8 Go : 15 000 FCFA
+Moto C Plus (2017) - 1 / 2 Go/16 Go : 15 000 FCFA
+Moto G4 (2016) - 2 / 3 Go/16 Go : 117 500 FCFA
+Moto G4 (2016) - 2 / 3 Go/32 Go : 117 500 FCFA
+Moto G4 Plus (2016) - 2 / 3 / 4 Go/16 Go : 15 000 FCFA
+Moto G4 Plus (2016) - 2 / 3 / 4 Go/32 Go : 15 000 FCFA
+Moto G4 Plus (2016) - 2 / 3 / 4 Go/64 Go : 15 000 FCFA
+Moto G4 Play (2016) - 1 / 2 Go/8 Go :  FCFA
+Moto G4 Play (2016) - 1 / 2 Go/16 Go :  FCFA
+Moto Z (2016) - 4 Go/32 Go : 45 000 FCFA
+Moto Z (2016) - 4 Go/64 Go : 45 000 FCFA
+Moto Z Force (2016) - 4 Go/32 Go :  FCFA
+Moto Z Force (2016) - 4 Go/64 Go :  FCFA
+Moto Z Play (2016) - 3 Go/32 Go :  FCFA
+Moto Z Play (2016) - 3 Go/64 Go :  FCFA
+Moto E3 Power (2016) - 2 Go/16 Go :  FCFA
+Moto X Force (2016) - 3 / 4 Go/32 Go :  FCFA
+Moto X Force (2016) - 3 / 4 Go/64 Go :  FCFA
+Moto G (3e gén.) (2015) - 1 / 2 Go/8 Go :  FCFA
+Moto G (3e gén.) (2015) - 1 / 2 Go/16 Go :  FCFA
+Moto G Turbo Edition (2015) - 2 Go/16 Go :  FCFA
+Moto E (2e gén.) (2015) - 1 Go/8 Go :  FCFA
+Moto X Style / Pure (2015) - 2 / 3 Go/16 Go :  FCFA
+Moto X Style / Pure (2015) - 2 / 3 Go/32 Go :  FCFA
+Moto X Style / Pure (2015) - 2 / 3 Go/64 Go :  FCFA
+Moto X Play (2015) - 2 Go/16 Go :  FCFA
+Moto X Play (2015) - 2 Go/32 Go :  FCFA
+Moto Turbo / Droid Turbo (2015) - 2 / 3 Go/32 Go :  FCFA
+Moto Turbo / Droid Turbo (2015) - 2 / 3 Go/64 Go :  FCFA
+Moto G (2e gén.) (2014) - 1 Go/8 Go :  FCFA
+Moto G (2e gén.) (2014) - 1 Go/16 Go :  FCFA
+Moto E (1ère gén.) (2014) - 1 Go/4 Go :  FCFA
+Moto X (2e gén.) (2014) - 2 Go/16 Go :  FCFA
+Moto X (2e gén.) (2014) - 2 Go/32 Go :  FCFA
+Moto X (2e gén.) (2014) - 2 Go/64 Go :  FCFA
+Moto Maxx / Droid Turbo (2014) - 3 Go/32 Go :  FCFA
+Moto Maxx / Droid Turbo (2014) - 3 Go/64 Go :  FCFA
+Moto G (1ère gén.) (2013) - 1 Go/8 Go :  FCFA
+Moto G (1ère gén.) (2013) - 1 Go/16 Go :  FCFA
+Moto X (1ère gén.) (2013) - 2 Go/16 Go :  FCFA
+Moto X (1ère gén.) (2013) - 2 Go/32 Go :  FCFA

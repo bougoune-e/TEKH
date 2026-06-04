@@ -8,27 +8,27 @@ import { toast } from "@/shared/hooks/use-toast";
 
 function labelBatterie(state?: string): string {
     switch (state) {
-        case "gte90":    return "Excellente (≥ 90%)";
+        case "gte90": return "Excellente (≥ 90%)";
         case "gte80_89": return "Bonne (80–89%)";
         case "gte70_79": return "Correcte (70–79%)";
         case "gte60_69": return "Faible (60–69%)";
-        case "lt60":     return "Très faible / à remplacer (< 60%)";
-        default:         return state || "—";
+        case "lt60": return "Très faible / à remplacer (< 60%)";
+        default: return state || "—";
     }
 }
 function labelEcran(state?: string): string {
     switch (state) {
         case "parfait": return "Parfait (aucune rayure)";
-        case "raye":    return "Rayé / micro-rayures";
-        case "casse":   return "Cassé / fissuré";
-        default:        return state || "—";
+        case "raye": return "Rayé / micro-rayures";
+        case "casse": return "Cassé / fissuré";
+        default: return state || "—";
     }
 }
 function labelChassis(state?: string): string {
     switch (state) {
         case "intact": return "Intact (aucun choc)";
-        case "abime":  return "Endommagé (chocs visibles)";
-        default:       return state || "—";
+        case "abime": return "Endommagé (chocs visibles)";
+        default: return state || "—";
     }
 }
 
@@ -166,17 +166,19 @@ export const ComparisonStep = ({
                             "━━━━━━━━━━━━━━━━━━━━",
                             "",
                             "📱 *MON APPAREIL À DONNER*",
-                            `• Modèle    : ${brand} ${model}`,
+                            `• Marque    : ${brand}`,
+                            `• Modèle    : ${model}`,
                             `• Stockage  : ${storage ?? "—"} Go`,
                             `• Écran     : ${labelEcran(ecranState)}`,
                             `• Châssis   : ${labelChassis(chassisState)}`,
                             `• Batterie  : ${labelBatterie(batterieState)}`,
-                            `• Valeur estimée (VRT) : ${formatCFA(safeFinalPrice)}`,
+                            `• Valeur estimée : ${formatCFA(safeFinalPrice)}`,
                             "",
                             "🎯 *APPAREIL SOUHAITÉ*",
-                            `• Modèle    : ${targetBrand} ${targetModel}`,
+                            `• Marque    : ${targetBrand}`,
+                            `• Modèle    : ${targetModel}`,
                             `• Stockage  : ${targetStorage ?? "—"} Go · Grade A certifié`,
-                            `• Prix catalogue (PRT) : ${formatCFA(safeTargetPrice)}`,
+                            `• Prix catalogue : ${formatCFA(safeTargetPrice)}`,
                             "",
                             "💰 *BILAN FINANCIER*",
                             `• Apport (reprise)     : ${formatCFA(safeFinalPrice)}`,
