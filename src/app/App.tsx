@@ -22,6 +22,7 @@ const Categories = lazy(() => import("@/features/admin/pages/Categories"));
 const AdminStats = lazy(() => import("@/features/admin/pages/Stats"));
 const AdminSettings = lazy(() => import("@/features/admin/pages/Settings"));
 const AdminNotifications = lazy(() => import("@/features/admin/pages/AdminNotifications"));
+const QRScanner = lazy(() => import("@/features/admin/pages/QRScanner"));
 import PageLoader from "@/shared/components/PageLoader";
 import { DealsProvider } from "@/features/marketplace/deals.context";
 import { CartProvider } from "@/features/marketplace/cart.context";
@@ -251,6 +252,7 @@ const NavigationWrapper = () => {
                         <Route path="stats" element={<AdminStats />} />
                         <Route path="settings" element={<AdminSettings />} />
                         <Route path="notifications" element={<AdminNotifications />} />
+                        <Route path="scan" element={<QRScanner />} />
                       </Route>
 
                       {/* Route 404 - Doit être la dernière */}

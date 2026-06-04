@@ -8,6 +8,16 @@ import { fetchUserTransactions, subscribeToTransaction } from "@/core/api/supaba
 import { LogisticsTimeline, LogisticsStatus } from "@/shared/components/LogisticsTimeline";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogTrigger
+} from "@/shared/ui/dialog";
+import { generateSecureTransactionQR } from "@/core/utils/qr";
+import { QrCode, Timer } from "lucide-react";
 import { cn } from "@/core/api/utils";
 
 export default function CommandesPage() {
@@ -123,6 +133,54 @@ export function CommandeDetailPage() {
 
         {/* Real-time Timeline */}
         <LogisticsTimeline currentStatus={order.status as LogisticsStatus} className="mb-6" />
+
+        {/* QR Deposit Section - Only if status is 'Estimé' */}
+        {order.status === 'Estimé' && (
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button className="w-full mb-6 py-8 rounded-3xl bg-emerald-600 hover:bg-emerald-700 text-white font-black uppercase tracking-tighter flex flex-col gap-1 h-auto shadow-lg shadow-emerald-500/20 group">
+                <div className="flex items-center gap-2 text-lg">
+                  <QrCode className="h-6 w-6 group-hover:rotate-12 transition-transform" />
+                  Générer mon QR de dépôt
+                </div>
+                <span className="text-[10px] opacity-80 font-bold uppercase tracking-widest flex items-center gap-1">
+                  <Timer className="h-3 w-3" /> Valide 5 minutes (Sécurité Anti-Fraude)
+                </span>
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-md rounded-3xl p-8">
+              <DialogHeader className="text-center">
+                <DialogTitle className="text-2xl font-black uppercase tracking-tighter italic text-emerald-600">Scanner en agence</DialogTitle>
+                <DialogDescription className="text-xs font-bold text-muted-foreground pt-2">
+                  Présentez ce code sécurisé à l'agent TEKH+ pour valider votre dépôt et déclencher vos récompenses.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="flex flex-col items-center justify-center space-y-6 py-4">
+                <div className="bg-white p-4 rounded-3xl shadow-inner border-2 border-dashed border-emerald-200">
+                  <canvas id="deposit-qr-canvas" className="w-[200px] h-[200px]" />
+                </div>
+                <div className="text-center space-y-2">
+                  <p className="text-[10px] font-black uppercase tracking-widest text-[#059669] animate-pulse">
+                    Code Temporel Activé
+                  </p>
+                  <p className="text-xs text-muted-foreground font-medium italic">
+                    Ce code expire automatiquement pour votre sécurité.
+                  </p>
+                </div>
+              </div>
+              <Button
+                className="w-full rounded-2xl font-black uppercase tracking-widest text-xs h-12"
+                onClick={() => {
+                  if (user && order) {
+                    generateSecureTransactionQR(order.id, user.id, 'deposit-qr-canvas');
+                  }
+                }}
+              >
+                Actualiser le code
+              </Button>
+            </DialogContent>
+          </Dialog>
+        )}
 
         <div className="grid grid-cols-1 gap-4">
           <Card className="border border-border/50 shadow-sm">

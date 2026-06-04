@@ -107,7 +107,7 @@ export async function getUserImpactStats(userId: string) {
     const remainingForReward = Math.max(0, 5 - convertedCount);
 
     return {
-        rewardStatus: data.reward_status as 'none' | 'eligible' | 'claimed',
+        rewardStatus: data.reward_status as 'none' | 'eligible_reward' | 'reward_claimed',
         co2Saved: Number(data.total_co2_saved),
         convertedCount,
         remainingToGoal: remainingForReward

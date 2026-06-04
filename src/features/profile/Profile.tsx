@@ -16,6 +16,16 @@ import { toast } from "@/shared/hooks/use-toast";
 import MotionRings from "@/shared/components/MotionRings";
 import { useCart } from "@/features/marketplace/cart.context";
 import { Link } from "react-router-dom";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogTrigger
+} from "@/shared/ui/dialog";
+import { generateSecureTransactionQR } from "@/core/utils/qr";
+import { QrCode, Timer, Gift, Headphones } from "lucide-react";
 
 export default function Profile() {
   const { t } = useTranslation();
@@ -198,13 +208,13 @@ export default function Profile() {
           </button>
         </section>
 
-        {/* Mon Impact ESG & Parrainage */}
+        {/* Mon Impact ESG & Club TEKH+ */}
         <section className="space-y-3">
           <div className="flex items-center justify-between px-1">
-            <h2 className="text-xs font-black uppercase tracking-widest text-muted-foreground">Mon Impact Éco</h2>
+            <h2 className="text-xs font-black uppercase tracking-widest text-muted-foreground">Club TEKH+ & Impact</h2>
             {impactStats?.co2Saved > 0 && (
               <span className="flex items-center gap-1 text-[10px] font-black text-emerald-500 uppercase italic">
-                <TrendingUp className="h-3 w-3" /> Score en hausse
+                <TrendingUp className="h-3 w-3" /> Score Éco en hausse
               </span>
             )}
           </div>
@@ -213,7 +223,8 @@ export default function Profile() {
             {/* Background Effect */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full -mr-16 -mt-16 blur-2xl" />
 
-            <div className="p-6 sm:p-8 space-y-6 relative">
+            <div className="p-6 sm:p-8 space-y-8 relative">
+              {/* Header Stats */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
                 <div className="flex items-center gap-5">
                   <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center shrink-0 border border-emerald-500/20">
@@ -224,48 +235,122 @@ export default function Profile() {
                       {impactStats?.co2Saved?.toFixed(1) ?? "0.0"}
                       <span className="text-sm font-bold text-muted-foreground ml-1.5 uppercase tracking-tighter">kg CO₂</span>
                     </p>
-                    <p className="text-[11px] text-muted-foreground font-bold uppercase tracking-widest mt-0.5 mt-1">Émissions de carbone économisées</p>
+                    <p className="text-[10px] text-muted-foreground font-black uppercase tracking-widest mt-0.5">Impact Écologique</p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <div className="bg-background border border-border/60 rounded-2xl p-3 px-4 flex flex-col items-center justify-center min-w-[100px]">
                     <p className="text-xl font-black text-foreground leading-none">{impactStats?.convertedCount ?? 0}</p>
-                    <p className="text-[9px] text-muted-foreground font-black uppercase tracking-tighter mt-1">Filleuls actifs</p>
+                    <p className="text-[9px] text-muted-foreground font-black uppercase tracking-tighter mt-1">Filleuls</p>
                   </div>
                 </div>
               </div>
 
-              {/* Progress Bar towards reward */}
-              <div className="space-y-3">
+              {/* Progress Tracker */}
+              <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Sparkles className="h-3.5 w-3.5 text-amber-500" />
-                    <span className="text-[10px] font-black uppercase tracking-widest text-foreground">Objectif Récompense</span>
+                    <Sparkles className="h-4 w-4 text-amber-500 animate-pulse" />
+                    <span className="text-[11px] font-black uppercase tracking-widest text-foreground">Objectif Cadeau Club</span>
                   </div>
-                  <span className="text-[10px] font-black text-muted-foreground">{impactStats?.convertedCount ?? 0} / 5</span>
+                  <span className="text-xs font-black text-emerald-600 dark:text-emerald-400">{impactStats?.convertedCount ?? 0} / 5</span>
                 </div>
-                <div className="h-3 bg-muted/30 rounded-full overflow-hidden border border-border/20">
+                <div className="h-3.5 bg-muted/30 rounded-full overflow-hidden border border-border/10 p-0.5">
                   <div
-                    className="h-full bg-gradient-to-r from-emerald-500 to-blue-500 transition-all duration-1000 ease-out"
+                    className="h-full bg-gradient-to-r from-emerald-500 via-teal-400 to-blue-500 rounded-full transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(16,185,129,0.3)]"
                     style={{ width: `${Math.min(100, ((impactStats?.convertedCount ?? 0) / 5) * 100)}%` }}
                   />
                 </div>
-                <p className="text-[9px] text-muted-foreground font-medium italic">
+                <p className="text-[10px] text-muted-foreground font-bold italic leading-tight">
                   {impactStats?.remainingToGoal > 0
-                    ? `Plus que ${impactStats.remainingToGoal} parrainage${impactStats.remainingToGoal > 1 ? 's' : ''} pour débloquer votre avantage premium.`
-                    : "Félicitations ! Vous êtes éligible à votre récompense TEKH+."}
+                    ? `Plus que ${impactStats.remainingToGoal} parrainage${impactStats.remainingToGoal > 1 ? 's' : ''} pour débloquer vos TEKH Pods (Écouteurs Sans Fil).`
+                    : "🎉 Objectif atteint ! Vous pouvez maintenant réclamer vos TEKH Pods en agence."}
                 </p>
+              </div>
+
+              {/* Reward Item Card */}
+              <div className={cn(
+                "p-4 rounded-3xl border-2 transition-all duration-500 flex items-center justify-between gap-4",
+                impactStats?.rewardStatus === 'eligible_reward'
+                  ? "bg-amber-500/5 border-amber-500/20 shadow-xl shadow-amber-500/5 scale-105"
+                  : "bg-muted/10 border-border/40 opacity-60 grayscale"
+              )}>
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-background rounded-2xl flex items-center justify-center shadow-md">
+                    <Headphones className={cn("h-6 w-6", impactStats?.rewardStatus === 'eligible_reward' ? "text-amber-600" : "text-muted-foreground")} />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-black text-foreground uppercase tracking-tight">TEKH Pods Series 1</h4>
+                    <p className="text-[10px] text-muted-foreground font-bold">Réduction de bruit & Basses profondes</p>
+                  </div>
+                </div>
+
+                {impactStats?.rewardStatus === 'eligible_reward' ? (
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button
+                        size="sm"
+                        className="rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-black text-[10px] uppercase tracking-widest px-4 h-9 shadow-lg shadow-amber-600/20 active:scale-95 transition-transform"
+                      >
+                        Réclamer
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-md rounded-[2.5rem] p-8">
+                      <DialogHeader className="text-center">
+                        <div className="mx-auto w-16 h-16 bg-amber-500/10 rounded-3xl flex items-center justify-center mb-4">
+                          <Gift className="h-8 w-8 text-amber-600" />
+                        </div>
+                        <DialogTitle className="text-2xl font-black uppercase tracking-tighter italic text-amber-600">Félicitations !</DialogTitle>
+                        <DialogDescription className="text-xs font-bold text-muted-foreground pt-2">
+                          Présentez ce QR Code en agence physique TEKH+ pour retirer vos TEKH Pods.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="flex flex-col items-center justify-center space-y-6 py-6 font-sans">
+                        <div className="bg-white p-4 rounded-3xl shadow-inner border-2 border-dashed border-amber-200">
+                          <canvas id="reward-qr-canvas" className="w-[200px] h-[200px]" />
+                        </div>
+                        <div className="text-center space-y-2">
+                          <p className="text-[10px] font-black uppercase tracking-widest text-amber-600 animate-pulse flex items-center gap-2 justify-center">
+                            <Timer className="h-3 w-3" /> Code Sécurisé Actif
+                          </p>
+                          <p className="text-[11px] text-muted-foreground font-medium italic">
+                            Valide pendant 5 minutes.
+                          </p>
+                        </div>
+                      </div>
+                      <Button
+                        className="w-full rounded-2xl bg-amber-600 hover:bg-amber-700 font-black uppercase tracking-[0.2em] text-[10px] h-12"
+                        onClick={() => {
+                          if (user) {
+                            generateSecureTransactionQR('REWARD_EARPHONES', user.id, 'reward-qr-canvas');
+                          }
+                        }}
+                      >
+                        Actualiser le code
+                      </Button>
+                    </DialogContent>
+                  </Dialog>
+                ) : impactStats?.rewardStatus === 'reward_claimed' ? (
+                  <div className="px-4 py-2 bg-blue-500/10 rounded-xl flex items-center gap-2">
+                    <ShieldCheck className="h-3 w-3 text-blue-600" />
+                    <span className="text-[10px] font-black text-blue-600 uppercase">Récupéré</span>
+                  </div>
+                ) : (
+                  <div className="px-3 py-1.5 bg-muted/40 rounded-xl">
+                    <span className="text-[9px] font-black text-muted-foreground uppercase opacity-50 tracking-widest">Bloqué</span>
+                  </div>
+                )}
               </div>
 
               {/* Share Action */}
               <div className="pt-2">
                 <button
                   onClick={handleShare}
-                  className="w-full h-14 bg-black dark:bg-white text-white dark:text-black rounded-2xl font-black text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all shadow-xl group"
+                  className="w-full h-14 bg-black dark:bg-white text-white dark:text-black rounded-2xl font-black text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all shadow-xl group border border-white/10"
                 >
                   <Share2 className="h-4 w-4 group-hover:rotate-12 transition-transform" />
-                  Inviter & Gagner
+                  Inviter mes contacts
                   <Copy className="h-3.5 w-3.5 opacity-50 ml-1" />
                 </button>
               </div>
