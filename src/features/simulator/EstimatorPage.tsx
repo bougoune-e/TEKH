@@ -62,6 +62,8 @@ interface EstimatorSessionV2 {
   isSatisfied: boolean | null;
   proposedPrice: string;
   detectionStep: "detecting" | "manual" | "confirmed";
+  /** Contre-prix saisi par le client à l'étape 2 (null = client satisfait) */
+  counterPrice: number | null;
 }
 
 // ─── Condition mappings ───────────────────────────────────────────────────────
@@ -181,6 +183,7 @@ export default function EstimatorPage() {
   const [step, setStep] = useState<"estimation" | "satisfaction" | "target_selection" | "comparison">("estimation");
   const [isSatisfied, setIsSatisfied] = useState<boolean | null>(null);
   const [proposedPrice, setProposedPrice] = useState("");
+  const [counterPrice, setCounterPrice] = useState<number | null>(null);
   const [exchangeType, setExchangeType] = useState<"upgrade" | "downgrade" | "">("");
   const [detectionStep, setDetectionStep] = useState<"detecting" | "manual" | "confirmed">("manual");
 
@@ -304,6 +307,7 @@ export default function EstimatorPage() {
     if (s.targetStorage != null) setTargetStorage(s.targetStorage);
     if (s.isSatisfied !== undefined) setIsSatisfied(s.isSatisfied);
     if (s.proposedPrice !== undefined) setProposedPrice(s.proposedPrice);
+    if (s.counterPrice !== undefined) setCounterPrice(s.counterPrice);
     if (s.detectionStep) setDetectionStep(s.detectionStep);
   }, []);
 
@@ -314,7 +318,7 @@ export default function EstimatorPage() {
         screenCondition, chassisCondition, batteryCondition,
         functionalityIssues, booleanAnswers, userDescription,
         exchangeType, targetBrand, targetModel, targetStorage,
-        isSatisfied, proposedPrice, detectionStep,
+        isSatisfied, proposedPrice, counterPrice, detectionStep,
       }, false);
     }, 700);
     return () => clearTimeout(t);
@@ -323,7 +327,7 @@ export default function EstimatorPage() {
     screenCondition, chassisCondition, batteryCondition,
     functionalityIssues, booleanAnswers, userDescription,
     exchangeType, targetBrand, targetModel, targetStorage,
-    isSatisfied, proposedPrice, detectionStep,
+    isSatisfied, proposedPrice, counterPrice, detectionStep,
   ]);
 
   // ─── Data fetching ──────────────────────────────────────────────────────────
@@ -675,6 +679,8 @@ export default function EstimatorPage() {
             setStep={setStep}
             proposedPrice={proposedPrice}
             setProposedPrice={setProposedPrice}
+            counterPrice={counterPrice}
+            setCounterPrice={setCounterPrice}
             isPWA={isPWA}
             brand={brand}
             model={model}
@@ -712,6 +718,7 @@ export default function EstimatorPage() {
             chassisState={resolvedCondition.chassis as ChassisTekh | ""}
             batterieState={resolvedCondition.batterie as BatterieTekh | ""}
             targetStorage={targetStorage}
+            counterPrice={counterPrice}
             formatCFA={formatCFA}
             isPWA={isPWA}
           />

@@ -44,6 +44,8 @@ interface ComparisonStepProps {
     chassisState: ChassisTekh | "";
     batterieState?: BatterieTekh | "";
     targetStorage: number | null;
+    /** Contre-prix proposé par le client à l'étape 2 (null = satisfait de l'estimation) */
+    counterPrice: number | null;
     formatCFA: (n: number) => string;
     isPWA?: boolean;
 }
@@ -52,6 +54,7 @@ export const ComparisonStep = ({
     brand, model, finalPrice,
     targetBrand, targetModel, targetModelInfo,
     storage, ecranState, chassisState, batterieState, targetStorage,
+    counterPrice,
     formatCFA, isPWA = false
 }: ComparisonStepProps) => {
     const { t } = useTranslation();
@@ -60,12 +63,10 @@ export const ComparisonStep = ({
         window.scrollTo({ top: 0, behavior: "smooth" });
     }, []);
 
-    // Defensive parsing to ensure we have numbers
     const safeFinalPrice = Number(finalPrice) || 0;
     const safeTargetPrice = Number(targetModelInfo?.base_price_fcfa) || 0;
     const difference = Math.max(0, safeTargetPrice - safeFinalPrice);
 
-    // Fallback UI if crucial info is somehow missing (shouldn't happen but prevents white page)
     if (!brand && !targetBrand) {
         return (
             <div className="p-10 text-center text-slate-500 font-bold uppercase tracking-widest animate-pulse">
@@ -87,9 +88,8 @@ export const ComparisonStep = ({
             </div>
 
             <div className="space-y-6">
-                {/* Deux cartes smartphone face à face — même layout web + PWA */}
                 <div className="flex flex-row items-stretch justify-center gap-3 sm:gap-6 max-w-2xl mx-auto">
-                    {/* Carte 1: Votre appareil (forme smartphone) */}
+                    {/* Carte 1 : Votre appareil */}
                     <div className="flex-1 max-w-[180px] sm:max-w-[200px] flex flex-col rounded-[20px] sm:rounded-[24px] overflow-hidden border-2 border-zinc-200 dark:border-white/10 bg-white dark:bg-white/5 shadow-xl">
                         <div className="aspect-[9/19] min-h-[140px] flex items-center justify-center bg-gradient-to-b from-slate-100 to-slate-50 dark:from-white/10 dark:to-transparent">
                             <Smartphone className="w-12 h-12 sm:w-14 sm:h-14 text-blue-600 dark:text-primary opacity-80" />
@@ -102,7 +102,7 @@ export const ComparisonStep = ({
                         </div>
                     </div>
 
-                    {/* Icône échange au centre */}
+                    {/* Icône échange */}
                     <div className="flex items-center justify-center shrink-0">
                         <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white dark:bg-[#05070a] border-2 border-zinc-200 dark:border-white/10 flex items-center justify-center z-10 shadow-lg">
                             <div className={cn("w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center", isPWA ? "bg-[#00FF41]" : "bg-[#064e3b] dark:bg-primary")}>
@@ -111,7 +111,7 @@ export const ComparisonStep = ({
                         </div>
                     </div>
 
-                    {/* Carte 2: Appareil cible (forme smartphone) */}
+                    {/* Carte 2 : Appareil cible */}
                     <div className="flex-1 max-w-[180px] sm:max-w-[200px] flex flex-col rounded-[20px] sm:rounded-[24px] overflow-hidden border-2 border-zinc-200 dark:border-white/10 bg-white dark:bg-white/5 shadow-xl">
                         <div className="aspect-[9/19] min-h-[140px] flex items-center justify-center bg-gradient-to-b from-[#00FF41]/10 to-transparent dark:from-primary/10 dark:to-transparent">
                             <Zap className="w-12 h-12 sm:w-14 sm:h-14 text-blue-600 dark:text-primary opacity-80" fill="currentColor" />
@@ -126,7 +126,7 @@ export const ComparisonStep = ({
                 </div>
             </div>
 
-            {/* Financial Balance Section */}
+            {/* Bilan financier */}
             <div className="bg-slate-900 dark:bg-black rounded-[32px] p-5 sm:p-8 md:p-10 space-y-8 relative shadow-2xl text-white max-w-4xl mx-auto mt-8">
                 <div className="flex justify-center -mt-9 sm:-mt-12 md:-mt-14 mb-2">
                     <div className="bg-blue-600 dark:bg-primary px-6 py-2 rounded-full shadow-lg">
@@ -140,6 +140,13 @@ export const ComparisonStep = ({
                             <span className="text-white text-[10px] font-black uppercase tracking-widest">Apport</span>
                             <span className="text-white text-base sm:text-lg font-black italic">{formatCFA(safeFinalPrice)}</span>
                         </div>
+                        {/* Contre-proposition du client — visible si présente */}
+                        {counterPrice !== null && (
+                            <div className="flex items-center justify-between border-b border-amber-500/30 pb-2">
+                                <span className="text-amber-400 text-[10px] font-black uppercase tracking-widest">Contre-offre client</span>
+                                <span className="text-amber-400 text-base sm:text-lg font-black italic">{formatCFA(counterPrice)}</span>
+                            </div>
+                        )}
                         <div className="flex items-center justify-between border-b border-white/10 pb-2">
                             <span className="text-white text-[10px] font-black uppercase tracking-widest">Cible</span>
                             <span className="text-white text-base sm:text-lg font-black italic">{formatCFA(safeTargetPrice)}</span>
@@ -156,23 +163,32 @@ export const ComparisonStep = ({
                 </div>
             </div>
 
-            {/* CTA — style minimal comme "Estimer mon téléphone" */}
+            {/* CTA WhatsApp — message final complet */}
             <div className="pt-6">
                 <button
                     type="button"
                     onClick={() => {
+                        const fmtNum = (n: number) => Math.abs(n).toLocaleString("fr-FR");
+
                         const lines = [
-                            "🔄 *DEMANDE DE SWAP — TEKH+*",
+                            "🔄 *NOUVELLE DEMANDE D'ÉCHANGE — TEKH+*",
                             "━━━━━━━━━━━━━━━━━━━━",
                             "",
-                            "📱 *MON APPAREIL À DONNER*",
+                            "📱 *APPAREIL CLIENT*",
                             `• Marque    : ${brand}`,
                             `• Modèle    : ${model}`,
                             `• Stockage  : ${storage ?? "—"} Go`,
                             `• Écran     : ${labelEcran(ecranState)}`,
                             `• Châssis   : ${labelChassis(chassisState)}`,
                             `• Batterie  : ${labelBatterie(batterieState)}`,
-                            `• Valeur estimée : ${formatCFA(safeFinalPrice)}`,
+                            "",
+                            "💰 *TARIFICATION*",
+                            `• Estimation TEKH+ : ${formatCFA(safeFinalPrice)}`,
+                            // Ligne contre-proposition — uniquement si présente
+                            ...(counterPrice !== null
+                                ? [`• Contre-offre client : ${fmtNum(counterPrice)} FCFA ⚠️`]
+                                : []
+                            ),
                             "",
                             "🎯 *APPAREIL SOUHAITÉ*",
                             `• Marque    : ${targetBrand}`,
@@ -180,14 +196,15 @@ export const ComparisonStep = ({
                             `• Stockage  : ${targetStorage ?? "—"} Go · Grade A certifié`,
                             `• Prix catalogue : ${formatCFA(safeTargetPrice)}`,
                             "",
-                            "💰 *BILAN FINANCIER*",
-                            `• Apport (reprise)     : ${formatCFA(safeFinalPrice)}`,
-                            `• Complément à régler  : ${formatCFA(difference)}`,
+                            "📊 *BILAN FINANCIER*",
+                            `• Apport (reprise)    : ${formatCFA(safeFinalPrice)}`,
+                            `• Complément à régler : ${formatCFA(difference)}`,
                             "━━━━━━━━━━━━━━━━━━━━",
                             "⚡ _Estimation auto-générée · TEKH+ App_",
                             "",
                             "Merci de confirmer la disponibilité et le point de swap.",
                         ];
+
                         const ok = openWhatsApp(lines.join("\n"));
                         if (!ok) {
                             toast({

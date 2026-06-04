@@ -3,33 +3,6 @@ import { Button } from "@/shared/ui/button";
 import { Zap, CheckCircle2, TrendingUp, ArrowRightLeft, AlertCircle } from "lucide-react";
 import { cn } from "@/core/api/utils";
 import { useTranslation } from "react-i18next";
-import { openWhatsApp } from "@/core/utils/whatsapp";
-
-function labelBatterie(state?: string): string {
-    switch (state) {
-        case "gte90":    return "Excellente (capacité ≥ 90%)";
-        case "gte80_89": return "Bonne (capacité 80–89%)";
-        case "gte70_79": return "Correcte (capacité 70–79%)";
-        case "gte60_69": return "Faible (capacité 60–69%)";
-        case "lt60":     return "Très faible — à remplacer (< 60%)";
-        default:         return state || "—";
-    }
-}
-function labelEcran(state?: string): string {
-    switch (state) {
-        case "parfait": return "Parfait (aucune rayure ni trace)";
-        case "raye":    return "Rayé / micro-rayures visibles";
-        case "casse":   return "Cassé / écran fissuré";
-        default:        return state || "—";
-    }
-}
-function labelChassis(state?: string): string {
-    switch (state) {
-        case "intact": return "Intact (aucun choc ni marque)";
-        case "abime":  return "Endommagé (chocs ou fissures)";
-        default:       return state || "—";
-    }
-}
 
 interface SatisfactionStepProps {
     finalPrice: number | null;
@@ -39,6 +12,9 @@ interface SatisfactionStepProps {
     setStep: (v: any) => void;
     proposedPrice: string;
     setProposedPrice: (v: string) => void;
+    /** Contre-prix capturé en session (null = satisfait) */
+    counterPrice: number | null;
+    setCounterPrice: (v: number | null) => void;
     isPWA?: boolean;
     brand?: string;
     model?: string;
@@ -51,8 +27,10 @@ interface SatisfactionStepProps {
 
 export const SatisfactionStep = ({
     finalPrice, formatCFA, isSatisfied, setIsSatisfied, setStep,
-    proposedPrice, setProposedPrice, isPWA = false,
-    brand, model, storage, ram, ecranState, chassisState, batterieState
+    proposedPrice, setProposedPrice,
+    counterPrice, setCounterPrice,
+    isPWA = false,
+    brand, model, storage, ram,
 }: SatisfactionStepProps) => {
     const { t } = useTranslation();
 
@@ -60,6 +38,14 @@ export const SatisfactionStep = ({
     const estimatedNum = finalPrice || 0;
     const isSameAsEstimate = proposedNum > 0 && proposedNum === estimatedNum;
     const canSubmit = proposedNum > 0 && !isSameAsEstimate;
+
+    const handleSubmitCounterPrice = () => {
+        if (!canSubmit) return;
+        // Stocker le contre-prix dans la session et avancer dans le tunnel
+        setCounterPrice(proposedNum);
+        setStep("target_selection");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
 
     return (
         <div className="p-4 sm:p-6 space-y-6 animate-in slide-in-from-bottom-12 duration-700 text-center">
@@ -78,8 +64,14 @@ export const SatisfactionStep = ({
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl mx-auto">
+                {/* Option 1 : Accepter l'estimation TEKH+ */}
                 <button
-                    onClick={() => { setIsSatisfied(true); setStep("target_selection"); }}
+                    onClick={() => {
+                        setIsSatisfied(true);
+                        setCounterPrice(null); // Réinitialise tout contre-prix précédent
+                        setStep("target_selection");
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                    }}
                     className={cn(
                         "flex flex-col items-center justify-center gap-1.5 transition-all duration-300 p-4 px-6 rounded-2xl border border-white/5 hover:scale-[1.02] active:scale-95 group shadow-sm text-left sm:text-center",
                         isPWA ? "bg-[#00FF41] text-black" : "bg-black text-white hover:bg-zinc-900"
@@ -92,6 +84,7 @@ export const SatisfactionStep = ({
                     <span className="text-[10px] font-medium opacity-90">{t('simulator.perfect_desc', 'J\'accepte ce prix de reprise.')}</span>
                 </button>
 
+                {/* Option 2 : Proposer un contre-prix */}
                 <button
                     onClick={() => setIsSatisfied(false)}
                     className={cn(
@@ -107,12 +100,22 @@ export const SatisfactionStep = ({
                 </button>
             </div>
 
+            {/* Panneau de saisie du contre-prix — apparu quand "Estimation trop basse" */}
             {isSatisfied === false && (
                 <div className="space-y-4 pt-8 border-t border-slate-100 dark:border-white/5 animate-in fade-in slide-in-from-top-6 max-w-lg mx-auto">
                     <div className="flex items-center justify-center gap-2 mb-1">
                         <Zap className="w-3 h-3 text-blue-600 dark:text-primary" />
                         <Label className="text-[10px] font-black uppercase tracking-widest text-slate-700 dark:text-zinc-400 italic">MON MONTANT PROPOSÉ (FCFA)</Label>
                     </div>
+
+                    {/* Info : le contre-prix sera transmis avec le dossier complet à l'étape 4 */}
+                    <div className="flex items-start gap-2 px-3 py-2.5 rounded-xl bg-blue-500/10 border border-blue-500/20 text-left">
+                        <AlertCircle className="w-3.5 h-3.5 text-blue-500 shrink-0 mt-0.5" />
+                        <p className="text-[9px] font-black text-blue-700 dark:text-blue-400 leading-snug">
+                            Votre contre-proposition sera incluse dans le récapitulatif envoyé à TEKH+ à la fin du tunnel, avec le bilan complet de votre échange.
+                        </p>
+                    </div>
+
                     <input
                         type="number"
                         placeholder="EX: 450000"
@@ -125,44 +128,23 @@ export const SatisfactionStep = ({
                                 : "border-zinc-100 dark:border-zinc-700 focus:border-[#064e3b] dark:focus:border-primary"
                         )}
                     />
+
                     {isSameAsEstimate && (
                         <div className="flex items-center gap-2 text-rose-500 text-[10px] font-black uppercase tracking-widest">
                             <AlertCircle className="w-3 h-3 shrink-0" />
                             Votre montant doit être différent de l'estimation TEKH+
                         </div>
                     )}
+
                     <Button
                         className={cn(
                             "w-full h-14 rounded-full font-black text-sm uppercase italic tracking-[0.2em] shadow-xl mt-4 transition-all",
                             isPWA ? "bg-[#00FF41] hover:bg-[#00FF41]/90 text-black" : "bg-slate-900 hover:bg-black dark:bg-white dark:hover:bg-slate-100 text-white dark:text-black"
                         )}
-                        onClick={() => {
-                            const diff = proposedNum - estimatedNum;
-                            const diffPct = estimatedNum > 0 ? (diff / estimatedNum) * 100 : 0;
-                            const sign = diff >= 0 ? "+" : "";
-                            const fmtNum = (n: number) => Math.abs(n).toLocaleString("fr-FR");
-                            const msg =
-                                `🔔 *DEMANDE DE NÉGOCIATION — TEKH+*\n` +
-                                `━━━━━━━━━━━━━━━━━━━━\n` +
-                                `📱 *${brand} ${model}*\n` +
-                                `   💾 Stockage : ${storage} Go${ram ? ` · RAM : ${ram} Go` : ``}\n\n` +
-                                `🔍 *ÉTAT DE L'APPAREIL*\n` +
-                                `• Écran    : ${labelEcran(ecranState)}\n` +
-                                `• Châssis  : ${labelChassis(chassisState)}\n` +
-                                `• Batterie : ${labelBatterie(batterieState)}\n\n` +
-                                `💰 *NÉGOCIATION PRIX*\n` +
-                                `• Estimation TEKH+ : ${formatCFA(estimatedNum)}\n` +
-                                `• Contre-offre     : ${fmtNum(proposedNum)} FCFA\n` +
-                                `• Écart             : ${sign}${fmtNum(diff)} FCFA (${sign}${diffPct.toFixed(1)}%)\n` +
-                                `━━━━━━━━━━━━━━━━━━━━\n` +
-                                `⚡ _Expertise auto-générée · TEKH+ App_`;
-
-                            openWhatsApp(msg);
-                            setStep("target_selection");
-                        }}
+                        onClick={handleSubmitCounterPrice}
                         disabled={!canSubmit}
                     >
-                        SOUMETTRE <ArrowRightLeft className="w-5 h-5 ml-4" />
+                        CONTINUER L'ÉCHANGE <ArrowRightLeft className="w-5 h-5 ml-4" />
                     </Button>
                 </div>
             )}
