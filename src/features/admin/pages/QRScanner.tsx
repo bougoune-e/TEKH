@@ -7,6 +7,7 @@ import { Button } from "@/shared/ui/button";
 import { ChevronLeft, Camera, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "@/shared/hooks/use-toast";
+import { cn } from "@/core/api/utils";
 
 export default function QRScanner() {
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -172,4 +173,4 @@ export default function QRScanner() {
     );
 }
 
-import { cn } from "@/core/api/utils";
+
