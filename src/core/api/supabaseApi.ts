@@ -187,7 +187,7 @@ async function fetchBrands_fromSupabase(): Promise<string[]> {
       const PAGE = 1000;
       const all: string[] = [];
       let from = 0;
-      for (;;) {
+      for (; ;) {
         const { data, error } = await realClient
           .from("smartphones")
           .select("marque")
@@ -890,4 +890,43 @@ export async function fetchCatalogItems() {
   const { data, error } = await realClient.from(PRICES_TABLE).select("marque, modele_exact, stockage_gb, prix_neuf_fcfa").limit(200);
   if (error) return [];
   return data.map((d: any) => ({ marque: d.marque, modele: d.modele_exact, stockage: d.stockage_gb, prix: d.prix_neuf_fcfa }));
+}
+/** Fetch all logistical transactions for a user. */
+export async function fetchUserTransactions(userId: string) {
+  if (!realClient) return [];
+  const { data, error } = await realClient
+    .from("device_transactions")
+    .select("*")
+    .eq("user_id", userId)
+    .order("created_at", { ascending: false });
+
+  if (error) throw error;
+  return data || [];
+}
+
+/** Subscribe to real-time updates for a specific transaction. */
+export function subscribeToTransaction(transactionId: string, onUpdate: (newStatus: string) => void) {
+  if (!realClient) return { unsubscribe: () => { } };
+
+  const channel = realClient
+    .channel(`logistics:${transactionId}`)
+    .on(
+      "postgres_changes",
+      {
+        event: "UPDATE",
+        schema: "public",
+        table: "device_transactions",
+        filter: `id=eq.${transactionId}`
+      },
+      (payload: any) => {
+        if (payload.new && payload.new.status) {
+          onUpdate(payload.new.status);
+        }
+      }
+    )
+    .subscribe();
+
+  return {
+    unsubscribe: () => realClient.removeChannel(channel)
+  };
 }
