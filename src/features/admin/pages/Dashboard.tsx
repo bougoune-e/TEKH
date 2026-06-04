@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import StatCard from "../components/StatCard";
 import ChartCard from "../components/ChartCard";
-import { Users as UsersIcon, Smartphone, Handshake, Boxes } from "lucide-react";
+import { Users as UsersIcon, Smartphone, Handshake, Boxes, QrCode } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/shared/ui/button";
 import { fetchAllDealsForAdmin, countProfiles } from "@/core/api/supabaseApi";
 import { isSupabaseConfigured } from "@/core/api/supabaseClient";
 
@@ -49,7 +51,7 @@ const Dashboard = () => {
           "publishedAt"
         ));
       })
-      .catch(() => {})
+      .catch(() => { })
       .finally(() => setLoading(false));
   }, []);
 
@@ -84,6 +86,26 @@ const Dashboard = () => {
           icon={<Boxes className="h-5 w-5 text-primary-foreground" />}
           accent="bg-emerald-600"
         />
+      </div>
+
+      {/* Quick Action: Scanner */}
+      <div className="bg-emerald-600 rounded-[2rem] p-8 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl shadow-emerald-600/20 group">
+        <div className="flex items-center gap-6">
+          <div className="w-16 h-16 bg-white/20 rounded-3xl flex items-center justify-center shrink-0 border border-white/30 backdrop-blur-md group-hover:scale-110 transition-transform">
+            <QrCode className="h-8 w-8 text-white" />
+          </div>
+          <div>
+            <h3 className="text-xl font-black uppercase tracking-tighter italic">Scanner de Validation</h3>
+            <p className="text-sm font-bold opacity-80 leading-snug max-w-sm">
+              Validez les dépôts d&apos;appareils et les retraits de cadeaux clients en un instant.
+            </p>
+          </div>
+        </div>
+        <Link to="/admin/scan" className="w-full md:w-auto">
+          <Button className="w-full md:w-auto bg-white text-emerald-600 hover:bg-emerald-50 font-black uppercase tracking-widest px-8 h-12 rounded-2xl shadow-lg ring-offset-emerald-600">
+            Lancer le scanner
+          </Button>
+        </Link>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">

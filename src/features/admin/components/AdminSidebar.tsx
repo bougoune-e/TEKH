@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { cn } from "@/core/api/utils";
 import {
   LayoutGrid, Users, Smartphone, Boxes, Tags, BarChart3,
-  Settings, Handshake, ChevronRight, X, Menu, LogOut, Bell, Coins,
+  Settings, Handshake, ChevronRight, X, Menu, LogOut, Bell, Coins, QrCode
 } from "lucide-react";
 import { getRole } from "@/core/api/auth";
 import { useAuth } from "@/features/auth/auth.context";
@@ -11,6 +11,7 @@ import logo from "@/assets/logos/robott.jpeg";
 
 const items = [
   { to: "/admin", label: "Dashboard", icon: LayoutGrid, end: true },
+  { to: "/admin/scan", label: "Scanner QR", icon: QrCode },
   { to: "/admin/annonces", label: "Annonces", icon: Smartphone },
   { to: "/admin/deals", label: "Deals", icon: Handshake },
   { to: "/admin/users", label: "Utilisateurs", icon: Users },

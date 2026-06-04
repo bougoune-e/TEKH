@@ -3,7 +3,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { AdminDesktopSidebar, AdminMobileNav } from "../components/AdminSidebar";
 import AdminHeader from "../components/AdminHeader";
 import { AdminPWAInstall } from "../components/AdminPWAInstall";
-import { Plus, X, Megaphone, Bell } from "lucide-react";
+import { Plus, X, Megaphone, Bell, QrCode } from "lucide-react";
 import { cn } from "@/core/api/utils";
 
 /* ── FAB Speed-dial mobile ───────────────────────────────────── */
@@ -34,6 +34,15 @@ function AdminFAB() {
       {/* Speed-dial actions */}
       {open && (
         <>
+          <button
+            onClick={() => go("/admin/scan")}
+            className="flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-emerald-600 text-white shadow-lg text-sm font-black transition-all active:scale-95"
+          >
+            <span className="w-8 h-8 rounded-xl bg-white/20 text-white flex items-center justify-center shrink-0">
+              <QrCode className="w-4 h-4" />
+            </span>
+            Scanner un client
+          </button>
           <button
             onClick={() => go("/admin/notifications")}
             className="flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-card border border-border shadow-lg text-sm font-black transition-all active:scale-95"
