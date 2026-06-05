@@ -117,7 +117,7 @@ export default function Profile() {
 
   const handleShare = () => {
     if (!referralCode) return;
-    const url = `https://tekh.app/invite?ref=${referralCode}`;
+    const url = `${window.location.origin}/invite?ref=${referralCode}`;
     navigator.clipboard.writeText(url).then(() => {
       toast({
         title: "Lien copié !",
