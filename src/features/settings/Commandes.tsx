@@ -134,9 +134,17 @@ export function CommandeDetailPage() {
         {/* Real-time Timeline */}
         <LogisticsTimeline currentStatus={order.status as LogisticsStatus} className="mb-6" />
 
-        {/* QR Deposit Section - Only if status is 'Estimé' */}
         {order.status === 'Estimé' && (
-          <Dialog>
+          <Dialog onOpenChange={(open) => {
+            if (open) {
+              // Delay slightly to ensure canvas is in DOM
+              setTimeout(() => {
+                if (user && order) {
+                  generateSecureTransactionQR(order.id, user.id, 'deposit-qr-canvas');
+                }
+              }, 100);
+            }
+          }}>
             <DialogTrigger asChild>
               <Button className="w-full mb-6 py-8 rounded-3xl bg-emerald-600 hover:bg-emerald-700 text-white font-black uppercase tracking-tighter flex flex-col gap-1 h-auto shadow-lg shadow-emerald-500/20 group">
                 <div className="flex items-center gap-2 text-lg">

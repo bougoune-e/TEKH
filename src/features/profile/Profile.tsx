@@ -288,7 +288,15 @@ export default function Profile() {
                 </div>
 
                 {impactStats?.rewardStatus === 'eligible_reward' ? (
-                  <Dialog>
+                  <Dialog onOpenChange={(open) => {
+                    if (open) {
+                      setTimeout(() => {
+                        if (user) {
+                          generateSecureTransactionQR('REWARD_EARPHONES', user.id, 'reward-qr-canvas');
+                        }
+                      }, 100);
+                    }
+                  }}>
                     <DialogTrigger asChild>
                       <Button
                         size="sm"
