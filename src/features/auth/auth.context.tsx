@@ -93,8 +93,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return;
       }
 
-      // Handle referral registration on first sign in/up
-      if (event === "SIGNED_IN" && session?.user) {
+      // Handle referral registration
+      if (session?.user) {
         const code = getStoredReferralCode();
         if (code) {
           registerReferee(session.user.id, code).catch(console.error);
