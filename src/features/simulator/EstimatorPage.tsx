@@ -244,6 +244,12 @@ export default function EstimatorPage() {
   // Display price: use adjustedFinalPrice when AI is done, otherwise fall back to raw finalPriceValue
   const displayPrice = adjustedFinalPrice ?? finalPriceValue;
 
+  // ─── Reset AI adjustment on condition change ─────────────────────────────
+  useEffect(() => {
+    setAiAdjustment(0);
+    setAiConfidence(null);
+  }, [screenCondition, chassisCondition, batteryCondition, functionalityIssues]);
+
   useEffect(() => {
     if (displayPrice !== null) setProposedPrice(displayPrice.toString());
   }, [displayPrice]);
@@ -554,7 +560,7 @@ export default function EstimatorPage() {
                 {/* Price card (visible as soon as mandatory fields are complete) */}
                 <div className={cn(
                   "transition-all duration-300 overflow-hidden",
-                  isStep1Complete && displayPrice !== null
+                  displayPrice !== null
                     ? "max-h-[800px] opacity-100 translate-y-0 mt-8"
                     : "max-h-0 opacity-0 translate-y-4 pointer-events-none"
                 )}>
