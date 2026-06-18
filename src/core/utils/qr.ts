@@ -1,4 +1,4 @@
-import QRCode from 'https://cdn.jsdelivr.net/npm/qrcode@1.5.3/+esm';
+import QRCode from 'qrcode';
 
 /**
  * Generates a secure, time-limited QR code for TEKH+ transactions or rewards.

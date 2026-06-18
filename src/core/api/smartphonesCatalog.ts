@@ -26,11 +26,21 @@ function parseStorageGbFromVariante(variante: string): number | null {
   return null;
 }
 
+// ─── In-memory cache for fetchSmartphonesForBrandModel ────────────────────────
+const smCache = new Map<string, { rows: SmartphoneRow[]; ts: number }>();
+const SM_CACHE_TTL = 5 * 60 * 1000; // 5 min
+
 /** Lignes pour une marque + modèle (trim, correspondance insensible à la casse côté SQL). */
 export async function fetchSmartphonesForBrandModel(brand: string, model: string): Promise<SmartphoneRow[]> {
   if (!realClient) return [];
   const b = brand.trim();
   const m = model.trim();
+  const cacheKey = `${b.toLowerCase()}|${m.toLowerCase()}`;
+
+  // Return cached rows if fresh
+  const cached = smCache.get(cacheKey);
+  if (cached && Date.now() - cached.ts < SM_CACHE_TTL) return cached.rows;
+
   const { data, error } = await realClient
     .from("smartphones")
     .select("id, marque, modele, variante, annee_sortie, classe_tekh, specs, prt_fcfa, prt_updated_at, facteur_afrique")
@@ -41,7 +51,9 @@ export async function fetchSmartphonesForBrandModel(brand: string, model: string
     if (import.meta.env.DEV) console.warn("[smartphonesCatalog]", error.message);
     return [];
   }
-  return (data || []) as SmartphoneRow[];
+  const rows = (data || []) as SmartphoneRow[];
+  smCache.set(cacheKey, { rows, ts: Date.now() });
+  return rows;
 }
 
 /** Modèles distincts présents dans `smartphones` pour une marque. */

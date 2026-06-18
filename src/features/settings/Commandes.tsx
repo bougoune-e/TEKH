@@ -54,7 +54,7 @@ export default function CommandesPage() {
                   <CardTitle className="text-sm font-black truncate max-w-[200px]">ID: {order.id.split('-')[0].toUpperCase()}</CardTitle>
                   <span className={cn(
                     "text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded-full",
-                    order.status === 'completed' ? "bg-emerald-500/10 text-emerald-600" : "bg-primary/10 text-primary"
+                    order.status === 'Terminé' ? "bg-emerald-500/10 text-emerald-600" : "bg-primary/10 text-primary"
                   )}>
                     {order.status}
                   </span>

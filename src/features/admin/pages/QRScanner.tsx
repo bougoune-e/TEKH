@@ -1,6 +1,4 @@
-import { useEffect, useRef, useState } from "react";
-// @ts-ignore
-import QrScanner from 'https://cdn.jsdelivr.net/npm/qr-scanner@1.4.2/+esm';
+import QrScanner from 'qr-scanner';
 import { supabase } from "@/core/api/supabaseClient";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/card";
 import { Button } from "@/shared/ui/button";
@@ -78,7 +76,7 @@ export default function QRScanner() {
                 const { error } = await supabase
                     .from('device_transactions')
                     .update({
-                        status: 'Déposé en Point Relais',
+                        status: 'Déposé',
                         updated_at: new Date().toISOString()
                     })
                     .eq('id', tId)

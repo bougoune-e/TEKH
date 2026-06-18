@@ -459,12 +459,6 @@ export async function getAvailableVariants(brand: string, model: string): Promis
   return [];
 }
 
-/** @deprecated Use getModelInfo */
-export async function getBasePriceCFA(brand: string, model: string, storage: number): Promise<number | null> {
-  const info = await getModelInfo(brand, model, storage);
-  return info?.base_price_fcfa ?? null;
-}
-
 export async function fetchRams(brand: string, model: string): Promise<number[]> {
   try {
     if (realClient) {
@@ -929,4 +923,36 @@ export function subscribeToTransaction(transactionId: string, onUpdate: (newStat
   return {
     unsubscribe: () => realClient.removeChannel(channel)
   };
+}
+
+/** Create a new logistics transaction after estimation. */
+export async function createLogisticsTransaction(userId: string, deviceName: string, price: number, metadata: any = {}) {
+  console.log("[createLogisticsTransaction] Starting...", { userId, deviceName, price });
+
+  if (!realClient) {
+    console.error("[createLogisticsTransaction] Supabase client not initialized (check VITE_SUPABASE_URL)");
+    throw new Error("Supabase non configuré");
+  }
+
+  const { data, error } = await realClient
+    .from("device_transactions")
+    .insert([
+      {
+        user_id: userId,
+        device_name: deviceName,
+        price_fcfa: price,
+        status: "Estimé",
+        metadata: metadata
+      }
+    ])
+    .select()
+    .single();
+
+  if (error) {
+    console.error("[createLogisticsTransaction] Insert error:", error);
+    throw error;
+  }
+
+  console.log("[createLogisticsTransaction] Success:", data);
+  return data;
 }

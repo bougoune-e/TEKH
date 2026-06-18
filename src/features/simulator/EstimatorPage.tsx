@@ -1,12 +1,12 @@
 import { useEffect, useLayoutEffect, useMemo, useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/shared/ui/button";
-import { toast } from "@/shared/hooks/use-toast";
 import {
   fetchBrands,
   fetchModels,
   getModelInfo,
-  getAvailableVariants
+  getAvailableVariants,
+  createLogisticsTransaction
 } from "@/core/api/supabaseApi";
 import { lookupCsvVariants } from "@/core/api/csvCatalog";
 import { calculerEstimation, type BatterieTekh, type ChassisTekh, type EcranTekh } from "@/core/api/pricing";
@@ -145,6 +145,7 @@ export default function EstimatorPage() {
     side1: useRef<HTMLInputElement>(null),
     side2: useRef<HTMLInputElement>(null),
   };
+  const uploadedFilesRef = useRef<Record<PhotoSlot, File | null>>({ front: null, back: null, side1: null, side2: null });
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>, slot: PhotoSlot) => {
     const file = e.target.files?.[0];
@@ -152,11 +153,11 @@ export default function EstimatorPage() {
     const previewUrl = URL.createObjectURL(file);
     setImageSlots(prev => ({ ...prev, [slot]: previewUrl }));
     setAnalysisResults(prev => ({ ...prev, [slot]: null }));
-    (window as any)[`file_${slot}`] = file;
+    uploadedFilesRef.current[slot] = file;
   };
 
   const performAnalysis = async (slot: PhotoSlot) => {
-    const file = (window as any)[`file_${slot}`];
+    const file = uploadedFilesRef.current[slot];
     if (!file || !isSupabaseConfigured) return;
     setAnalyzingSlots(prev => ({ ...prev, [slot]: true }));
     try {
@@ -240,9 +241,12 @@ export default function EstimatorPage() {
     return Math.round(finalPriceValue * (1 + capped));
   }, [finalPriceValue, aiAdjustment, aiConfidence, resolvedCondition.isNonFonctionnel]);
 
+  // Display price: use adjustedFinalPrice when AI is done, otherwise fall back to raw finalPriceValue
+  const displayPrice = adjustedFinalPrice ?? finalPriceValue;
+
   useEffect(() => {
-    if (adjustedFinalPrice !== null) setProposedPrice(adjustedFinalPrice.toString());
-  }, [adjustedFinalPrice]);
+    if (displayPrice !== null) setProposedPrice(displayPrice.toString());
+  }, [displayPrice]);
 
   // ─── Gate conditions ────────────────────────────────────────────────────────
   const isRamSatisfied = rams.length === 0 ? true : Boolean(ram);
@@ -549,24 +553,24 @@ export default function EstimatorPage() {
 
                 {/* Price card (visible as soon as mandatory fields are complete) */}
                 <div className={cn(
-                  "transition-all duration-700 overflow-hidden",
-                  isStep1Complete && adjustedFinalPrice !== null
+                  "transition-all duration-300 overflow-hidden",
+                  isStep1Complete && displayPrice !== null
                     ? "max-h-[800px] opacity-100 translate-y-0 mt-8"
                     : "max-h-0 opacity-0 translate-y-4 pointer-events-none"
                 )}>
-                  {adjustedFinalPrice !== null && (
+                  {displayPrice !== null && (
                     <div className="space-y-4">
                       {/* Main price card */}
                       <div className="flex flex-col items-center justify-center p-10 rounded-[2.5rem] bg-gradient-to-b from-green-500/10 to-transparent dark:from-[#00FF41]/10 border-2 border-[#00FF41]/20 shadow-2xl shadow-[#00FF41]/5 text-center">
                         <h3 className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mb-4 italic">Valeur de Reprise Estimée</h3>
                         <div className="text-5xl sm:text-6xl font-black text-slate-900 dark:text-white tracking-tighter mb-4 flex items-baseline gap-2 italic">
-                          {adjustedFinalPrice === 0
+                          {displayPrice === 0
                             ? "0"
-                            : formatCFA(adjustedFinalPrice).replace("FCFA", "")}
+                            : formatCFA(displayPrice).replace("FCFA", "")}
                           <span className="text-xl opacity-50 font-sans not-italic">XOF</span>
                         </div>
 
-                        {adjustedFinalPrice === 0 && (
+                        {displayPrice === 0 && (
                           <p className="text-[11px] font-bold text-rose-500 dark:text-rose-400 mb-3">
                             Appareil non fonctionnel — reprise non possible
                           </p>
@@ -603,13 +607,43 @@ export default function EstimatorPage() {
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pb-2">
                         <Button
-                          onClick={() => {
+                          onClick={async () => {
                             if (!user) {
                               triggerNudge("save_estimation", true);
                               return;
                             }
-                            setStep("satisfaction");
-                            window.scrollTo({ top: 0, behavior: "smooth" });
+
+                            try {
+                              console.log("Attempting to save transaction for user:", user.id);
+                              const priceToSave = adjustedFinalPrice ?? displayPrice;
+                              const result = await createLogisticsTransaction(
+                                user.id,
+                                `${brand} ${model}`,
+                                priceToSave || 0,
+                                {
+                                  storage,
+                                  condition: resolvedCondition,
+                                  isCounterOffer: counterPrice !== null
+                                }
+                              );
+
+                              if (result) {
+                                toast({
+                                  title: "Offre validée !",
+                                  description: "Votre transaction est enregistrée. Rendez-vous en agence pour le dépôt.",
+                                });
+                                setStep("satisfaction");
+                                window.scrollTo({ top: 0, behavior: "smooth" });
+                              }
+                            } catch (e: any) {
+                              console.error("Failed to create transaction:", e);
+                              toast({
+                                variant: "destructive",
+                                title: "Erreur d'enregistrement",
+                                description: `Impossible d'enregistrer l'offre : ${e.message || "Erreur inconnue"}. Veuillez réessayer.`,
+                              });
+                            }
+
                           }}
                           className="group h-16 rounded-[1.5rem] bg-[#00FF41] hover:bg-[#00D737] text-black font-black text-lg uppercase tracking-tighter italic shadow-xl shadow-[#00FF41]/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
                         >
@@ -633,16 +667,17 @@ export default function EstimatorPage() {
                         </Button>
                       </div>
 
-                      {returnToDealId && adjustedFinalPrice > 0 && (
+                      {returnToDealId && (displayPrice ?? 0) > 0 && (
                         <Button
                           onClick={() => {
+                            const priceForDeal = adjustedFinalPrice ?? displayPrice ?? 0;
                             const condition =
                               resolvedCondition.ecran === "parfait" && resolvedCondition.chassis === "intact"
                                 ? ("like_new" as const)
                                 : resolvedCondition.ecran === "casse"
                                   ? ("damaged" as const)
                                   : ("good" as const);
-                            setLastSimulation({ model, storage: storage || undefined, estimated: adjustedFinalPrice, condition });
+                            setLastSimulation({ model, storage: storage || undefined, estimated: priceForDeal, condition });
                             navigate(`/deal/${returnToDealId}`);
                           }}
                           variant="outline"
