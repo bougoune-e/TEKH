@@ -31,6 +31,7 @@ import { SatisfactionStep } from "./components/SatisfactionStep";
 import { TargetSelectionStep } from "./components/TargetSelectionStep";
 import { ComparisonStep } from "./components/ComparisonStep";
 import { PhotoStep, type PhotoSlot } from "./components/PhotoStep";
+import { CameraScanModal } from "./components/CameraScanModal";
 import { usePWA } from "@/shared/hooks/usePWA";
 import { useDeals } from "@/features/marketplace/deals.context";
 import { loadJson, saveJson } from "@/core/pwa/tekhSession";
@@ -180,6 +181,16 @@ export default function EstimatorPage() {
     setAnalysisResults(prev => ({ ...prev, [slot]: null }));
   };
 
+  const handleApplyScanResult = (vrt: number, screenCond: string, score: number) => {
+    setScreenCondition(screenCond as any);
+    setAiAdjustment(Math.round((score - 0.85) * 100)); // offset from standard condition
+    setAiConfidence(0.95);
+    toast({
+      title: "Scanner Vision AI",
+      description: `État certifié à ${Math.round(score * 100)}% avec succès.`
+    });
+  };
+
   // Workflow
   const [step, setStep] = useState<"estimation" | "satisfaction" | "target_selection" | "comparison">("estimation");
   const [isSatisfied, setIsSatisfied] = useState<boolean | null>(null);
@@ -187,6 +198,7 @@ export default function EstimatorPage() {
   const [counterPrice, setCounterPrice] = useState<number | null>(null);
   const [exchangeType, setExchangeType] = useState<"upgrade" | "downgrade" | "">("");
   const [detectionStep, setDetectionStep] = useState<"detecting" | "manual" | "confirmed">("manual");
+  const [scanModalOpen, setScanModalOpen] = useState(false);
 
   // Target device
   const [targetBrand, setTargetBrand] = useState("");
@@ -225,10 +237,17 @@ export default function EstimatorPage() {
   // ─── Price calculation ──────────────────────────────────────────────────────
   const finalPriceValue = useMemo(() => {
     if (resolvedCondition.isNonFonctionnel) return 0;
-    if (!basePrice || !resolvedCondition.ecran || !resolvedCondition.chassis || !resolvedCondition.batterie) return null;
+    // basePrice can be 0 (reprise refusee), but should not be null to calculate
+    if (basePrice === null || !resolvedCondition.ecran || !resolvedCondition.chassis || !resolvedCondition.batterie) {
+      return null;
+    }
     return calculerEstimation(
       basePrice, brand, modelInfo?.release_year || 2021,
-      { ecran: resolvedCondition.ecran as EcranTekh, chassis: resolvedCondition.chassis as ChassisTekh, batterie: resolvedCondition.batterie as BatterieTekh },
+      {
+        ecran: resolvedCondition.ecran as EcranTekh,
+        chassis: resolvedCondition.chassis as ChassisTekh,
+        batterie: resolvedCondition.batterie as BatterieTekh
+      },
       model
     );
   }, [basePrice, brand, modelInfo, resolvedCondition, model]);
@@ -236,12 +255,18 @@ export default function EstimatorPage() {
   const adjustedFinalPrice = useMemo(() => {
     if (resolvedCondition.isNonFonctionnel) return 0;
     if (finalPriceValue === null) return null;
-    if (aiAdjustment === 0 || aiConfidence === null || aiConfidence < 0.5) return finalPriceValue;
+
+    // Fallback to raw price if AI adjustment is zero or low confidence
+    if (aiAdjustment === 0 || aiConfidence === null || aiConfidence < 0.5) {
+      return finalPriceValue;
+    }
+
     const capped = Math.max(-0.10, Math.min(0.10, aiAdjustment / 100));
-    return Math.round(finalPriceValue * (1 + capped));
+    const val = Math.round(finalPriceValue * (1 + capped));
+    return val;
   }, [finalPriceValue, aiAdjustment, aiConfidence, resolvedCondition.isNonFonctionnel]);
 
-  // Display price: use adjustedFinalPrice when AI is done, otherwise fall back to raw finalPriceValue
+  // Display price: absolute fallback
   const displayPrice = adjustedFinalPrice ?? finalPriceValue;
 
   // ─── Reset AI adjustment on condition change ─────────────────────────────
@@ -323,7 +348,7 @@ export default function EstimatorPage() {
 
   useEffect(() => {
     const t = window.setTimeout(() => {
-      saveJson<EstimatorSessionV2>("estimator-v1", {
+      saveJson("estimator-v1", {
         v: 2, step, brand, model, storage, ram,
         screenCondition, chassisCondition, batteryCondition,
         functionalityIssues, booleanAnswers, userDescription,
@@ -555,16 +580,27 @@ export default function EstimatorPage() {
                   handleImageUpload={handleImageUpload}
                   removeImage={removeImage}
                   performAnalysis={performAnalysis}
+                  onOpenScan={() => setScanModalOpen(true)}
+                />
+
+                <CameraScanModal
+                  isOpen={scanModalOpen}
+                  onClose={() => setScanModalOpen(false)}
+                  prt={basePrice || 0}
+                  brand={brand}
+                  chassis={resolvedCondition.chassis}
+                  batterie={resolvedCondition.batterie}
+                  onApplyResult={handleApplyScanResult}
                 />
 
                 {/* Price card (visible as soon as mandatory fields are complete) */}
                 <div className={cn(
-                  "transition-all duration-300 overflow-hidden",
-                  displayPrice !== null
-                    ? "max-h-[800px] opacity-100 translate-y-0 mt-8"
+                  "transition-all duration-500 overflow-hidden",
+                  (isStep1Complete && displayPrice !== null)
+                    ? "max-h-[1000px] opacity-100 translate-y-0 mt-8"
                     : "max-h-0 opacity-0 translate-y-4 pointer-events-none"
                 )}>
-                  {displayPrice !== null && (
+                  {isStep1Complete && displayPrice !== null && (
                     <div className="space-y-4">
                       {/* Main price card */}
                       <div className="flex flex-col items-center justify-center p-10 rounded-[2.5rem] bg-gradient-to-b from-green-500/10 to-transparent dark:from-[#00FF41]/10 border-2 border-[#00FF41]/20 shadow-2xl shadow-[#00FF41]/5 text-center">

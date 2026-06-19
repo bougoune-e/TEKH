@@ -1,6 +1,7 @@
-import { Camera, Plus, X, Loader2, CheckCircle2, AlertTriangle, ScanLine, Smartphone, Zap } from "lucide-react";
+import { Camera, Plus, X, Loader2, CheckCircle2, AlertTriangle, ScanLine, Smartphone, Zap, Cpu } from "lucide-react";
 import { cn } from "@/core/api/utils";
 import type { PhoneAnalysisResult } from "@/core/api/analyzePhone";
+import { Button } from "@/shared/ui/button";
 
 export type PhotoSlot = "front" | "back" | "side1" | "side2";
 
@@ -12,6 +13,7 @@ interface PhotoStepProps {
     handleImageUpload: (e: React.ChangeEvent<HTMLInputElement>, slot: PhotoSlot) => void;
     removeImage: (slot: PhotoSlot) => void;
     performAnalysis: (slot: PhotoSlot) => void;
+    onOpenScan: () => void;
 }
 
 /** Simple list of 4 slots to be displayed on one line */
@@ -21,6 +23,7 @@ const SLOTS: { id: PhotoSlot; label: string; Icon: any }[] = [
     { id: "side1", label: "Côté 1", Icon: Smartphone },
     { id: "side2", label: "Côté 2", Icon: Smartphone },
 ];
+
 
 const MiniSlot = ({
     slot,
@@ -124,28 +127,39 @@ const MiniSlot = ({
 
 export const PhotoStep = ({
     imageSlots, analysisResults, analyzingSlots,
-    fileInputRefs, handleImageUpload, removeImage, performAnalysis
+    fileInputRefs, handleImageUpload, removeImage, performAnalysis, onOpenScan
 }: PhotoStepProps) => {
     return (
         <div className="space-y-6 pt-6 border-t border-slate-100 dark:border-white/5">
-            <div className="flex items-center gap-3 px-1">
-                <div className="w-10 h-10 rounded-xl bg-blue-600/10 dark:bg-primary/10 text-blue-600 dark:text-primary flex items-center justify-center shrink-0">
-                    <Camera className="w-5 h-5" />
-                </div>
-                <div>
-                    <div className="flex items-center gap-2 flex-wrap">
-                        <div className="text-base font-black tracking-tighter uppercase font-sans text-black dark:text-white italic leading-tight">
-                            4. Photos
-                        </div>
-                        <span className="text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/10 text-slate-500 dark:text-zinc-500">
-                            Optionnel
-                        </span>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-1">
+                <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-blue-600/10 dark:bg-primary/10 text-blue-600 dark:text-primary flex items-center justify-center shrink-0">
+                        <Camera className="w-5 h-5" />
                     </div>
-                    <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">
-                        Renforcez votre certification — étape facultative
-                    </p>
+                    <div>
+                        <div className="flex items-center gap-2 flex-wrap">
+                            <div className="text-base font-black tracking-tighter uppercase font-sans text-black dark:text-white italic leading-tight">
+                                4. Photos
+                            </div>
+                            <span className="text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/10 text-slate-500 dark:text-zinc-500">
+                                Optionnel
+                            </span>
+                        </div>
+                        <p className="text-[9px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">
+                            Renforcez votre certification — étape facultative
+                        </p>
+                    </div>
                 </div>
+                <Button
+                    onClick={onOpenScan}
+                    type="button"
+                    className="h-10 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs uppercase tracking-wider flex items-center gap-2 shadow-lg shadow-blue-500/10 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                >
+                    <Cpu className="w-4 h-4 text-cyan-300 animate-pulse" />
+                    Scan Vision AI Direct
+                </Button>
             </div>
+
 
             <div className="flex flex-row overflow-x-auto gap-3 pb-2 snap-x snap-mandatory scrollbar-hide">
                 {SLOTS.map(({ id, label, Icon }, i) => (
