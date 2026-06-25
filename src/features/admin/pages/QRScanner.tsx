@@ -1,3 +1,4 @@
+import { useRef, useState, useEffect } from "react";
 import QrScanner from 'qr-scanner';
 import { supabase } from "@/core/api/supabaseClient";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/card";
