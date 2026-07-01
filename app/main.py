@@ -1,6 +1,30 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 from typing import Optional, Dict
+import os
+import json
+import urllib.request
+
+# Load .env manually to avoid extra dependencies
+SUPABASE_URL = None
+SUPABASE_KEY = None
+
+def load_env_manually():
+    global SUPABASE_URL, SUPABASE_KEY
+    env_path = "/home/kizerbo/TEKH/.env"
+    if os.path.exists(env_path):
+        with open(env_path, "r") as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith("#") and "=" in line:
+                    key, val = line.split("=", 1)
+                    key = key.strip()
+                    val = val.strip()
+                    os.environ[key] = val
+    SUPABASE_URL = os.environ.get("VITE_SUPABASE_URL")
+    SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY") or os.environ.get("VITE_SUPABASE_ANON_KEY")
+
+load_env_manually()
 
 app = FastAPI(
     title="TEKH+ Core API",
@@ -261,3 +285,63 @@ def calculate_swap_gap(req: SwapGapRequest):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+class ImageResponse(BaseModel):
+    model_name: str
+    official_image_url: str
+    fallback_image_url: str
+
+@app.get("/api/v1/catalog/image/{brand}/{model_slug}", response_model=ImageResponse)
+def get_smartphone_image(brand: str, model_slug: str):
+    """
+    Génère dynamiquement l'URL de l'image stockée sur le CDN officiel du constructeur ou récupérée depuis Supabase.
+    """
+    brand_lower = brand.lower().strip()
+    model_slug_lower = model_slug.lower().strip()
+    
+    # 1. Tenter de récupérer l'image_url depuis Supabase
+    db_image_url = None
+    if SUPABASE_URL and SUPABASE_KEY:
+        try:
+            req_url = f"{SUPABASE_URL}/rest/v1/models?select=image_url&or=(gsmarena_slug.eq.{model_slug_lower},name.ilike.{model_slug_lower})&limit=1"
+            req = urllib.request.Request(
+                req_url,
+                headers={
+                    "apikey": SUPABASE_KEY,
+                    "Authorization": f"Bearer {SUPABASE_KEY}"
+                }
+            )
+            with urllib.request.urlopen(req, timeout=3.0) as res:
+                data = json.loads(res.read().decode("utf-8"))
+                if data and data[0].get("image_url"):
+                    db_image_url = data[0]["image_url"]
+        except Exception:
+            pass
+            
+    if db_image_url:
+        official_url = db_image_url
+        fallback_url = "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=1000"
+    else:
+        # 2. Logique pour Apple (CDN officiel)
+        if "apple" in brand_lower:
+            official_url = f"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/{model_slug_lower}?wid=1000&hei=1000&fmt=jpeg"
+            fallback_url = "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=1000"
+            
+        # 3. Logique pour Samsung
+        elif "samsung" in brand_lower:
+            official_url = f"https://images.samsung.com/is/image/samsung/{model_slug_lower}"
+            fallback_url = "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=1000"
+            
+        # 4. Tout autre constructeur (Google, Xiaomi, etc.) ou fallback générique
+        else:
+            official_url = "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=1000"
+            fallback_url = "https://images.unsplash.com/photo-1598327105666-5b89351aff97?q=80&w=1000"
+
+    model_name = model_slug.replace("-", " ").replace("_", " ").title()
+
+    return {
+        "model_name": model_name,
+        "official_image_url": official_url,
+        "fallback_image_url": fallback_url
+    }
+
