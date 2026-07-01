@@ -1,6 +1,7 @@
 import { useEffect } from "react";
-import { ShieldCheck, Smartphone, ArrowRightLeft, Zap } from "lucide-react";
+import { ShieldCheck, ArrowRightLeft } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { DeviceImage } from "@/shared/ui/DeviceImage";
 import { cn } from "@/core/api/utils";
 import type { ChassisTekh, EcranTekh, BatterieTekh } from "@/core/api/pricing";
 import { openWhatsApp } from "@/core/utils/whatsapp";
@@ -91,8 +92,8 @@ export const ComparisonStep = ({
                 <div className="flex flex-row items-stretch justify-center gap-3 sm:gap-6 max-w-2xl mx-auto">
                     {/* Carte 1 : Votre appareil */}
                     <div className="flex-1 max-w-[180px] sm:max-w-[200px] flex flex-col rounded-[20px] sm:rounded-[24px] overflow-hidden border-2 border-zinc-200 dark:border-white/10 bg-white dark:bg-white/5 shadow-xl">
-                        <div className="aspect-[9/19] min-h-[140px] flex items-center justify-center bg-gradient-to-b from-slate-100 to-slate-50 dark:from-white/10 dark:to-transparent">
-                            <Smartphone className="w-12 h-12 sm:w-14 sm:h-14 text-blue-600 dark:text-primary opacity-80" />
+                        <div className="aspect-[9/19] min-h-[140px] flex items-center justify-center bg-gradient-to-b from-slate-100 to-slate-50 dark:from-white/10 dark:to-transparent overflow-hidden">
+                            <DeviceImage brand={brand} model={model} fallbackIcon="smartphone" className="w-full h-full" />
                         </div>
                         <div className="p-3 border-t border-zinc-100 dark:border-white/5 bg-white dark:bg-white/5">
                             <p className="text-[8px] sm:text-[9px] font-black text-slate-500 dark:text-zinc-400 uppercase tracking-widest">{t('simulator.possession')}</p>
@@ -113,8 +114,8 @@ export const ComparisonStep = ({
 
                     {/* Carte 2 : Appareil cible */}
                     <div className="flex-1 max-w-[180px] sm:max-w-[200px] flex flex-col rounded-[20px] sm:rounded-[24px] overflow-hidden border-2 border-zinc-200 dark:border-white/10 bg-white dark:bg-white/5 shadow-xl">
-                        <div className="aspect-[9/19] min-h-[140px] flex items-center justify-center bg-gradient-to-b from-[#00FF41]/10 to-transparent dark:from-primary/10 dark:to-transparent">
-                            <Zap className="w-12 h-12 sm:w-14 sm:h-14 text-blue-600 dark:text-primary opacity-80" fill="currentColor" />
+                        <div className="aspect-[9/19] min-h-[140px] flex items-center justify-center bg-gradient-to-b from-[#00FF41]/10 to-transparent dark:from-primary/10 dark:to-transparent overflow-hidden">
+                            <DeviceImage brand={targetBrand} model={targetModel} fallbackIcon="zap" className="w-full h-full" />
                         </div>
                         <div className="p-3 border-t border-zinc-100 dark:border-white/5 bg-white dark:bg-white/5">
                             <p className="text-[8px] sm:text-[9px] font-black text-slate-500 dark:text-zinc-400 uppercase tracking-widest">{t('simulator.acquisition')}</p>

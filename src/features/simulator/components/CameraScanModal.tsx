@@ -199,7 +199,11 @@ export function CameraScanModal({
         }
       };
 
-      const response = await fetch("http://127.0.0.1:8000/api/v1/pricing/estimate", {
+      const baseApiUrl = (import.meta.env.VITE_PYTHON_API_URL as string || "http://127.0.0.1:8000")
+        .trim()
+        .replace(/\/$/, "");
+
+      const response = await fetch(`${baseApiUrl}/api/v1/pricing/estimate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
