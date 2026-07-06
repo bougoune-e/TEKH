@@ -38,3 +38,9 @@ tekh_backend/backend/node_modules/
 *.njsproj
 *.sln
 *.sw?
+
+# Python Virtual Environment and cache
+.venv/
+__pycache__/
+*.pyc
+
