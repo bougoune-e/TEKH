@@ -3,7 +3,7 @@ import { Toaster } from "@/shared/ui/toaster";
 import { Toaster as Sonner } from "@/shared/ui/sonner";
 import { TooltipProvider } from "@/shared/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useNavigationType } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigationType, useLocation } from "react-router-dom";
 import { Suspense, lazy, useEffect } from "react";
 import ProtectedRoute from "@/features/auth/ProtectedRoute";
 import AdminRoute from "@/features/auth/AdminRoute";
@@ -167,6 +167,18 @@ const NavigationShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
 const NavigationWrapper = () => {
   const navType = useNavigationType();
   const isPWA = usePWA();
+  const location = useLocation();
+
+  useEffect(() => {
+    let link = document.querySelector("link[rel='canonical']") as HTMLLinkElement;
+    if (!link) {
+      link = document.createElement("link");
+      link.rel = "canonical";
+      document.head.appendChild(link);
+    }
+    const cleanPath = location.pathname.replace(/\/$/, "") || "/";
+    link.href = `https://tekhplus.com${cleanPath}`;
+  }, [location.pathname]);
 
   return (
     <>

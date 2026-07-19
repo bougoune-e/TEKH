@@ -3,6 +3,16 @@
 
 <head>
   <meta charset="UTF-8" />
+  <!-- SEO Canonical URL Dynamic Injection -->
+  <script>
+    (function () {
+      var link = document.createElement('link');
+      link.rel = 'canonical';
+      var path = window.location.pathname.replace(/\/$/, '') || '/';
+      link.href = 'https://tekhplus.com' + path;
+      document.head.appendChild(link);
+    })();
+  </script>
   <!-- Google Fonts — Inter (préchargée, font-display swap, zero layout shift) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
