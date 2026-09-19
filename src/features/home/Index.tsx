@@ -6,10 +6,13 @@ import DealsSection from "@/features/marketplace/DealsSection";
 import MessagingSection from "@/features/marketplace/MessagingSection";
 import RepairSection from "@/features/marketplace/RepairSection";
 import ServicesSection from "@/features/home/ServicesSection";
+import FAQSection from "@/features/home/FAQSection";
 import WhyTekh from "@/features/home/WhyTekh";
 import ExchangeProcess from "@/features/home/ExchangeProcess";
 import TrustSection from "@/features/home/TrustSection";
 import CtaSection from "@/features/home/CtaSection";
+import HowItWorks from "@/features/home/HowItWorks";
+import WebSwapStory from "@/features/home/WebSwapStory";
 import { Zap, Search, ShieldCheck } from "lucide-react";
 import { usePWA } from "@/shared/hooks/usePWA";
 
@@ -59,19 +62,21 @@ const Index = () => {
             <QuickActions />
             <ServicesSection />
             <DealsSection />
+            <FAQSection />
           </div>
         </div>
       ) : (
-        /* VUE SITE WEB CLASSIQUE */
+        /* VUE SITE WEB — éditorial, navy / vert profond / blanc */
         <>
           <HeaderCarousel />
-          {/* Pont dégradé dark → light */}
-          <div className="h-24 bg-gradient-to-b from-black to-[#f0f9f4] dark:to-zinc-950 -mt-1" aria-hidden="true" />
-          <ServicesSection />
+          <WebSwapStory />
+          <HowItWorks />
           <WhyTekh />
           <DealsSection />
           <ExchangeProcess />
           <TrustSection />
+          <ServicesSection />
+          <FAQSection />
           <div className="container mx-auto px-4 py-8 space-y-12">
             <MessagingSection />
             <RepairSection />

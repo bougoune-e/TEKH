@@ -4,82 +4,61 @@ const HowItWorks = () => {
   const steps = [
     {
       icon: Search,
-      title: "Estimez votre téléphone",
-      description: "Utilisez le simulateur pour estimer la valeur de votre appareil selon le modèle et l'état",
+      title: "Estimez",
+      description: "Modèle, état, batterie : la VRT (valeur résiduelle) s’affiche en quelques questions.",
     },
     {
       icon: ArrowRightLeft,
-      title: "Créez ou proposez un SWAP",
-      description: "Publiez votre offre avec photos et détails, ou proposez un troc partiel à un autre membre",
+      title: "Choisissez le SWAP",
+      description: "Un appareil certifié en face, ou une compensation en FCFA. Tout est calculé, rien n’est caché.",
     },
     {
       icon: Smartphone,
-      title: "Négociation & sécurité",
-      description: "Discutez via la messagerie et sécurisez la compensation via SWAP Wallet",
+      title: "Déposez en Dealbox",
+      description: "Un agent vérifie l’appareil. QR de dépôt, suivi logistique, expertise au centre TEKH+.",
     },
     {
       icon: CheckCircle,
-      title: "Finalisez l'échange",
-      description: "Remise en main propre ou envoi selon accord. Les fonds sont libérés une fois l'échange confirmé",
+      title: "Reprenez le neuf d’usage",
+      description: "Appareil Grade A, garantie, TekhPoints. L’ancien entre dans le circuit, pas à la poubelle.",
     },
   ];
 
-  const nums = ["01", "02", "03", "04"];
-
   return (
-    <section id="how-it-works" className="py-16 md:py-24 bg-background overflow-hidden">
-      <div className="container mx-auto px-4">
-        <div className="text-center space-y-3 mb-14">
-          <p className="text-xs font-black uppercase tracking-[0.2em] text-primary/70">Processus</p>
-          <h2 className="text-3xl md:text-5xl font-black tracking-tighter text-black dark:text-white">
-            Comment ça <span className="text-primary italic">marche ?</span>
+    <section id="how-it-works" className="py-20 md:py-28 bg-[hsl(var(--tekh-navy))] text-white overflow-hidden">
+      <div className="container mx-auto px-6 lg:px-16">
+        <div className="max-w-2xl mb-16 space-y-4">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[hsl(142_55%_62%)]">
+            Le parcours
+          </p>
+          <h2 className="font-display text-4xl md:text-5xl font-semibold tracking-tight leading-[1.08]">
+            Quatre gestes. Un échange.
           </h2>
-          <p className="text-base text-muted-foreground max-w-xl mx-auto font-medium">
-            Un processus simple et transparent en 4 étapes
+          <p className="text-white/65 font-medium text-base md:text-lg leading-relaxed">
+            Pas une marketplace d’annonces. Un circuit d’échange, du simulateur jusqu’au point relais.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <ol className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
           {steps.map((step, index) => {
             const Icon = step.icon;
-            const isLast = index === steps.length - 1;
             return (
-              <div key={index} className="relative group">
-                {/* Connector line between steps (desktop only) */}
-                {!isLast && (
-                  <div className="hidden lg:block absolute top-10 left-[calc(50%+44px)] w-[calc(100%-88px)] border-t-2 border-dashed border-border/60 z-0" />
-                )}
-
-                <div className="relative flex flex-col items-center text-center space-y-4 z-10">
-                  {/* Icon box with background number */}
-                  <div className="relative">
-                    {/* Giant step number — background watermark */}
-                    <span
-                      className="absolute -top-3 -left-3 text-[80px] font-black leading-none select-none pointer-events-none"
-                      style={{ color: 'currentColor', opacity: 0.04 }}
-                      aria-hidden="true"
-                    >
-                      {nums[index]}
-                    </span>
-                    {/* Icon container */}
-                    <div className="relative w-20 h-20 bg-card border-2 border-border rounded-3xl flex items-center justify-center shadow-sm group-hover:border-primary/30 group-hover:shadow-md transition-all duration-300">
-                      <Icon className="h-9 w-9 text-primary" strokeWidth={1.75} />
-                    </div>
-                    {/* Step badge */}
-                    <span className="absolute -top-2 -right-2 h-6 w-6 rounded-full bg-primary text-white dark:text-black text-[10px] font-black flex items-center justify-center shadow-md">
-                      {index + 1}
-                    </span>
-                  </div>
-
-                  <div className="space-y-1.5 px-2">
-                    <h3 className="text-base font-black text-black dark:text-white tracking-tight">{step.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed font-medium">{step.description}</p>
-                  </div>
+              <li key={step.title} className="relative pl-0 space-y-5">
+                <div className="flex items-baseline gap-3">
+                  <span className="font-display italic text-5xl text-[hsl(var(--tekh-green))]/80">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <Icon className="h-5 w-5 text-white/50" strokeWidth={1.5} />
                 </div>
-              </div>
+                <h3 className="font-display text-xl font-semibold">{step.title}</h3>
+                <p className="text-sm text-white/60 leading-relaxed font-medium">{step.description}</p>
+                {index < steps.length - 1 && (
+                  <div className="hidden lg:block absolute top-6 -right-3 w-6 h-px bg-white/20" aria-hidden="true" />
+                )}
+              </li>
             );
           })}
-        </div>
+        </ol>
       </div>
     </section>
   );

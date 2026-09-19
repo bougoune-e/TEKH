@@ -68,12 +68,15 @@ const DealsSection = () => {
       <div className={cn("relative z-10", isPWA ? "container mx-auto px-4 sm:px-6" : "container mx-auto px-4")}>
         {/* WEB: bloc titre + visuels */}
         {!isPWA && (
-          <div className="text-center space-y-4 mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
-              Nos meilleurs <span className="text-primary">deals</span>
+          <div className="text-left space-y-4 mb-12 max-w-2xl">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[hsl(var(--tekh-green))]">
+              Catalogue
+            </p>
+            <h2 className="font-display text-4xl md:text-5xl font-semibold tracking-tight text-[hsl(var(--tekh-navy))]">
+              Appareils certifiés, prêts à SWAP
             </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              Les meilleurs deals d'échange équitable entre smartphones: marque, modèle et état pris en compte, compensation ajustée, transaction sécurisée.
+            <p className="text-base text-[hsl(var(--tekh-navy))]/60 font-medium leading-relaxed">
+              Marque, modèle et état pris en compte. Compensation ajustée. Transaction sécurisée.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-2 mt-4">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium bg-primary/10 text-primary border border-primary/20">
