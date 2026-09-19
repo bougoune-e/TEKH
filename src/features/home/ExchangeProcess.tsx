@@ -1,90 +1,72 @@
 import offerImg from "@/assets/illustrations/deals/offer.png";
 import fcfaImg from "@/assets/illustrations/deals/fcfa.jpg";
 import swapImg from "@/assets/illustrations/deals/swap.jpeg";
-import { ArrowRight } from "lucide-react";
-
-/** SVG coche de validation — noire sur fond vert */
-const ValidationSVG = () => (
-    <svg viewBox="0 0 80 80" className="w-12 h-12" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="40" cy="40" r="36" stroke="rgba(0,0,0,0.35)" strokeWidth="3" fill="rgba(255,255,255,0.2)" />
-        <path d="M22 42L34 54L58 28" stroke="black" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-);
 
 const ExchangeProcess = () => {
     const steps = [
         {
             img: offerImg,
             title: "Consultez",
-            desc: "Trouvez le deal qui vous correspond.",
+            desc: "Trouvez l’appareil certifié qui correspond à votre usage.",
         },
         {
             img: fcfaImg,
             title: "Évaluez",
-            desc: "Compensation calculée par notre algorithme.",
+            desc: "La soulte est calculée : votre téléphone contre le leur, en FCFA.",
         },
         {
             img: swapImg,
             title: "Échangez",
-            desc: "En lieu sûr ou via notre logistique.",
+            desc: "Dépôt en Dealbox ou logistique TEKH+. Rien n’est livré à l’aveugle.",
         },
     ];
 
     return (
-        <section className="py-10 md:py-16 bg-white dark:bg-black overflow-hidden">
-            <div className="container mx-auto px-6">
-                <div className="text-center mb-8 space-y-2">
-                    <h2 className="text-3xl md:text-5xl font-black tracking-tighter text-black dark:text-white">
-                        Le processus <span className="italic" style={{ color: '#00FF41' }}>SWAP.</span>
-                    </h2>
-                    <p className="text-sm font-bold text-slate-500 dark:text-slate-400 max-w-xl mx-auto">
-                        Échangez votre appareil en 4 étapes certifiées.
+        <section className="py-20 md:py-28 bg-[hsl(142_30%_97%)] overflow-hidden">
+            <div className="container mx-auto px-6 lg:px-16">
+                <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+                    <div className="space-y-3 max-w-xl">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[hsl(var(--tekh-green))]">
+                            Le SWAP
+                        </p>
+                        <h2 className="font-display text-4xl md:text-5xl font-semibold tracking-tight text-[hsl(var(--tekh-navy))]">
+                            Consulter, évaluer, échanger.
+                        </h2>
+                    </div>
+                    <p className="text-sm font-medium text-[hsl(var(--tekh-navy))]/55 max-w-sm leading-relaxed">
+                        Quatre étapes certifiées — de la vitrine jusqu’à la validation physique.
                     </p>
                 </div>
 
-                {/* Grille responsive: 2 colonnes mobile, 4 desktop */}
-                <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4 items-start">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
                     {steps.map((step, idx) => (
-                        <div key={idx} className="relative space-y-2 group">
-                            <div className="relative h-20 md:h-28 rounded-[14px] overflow-hidden border-2 border-black dark:border-white shadow-md group-hover:scale-[1.03] transition-transform duration-400">
-                                <img src={step.img} alt={step.title} className="w-full h-full object-cover" />
-                                <div className="absolute top-1 left-1 h-5 w-5 bg-black dark:bg-white text-white dark:text-black rounded-md flex items-center justify-center font-black text-[10px] shadow">
+                        <div key={step.title} className="space-y-4">
+                            <div className="relative h-36 md:h-48 overflow-hidden border border-[hsl(var(--tekh-navy))]/10">
+                                <img src={step.img} alt="" className="w-full h-full object-cover" />
+                                <span className="absolute top-3 left-3 h-7 w-7 bg-[hsl(var(--tekh-navy))] text-white flex items-center justify-center font-display text-sm">
                                     {idx + 1}
-                                </div>
+                                </span>
                             </div>
                             <div>
-                                <h3 className="text-xs md:text-sm font-black text-black dark:text-white leading-tight">{step.title}</h3>
-                                <p className="text-[11px] md:text-xs font-medium text-slate-500 dark:text-slate-400 leading-snug">
+                                <h3 className="font-display text-lg font-semibold text-[hsl(var(--tekh-navy))]">{step.title}</h3>
+                                <p className="text-sm font-medium text-[hsl(var(--tekh-navy))]/55 leading-snug mt-1">
                                     {step.desc}
                                 </p>
                             </div>
-                            {/* Directional arrow for mobile (only between 1-2 and 3-4 in 2x2 grid) */}
-                            {idx % 2 === 0 && (
-                                <div className="absolute -right-3 top-8 md:hidden z-20 text-primary animate-pulse">
-                                    <ArrowRight size={16} strokeWidth={3} />
-                                </div>
-                            )}
                         </div>
                     ))}
 
-                    {/* Étape 4 : Validation verte */}
-                    <div className="space-y-2 group">
-                        <div
-                            className="relative h-20 md:h-28 rounded-[14px] flex flex-col items-center justify-center border-2 border-black dark:border-white shadow-md group-hover:scale-[1.03] transition-transform duration-400"
-                            style={{ backgroundColor: '#00FF41' }}
-                        >
-                            <ValidationSVG />
-                            <div className="absolute top-1 left-1 h-5 w-5 bg-black text-white rounded-md flex items-center justify-center font-black text-[10px] shadow border border-white/20">
+                    <div className="space-y-4">
+                        <div className="relative h-36 md:h-48 flex flex-col items-center justify-center bg-[hsl(var(--tekh-green))] text-white">
+                            <span className="absolute top-3 left-3 h-7 w-7 bg-[hsl(var(--tekh-navy))] text-white flex items-center justify-center font-display text-sm">
                                 4
-                            </div>
-                            <span className="mt-1 px-2 py-0.5 bg-black text-white rounded-full font-black text-[10px] md:text-xs uppercase tracking-widest">
-                                Terminé !
                             </span>
+                            <span className="font-display italic text-2xl">Validé</span>
                         </div>
                         <div>
-                            <h3 className="text-xs md:text-sm font-black text-black dark:text-white leading-tight">Deal Validé</h3>
-                            <p className="text-[11px] md:text-xs font-medium text-slate-500 dark:text-slate-400 leading-snug">
-                                Échange finalisé, appareil prêt.
+                            <h3 className="font-display text-lg font-semibold text-[hsl(var(--tekh-navy))]">Deal validé</h3>
+                            <p className="text-sm font-medium text-[hsl(var(--tekh-navy))]/55 leading-snug mt-1">
+                                Échange finalisé, appareil prêt, TekhPoints crédités.
                             </p>
                         </div>
                     </div>

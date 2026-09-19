@@ -22,6 +22,7 @@ const Layout = () => {
   const isPWA = usePWA();
   const isHomepage = location.pathname === "/";
   const [scrolled, setScrolled] = useState(false);
+  const webHeroOverlay = isHomepage && !scrolled && !isPWA;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -48,7 +49,7 @@ const Layout = () => {
   }, []);
 
   return (
-    <div className={`flex min-h-[100dvh] bg-background text-foreground transition-colors overflow-x-hidden ${isPWA ? 'mode-pwa' : ''} pt-safe pb-safe`}>
+    <div className={`flex min-h-[100dvh] bg-background text-foreground transition-colors overflow-x-hidden ${isPWA ? 'mode-pwa font-sans' : 'font-editorial'} pt-safe pb-safe`}>
       {/* Background tech ambiance — web uniquement, très subtil */}
       {!isPWA && (
         <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
@@ -65,7 +66,7 @@ const Layout = () => {
       <PWAInstallBanner />
       <div className={`flex-1 flex flex-col md:pl-16 relative min-w-0 md:pb-0 ${isPWA ? "pb-28" : "pb-20"}`}>
         {/* Header — transparent en haut de la homepage, opaque ailleurs */}
-        <header className={`sticky top-0 z-40 w-full transition-all duration-300 pt-safe shrink-0 ${isHomepage && !scrolled && !isPWA
+        <header className={`sticky top-0 z-40 w-full transition-all duration-300 pt-safe shrink-0 ${webHeroOverlay
           ? "border-transparent bg-transparent"
           : "border-b border-border/5 bg-background/95 backdrop-blur-xl"
           }`}>
@@ -79,7 +80,7 @@ const Layout = () => {
                 {isPWA ? (
                   <SettingsIcon className="h-6 w-6 text-foreground group-hover/settings:text-primary" strokeWidth={2} />
                 ) : (
-                  <div className="h-10 w-10 rounded-xl overflow-hidden border border-border/10 flex items-center justify-center">
+                  <div className={`h-10 w-10 rounded-xl overflow-hidden border flex items-center justify-center ${webHeroOverlay ? "border-white/20" : "border-border/10"}`}>
                     <img src={logo} alt="TΞKΗ+" className="h-full w-full object-cover" />
                   </div>
                 )}
@@ -88,7 +89,7 @@ const Layout = () => {
 
             {/* Barre de recherche centrée, fluide */}
             <div className="flex-1 min-w-0 max-w-xl mx-auto">
-              <SearchBar />
+              <SearchBar inverted={webHeroOverlay} />
             </div>
 
             {/* Actions */}
@@ -97,7 +98,7 @@ const Layout = () => {
                 onClick={() => navigate("/notifications")}
                 className="relative p-2 hover:bg-white/5 rounded-full transition-all group/bell active:scale-90"
               >
-                <Bell className="h-[24px] w-[24px] text-foreground group-hover/bell:text-primary" strokeWidth={2} />
+                <Bell className={`h-[24px] w-[24px] ${webHeroOverlay ? "text-white" : "text-foreground group-hover/bell:text-primary"}`} strokeWidth={2} />
               </button>
             </div>
           </div>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Search } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 
-export default function SearchBar() {
+export default function SearchBar({ inverted = false }: { inverted?: boolean }) {
   const navigate = useNavigate();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -16,12 +16,16 @@ export default function SearchBar() {
 
   return (
     <form onSubmit={onSubmit} className="w-full max-w-2xl ml-auto relative">
-      <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-black dark:text-zinc-400 z-10" />
+      <Search className={`absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 z-10 ${inverted ? "text-white/70" : "text-black dark:text-zinc-400"}`} />
       <input
         value={q}
         onChange={(e) => setQ(e.target.value)}
         placeholder="Rechercher un deal..."
-        className="w-full h-11 sm:h-[45px] rounded-xl pl-12 pr-4 outline-none border border-border bg-white/70 dark:bg-[#252525] supports-[backdrop-filter]:backdrop-blur-sm focus:border-primary transition-smooth"
+        className={`w-full h-11 sm:h-[45px] rounded-xl pl-12 pr-4 outline-none transition-smooth ${
+          inverted
+            ? "border border-white/20 bg-white/10 text-white placeholder:text-white/50 focus:border-[hsl(var(--tekh-green))]"
+            : "border border-border bg-white/70 dark:bg-[#252525] supports-[backdrop-filter]:backdrop-blur-sm focus:border-primary"
+        }`}
       />
     </form>
   );

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Sparkles, Zap, Smartphone, ShieldCheck } from 'lucide-react';
+import { ArrowRight, Sparkles, Zap, Smartphone, ShieldCheck, Wrench } from 'lucide-react';
 import { cn } from "@/core/api/utils";
 import carousel1 from "@/assets/illustrations/homepage/smartphones.jpeg";
 import carousel2 from "@/assets/illustrations/homepage/smartphone.jpeg";
@@ -18,32 +18,32 @@ type AdminAnnonce = {
 const STATIC_SLIDES = [
   {
     image: carousel1,
-    badge: "Promotion",
-    title: "Change ton téléphone,",
-    highlight: "pas ton budget.",
-    desc: "Échange ton ancien smartphone contre un modèle certifié Grade A.",
-    cta: "Estimer mon téléphone",
+    badge: "Trade-In",
+    title: "Valorisez & Échangez",
+    highlight: "Standard Dealbox.",
+    desc: "Estimez votre téléphone en 2 min, recevez du cash ou swappez en toute sécurité.",
+    cta: "Estimer mon appareil",
     path: "/simulateur",
     icon: <Zap className="w-4 h-4" />,
   },
   {
     image: carousel2,
-    badge: "Nouveau",
-    title: "Les derniers modèles",
-    highlight: "sont arrivés.",
-    desc: "iPhone 17, Galaxy S26, Samsung A56, Tecno Spark Slim... Profite des meilleurs deals.",
-    cta: "Voir les offres",
-    path: "/deals",
-    icon: <Smartphone className="w-4 h-4" />,
+    badge: "Espace Pro",
+    title: "Gérez votre atelier",
+    highlight: "Logiciel TEKH OS B2B.",
+    desc: "Le système d'exploitation professionnel pour piloter vos réparations et diagnostics.",
+    cta: "Accéder à l'Espace Pro",
+    path: "/maintenance",
+    icon: <Wrench className="w-4 h-4" />,
   },
   {
     image: carousel3,
-    badge: "Certifié",
-    title: "Qualité Premium",
-    highlight: "Garantie 06 mois.",
-    desc: "Tous nos appareils sont testés sur 50 points de contrôle.",
-    cta: "Découvrir TEKH+",
-    path: "/a-propos",
+    badge: "Label Certifié",
+    title: "50 points de contrôle",
+    highlight: "Transparence totale.",
+    desc: "Tous nos téléphones subissent un diagnostic rigoureux sous le standard Dealbox.",
+    cta: "Découvrir la charte",
+    path: "/charte-qualite",
     icon: <ShieldCheck className="w-4 h-4" />,
   },
 ];
