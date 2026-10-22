@@ -72,10 +72,10 @@ const DealsSection = () => {
             <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[hsl(var(--tekh-green))]">
               Catalogue
             </p>
-            <h2 className="font-display text-4xl md:text-5xl font-semibold tracking-tight text-[hsl(var(--tekh-navy))]">
+            <h2 className="font-display text-4xl md:text-5xl font-semibold tracking-tight text-[hsl(var(--tekh-navy))] dark:text-zinc-50">
               Appareils certifiés, prêts à SWAP
             </h2>
-            <p className="text-base text-[hsl(var(--tekh-navy))]/60 font-medium leading-relaxed">
+            <p className="text-base text-[hsl(var(--tekh-navy))]/60 dark:text-zinc-300 font-medium leading-relaxed">
               Marque, modèle et état pris en compte. Compensation ajustée. Transaction sécurisée.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-2 mt-4">

@@ -1,42 +1,26 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { RefreshCcw, Wrench, ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Wrench, ArrowRight } from "lucide-react";
 import { usePWA } from "@/shared/hooks/usePWA";
 
 const servicePaths: Record<string, string> = {
-  "trade-in": "/simulateur",
   "maintenance": "/maintenance",
 };
 
 const services = [
   {
-    id: "trade-in",
-    title: "Trade-In & Standard Dealbox",
-    shortDesc: "Évaluation intelligente et revalorisation certifiée.",
-    longDesc: "Déterminez instantanément la Valeur Résiduelle Technique (VRT) de votre smartphone grâce à notre algorithme d'estimation en temps réel. Profitez d'un processus de rachat ou d'échange sécurisé, transparent et basé sur un audit rigoureux de 50 points de contrôle. Recevez votre paiement immédiatement par Mobile Money.",
-    icon: RefreshCcw,
-    emoji: "📱",
-    color: "bg-[#064e3b]",
-    borderColor: "border-[#064e3b]/20 dark:border-zinc-800",
-    features: [
-      "Estimation VRT en temps réel",
-      "Label Dealbox : 50 points d'audit",
-      "Paiement Wave / MoMo instantané"
-    ]
-  },
-  {
     id: "maintenance",
-    title: "Suite Maintenance IT (TEKH OS)",
-    shortDesc: "Le système d'exploitation des professionnels de la réparation.",
-    longDesc: "Professionnalisez votre atelier et connectez votre activité à un écosystème industriel. Pilotez vos réparations, suivez vos clients par SMS automatiques, réalisez des diagnostics assistés par Vision (Edge AI) et accédez à notre catalogue de pièces détachées d'origine certifiée.",
+    title: "Maintenance IT",
+    shortDesc: "Réparation, dépannage logiciel et remise en service de vos appareils.",
+    longDesc: "Confiez vos smartphones, tablettes, ordinateurs et autres appareils à nos techniciens. Nous assurons le diagnostic, la réparation matérielle, le déblocage, la réinstallation de firmware et la remise en état, avec un devis clair avant intervention.",
     icon: Wrench,
     emoji: "🔧",
     color: "bg-zinc-900",
     borderColor: "border-[#00FF41]/20 dark:border-zinc-800",
     features: [
-      "Diagnostic assisté par Vision (Edge AI)",
-      "Gestion d'atelier & alertes SMS clients",
-      "Catalogue de pièces d'origine certifiée"
+      "Écrans, batteries et connecteurs",
+      "Déblocage et réparation logicielle",
+      "Firmware, mises à jour et réinstallation système"
     ]
   }
 ];
@@ -48,21 +32,21 @@ const ServicesSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="py-16 md:py-20 bg-white">
+    <section className="py-16 md:py-20 bg-white dark:bg-zinc-950">
       <div className="container mx-auto px-6 lg:px-16">
         <div className="text-center mb-14">
           <h2 className={`${isPWA ? "text-3xl md:text-5xl font-black text-[#0a0a0a] dark:text-white mb-4 tracking-tighter" : "font-display text-4xl md:text-5xl font-semibold text-[hsl(var(--tekh-navy))] mb-4 tracking-tight"}`}>
-            {isPWA ? "Nos Services" : "Au-delà du SWAP"}
+            {isPWA ? "Maintenance IT" : "Réparer. Débloquer. Remettre en service."}
           </h2>
           <p className={`${isPWA ? "text-[#404040] dark:text-zinc-400 font-bold max-w-2xl mx-auto" : "text-[hsl(var(--tekh-navy))]/60 font-medium max-w-2xl mx-auto"}`}>
             {isPWA
-              ? "Des solutions technologiques professionnelles pour le cycle de vie de vos appareils."
-              : "Le trade-in pour chacun. La suite atelier pour les professionnels de la réparation."}
+              ? "Une prise en charge technique fiable pour vos appareils."
+              : "Une maintenance complète pour les appareils qui doivent retrouver leur pleine capacité."}
           </p>
         </div>
 
         {isPWA ? (
-          <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-2xl mx-auto">
+          <div className="grid grid-cols-1 gap-3 sm:gap-4 max-w-2xl mx-auto">
             {services.map((s) => (
               <button
                 key={s.id}
@@ -88,7 +72,7 @@ const ServicesSection = () => {
             {services.map((s) => (
               <div
                 key={s.id}
-                className="group relative border border-[hsl(var(--tekh-navy))]/10 bg-white p-8 md:p-10 flex flex-col md:flex-row gap-8 items-start md:items-center"
+                className="group relative border border-[hsl(var(--tekh-navy))]/10 dark:border-white/10 bg-white dark:bg-zinc-900 p-8 md:p-10 flex flex-col md:flex-row gap-8 items-start md:items-center"
               >
                 <div className="flex items-center gap-4 shrink-0">
                   <div className="w-16 h-16 flex items-center justify-center bg-[hsl(var(--tekh-navy))] text-white">
@@ -97,13 +81,13 @@ const ServicesSection = () => {
                 </div>
 
                 <div className="flex-1 space-y-3">
-                  <h3 className="font-display text-2xl font-semibold text-[hsl(var(--tekh-navy))] tracking-tight">
+                  <h3 className="font-display text-2xl font-semibold text-[hsl(var(--tekh-navy))] dark:text-zinc-50 tracking-tight">
                     {s.title}
                   </h3>
-                  <p className="text-[hsl(var(--tekh-navy))]/70 font-medium leading-relaxed text-base">
+                  <p className="text-[hsl(var(--tekh-navy))]/70 dark:text-zinc-200 font-medium leading-relaxed text-base">
                     {s.shortDesc}
                   </p>
-                  <p className="text-[hsl(var(--tekh-navy))]/55 font-medium text-sm leading-relaxed max-w-3xl">
+                  <p className="text-[hsl(var(--tekh-navy))]/55 dark:text-zinc-300 font-medium text-sm leading-relaxed max-w-3xl">
                     {s.longDesc}
                   </p>
                   <div className="flex flex-wrap gap-2 pt-1">

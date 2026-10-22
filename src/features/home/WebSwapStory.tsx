@@ -26,7 +26,7 @@ const WebSwapStory = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="relative bg-white overflow-hidden">
+    <section className="relative bg-white dark:bg-zinc-950 overflow-hidden">
       <div className="absolute inset-y-0 left-0 w-1.5 bg-[hsl(var(--tekh-green))]" aria-hidden="true" />
 
       <div className="container mx-auto px-6 lg:px-16 py-20 md:py-28">
@@ -35,7 +35,7 @@ const WebSwapStory = () => {
             <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[hsl(var(--tekh-green))]">
               Ce que fait TΞKΗ+
             </p>
-            <h2 className="font-display text-4xl md:text-5xl lg:text-[3.5rem] font-semibold tracking-tight text-[hsl(var(--tekh-navy))] leading-[1.08]">
+            <h2 className="font-display text-4xl md:text-5xl lg:text-[3.5rem] font-semibold tracking-tight text-[hsl(var(--tekh-navy))] dark:text-zinc-50 leading-[1.08]">
               Votre téléphone ne se vend pas.
               <span className="block italic font-medium text-[hsl(var(--tekh-green))]">
                 Il devient un autre téléphone.
@@ -43,7 +43,7 @@ const WebSwapStory = () => {
             </h2>
           </div>
           <div className="lg:col-span-5">
-            <p className="text-base md:text-lg text-[hsl(var(--tekh-navy))]/70 leading-relaxed max-w-md font-medium">
+            <p className="text-base md:text-lg text-[hsl(var(--tekh-navy))]/70 dark:text-zinc-300 leading-relaxed max-w-md font-medium">
               TΞKΗ+ est la plateforme d’échange certifié de smartphones en Afrique de l’Ouest.
               Estimation, reconditionnement, compensation en FCFA, et retrait sécurisé — un seul geste : le SWAP.
             </p>
@@ -58,20 +58,20 @@ const WebSwapStory = () => {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-px bg-[hsl(var(--tekh-navy))]/10 border border-[hsl(var(--tekh-navy))]/10">
+        <div className="grid md:grid-cols-3 gap-px bg-[hsl(var(--tekh-navy))]/10 dark:bg-white/10 border border-[hsl(var(--tekh-navy))]/10 dark:border-white/10">
           {pillars.map(({ n, icon: Icon, title, body }) => (
             <article
               key={n}
-              className="bg-white p-8 md:p-10 space-y-5 hover:bg-[hsl(142_30%_97%)] transition-colors"
+              className="bg-white dark:bg-zinc-900 p-8 md:p-10 space-y-5 hover:bg-[hsl(142_30%_97%)] dark:hover:bg-zinc-800 transition-colors"
             >
               <div className="flex items-center justify-between">
                 <span className="font-display italic text-3xl text-[hsl(var(--tekh-green))]">{n}</span>
-                <Icon className="w-6 h-6 text-[hsl(var(--tekh-navy))]" strokeWidth={1.5} />
+                <Icon className="w-6 h-6 text-[hsl(var(--tekh-navy))] dark:text-zinc-200" strokeWidth={1.5} />
               </div>
-              <h3 className="font-display text-xl md:text-2xl font-semibold text-[hsl(var(--tekh-navy))] leading-snug">
+              <h3 className="font-display text-xl md:text-2xl font-semibold text-[hsl(var(--tekh-navy))] dark:text-zinc-50 leading-snug">
                 {title}
               </h3>
-              <p className="text-sm md:text-[15px] text-[hsl(var(--tekh-navy))]/65 leading-relaxed font-medium">
+              <p className="text-sm md:text-[15px] text-[hsl(var(--tekh-navy))]/65 dark:text-zinc-300 leading-relaxed font-medium">
                 {body}
               </p>
             </article>

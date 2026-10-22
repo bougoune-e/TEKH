@@ -2,7 +2,7 @@ import React from 'react';
 import { Smartphone, ShieldCheck, Zap, Clock } from 'lucide-react';
 
 const stats = [
-  { value: "500+", label: "Échanges réalisés", icon: Smartphone },
+  { value: "20+", label: "Échanges réalisés", icon: Smartphone },
   { value: "4.8", label: "Note satisfaction", suffix: "/5", icon: ShieldCheck },
   { value: "< 2", label: "Minutes d'estimation", suffix: " min", icon: Zap },
   { value: "50", label: "Points de contrôle", suffix: " pts", icon: Clock },
@@ -10,7 +10,7 @@ const stats = [
 
 const WhyTekh = () => {
   return (
-    <section className="py-20 md:py-28 bg-white relative overflow-hidden">
+    <section className="py-20 md:py-28 bg-white dark:bg-zinc-950 relative overflow-hidden">
       <div
         className="absolute inset-0 opacity-[0.035] pointer-events-none"
         style={{
@@ -24,10 +24,10 @@ const WhyTekh = () => {
           <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[hsl(var(--tekh-green))] mb-3">
             Preuves
           </p>
-          <h2 className="font-display text-4xl md:text-5xl font-semibold text-[hsl(var(--tekh-navy))] tracking-tight">
+          <h2 className="font-display text-4xl md:text-5xl font-semibold text-[hsl(var(--tekh-navy))] dark:text-zinc-50 tracking-tight">
             Pourquoi les gens SWAP chez TEKH+
           </h2>
-          <p className="mt-4 text-[hsl(var(--tekh-navy))]/60 font-medium max-w-lg leading-relaxed">
+          <p className="mt-4 text-[hsl(var(--tekh-navy))]/60 dark:text-zinc-300 font-medium max-w-lg leading-relaxed">
             Moins cher que le neuf, plus sûr qu’une petite annonce, plus utile qu’un tiroir oublié.
           </p>
         </div>
@@ -36,14 +36,14 @@ const WhyTekh = () => {
           {stats.map(({ value, label, suffix, icon: Icon }) => (
             <div
               key={label}
-              className="flex flex-col p-6 md:p-8 border border-[hsl(var(--tekh-navy))]/10 bg-[hsl(142_30%_97%)]"
+              className="flex flex-col p-6 md:p-8 border border-[hsl(var(--tekh-navy))]/10 dark:border-white/10 bg-[hsl(142_30%_97%)] dark:bg-zinc-900"
             >
               <Icon className="w-5 h-5 text-[hsl(var(--tekh-green))] mb-6" strokeWidth={1.5} />
-              <div className="font-display text-4xl md:text-5xl font-semibold text-[hsl(var(--tekh-navy))] tracking-tight leading-none">
+              <div className="font-display text-4xl md:text-5xl font-semibold text-[hsl(var(--tekh-navy))] dark:text-zinc-50 tracking-tight leading-none">
                 {value}
                 {suffix && <span className="text-2xl text-[hsl(var(--tekh-green))]">{suffix}</span>}
               </div>
-              <div className="mt-3 text-xs font-semibold uppercase tracking-widest text-[hsl(var(--tekh-navy))]/45 leading-tight">
+              <div className="mt-3 text-xs font-semibold uppercase tracking-widest text-[hsl(var(--tekh-navy))]/45 dark:text-zinc-400 leading-tight">
                 {label}
               </div>
             </div>

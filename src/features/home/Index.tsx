@@ -3,18 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { HomeCarousel } from "@/features/home/HomeCarousel";
 import { HeaderCarousel } from "@/features/home/HeaderCarousel";
 import DealsSection from "@/features/marketplace/DealsSection";
-import MessagingSection from "@/features/marketplace/MessagingSection";
-import RepairSection from "@/features/marketplace/RepairSection";
 import ServicesSection from "@/features/home/ServicesSection";
 import FAQSection from "@/features/home/FAQSection";
 import WhyTekh from "@/features/home/WhyTekh";
 import ExchangeProcess from "@/features/home/ExchangeProcess";
-import TrustSection from "@/features/home/TrustSection";
 import CtaSection from "@/features/home/CtaSection";
 import HowItWorks from "@/features/home/HowItWorks";
 import WebSwapStory from "@/features/home/WebSwapStory";
-import { Zap, Search, ShieldCheck } from "lucide-react";
+import { Zap, Search, ShieldCheck, MessageCircle } from "lucide-react";
 import { usePWA } from "@/shared/hooks/usePWA";
+import { buildWhatsAppUrl } from "@/core/utils/whatsapp";
 
 const QuickActions = () => {
   const navigate = useNavigate();
@@ -49,9 +47,10 @@ const QuickActions = () => {
 
 const Index = () => {
   const isPWA = usePWA();
+  const whatsappHref = buildWhatsAppUrl("Bonjour TEKH+, je souhaite obtenir de l'aide pour la réparation de mon appareil.") || "/contact";
 
   return (
-    <main className={`bg-background pb-20 ${!isPWA ? "pt-0" : ""}`}>
+    <main className={`landing-page bg-background pb-20 ${!isPWA ? "pt-0" : ""}`}>
       {isPWA ? (
         /* VUE PWA — header déjà pleine largeur, contenu fluide */
         <div className="space-y-0">
@@ -74,16 +73,21 @@ const Index = () => {
           <WhyTekh />
           <DealsSection />
           <ExchangeProcess />
-          <TrustSection />
           <ServicesSection />
           <FAQSection />
-          <div className="container mx-auto px-4 py-8 space-y-12">
-            <MessagingSection />
-            <RepairSection />
-          </div>
           <CtaSection />
         </>
       )}
+      <a
+        href={whatsappHref}
+        target={whatsappHref.startsWith("http") ? "_blank" : undefined}
+        rel={whatsappHref.startsWith("http") ? "noopener noreferrer" : undefined}
+        aria-label="Contacter TEKH+ sur WhatsApp"
+        title="Contacter TEKH+ sur WhatsApp"
+        className="fixed bottom-6 right-5 z-50 inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_12px_30px_rgba(37,211,102,0.35)] transition-transform hover:scale-105 focus-visible:ring-[#25D366]"
+      >
+        <MessageCircle className="h-7 w-7" strokeWidth={2.25} />
+      </a>
     </main>
   );
 };

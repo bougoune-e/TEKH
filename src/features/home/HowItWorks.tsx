@@ -25,16 +25,16 @@ const HowItWorks = () => {
   ];
 
   return (
-    <section id="how-it-works" className="py-20 md:py-28 bg-[hsl(var(--tekh-navy))] text-white overflow-hidden">
+    <section id="how-it-works" className="py-20 md:py-28 bg-[hsl(142_30%_97%)] dark:bg-zinc-900 text-[hsl(var(--tekh-navy))] dark:text-zinc-50 overflow-hidden">
       <div className="container mx-auto px-6 lg:px-16">
         <div className="max-w-2xl mb-16 space-y-4">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[hsl(142_55%_62%)]">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[hsl(var(--tekh-green))]">
             Le parcours
           </p>
           <h2 className="font-display text-4xl md:text-5xl font-semibold tracking-tight leading-[1.08]">
             Quatre gestes. Un échange.
           </h2>
-          <p className="text-white/65 font-medium text-base md:text-lg leading-relaxed">
+          <p className="text-[hsl(var(--tekh-navy))]/65 dark:text-zinc-300 font-medium text-base md:text-lg leading-relaxed">
             Pas une marketplace d’annonces. Un circuit d’échange, du simulateur jusqu’au point relais.
           </p>
         </div>
@@ -48,12 +48,12 @@ const HowItWorks = () => {
                   <span className="font-display italic text-5xl text-[hsl(var(--tekh-green))]/80">
                     {String(index + 1).padStart(2, "0")}
                   </span>
-                  <Icon className="h-5 w-5 text-white/50" strokeWidth={1.5} />
+                  <Icon className="h-5 w-5 text-[hsl(var(--tekh-navy))]/50 dark:text-zinc-400" strokeWidth={1.5} />
                 </div>
                 <h3 className="font-display text-xl font-semibold">{step.title}</h3>
-                <p className="text-sm text-white/60 leading-relaxed font-medium">{step.description}</p>
+                <p className="text-sm text-[hsl(var(--tekh-navy))]/60 dark:text-zinc-300 leading-relaxed font-medium">{step.description}</p>
                 {index < steps.length - 1 && (
-                  <div className="hidden lg:block absolute top-6 -right-3 w-6 h-px bg-white/20" aria-hidden="true" />
+                  <div className="hidden lg:block absolute top-6 -right-3 w-6 h-px bg-[hsl(var(--tekh-navy))]/20 dark:bg-white/20" aria-hidden="true" />
                 )}
               </li>
             );
