@@ -54,12 +54,6 @@ function getTitlePreviewEmoji(title: string): string {
   return getContentEmoji(title);
 }
 
-async function fetchSubCountFromSupabase(): Promise<number | null> {
-  const { data, error } = await supabase.rpc("count_push_subscriptions");
-  if (error) { console.error("[push/count] RPC Supabase:", error.message); return null; }
-  return typeof data === "number" ? data : Number(data ?? 0);
-}
-
 async function fetchSubCountFromBackend(jwt: string): Promise<number | null> {
   if (!API_URL) return null;
   try {
@@ -124,12 +118,7 @@ export default function AdminNotifications() {
     }
 
     const [count, subsRes, { data: camp }] = await Promise.all([
-      fetchSubCountFromSupabase().then(async (n) => {
-        if (n !== null) return n;
-        if (!jwt) return 0;
-        const nb = await fetchSubCountFromBackend(jwt);
-        return nb ?? 0;
-      }),
+      fetchSubCountFromBackend(jwt).then((count) => count ?? 0),
       jwt
         ? fetch(`${API_URL}/api/push/subscribers`, { headers: { Authorization: `Bearer ${jwt}` } })
           .then(r => r.ok ? r.json() : { subscribers: [] })
