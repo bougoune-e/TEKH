@@ -8,17 +8,17 @@ import webpush from "web-push";
 import Anthropic from "@anthropic-ai/sdk";
 import { supabase, TABLE_PRODUCTS } from "./supabase.js";
 
-// ── Vérification JWT Supabase via HTTP direct (compatible clés ECC P-256 et Legacy HS256)
+// ── Vérification JWT via client public (separate from the privileged server client)
 const SUPABASE_URL = process.env.SUPABASE_URL || "";
-const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
+const SUPABASE_PUBLIC_KEY = process.env.SUPABASE_PUBLISHABLE_KEY || process.env.VITE_SUPABASE_ANON_KEY || "";
 
 async function getSupabaseUser(jwt) {
-  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY || !jwt) return null;
+  if (!SUPABASE_URL || !SUPABASE_PUBLIC_KEY || !jwt) return null;
   try {
     const res = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
       headers: {
         "Authorization": `Bearer ${jwt}`,
-        "apikey": SUPABASE_SERVICE_ROLE_KEY,
+        "apikey": SUPABASE_PUBLIC_KEY,
       },
     });
     if (!res.ok) {
@@ -36,8 +36,6 @@ async function getSupabaseUser(jwt) {
 const VAPID_PUBLIC = process.env.VAPID_PUBLIC_KEY;
 const VAPID_PRIVATE = process.env.VAPID_PRIVATE_KEY;
 const VAPID_SUBJECT = process.env.VAPID_SUBJECT || "mailto:tekhswap@gmail.com";
-const ADMIN_EMAILS = (process.env.VITE_ADMIN_EMAILS || "tekhswap@gmail.com")
-  .split(",").map((e) => e.trim().toLowerCase());
 
 if (VAPID_PUBLIC && VAPID_PRIVATE) {
   webpush.setVapidDetails(VAPID_SUBJECT, VAPID_PUBLIC, VAPID_PRIVATE);
@@ -75,7 +73,6 @@ const DEFAULT_ORIGINS = [
   "http://localhost:8082",
   "http://localhost:8083",
   "http://localhost:5173",
-  "https://tekh-1.onrender.com",
   "https://tekh.onrender.com",
   "https://tekh-backend.onrender.com",
   "https://tekh-backend-production.up.railway.app",
@@ -391,7 +388,7 @@ app.get("/api/push/subscribers", async (req, res) => {
   if (!jwt || !supabase) return res.status(401).json({ error: "Non autorisé" });
   const user = await getSupabaseUser(jwt);
   if (!user) return res.status(401).json({ error: "Token invalide" });
-  if (!ADMIN_EMAILS.includes((user.email || "").toLowerCase()))
+  if (user.app_metadata?.role?.toUpperCase() !== "ADMIN")
     return res.status(403).json({ error: "Admins uniquement" });
 
   const { data: subs, error } = await supabase
@@ -429,8 +426,7 @@ app.get("/api/push/count", async (req, res) => {
   if (!jwt || !supabase) return res.status(401).json({ error: "Non autorisé" });
   const user = await getSupabaseUser(jwt);
   if (!user) return res.status(401).json({ error: "Token invalide" });
-  const email = (user.email || "").toLowerCase();
-  if (!ADMIN_EMAILS.includes(email)) return res.status(403).json({ error: "Admins uniquement" });
+  if (user.app_metadata?.role?.toUpperCase() !== "ADMIN") return res.status(403).json({ error: "Admins uniquement" });
   const { count, error } = await supabase
     .from("push_subscriptions")
     .select("*", { count: "exact", head: true });
@@ -455,9 +451,7 @@ app.post("/api/push/send", async (req, res) => {
   const user = await getSupabaseUser(jwt);
   if (!user) return res.status(401).json({ error: "Token invalide" });
 
-  const email = (user.email || "").toLowerCase();
-  const role = (user.app_metadata?.role || user.user_metadata?.role || "").toLowerCase();
-  if (role !== "admin" && !ADMIN_EMAILS.includes(email)) {
+  if (user.app_metadata?.role?.toUpperCase() !== "ADMIN") {
     return res.status(403).json({ error: "Accès réservé aux admins" });
   }
 

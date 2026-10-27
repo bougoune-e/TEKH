@@ -11,7 +11,7 @@ This is the backend API for the TEKH project, built with Node.js, Express, and S
 
 2. Copy `.env` and configure your environment variables:
    - `SUPABASE_URL`
-   - `SUPABASE_SERVICE_ROLE_KEY`
+   - `SUPABASE_SECRET_KEY`
    - `PRICE_TABLE`
    - `PRODUCTS_TABLE`
 

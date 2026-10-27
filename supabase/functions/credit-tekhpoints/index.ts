@@ -9,9 +9,25 @@ const CORS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
+const SECRET_KEY_NAME = "tekhbackendproduction";
 
-const ADMIN_EMAILS = (Deno.env.get("ADMIN_EMAILS") || "tekhswap@gmail.com,owldesmond8@gmail.com")
-  .split(",").map((e) => e.trim().toLowerCase());
+function getSupabaseSecretKey(): string {
+  const rawKeys = Deno.env.get("SUPABASE_SECRET_KEYS");
+  if (!rawKeys) {
+    throw new Error("Missing Supabase Secret API key registry for this Edge Function.");
+  }
+
+  try {
+    const secretKey = (JSON.parse(rawKeys) as Record<string, string>)[SECRET_KEY_NAME];
+    if (!secretKey) throw new Error("configured key not found");
+    return secretKey;
+  } catch {
+    throw new Error("Missing Supabase Secret API key named " + SECRET_KEY_NAME + ".");
+  }
+}
+
+const SUPABASE_SECRET_KEY = getSupabaseSecretKey();
+
 
 const TEKH_POINT_VALUE = 500; // 1 TekhPoint = 500 FCFA
 
@@ -38,9 +54,7 @@ serve(async (req) => {
   const { data: { user }, error: authErr } = await supabase.auth.getUser();
   if (authErr || !user) return respond({ error: "Token invalide" }, 401);
 
-  const email = (user.email || "").toLowerCase();
-  const appRole = (user.app_metadata?.role || user.user_metadata?.role || "").toLowerCase();
-  const isAdmin = appRole === "admin" || ADMIN_EMAILS.includes(email);
+  const isAdmin = user.app_metadata?.role?.toUpperCase() === "ADMIN";
   if (!isAdmin) return respond({ error: "Accès refusé — admin requis" }, 403);
 
   // 2. Parser le body
@@ -58,10 +72,10 @@ serve(async (req) => {
     return respond({ error: "amount_fcfa doit être > 15 000 FCFA" }, 400);
   }
 
-  // 3. Insérer avec le client service_role (bypass RLS)
+  // 3. Insérer avec le privileged secret client (bypasses RLS)
   const admin = createClient(
     Deno.env.get("SUPABASE_URL") || "",
-    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || ""
+    SUPABASE_SECRET_KEY
   );
 
   const expiresAt = new Date();
