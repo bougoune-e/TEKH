@@ -6,19 +6,19 @@ try { dotenv.config({ path: '.env.local' }); } catch {}
 try { dotenv.config(); } catch {}
 
 const url = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
-const anonKey = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
+const publicKey = process.env.SUPABASE_PUBLISHABLE_KEY || process.env.VITE_SUPABASE_ANON_KEY;
 const pricesTableEnv = process.env.VITE_PRICES_TABLE;
 const apiUrl = process.env.VITE_API_URL || 'http://localhost:3001';
 
 async function main() {
   console.log('--- Supabase connectivity test ---');
-  if (!url || !anonKey) {
-    console.error('Supabase not configured: set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in .env.local');
+  if (!url || !publicKey) {
+    console.error('Supabase not configured: set SUPABASE_PUBLISHABLE_KEY or VITE_SUPABASE_ANON_KEY in .env.local');
     process.exitCode = 1;
     return;
   }
 
-  const supabase = createClient(url, anonKey, { auth: { persistSession: false } });
+  const supabase = createClient(url, publicKey, { auth: { persistSession: false } });
   console.log('Environment OK. Attempting to query candidate tables...');
 
   const candidates = Array.from(new Set([
