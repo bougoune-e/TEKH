@@ -10,7 +10,7 @@ import { supabase, TABLE_PRODUCTS } from "./supabase.js";
 
 // ── Vérification JWT via client public (separate from the privileged server client)
 const SUPABASE_URL = process.env.SUPABASE_URL || "";
-const SUPABASE_PUBLIC_KEY = process.env.SUPABASE_PUBLISHABLE_KEY || process.env.VITE_SUPABASE_ANON_KEY || "";
+const SUPABASE_PUBLIC_KEY = process.env.SUPABASE_PUBLISHABLE_KEY || "";
 
 async function getSupabaseUser(jwt) {
   if (!SUPABASE_URL || !SUPABASE_PUBLIC_KEY || !jwt) return null;

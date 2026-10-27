@@ -10,7 +10,7 @@ const path = require('path');
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SERVICE_KEY = process.env.SUPABASE_SECRET_KEY;
-const ANON_KEY = process.env.VITE_SUPABASE_ANON_KEY;
+const ANON_KEY = process.env.SUPABASE_PUBLISHABLE_KEY;
 
 const supabaseRead = createClient(SUPABASE_URL, ANON_KEY);
 const supabaseWrite = createClient(SUPABASE_URL, SERVICE_KEY);

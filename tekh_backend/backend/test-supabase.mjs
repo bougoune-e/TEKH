@@ -6,14 +6,14 @@ try { dotenv.config({ path: '.env.local' }); } catch {}
 try { dotenv.config(); } catch {}
 
 const url = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
-const publicKey = process.env.SUPABASE_PUBLISHABLE_KEY || process.env.VITE_SUPABASE_ANON_KEY;
+const publicKey = process.env.SUPABASE_PUBLISHABLE_KEY;
 const pricesTableEnv = process.env.VITE_PRICES_TABLE;
 const apiUrl = process.env.VITE_API_URL || 'http://localhost:3001';
 
 async function main() {
   console.log('--- Supabase connectivity test ---');
   if (!url || !publicKey) {
-    console.error('Supabase not configured: set SUPABASE_PUBLISHABLE_KEY or VITE_SUPABASE_ANON_KEY in .env.local');
+    console.error('Supabase not configured: set SUPABASE_PUBLISHABLE_KEY in .env.local');
     process.exitCode = 1;
     return;
   }

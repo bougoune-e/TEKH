@@ -10,12 +10,12 @@ const fs = require('fs');
 const path = require('path');
 
 const SUPABASE_URL = 'https://zkdmdohothspysricfmw.supabase.co';
-const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
-if (!SUPABASE_ANON_KEY) {
-    throw new Error('SUPABASE_ANON_KEY is required to run this local audit.');
+const SUPABASE_PUBLISHABLE_KEY = process.env.SUPABASE_PUBLISHABLE_KEY;
+if (!SUPABASE_PUBLISHABLE_KEY) {
+    throw new Error('SUPABASE_PUBLISHABLE_KEY is required to run this local audit.');
 }
 
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 
 // Parse CSV reference file
 function parseCSV(filePath) {

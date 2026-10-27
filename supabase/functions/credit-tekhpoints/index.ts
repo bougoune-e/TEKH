@@ -26,7 +26,24 @@ function getSupabaseSecretKey(): string {
   }
 }
 
+function getSupabasePublishableKey(): string {
+  const rawKeys = Deno.env.get("SUPABASE_PUBLISHABLE_KEYS");
+  if (!rawKeys) {
+    throw new Error("Missing Supabase Publishable API key registry for this Edge Function.");
+  }
+
+  try {
+    const publishableKeys = JSON.parse(rawKeys) as Record<string, string>;
+    const publishableKey = publishableKeys["default"];
+    if (!publishableKey) throw new Error("default key not found");
+    return publishableKey;
+  } catch {
+    throw new Error("Missing default Supabase Publishable API key.");
+  }
+}
+
 const SUPABASE_SECRET_KEY = getSupabaseSecretKey();
+const publishableKey = getSupabasePublishableKey();
 
 
 const TEKH_POINT_VALUE = 500; // 1 TekhPoint = 500 FCFA
@@ -47,7 +64,7 @@ serve(async (req) => {
 
   const supabase = createClient(
     Deno.env.get("SUPABASE_URL") || "",
-    Deno.env.get("SUPABASE_ANON_KEY") || "",
+    publishableKey,
     { global: { headers: { Authorization: `Bearer ${jwt}` } } }
   );
 
