@@ -94,7 +94,25 @@
         "value": "Valeur",
         "target": "Cible",
         "accord": "Accord",
-        "search_placeholder": "Rechercher des pépites, des modèles, des marques..."
+        "search_placeholder": "Rechercher des pépites, des modèles, des marques...",
+        "identity": {
+            "eyebrow": "Votre appareil",
+            "title": "Commençons par l’identifier.",
+            "subtitle": "Choisissez la configuration exacte pour une estimation fiable.",
+            "brandQuestion": "1. Quelle est la marque ?",
+            "selected": "Sélectionnée",
+            "loadingBrands": "Chargement des marques…",
+            "modelQuestion": "2. Quel est le modèle ?",
+            "chooseBrand": "Choisissez d’abord une marque",
+            "loadingModels": "Chargement des modèles…",
+            "modelPlaceholder": "Rechercher ou choisir un modèle",
+            "availableModels": "{{count}} modèle disponible.",
+            "availableModels_plural": "{{count}} modèles disponibles.",
+            "storageQuestion": "3. Quelle capacité de stockage ?",
+            "ramQuestion": "4. Mémoire vive (RAM)",
+            "securedTitle": "Configuration sécurisée.",
+            "securedText": "Vos choix servent uniquement à calculer la valeur de reprise de votre appareil."
+        }
     },
     "settings": {
         "navigate": "Naviguer",

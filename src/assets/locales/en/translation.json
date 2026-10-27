@@ -94,7 +94,25 @@
         "value": "Value",
         "target": "Target",
         "accord": "Accord",
-        "search_placeholder": "Search for gems, models, brands..."
+        "search_placeholder": "Search for gems, models, brands...",
+        "identity": {
+            "eyebrow": "Your device",
+            "title": "Let’s identify it.",
+            "subtitle": "Choose the exact configuration for a reliable estimate.",
+            "brandQuestion": "1. Which brand?",
+            "selected": "Selected",
+            "loadingBrands": "Loading brands…",
+            "modelQuestion": "2. Which model?",
+            "chooseBrand": "Choose a brand first",
+            "loadingModels": "Loading models…",
+            "modelPlaceholder": "Search for or choose a model",
+            "availableModels": "{{count}} model available.",
+            "availableModels_plural": "{{count}} models available.",
+            "storageQuestion": "3. What storage capacity?",
+            "ramQuestion": "4. RAM",
+            "securedTitle": "Secure configuration.",
+            "securedText": "Your choices are used only to calculate your device’s trade-in value."
+        }
     },
     "settings": {
         "navigate": "Navigate",

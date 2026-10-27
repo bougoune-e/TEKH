@@ -287,6 +287,12 @@ export default function EstimatorPage() {
     isIdentityComplete && screenCondition && chassisCondition &&
     batteryCondition && functionalityIssues.length > 0 && isAllMandatoryAnswered
   );
+  const completedFormItems = [
+    Boolean(brand), Boolean(model), Boolean(storage), isRamSatisfied,
+    Boolean(screenCondition), Boolean(chassisCondition), Boolean(batteryCondition),
+    functionalityIssues.length > 0, ...Object.values(booleanAnswers).map((value) => value !== null),
+  ].filter(Boolean).length;
+  const formCompletion = Math.round((completedFormItems / 12) * 100);
 
   // ─── AI enrichment trigger ──────────────────────────────────────────────────
   useEffect(() => {
@@ -474,43 +480,43 @@ export default function EstimatorPage() {
   // ─── Progress indicator ─────────────────────────────────────────────────────
   const renderProgress = () => {
     const steps = [
-      { id: "estimation", label: "Diagnostic" },
-      { id: "satisfaction", label: "Valeur" },
-      { id: "target_selection", label: "Cible" },
+      { id: "estimation", label: "Appareil" },
+      { id: "satisfaction", label: "Offre" },
+      { id: "target_selection", label: "Choix" },
       { id: "comparison", label: "Accord" },
     ];
-    const currentIndex = steps.findIndex(s => s.id === step);
+    const currentIndex = Math.max(0, steps.findIndex((item) => item.id === step));
     return (
-      <div className="flex items-center gap-1.5 px-4 py-2 bg-slate-100/50 dark:bg-white/5 rounded-full border border-slate-200/50 dark:border-white/5 mx-auto w-fit mb-8">
-        {steps.map((s, idx) => {
-          const isActive = s.id === step;
-          const isDone = currentIndex > idx;
-          return (
-            <div key={s.id} className="flex items-center gap-1.5">
-              <div className={cn(
-                "w-2 h-2 rounded-full transition-all duration-500",
-                isActive ? "bg-blue-600 dark:bg-primary scale-125 shadow-lg shadow-blue-500/20" :
-                  isDone ? "bg-green-500" : "bg-slate-300 dark:bg-zinc-700"
-              )} />
-              {isActive && (
-                <span className="text-[9px] font-black uppercase tracking-widest text-slate-900 dark:text-white mr-1 italic">
-                  {s.label}
-                </span>
-              )}
-              {idx < steps.length - 1 && <div className="w-1.5 h-px bg-slate-200 dark:bg-white/10" />}
-            </div>
-          );
-        })}
-      </div>
+      <section className="mb-8 overflow-hidden rounded-2xl border border-[hsl(var(--tekh-green))]/20 bg-[hsl(var(--tekh-navy))] p-4 text-white shadow-lg shadow-emerald-950/15 sm:p-5">
+        <div className="mb-4 flex items-start justify-between gap-4">
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#4ADE80]">Parcours d’estimation</p>
+            <p className="mt-1 font-display text-xl font-semibold">Étape {currentIndex + 1} <span className="text-white/45">sur {steps.length}</span></p>
+          </div>
+          <span className="rounded-full bg-white/10 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-white/80">{steps[currentIndex].label}</span>
+        </div>
+        <ol className="grid grid-cols-4 gap-2" aria-label="Progression de l’estimation">
+          {steps.map((item, index) => {
+            const done = index < currentIndex;
+            const active = index === currentIndex;
+            return (
+              <li key={item.id} className="space-y-2">
+                <div className={cn("h-1.5 rounded-full transition-all duration-500", done || active ? "bg-[#4ADE80]" : "bg-white/15")} />
+                <span className={cn("block text-[10px] font-medium sm:text-xs", active ? "text-white" : done ? "text-[#4ADE80]" : "text-white/45")}>{item.label}</span>
+              </li>
+            );
+          })}
+        </ol>
+      </section>
     );
   };
 
   // ─── Render ─────────────────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-white dark:bg-[#0A0A0A] font-sans pb-32">
+    <div className="min-h-screen bg-[hsl(142_30%_97%)] dark:bg-[#0A0A0A] font-sans pb-32">
       {/* Header Premium — Floating & Detached */}
       <div className="sticky top-14 md:top-20 z-50 px-4">
-        <div className="max-w-xl mx-auto bg-white/95 dark:bg-black/95 backdrop-blur-xl border border-slate-100 dark:border-white/10 shadow-lg rounded-2xl h-12 relative flex items-center px-3">
+        <div className="max-w-3xl mx-auto bg-white/95 dark:bg-black/95 backdrop-blur-xl border border-slate-100 dark:border-white/10 shadow-lg rounded-2xl h-12 relative flex items-center px-3">
           <Button
             variant="ghost"
             size="sm"
@@ -538,7 +544,7 @@ export default function EstimatorPage() {
         </div>
       </div>
 
-      <div className="max-w-xl mx-auto px-4 pt-8">
+      <div className="max-w-3xl mx-auto px-4 pt-8">
         {renderProgress()}
 
         {/* ── STEP: ESTIMATION ── */}
@@ -647,6 +653,11 @@ export default function EstimatorPage() {
                         </div>
                       )}
 
+                      <div className="flex items-center justify-center gap-2 rounded-2xl border border-[hsl(var(--tekh-green))]/20 bg-[hsl(var(--tekh-green))]/[0.06] px-4 py-3 text-center text-xs font-semibold text-[hsl(var(--tekh-navy))] dark:text-zinc-200">
+                        <ShieldCheck className="h-5 w-5 shrink-0 text-[hsl(var(--tekh-green))]" />
+                        Estimation gratuite en moins de 2 minutes · Vos données restent protégées.
+                      </div>
+
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pb-2">
                         <Button
                           onClick={async () => {
@@ -732,13 +743,22 @@ export default function EstimatorPage() {
                   )}
                 </div>
 
-                {/* Hint while mandatory fields are still incomplete */}
+                {/* Completion CTA while required answers are missing */}
                 {!isStep1Complete && (
-                  <div className="mt-6 flex flex-col items-center p-6 bg-slate-50 dark:bg-zinc-900 rounded-3xl border border-slate-100 dark:border-zinc-800">
-                    <p className="text-[10px] font-black text-slate-400 dark:text-zinc-500 uppercase tracking-widest text-center leading-loose">
-                      Complétez les sections ci-dessus <br />
-                      <span className="text-blue-600 dark:text-primary">pour débloquer l'estimation</span>
-                    </p>
+                  <div className="mt-6 overflow-hidden rounded-3xl border border-[hsl(var(--tekh-green))]/20 bg-white shadow-sm dark:bg-zinc-950">
+                    <div className="flex items-center justify-between gap-4 px-5 pt-5 text-sm font-semibold text-[hsl(var(--tekh-navy))] dark:text-white">
+                      <span>Formulaire complété à {formCompletion}%</span>
+                      <span className="text-xs font-semibold text-[hsl(var(--tekh-green))]">{completedFormItems}/12 éléments</span>
+                    </div>
+                    <div className="mx-5 mt-3 h-2 overflow-hidden rounded-full bg-[hsl(var(--tekh-green))]/10">
+                      <div className="h-full rounded-full bg-[hsl(var(--tekh-green))] transition-all duration-500" style={{ width: `${formCompletion}%` }} />
+                    </div>
+                    <div className="p-5">
+                      <button type="button" disabled className="flex min-h-14 w-full cursor-not-allowed items-center justify-center rounded-2xl bg-zinc-200 px-5 text-center text-sm font-semibold text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
+                        Veuillez compléter les étapes précédentes pour afficher votre estimation
+                      </button>
+                      <p className="mt-3 text-center text-xs font-medium text-muted-foreground">L’estimation apparaît automatiquement dès que les informations requises sont complètes.</p>
+                    </div>
                   </div>
                 )}
               </div>

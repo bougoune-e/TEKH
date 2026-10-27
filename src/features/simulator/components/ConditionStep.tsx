@@ -20,7 +20,7 @@ interface ConditionStepProps {
 function SectionLabel({ num, label }: { num: string; label: string }) {
     return (
         <p className="text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-zinc-400 mb-2.5 flex items-center gap-1.5">
-            <span className="w-4 h-4 rounded-full bg-blue-600/10 dark:bg-primary/10 text-blue-600 dark:text-primary text-[8px] flex items-center justify-center font-black shrink-0">{num}</span>
+            <span className="w-4 h-4 rounded-full bg-[hsl(var(--tekh-green))]/10 text-[hsl(var(--tekh-green))] dark:text-[#4ADE80] text-[8px] flex items-center justify-center font-black shrink-0">{num}</span>
             {label}
         </p>
     );
@@ -37,19 +37,19 @@ function OptionCard<T extends string>({
             type="button"
             onClick={() => onSelect(value)}
             className={cn(
-                "flex flex-col items-center gap-1.5 rounded-xl border-2 p-2.5 flex-1 min-w-0 transition-all duration-150 text-center cursor-pointer",
+                "flex flex-col items-center gap-1.5 rounded-2xl border-2 p-3 flex-1 min-w-0 transition-all duration-150 text-center cursor-pointer",
                 selected
-                    ? "border-blue-600 bg-blue-50 dark:border-primary dark:bg-primary/10"
+                    ? "border-[hsl(var(--tekh-green))] bg-[hsl(var(--tekh-green))]/10 dark:border-[#4ADE80] dark:bg-[#4ADE80]/10"
                     : "border-slate-200 bg-white dark:border-white/10 dark:bg-white/5 hover:border-slate-300 dark:hover:border-white/20"
             )}
         >
             <Icon className={cn(
                 "w-4 h-4 shrink-0",
-                selected ? "text-blue-600 dark:text-primary" : "text-slate-400 dark:text-zinc-500"
+                selected ? "text-[hsl(var(--tekh-green))] dark:text-[#4ADE80]" : "text-slate-400 dark:text-zinc-500"
             )} />
             <span className={cn(
                 "text-[10px] font-black leading-none",
-                selected ? "text-blue-700 dark:text-primary" : "text-slate-700 dark:text-zinc-300"
+                selected ? "text-[hsl(var(--tekh-green))] dark:text-[#4ADE80]" : "text-slate-700 dark:text-zinc-300"
             )}>{label}</span>
             {sub && (
                 <span className="text-[8px] font-semibold text-slate-400 dark:text-zinc-600 leading-tight">{sub}</span>
@@ -59,10 +59,10 @@ function OptionCard<T extends string>({
 }
 
 const SCREEN_OPTIONS: { value: ScreenCondition; icon: React.ElementType; label: string; sub: string }[] = [
-    { value: "comme_neuf", icon: CheckCircle2, label: "Comme neuf", sub: "Aucune marque" },
-    { value: "micro_rayures", icon: Eye, label: "Micro-rayures", sub: "Légères, visibles" },
-    { value: "fissure", icon: AlertTriangle, label: "Fissuré", sub: "Fissure présente" },
-    { value: "casse", icon: X, label: "Cassé", sub: "Éclat / fragment" },
+    { value: "comme_neuf", icon: CheckCircle2, label: "Grade A · Comme neuf", sub: "Aucune marque" },
+    { value: "micro_rayures", icon: Eye, label: "Grade B · Micro-rayures", sub: "Légères, visibles" },
+    { value: "fissure", icon: AlertTriangle, label: "Grade C · Fissuré", sub: "Fissure présente" },
+    { value: "casse", icon: X, label: "Grade D · Cassé", sub: "Éclat / fragment" },
 ];
 
 const CHASSIS_OPTIONS: { value: ChassisCondition; icon: React.ElementType; label: string; sub: string }[] = [
@@ -105,9 +105,9 @@ export const ConditionStep = ({
     };
 
     return (
-        <div className="space-y-6 pt-6 border-t border-slate-100 dark:border-white/5">
+        <div className="space-y-7 rounded-[2rem] border border-[hsl(var(--tekh-green))]/15 bg-white p-5 shadow-[0_20px_50px_-34px_rgba(13,92,61,0.35)] dark:bg-zinc-950 sm:p-8">
             <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-blue-600/10 dark:bg-primary/10 text-blue-600 dark:text-primary flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl bg-[hsl(var(--tekh-green))]/10 text-[hsl(var(--tekh-green))] dark:text-[#4ADE80] flex items-center justify-center">
                     <ShieldCheck className="w-5 h-5" />
                 </div>
                 <div>
@@ -184,19 +184,19 @@ export const ConditionStep = ({
                             type="button"
                             onClick={() => toggleFunc(opt.value)}
                             className={cn(
-                                "flex flex-col items-center gap-1.5 rounded-xl border-2 p-2.5 transition-all duration-150 cursor-pointer",
+                                "flex flex-col items-center gap-1.5 rounded-2xl border-2 p-3 transition-all duration-150 cursor-pointer",
                                 functionalityIssues.includes(opt.value)
-                                    ? "border-blue-600 bg-blue-50 dark:border-primary dark:bg-primary/10"
+                                    ? "border-[hsl(var(--tekh-green))] bg-[hsl(var(--tekh-green))]/10 dark:border-[#4ADE80] dark:bg-[#4ADE80]/10"
                                     : "border-slate-200 bg-white dark:border-white/10 dark:bg-white/5 hover:border-slate-300 dark:hover:border-white/20"
                             )}
                         >
                             <opt.icon className={cn(
                                 "w-4 h-4 shrink-0",
-                                functionalityIssues.includes(opt.value) ? "text-blue-600 dark:text-primary" : "text-slate-400 dark:text-zinc-500"
+                                functionalityIssues.includes(opt.value) ? "text-[hsl(var(--tekh-green))] dark:text-[#4ADE80]" : "text-slate-400 dark:text-zinc-500"
                             )} />
                             <span className={cn(
                                 "text-[9px] font-black text-center leading-none",
-                                functionalityIssues.includes(opt.value) ? "text-blue-700 dark:text-primary" : "text-slate-700 dark:text-zinc-300"
+                                functionalityIssues.includes(opt.value) ? "text-[hsl(var(--tekh-green))] dark:text-[#4ADE80]" : "text-slate-700 dark:text-zinc-300"
                             )}>{opt.label}</span>
                         </button>
                     ))}
