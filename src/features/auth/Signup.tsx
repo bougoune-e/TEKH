@@ -24,29 +24,32 @@ export default function Signup() {
     setError("");
     setLoading(true);
     if (!isSupabaseConfigured) {
-      setError("Inscription indisponible : configuration Supabase manquante.");
+      setError(t("auth.signupUnavailable"));
       setLoading(false);
       return;
     }
     const { data, error: signUpError } = await supabase.auth.signUp({
       email,
       password,
-      options: { emailRedirectTo: window.location.origin + "/profile" },
+      options: { emailRedirectTo: window.location.origin + "/auth/callback?redirect_to=%2Fprofile" },
     });
     if (signUpError) {
-      setError("Inscription échouée : " + signUpError.message);
+      setError(t("auth.signupFailed", { message: signUpError.message }));
       setLoading(false);
       return;
     }
     if (data?.user) {
       if (data.user.identities?.length === 0) {
-        setError("Un compte existe déjà avec cet email. Connectez-vous.");
+        setError(t("auth.accountExists"));
         setLoading(false);
+        return;
+      }
+      if (data.session) {
+        navigate("/profile", { replace: true });
         return;
       }
       setSuccess(true);
       setLoading(false);
-      setTimeout(() => navigate("/login"), 2500);
     } else {
       setLoading(false);
     }
@@ -57,11 +60,11 @@ export default function Signup() {
       <section className="min-h-dvh bg-white dark:bg-black flex flex-col items-center justify-center p-6">
         <MotionRings className="mb-8">
           <div className="text-center space-y-4 z-20">
-            <h2 className="text-2xl font-black text-black dark:text-white">Compte créé</h2>
+            <h2 className="text-2xl font-black text-black dark:text-white">{t("auth.accountCreated")}</h2>
             <p className="text-muted-foreground text-sm max-w-sm">
-              Vérifiez votre boîte mail pour confirmer votre adresse, puis connectez-vous.
+              {t("auth.confirmEmail")}
             </p>
-            <p className="text-xs text-muted-foreground">Redirection vers la connexion…</p>
+            <p className="text-xs text-muted-foreground">{t("auth.redirectingLogin")}</p>
           </div>
         </MotionRings>
       </section>
@@ -91,7 +94,7 @@ export default function Signup() {
             <div className="relative">
               <Input
                 type={showPassword ? "text" : "password"}
-                placeholder="Mot de passe (min. 6 caractères)"
+                placeholder={t("auth.passwordMin")}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -110,11 +113,11 @@ export default function Signup() {
               <div className="text-rose-600 text-[13px] font-bold text-center">{error}</div>
             )}
             <Button type="submit" className="w-full h-14 rounded-full bg-[#064e3b] dark:bg-[#059669] text-white font-black text-lg hover:opacity-90 transition-all shadow-xl font-sans" disabled={loading}>
-              {loading ? "Création…" : "Créer mon compte"}
+              {loading ? t("auth.creating") : t("auth.createAccount")}
             </Button>
           </form>
           <p className="text-center text-xs text-muted-foreground">
-            Déjà un compte ?{" "}
+            {t("auth.alreadyAccount")} {" "}
             <Link to="/login" className="font-bold text-primary hover:underline">{t('auth.login')}</Link>
           </p>
         </CardContent>

@@ -25,13 +25,10 @@ export default function PublishPage() {
   const { user } = useAuth();
   const { addDeal } = useDeals();
 
-  // 🛡️ Securité : Seul l'admin peut accéder à cette page
+  // UI guard only — Supabase RLS/server-side authorization remains authoritative.
   useEffect(() => {
-    const adminEmails = (import.meta.env.VITE_ADMIN_EMAILS as string || "")
-      .split(",")
-      .map((e) => e.trim().toLowerCase());
-
-    if (!user || !adminEmails.includes(user.email?.toLowerCase() || "")) {
+    const role = user?.app_metadata?.role;
+    if (typeof role !== "string" || role.toUpperCase() !== "ADMIN") {
       navigate("/", { replace: true });
     }
   }, [user, navigate]);

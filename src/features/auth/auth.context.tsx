@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "@/core/api/supabaseApi";
 import { isSupabaseConfigured } from "@/core/api/supabaseClient";
 import { getStoredReferralCode, registerReferee } from "@/core/api/referral";
@@ -17,21 +18,8 @@ const AuthContext = createContext<AuthValue>({
   signOut: async () => { },
 });
 
-const ADMIN_EMAILS = (import.meta.env.VITE_ADMIN_EMAILS as string || "")
-  .split(",").map((e) => e.trim().toLowerCase()).filter(Boolean);
-
-function isAdminEmail(email: string): boolean {
-  return ADMIN_EMAILS.includes(email.trim().toLowerCase());
-}
-
-// Détecte si ce chargement de page est le retour d'un callback OAuth
-// (hash contient access_token) ou PKCE (query contient code).
-const _isOAuthReturn =
-  typeof window !== "undefined" &&
-  (window.location.hash.includes("access_token") ||
-    new URLSearchParams(window.location.search).has("code"));
-
 export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const navigate = useNavigate();
   const [user, setUser] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -89,7 +77,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       // Redirect to /reset-password when user clicks password reset email link
       if (event === 'PASSWORD_RECOVERY') {
-        window.location.href = '/reset-password';
+        navigate('/reset-password', { replace: true });
         return;
       }
 
@@ -101,16 +89,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
       }
 
-      // Redirection spécifique (ex: PASSWORD_RECOVERY) gérée ici.
-      // La redirection Admin est désormais gérée par Login.tsx et AuthCallback.tsx 
-      // pour éviter les conflits entre APK Standard et APK Admin.
+      // OAuth and password-recovery navigation is handled through React Router.
     });
     unsub = () => data?.subscription?.unsubscribe?.();
     return () => {
       if (t) window.clearTimeout(t);
       if (unsub) unsub();
     };
-  }, []);
+  }, [navigate]);
 
   return (
     <AuthContext.Provider value={{ user, loading, refreshUser, signOut }}>

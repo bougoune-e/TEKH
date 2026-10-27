@@ -6,6 +6,7 @@ import { Button } from "@/shared/ui/button";
 import { CardContent } from "@/shared/ui/card";
 import { Eye, EyeOff, CheckCircle2, AlertCircle } from "lucide-react";
 import MotionRings from "@/shared/components/MotionRings";
+import { useTranslation } from "react-i18next";
 
 /**
  * /reset-password — Page atterrissage lien email "Mot de passe oublié".
@@ -13,6 +14,7 @@ import MotionRings from "@/shared/components/MotionRings";
  * via l'event PASSWORD_RECOVERY dans onAuthStateChange.
  */
 export default function ResetPassword() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const [password, setPassword] = useState("");
     const [confirm, setConfirm] = useState("");
@@ -53,11 +55,11 @@ export default function ResetPassword() {
         setError("");
 
         if (password.length < 6) {
-            setError("Le mot de passe doit contenir au moins 6 caractères.");
+            setError(t("auth.passwordTooShort"));
             return;
         }
         if (password !== confirm) {
-            setError("Les mots de passe ne correspondent pas.");
+            setError(t("auth.passwordsDoNotMatch"));
             return;
         }
 
@@ -66,7 +68,7 @@ export default function ResetPassword() {
         setLoading(false);
 
         if (updateError) {
-            setError("Erreur : " + updateError.message);
+            setError(t("auth.sendFailed", { message: updateError.message }));
             return;
         }
 
@@ -82,9 +84,9 @@ export default function ResetPassword() {
                 <MotionRings className="mb-8">
                     <div className="text-center space-y-4 z-20">
                         <CheckCircle2 className="w-12 h-12 text-primary mx-auto" />
-                        <h2 className="text-2xl font-black text-black dark:text-white">Mot de passe mis à jour</h2>
+                        <h2 className="text-2xl font-black text-black dark:text-white">{t("auth.passwordUpdated")}</h2>
                         <p className="text-muted-foreground text-sm max-w-xs">
-                            Votre mot de passe a été modifié avec succès. Vous allez être redirigé vers la connexion.
+                            {t("auth.passwordUpdatedDescription")}
                         </p>
                     </div>
                 </MotionRings>
@@ -97,11 +99,11 @@ export default function ResetPassword() {
             <MotionRings className="mb-12">
                 <div className="text-center space-y-2 z-20">
                     <h2 className="text-4xl font-black tracking-tighter text-black dark:text-white font-sans uppercase">
-                        Nouveau mot de passe
+                        {t("auth.resetTitle")}
                     </h2>
                     <div className="h-1 w-12 bg-primary mx-auto rounded-full" />
                     <p className="text-sm text-muted-foreground mt-3 max-w-xs">
-                        Choisissez un nouveau mot de passe pour votre compte TΞKΗ+.
+                        {t("auth.resetSubtitle")}
                     </p>
                 </div>
             </MotionRings>
@@ -111,7 +113,7 @@ export default function ResetPassword() {
                     {!sessionReady ? (
                         <div className="text-center space-y-3 py-4">
                             <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto" />
-                            <p className="text-sm text-muted-foreground">Vérification de votre lien…</p>
+                            <p className="text-sm text-muted-foreground">{t("auth.checkingLink")}</p>
                         </div>
                     ) : (
                         <form onSubmit={handleSubmit} className="space-y-4">
@@ -119,7 +121,7 @@ export default function ResetPassword() {
                             <div className="relative">
                                 <Input
                                     type={showPwd ? "text" : "password"}
-                                    placeholder="Nouveau mot de passe (min. 6 caractères)"
+                                    placeholder={t("auth.newPassword")}
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
@@ -138,7 +140,7 @@ export default function ResetPassword() {
                             {/* Confirm password */}
                             <Input
                                 type={showPwd ? "text" : "password"}
-                                placeholder="Confirmer le mot de passe"
+                                placeholder={t("auth.confirmPassword")}
                                 value={confirm}
                                 onChange={(e) => setConfirm(e.target.value)}
                                 required
@@ -150,8 +152,8 @@ export default function ResetPassword() {
                             {confirm.length > 0 && (
                                 <div className={`flex items-center gap-2 text-xs font-bold ${password === confirm ? "text-primary" : "text-rose-500"}`}>
                                     {password === confirm
-                                        ? <><CheckCircle2 className="w-3.5 h-3.5" /> Les mots de passe correspondent</>
-                                        : <><AlertCircle className="w-3.5 h-3.5" /> Les mots de passe ne correspondent pas</>
+                                        ? <><CheckCircle2 className="w-3.5 h-3.5" /> {t("auth.passwordsMatch")}</>
+                                        : <><AlertCircle className="w-3.5 h-3.5" /> {t("auth.passwordsDoNotMatch")}</>
                                     }
                                 </div>
                             )}
@@ -165,14 +167,14 @@ export default function ResetPassword() {
                                 disabled={loading || password !== confirm || password.length < 6}
                                 className="w-full h-14 rounded-full bg-[#064e3b] dark:bg-[#059669] text-white font-black text-lg hover:opacity-90 hover:scale-[1.02] active:scale-95 transition-all shadow-xl font-sans disabled:opacity-50"
                             >
-                                {loading ? "Mise à jour…" : "Valider le nouveau mot de passe"}
+                                {loading ? t("auth.updatingPassword") : t("auth.confirmNewPassword")}
                             </Button>
                         </form>
                     )}
 
                     <p className="text-center text-xs text-muted-foreground">
                         <Link to="/login" className="font-bold text-primary hover:underline">
-                            Retour à la connexion
+                            {t("auth.backToLogin")}
                         </Link>
                     </p>
                 </CardContent>

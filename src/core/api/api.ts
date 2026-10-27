@@ -1,4 +1,4 @@
-import { getToken, logout } from "./auth";
+import { getToken } from "./auth";
 
 const baseURL = import.meta.env.VITE_API_BASE_URL as string | undefined;
 
@@ -10,6 +10,7 @@ export async function api(path: string, init?: RequestInit) {
     "Content-Type": "application/json",
   };
   const res = await fetch(`${baseURL}${path}`, { ...init, headers });
-  if (res.status === 401) logout();
+  // This helper targets the separate VITE_API_BASE_URL backend. It must not
+  // navigate or alter the Supabase Auth session; consumers decide how to handle 401.
   return res;
 }

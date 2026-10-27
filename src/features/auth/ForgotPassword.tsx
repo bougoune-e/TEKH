@@ -6,8 +6,10 @@ import { CardContent } from "@/shared/ui/card";
 import { Input } from "@/shared/ui/input";
 import { Button } from "@/shared/ui/button";
 import MotionRings from "@/shared/components/MotionRings";
+import { useTranslation } from "react-i18next";
 
 export default function ForgotPassword() {
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -19,7 +21,7 @@ export default function ForgotPassword() {
     setLoading(true);
 
     if (!isSupabaseConfigured) {
-      setError("Service indisponible : configuration manquante.");
+      setError(t("auth.serviceUnavailable"));
       setLoading(false);
       return;
     }
@@ -32,7 +34,7 @@ export default function ForgotPassword() {
     });
 
     if (resetError) {
-      setError("Erreur : " + resetError.message);
+      setError(t("auth.sendFailed", { message: resetError.message }));
       setLoading(false);
       return;
     }
@@ -46,12 +48,12 @@ export default function ForgotPassword() {
       <section className="min-h-dvh bg-white dark:bg-black flex flex-col items-center justify-center p-6">
         <MotionRings className="mb-8">
           <div className="text-center space-y-4 z-20">
-            <h2 className="text-2xl font-black text-black dark:text-white">Email envoyé</h2>
+            <h2 className="text-2xl font-black text-black dark:text-white">{t("auth.emailSent")}</h2>
             <p className="text-muted-foreground text-sm max-w-sm">
-              Si un compte existe avec cet email, vous recevrez un lien pour réinitialiser votre mot de passe.
+              {t("auth.resetEmailSent")}
             </p>
             <Link to="/login" className="block text-xs font-bold text-primary hover:underline mt-4">
-              Retour à la connexion
+              {t("auth.backToLogin")}
             </Link>
           </div>
         </MotionRings>
@@ -64,11 +66,11 @@ export default function ForgotPassword() {
       <MotionRings className="mb-12">
         <div className="text-center space-y-2 z-20">
           <h2 className="text-4xl font-black tracking-tighter text-black dark:text-white font-sans uppercase">
-            Mot de passe oublié
+            {t("auth.forgotTitle")}
           </h2>
           <div className="h-1 w-12 bg-primary mx-auto rounded-full" />
           <p className="text-sm text-muted-foreground mt-3 max-w-xs">
-            Saisissez votre email, nous vous enverrons un lien de réinitialisation.
+            {t("auth.forgotSubtitle")}
           </p>
         </div>
       </MotionRings>
@@ -78,7 +80,7 @@ export default function ForgotPassword() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <Input
               type="email"
-              placeholder="Votre adresse email"
+              placeholder={t("auth.emailAddress")}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -92,12 +94,12 @@ export default function ForgotPassword() {
               disabled={loading}
               className="w-full h-14 rounded-full bg-[#064e3b] dark:bg-[#059669] text-white font-black text-lg hover:opacity-90 hover:scale-[1.02] active:scale-95 transition-all shadow-xl font-sans"
             >
-              {loading ? "Envoi…" : "Envoyer le lien"}
+              {loading ? t("auth.sending") : t("auth.sendLink")}
             </Button>
           </form>
           <p className="text-center text-xs text-muted-foreground">
             <Link to="/login" className="font-bold text-primary hover:underline">
-              Retour à la connexion
+              {t("auth.backToLogin")}
             </Link>
           </p>
         </CardContent>

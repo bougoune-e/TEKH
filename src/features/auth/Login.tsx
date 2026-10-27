@@ -25,7 +25,7 @@ export default function Login() {
   const loginWithGoogle = async () => {
     setError("");
     if (!isSupabaseConfigured) {
-      setError("Connexion Google indisponible: configuration Supabase manquante.");
+      setError(t("auth.googleUnavailable"));
       return;
     }
     setLoading(true);
@@ -52,7 +52,7 @@ export default function Login() {
       }
       // Redirection en cours (page peut quitter) — pas de setLoading(false)
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Erreur inattendue");
+      setError(e instanceof Error ? e.message : t("auth.unexpected"));
       setLoading(false);
     }
   };
@@ -68,7 +68,7 @@ export default function Login() {
     });
 
     if (error) {
-      setError("Connexion échouée : " + error.message);
+      setError(t("auth.loginFailed", { message: error.message }));
       setLoading(false);
       return;
     }
@@ -79,7 +79,7 @@ export default function Login() {
 
       // Hard reload for /admin so Chrome registers the new Admin PWA manifest
       if (redirectTo.startsWith("/admin")) {
-        window.location.replace(redirectTo);
+        navigate(redirectTo, { replace: true });
       } else {
         navigate(redirectTo, { replace: true });
       }
@@ -133,7 +133,7 @@ export default function Login() {
             <div className="relative">
               <Input
                 type={showPassword ? "text" : "password"}
-                placeholder="Mot de passe"
+                placeholder={t("auth.password")}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required

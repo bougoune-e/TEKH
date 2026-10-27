@@ -27,9 +27,6 @@ export function getToken() {
   return localStorage.getItem(TOKEN_KEY);
 }
 
-export function getRole() {
-  return localStorage.getItem(ROLE_KEY);
-}
 
 export function clearSession() {
   localStorage.removeItem(TOKEN_KEY);
@@ -40,10 +37,6 @@ export function clearSession() {
   localStorage.removeItem(USER_AVATAR_KEY);
 }
 
-export function logout() {
-  clearSession();
-  window.location.href = "/login";
-}
 
 export function getUserId() {
   return localStorage.getItem(USER_ID_KEY);

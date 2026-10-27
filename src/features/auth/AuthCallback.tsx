@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/core/api/supabaseApi";
 import logo from "@/assets/logos/robott.jpeg";
 
-const ADMIN_EMAILS = (import.meta.env.VITE_ADMIN_EMAILS as string || "")
-    .split(",").map((e) => e.trim().toLowerCase()).filter(Boolean);
 
 /**
  * /auth/callback — landing page after OAuth (Google) redirect.
@@ -50,12 +48,7 @@ export default function AuthCallback() {
             const params = new URLSearchParams(window.location.search);
             const redirectTo = params.get("redirect_to") || "/profile";
 
-            // Hard reload for /admin so Chrome registers the new Admin PWA manifest
-            if (redirectTo.startsWith("/admin")) {
-                window.location.replace(redirectTo);
-            } else {
-                navigate(redirectTo, { replace: true });
-            }
+            navigate(redirectTo, { replace: true });
         };
 
         handleCallback();

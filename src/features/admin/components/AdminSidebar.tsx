@@ -5,7 +5,6 @@ import {
   LayoutGrid, Users, Smartphone, Boxes, Tags, BarChart3,
   Settings, Handshake, ChevronRight, X, Menu, LogOut, Bell, Coins, QrCode
 } from "lucide-react";
-import { getRole } from "@/core/api/auth";
 import { useAuth } from "@/features/auth/auth.context";
 import logo from "@/assets/logos/robott.jpeg";
 
@@ -29,12 +28,13 @@ const PRIMARY = items.slice(0, 4);
 /* ── Desktop sidebar ─────────────────────────────── */
 export const AdminDesktopSidebar = () => {
   const { user, signOut } = useAuth();
-  const role = user?.app_metadata?.role || user?.user_metadata?.role || "ADMIN";
+  const navigate = useNavigate();
+  const role = user?.app_metadata?.role || "ADMIN";
 
   const handleLogout = async () => {
     localStorage.removeItem("tekh:nav-snapshot");
     await signOut();
-    window.location.href = "/login";
+    navigate("/login", { replace: true });
   };
 
   return (
@@ -98,7 +98,7 @@ export const AdminMobileNav = () => {
     setDrawerOpen(false);
     localStorage.removeItem("tekh:nav-snapshot");
     await signOut();
-    window.location.href = "/login";
+    navigate("/login", { replace: true });
   };
 
   return (
