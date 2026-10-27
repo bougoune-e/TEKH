@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Wrench, ArrowRight } from "lucide-react";
 import { usePWA } from "@/shared/hooks/usePWA";
+import repairImg from "@/assets/illustrations/homepage/repair_image_phone.jpeg";
 
 const servicePaths: Record<string, string> = {
   "maintenance": "/maintenance",
@@ -55,6 +56,9 @@ const ServicesSection = () => {
                 className="bg-white dark:bg-zinc-900/40 p-4 sm:p-6 rounded-[24px] sm:rounded-[28px] border-2 border-slate-100 dark:border-white/5 shadow-sm flex flex-col items-center text-center active:scale-[0.98] hover:shadow-md transition-all min-h-0 min-w-0"
               >
                 <span className="text-3xl sm:text-4xl mb-2 sm:mb-3 shrink-0">{s.emoji}</span>
+                <div className="w-full h-32 sm:h-40 mb-4 overflow-hidden rounded-2xl border border-slate-100 dark:border-white/10">
+                  <img src={repairImg} alt="Technicien réparant un appareil" className="w-full h-full object-cover" />
+                </div>
                 <div className={`w-11 h-11 sm:w-14 sm:h-14 rounded-full flex items-center justify-center mb-2 sm:mb-3 shrink-0 ${s.color}`}>
                   <s.icon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
                 </div>
@@ -72,14 +76,13 @@ const ServicesSection = () => {
             {services.map((s) => (
               <div
                 key={s.id}
-                className="group relative border border-[hsl(var(--tekh-navy))]/10 dark:border-white/10 bg-white dark:bg-zinc-900 p-8 md:p-10 flex flex-col md:flex-row gap-8 items-start md:items-center"
+                className="group relative overflow-hidden rounded-[2rem] border border-[hsl(var(--tekh-navy))]/10 dark:border-white/10 bg-white dark:bg-zinc-900 p-8 md:p-10 flex flex-col md:flex-row gap-8 items-start md:items-center shadow-[0_18px_50px_-30px_hsl(var(--tekh-navy)/0.35)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_26px_60px_-28px_hsl(var(--tekh-navy)/0.45)]"
               >
-                <div className="flex items-center gap-4 shrink-0">
-                  <div className="w-16 h-16 flex items-center justify-center bg-[hsl(var(--tekh-navy))] text-white">
-                    <s.icon className="w-8 h-8" strokeWidth={1.5} />
-                  </div>
-                </div>
+                <div className="relative w-full md:w-72 h-52 md:h-64 shrink-0 overflow-hidden rounded-[1.5rem] border border-[hsl(var(--tekh-navy))]/10 dark:border-white/10">
+                  <img src={repairImg} alt="Technicien réparant un appareil" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
 
+                </div>
                 <div className="flex-1 space-y-3">
                   <h3 className="font-display text-2xl font-semibold text-[hsl(var(--tekh-navy))] dark:text-zinc-50 tracking-tight">
                     {s.title}
@@ -92,7 +95,7 @@ const ServicesSection = () => {
                   </p>
                   <div className="flex flex-wrap gap-2 pt-1">
                     {s.features.map((feat) => (
-                      <span key={feat} className="inline-flex items-center px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-[hsl(var(--tekh-green))] border border-[hsl(var(--tekh-green))]/25">
+                      <span key={feat} className="inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-[hsl(var(--tekh-green))] border border-[hsl(var(--tekh-green))]/25">
                         {feat}
                       </span>
                     ))}
@@ -103,7 +106,7 @@ const ServicesSection = () => {
                   <button
                     type="button"
                     onClick={() => navigate(servicePaths[s.id] || "/a-propos#services")}
-                    className="w-full md:w-auto group inline-flex items-center justify-center gap-2 bg-[hsl(var(--tekh-green))] text-white hover:bg-[hsl(142_76%_30%)] px-6 py-3.5 font-semibold text-xs uppercase tracking-widest transition-all"
+                    className="w-full md:w-auto group inline-flex items-center justify-center gap-2 rounded-full bg-[hsl(var(--tekh-green))] text-white hover:bg-[hsl(142_76%_30%)] px-6 py-3.5 font-semibold text-xs uppercase tracking-widest transition-all hover:-translate-y-0.5"
                   >
                     Découvrir
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

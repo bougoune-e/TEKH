@@ -220,5 +220,75 @@
         "rights": "All rights reserved.",
         "betaNotice": "TEKH+ is currently being rolled out in Lomé, Togo.",
         "betaContact": "For any question:"
+    },
+    "home": {
+        "quickEstimate": "Estimate",
+        "quickExplore": "Explore",
+        "quickCertified": "Certified",
+        "whatsappAria": "Contact TEKH+ on WhatsApp",
+        "hero": {
+            "eyebrow": "Certified exchange · West Africa",
+            "title": "Change your phone,",
+            "titleAccent": "not your budget.",
+            "description": "Bring a smartphone — even a broken one. TEKH+ calculates its value, refurbishes it, and turns it into a certified device. Compensation in FCFA, collection through Dealbox.",
+            "estimate": "Estimate my phone",
+            "certified": "View certified devices",
+            "trustSwap": "No straight sale",
+            "trustCertified": "Dealbox certified",
+            "trustEstimate": "Estimate",
+            "badge": "Dealbox certified",
+            "visual": "Visual {{number}}"
+        },
+        "story": {
+            "eyebrow": "What TΞKΗ+ does",
+            "title": "Your phone is not sold.",
+            "titleAccent": "It becomes another phone.",
+            "description": "TΞKΗ+ is the certified smartphone exchange platform for West Africa. Estimation, refurbishment, FCFA compensation and secure collection — one action: SWAP.",
+            "cta": "Start an estimate",
+            "steps": [
+                {
+                    "title": "You bring a phone",
+                    "body": "Broken, old, or simply too limited: we estimate its real value in under two minutes based on its condition and the West African market."
+                },
+                {
+                    "title": "TEKH+ turns it into a SWAP",
+                    "body": "This is not a straight sale. Your device enters the certified Dealbox process: 50 checks, refurbishment, then exchange."
+                },
+                {
+                    "title": "You leave with another device",
+                    "body": "Upgrade, equivalent device, or FCFA difference. The transaction is tracked, dropped at a collection point and handled through to handover."
+                }
+            ]
+        }
+    },
+    "faq": {
+        "badge": "TEKH+ FAQ",
+        "title": "Frequently asked questions",
+        "subtitle": "Key answers about estimation, Dealbox drop-off and your personal data.",
+        "back": "Back",
+        "helpTitle": "Need help?",
+        "helpSubtitle": "Find answers to the most frequently asked questions.",
+        "items": [
+            {
+                "question": "What is Technical Residual Value (VRT) and how is it calculated?",
+                "answer": "VRT is an estimate of your device’s remaining value. It considers the model, configuration, declared condition and local market. The final offer is confirmed after a physical check by a partner location."
+            },
+            {
+                "question": "How do device drop-off and payment work?",
+                "answer": "After an online estimate, you receive instructions to continue with TEKH+. The physical check at a partner location validates the device’s actual condition before any transaction."
+            },
+            {
+                "question": "What if the actual condition differs from the online diagnosis?",
+                "answer": "The partner location reviews the device with you. You may accept the adjusted offer or take your device back: no transaction is validated without your consent."
+            },
+            {
+                "question": "Is my personal data protected?",
+                "answer": "Before trade-in, you remain responsible for backing up and resetting your phone. The Dealbox check helps guide you through this step before final validation."
+            },
+            {
+                "question": "How can I get help?",
+                "answer": "Read this FAQ or contact TEKH+ by email or WhatsApp. Requests are handled by the team through the contact channels listed on the website."
+            }
+        ]
     }
 }

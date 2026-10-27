@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import PhoneCard from "@/features/marketplace/PhoneCard";
-import hpImg from "@/assets/illustrations/homepage/smartphones.jpeg";
-import hpImg2 from "@/assets/illustrations/homepage/smartphone.jpeg";
 import iphone from "@/assets/illustrations/homepage/iphone.jpeg";
 import samsung from "@/assets/illustrations/homepage/samsungA35.jpeg";
 import pixel from "@/assets/illustrations/homepage/google_pixel.jpeg";
@@ -76,16 +74,16 @@ const DealsSection = () => {
               Appareils certifiés, prêts à SWAP
             </h2>
             <p className="text-base text-[hsl(var(--tekh-navy))]/60 dark:text-zinc-300 font-medium leading-relaxed">
-              Marque, modèle et état pris en compte. Compensation ajustée. Transaction sécurisée.
+              Chaque appareil est contrôlé, classé et présenté selon le standard Dealbox avant sa mise en vitrine.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-2 mt-4">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium bg-primary/10 text-primary border border-primary/20">
                 <Sparkles className="h-4 w-4" aria-hidden="true" />
-                2025
+                Standard Dealbox
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-bold bg-green-600 text-white border-none shadow-md">
                 <BadgeCheck className="h-4 w-4" aria-hidden="true" />
-                Neuf
+                50 points de contrôle
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
                 <Recycle className="h-4 w-4" aria-hidden="true" />
@@ -95,18 +93,18 @@ const DealsSection = () => {
             <div className="mt-6 max-w-4xl mx-auto">
               <div className="md:hidden -mx-4 px-4 overflow-x-auto snap-x snap-mandatory flex gap-4 pb-2">
                 <div className="snap-start shrink-0 w-64 h-40 bg-card border border-border/60 rounded-2xl shadow overflow-hidden">
-                  <img src={hpImg} alt="Smartphones" className="w-full h-full object-cover" />
+                  <img src={iphone} alt="iPhone reconditionné certifié Dealbox" className="w-full h-full object-cover" />
                 </div>
                 <div className="snap-start shrink-0 w-64 h-40 bg-card border border-border/60 rounded-2xl shadow overflow-hidden">
-                  <img src={hpImg2} alt="Sélection" className="w-full h-full object-cover" />
+                  <img src={samsung} alt="Samsung reconditionné certifié Dealbox" className="w-full h-full object-cover" />
                 </div>
               </div>
               <div className="hidden md:grid grid-cols-2 gap-5">
                 <div className="rounded-2xl border border-border/60 shadow overflow-hidden w-full h-48 flex items-center justify-center bg-card">
-                  <img src={hpImg} alt="Smartphones" className="max-w-full max-h-full object-contain" />
+                  <img src={iphone} alt="iPhone reconditionné certifié Dealbox" className="max-w-full max-h-full object-contain" />
                 </div>
                 <div className="rounded-2xl border border-border/60 shadow overflow-hidden w-full h-48 flex items-center justify-center bg-card">
-                  <img src={hpImg2} alt="Sélection" className="max-w-full max-h-full object-contain" />
+                  <img src={samsung} alt="Samsung reconditionné certifié Dealbox" className="max-w-full max-h-full object-contain" />
                 </div>
               </div>
             </div>

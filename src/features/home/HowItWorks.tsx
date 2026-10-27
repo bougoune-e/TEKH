@@ -20,7 +20,7 @@ const HowItWorks = () => {
     {
       icon: CheckCircle,
       title: "Reprenez le neuf d’usage",
-      description: "Appareil Grade A, garantie, TekhPoints. L’ancien entre dans le circuit, pas à la poubelle.",
+      description: "Appareil certifié, garantie de service et retrait suivi. L’ancien entre dans le circuit, pas à la poubelle.",
     },
   ];
 
@@ -32,10 +32,10 @@ const HowItWorks = () => {
             Le parcours
           </p>
           <h2 className="font-display text-4xl md:text-5xl font-semibold tracking-tight leading-[1.08]">
-            Quatre gestes. Un échange.
+            Comment ça marche.
           </h2>
           <p className="text-[hsl(var(--tekh-navy))]/65 dark:text-zinc-300 font-medium text-base md:text-lg leading-relaxed">
-            Pas une marketplace d’annonces. Un circuit d’échange, du simulateur jusqu’au point relais.
+            Une seule trajectoire claire, du simulateur à la validation en Dealbox.
           </p>
         </div>
 

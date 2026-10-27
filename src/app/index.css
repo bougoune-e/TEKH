@@ -13,7 +13,7 @@
   html,
   body {
     @apply bg-background text-foreground;
-    font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: 'Satoshi', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
@@ -112,40 +112,40 @@
 
 @layer base {
 
-  /* Base Design Tokens — Web: deep green + bleu foncé (TEKH / APK) */
+  /* Web — warm editorial palette adapted from the approved TEKH+ reference. */
   :root {
-    --tekh-green: 142 76% 36%;
-    --tekh-green-bright: 142 100% 50%;
-    --tekh-blue-dark: 217 60% 12%;
-    --tekh-navy: 217 60% 12%;
-    --font-display: 'Fraunces', Georgia, serif;
-    --font-body: 'Outfit', Inter, system-ui, sans-serif;
-    --background: 255 0% 100%;
-    --foreground: 0 0% 0%;
+    --tekh-green: 151 59% 30%;
+    --tekh-green-bright: 145 59% 48%;
+    --tekh-blue-dark: 220 11% 9%;
+    --tekh-navy: 220 11% 9%;
+    --font-display: 'Cabinet Grotesk', system-ui, sans-serif;
+    --font-body: 'Satoshi', Inter, system-ui, sans-serif;
+    --background: 42 29% 95%;
+    --foreground: 220 11% 9%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 0%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 0%;
-    --primary: 142 76% 36%;
+    --popover-foreground: 220 11% 9%;
+    --primary: 151 59% 30%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 0 0% 0%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 0 0% 35%;
-    --accent: 217 60% 96%;
-    --accent-foreground: 0 0% 0%;
+    --secondary: 42 22% 92%;
+    --secondary-foreground: 220 11% 9%;
+    --muted: 42 22% 92%;
+    --muted-foreground: 220 5% 39%;
+    --accent: 143 36% 91%;
+    --accent-foreground: 220 11% 9%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 142 76% 36%;
-    --radius: 0.5rem;
+    --border: 38 20% 87%;
+    --input: 38 20% 87%;
+    --ring: 151 59% 30%;
+    --radius: 0.875rem;
     /* Premium tokens */
     --shadow-premium: 0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
     --transition-premium: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  /* Site web: display serif. PWA keeps Inter via .mode-pwa overrides below. */
+  /* Site web: contemporary grotesk display. PWA keeps Inter below. */
   h1,
   h2,
   h3,
@@ -153,8 +153,8 @@
   h5,
   h6 {
     font-family: var(--font-display);
-    font-weight: 600;
-    color: #0a0a0a;
+    font-weight: 700;
+    color: #14161a;
     line-height: 1.12;
     letter-spacing: -0.03em;
   }
@@ -170,7 +170,7 @@
 
   /* Paragraphes — medium pour la lisibilité, fini le bold omniprésent */
   p {
-    color: #0a0a0a;
+    color: #14161a;
     font-weight: 500;
     line-height: 1.65;
   }
@@ -185,7 +185,7 @@
 
   /* Labels UI — semibold */
   label {
-    color: #0a0a0a;
+    color: #14161a;
     font-weight: 600;
   }
 
@@ -203,7 +203,7 @@
   }
 
   .mode-pwa {
-    --primary: 142.1 76.2% 36.3%;
+    --primary: 151 59% 30%;
     --radius: 1.5rem;
     /* 24px - App feel */
   }
@@ -215,14 +215,14 @@
   }
 
   .dark {
-    --tekh-green: 142 76% 36%;
-    --background: 0 0% 3%;
+    --tekh-green: 145 59% 48%;
+    --background: 220 9% 7%;
     --foreground: 0 0% 97%;
-    --card: 0 0% 6%;
-    --card-foreground: 0 0% 97%;
+    --card: 220 8% 10%;
+    --card-foreground: 42 29% 97%;
     --popover: 0 0% 6%;
     --popover-foreground: 0 0% 97%;
-    --primary: 142.1 70.6% 45.3%;
+    --primary: 145 59% 48%;
     --primary-foreground: 144.9 80.4% 10%;
     --secondary: 0 0% 12%;
     --secondary-foreground: 0 0% 97%;
@@ -234,7 +234,7 @@
     --destructive-foreground: 0 0% 97%;
     --border: 0 0% 15%;
     --input: 0 0% 15%;
-    --ring: 142.1 70.6% 45.3%;
+    --ring: 145 59% 48%;
   }
 
   .mode-pwa.dark {

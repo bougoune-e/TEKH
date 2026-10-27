@@ -220,5 +220,75 @@
         "rights": "Tous droits réservés.",
         "betaNotice": "TEKH+ est une plateforme en cours de déploiement à Lomé, Togo.",
         "betaContact": "Pour toute question :"
+    },
+    "home": {
+        "quickEstimate": "Estimer",
+        "quickExplore": "Explorer",
+        "quickCertified": "Certifié",
+        "whatsappAria": "Contacter TEKH+ sur WhatsApp",
+        "hero": {
+            "eyebrow": "Échange certifié · Afrique de l’Ouest",
+            "title": "Change ton téléphone,",
+            "titleAccent": "pas ton budget.",
+            "description": "Apportez un smartphone — même cassé. TEKH+ calcule sa valeur, le reconditionne, et vous le transforme en un appareil certifié. Compensation en FCFA, retrait en Dealbox.",
+            "estimate": "Estimer mon téléphone",
+            "certified": "Voir les appareils certifiés",
+            "trustSwap": "Pas de vente sèche",
+            "trustCertified": "Certifié Dealbox",
+            "trustEstimate": "Estimation",
+            "badge": "Certifié Dealbox",
+            "visual": "Visuel {{number}}"
+        },
+        "story": {
+            "eyebrow": "Ce que fait TΞKΗ+",
+            "title": "Votre téléphone ne se vend pas.",
+            "titleAccent": "Il devient un autre téléphone.",
+            "description": "TΞKΗ+ est la plateforme d’échange certifié de smartphones en Afrique de l’Ouest. Estimation, reconditionnement, compensation en FCFA et retrait sécurisé — un seul geste : le SWAP.",
+            "cta": "Lancer une estimation",
+            "steps": [
+                {
+                    "title": "Vous apportez un téléphone",
+                    "body": "Cassé, ancien, ou simplement trop petit : on estime sa valeur réelle en moins de deux minutes, selon son état et le marché ouest-africain."
+                },
+                {
+                    "title": "TEKH+ le transforme en SWAP",
+                    "body": "Ce n’est pas une vente sèche. L’appareil entre dans un circuit certifié Dealbox : 50 points de contrôle, reconditionnement, puis échange."
+                },
+                {
+                    "title": "Vous repartez avec un autre",
+                    "body": "Upgrade, équivalent, ou soulte en FCFA. Transaction tracée, dépôt en point relais et logistique jusqu’à la remise."
+                }
+            ]
+        }
+    },
+    "faq": {
+        "badge": "FAQ TEKH+",
+        "title": "Questions fréquentes",
+        "subtitle": "Les réponses essentielles sur l’estimation, le dépôt Dealbox et vos données personnelles.",
+        "back": "Retour",
+        "helpTitle": "Besoin d’aide ?",
+        "helpSubtitle": "Retrouvez les réponses aux questions les plus fréquentes.",
+        "items": [
+            {
+                "question": "Qu’est-ce que la Valeur Résiduelle Technique (VRT) et comment est-elle calculée ?",
+                "answer": "La VRT est l’estimation de la valeur restante de votre appareil. Elle tient compte du modèle, de sa configuration, de son état déclaré et du marché local. L’offre finale est confirmée après le contrôle physique par un point partenaire."
+            },
+            {
+                "question": "Comment fonctionne le dépôt d’appareil et le paiement ?",
+                "answer": "Après une estimation en ligne, vous recevez les instructions pour poursuivre avec TEKH+. Le contrôle physique dans un point partenaire valide l’état réel de l’appareil avant toute transaction."
+            },
+            {
+                "question": "Que se passe-t-il si l’état réel ne correspond pas au diagnostic en ligne ?",
+                "answer": "Le point partenaire réévalue l’appareil avec vous. Vous pouvez accepter l’offre ajustée ou récupérer votre appareil : aucune transaction n’est validée sans votre accord."
+            },
+            {
+                "question": "Mes données personnelles sont-elles protégées ?",
+                "answer": "Avant la reprise, vous restez responsable de sauvegarder puis réinitialiser votre téléphone. Le contrôle Dealbox vise à vous accompagner dans cette étape avant la validation finale."
+            },
+            {
+                "question": "Comment obtenir de l’aide ?",
+                "answer": "Consultez cette FAQ ou contactez TEKH+ par email ou WhatsApp. Une demande est traitée par l’équipe selon les canaux de contact indiqués sur le site."
+            }
+        ]
     }
 }

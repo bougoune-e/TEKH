@@ -36,7 +36,7 @@ const WhyTekh = () => {
           {stats.map(({ value, label, suffix, icon: Icon }) => (
             <div
               key={label}
-              className="flex flex-col p-6 md:p-8 border border-[hsl(var(--tekh-navy))]/10 dark:border-white/10 bg-[hsl(142_30%_97%)] dark:bg-zinc-900"
+              className="flex flex-col rounded-[1.75rem] p-6 md:p-8 border border-[hsl(var(--tekh-navy))]/10 dark:border-white/10 bg-[hsl(142_30%_97%)] dark:bg-zinc-900 transition-transform duration-300 hover:-translate-y-1"
             >
               <Icon className="w-5 h-5 text-[hsl(var(--tekh-green))] mb-6" strokeWidth={1.5} />
               <div className="font-display text-4xl md:text-5xl font-semibold text-[hsl(var(--tekh-navy))] dark:text-zinc-50 tracking-tight leading-none">

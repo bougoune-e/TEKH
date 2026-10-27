@@ -6,21 +6,22 @@ import DealsSection from "@/features/marketplace/DealsSection";
 import ServicesSection from "@/features/home/ServicesSection";
 import FAQSection from "@/features/home/FAQSection";
 import WhyTekh from "@/features/home/WhyTekh";
-import ExchangeProcess from "@/features/home/ExchangeProcess";
 import CtaSection from "@/features/home/CtaSection";
 import HowItWorks from "@/features/home/HowItWorks";
 import WebSwapStory from "@/features/home/WebSwapStory";
 import { Zap, Search, ShieldCheck, MessageCircle } from "lucide-react";
 import { usePWA } from "@/shared/hooks/usePWA";
 import { buildWhatsAppUrl } from "@/core/utils/whatsapp";
+import { useTranslation } from "react-i18next";
 
 const QuickActions = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const isPWA = usePWA();
   const actions = [
-    { label: "Estimer", icon: <Zap className="w-6 h-6" />, path: "/simulateur", color: "bg-[#064e3b]" },
-    { label: "Explorer", icon: <Search className="w-6 h-6" />, path: "/deals", color: "bg-[#064e3b]" },
-    { label: "Certifié", icon: <ShieldCheck className="w-6 h-6" />, path: "/charte-qualite", color: "bg-[#064e3b]" },
+    { label: t("home.quickEstimate"), icon: <Zap className="w-6 h-6" />, path: "/simulateur", color: "bg-[#064e3b]" },
+    { label: t("home.quickExplore"), icon: <Search className="w-6 h-6" />, path: "/deals", color: "bg-[#064e3b]" },
+    { label: t("home.quickCertified"), icon: <ShieldCheck className="w-6 h-6" />, path: "/charte-qualite", color: "bg-[#064e3b]" },
   ];
 
   return (
@@ -46,6 +47,7 @@ const QuickActions = () => {
 };
 
 const Index = () => {
+  const { t } = useTranslation();
   const isPWA = usePWA();
   const whatsappHref = buildWhatsAppUrl("Bonjour TEKH+, je souhaite obtenir de l'aide pour la réparation de mon appareil.") || "/contact";
 
@@ -72,7 +74,6 @@ const Index = () => {
           <HowItWorks />
           <WhyTekh />
           <DealsSection />
-          <ExchangeProcess />
           <ServicesSection />
           <FAQSection />
           <CtaSection />
@@ -82,8 +83,8 @@ const Index = () => {
         href={whatsappHref}
         target={whatsappHref.startsWith("http") ? "_blank" : undefined}
         rel={whatsappHref.startsWith("http") ? "noopener noreferrer" : undefined}
-        aria-label="Contacter TEKH+ sur WhatsApp"
-        title="Contacter TEKH+ sur WhatsApp"
+        aria-label={t("home.whatsappAria")}
+        title={t("home.whatsappAria")}
         className="fixed bottom-6 right-5 z-50 inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_12px_30px_rgba(37,211,102,0.35)] transition-transform hover:scale-105 focus-visible:ring-[#25D366]"
       >
         <MessageCircle className="h-7 w-7" strokeWidth={2.25} />

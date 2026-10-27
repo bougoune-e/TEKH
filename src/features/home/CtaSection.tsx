@@ -25,7 +25,7 @@ const CtaSection = () => {
             <button
               type="button"
               onClick={() => navigate("/simulateur")}
-              className="group inline-flex items-center justify-center gap-2 bg-[hsl(var(--tekh-green))] text-white px-8 py-4 font-semibold text-sm tracking-wide hover:bg-[hsl(142_76%_30%)] transition-all"
+              className="group inline-flex items-center justify-center gap-2 bg-[hsl(var(--tekh-green))] text-white px-8 py-4 rounded-full font-semibold text-sm tracking-wide hover:bg-[hsl(142_76%_30%)] transition-all"
             >
               Estimer mon téléphone
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -33,7 +33,7 @@ const CtaSection = () => {
             <button
               type="button"
               onClick={() => navigate("/deals")}
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 font-medium text-sm text-white/80 border border-white/20 hover:border-white/50 hover:text-white transition-all"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-medium text-sm text-white/80 border border-white/20 hover:border-white/50 hover:text-white transition-all"
             >
               Explorer les deals
             </button>

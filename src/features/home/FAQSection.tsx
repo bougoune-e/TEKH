@@ -1,35 +1,15 @@
 import React, { useState } from "react";
 import { ChevronDown, HelpCircle } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface FAQItem {
   question: string;
   answer: string;
 }
 
-const faqs: FAQItem[] = [
-  {
-    question: "Qu'est-ce que la « Valeur Résiduelle Technique » (VRT) et comment est-elle calculée ?",
-    answer: "La VRT est l'estimation scientifique de la valeur restante de votre appareil. Elle est calculée par notre algorithme en combinant le prix d'origine du constructeur, la dépréciation du marché local, l'état d'usure de votre batterie et les éventuels coûts de remise en état (écran, connecteur, etc.). C'est l'assurance d'un prix de reprise transparent et sans surprise."
-  },
-  {
-    question: "Comment fonctionne le dépôt d'appareil et le paiement ?",
-    answer: "Une fois votre estimation complétée en ligne, vous obtenez un code Dealbox unique. Vous pouvez vous rendre dans n'importe quel point partenaire agréé TEKH+. L'agent vérifie la conformité de l'appareil en quelques minutes, valide la transaction, et le transfert de fonds est immédiatement initié sur votre compte Wave, MTN MoMo, Orange Money ou Moov Flooz."
-  },
-  {
-    question: "Je suis réparateur indépendant. Pourquoi devrais-je utiliser la suite de maintenance TEKH+ ?",
-    answer: "Notre logiciel vous permet de structurer votre activité. Vous passez d'une gestion informelle sur papier à un véritable tableau de bord professionnel. En certifiant vos réparations avec le standard Dealbox, vous augmentez la confiance de vos clients, justifiez des tarifs plus élevés, et accédez à un flux de clients qualifiés envoyés par notre plateforme de Trade-In."
-  },
-  {
-    question: "Que se passe-t-il si l'état réel de mon téléphone ne correspond pas à mon diagnostic en ligne ?",
-    answer: "Pas d'inquiétude. Lors de la validation physique dans notre point partenaire, si une différence notable est constatée (par exemple, un écran non d'origine ou une batterie gonflée), l'agent vous proposera une réévaluation instantanée. Vous êtes totalement libre d'accepter la nouvelle offre ou de récupérer votre appareil gratuitement."
-  },
-  {
-    question: "Les données personnelles stockées sur mon ancien téléphone sont-elles sécurisées ?",
-    answer: "Oui, la sécurité de vos données est notre priorité. Avant toute validation finale de reprise, nos agents partenaires vous guident dans la réinitialisation complète de votre smartphone. Pour les professionnels, notre suite de maintenance intègre un protocole d'effacement sécurisé des données répondant aux normes internationales."
-  }
-];
-
 export const FAQSection = () => {
+  const { t } = useTranslation();
+  const faqs = t("faq.items", { returnObjects: true }) as FAQItem[];
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggleFAQ = (index: number) => {
@@ -43,14 +23,14 @@ export const FAQSection = () => {
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#064e3b]/5 dark:bg-[#00FF41]/10 border border-[#064e3b]/10 dark:border-[#00FF41]/20 mb-4">
             <HelpCircle className="w-4 h-4 text-[#064e3b] dark:text-[#00FF41]" />
             <span className="text-[10px] font-black uppercase tracking-widest text-[#064e3b] dark:text-[#00FF41]">
-              FAQ Stratégique
+              {t("faq.badge")}
             </span>
           </div>
           <h2 className="text-3xl md:text-5xl font-black text-[#0a0a0a] dark:text-white mb-4 tracking-tighter">
-            Questions Fréquentes
+            {t("faq.title")}
           </h2>
           <p className="text-[#404040] dark:text-zinc-400 font-bold max-w-xl mx-auto">
-            Tout ce que vous devez savoir sur le standard Dealbox et notre suite logicielle.
+            {t("faq.subtitle")}
           </p>
         </div>
 

@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, ShieldCheck, Clock, Recycle } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const IMAGES = [
   "/header/header-1.png",
   "/header/header-2.png",
   "/header/header-3.png",
-];
-
-const trust = [
-  { icon: Recycle, value: "SWAP", label: "Pas de vente sèche" },
-  { icon: ShieldCheck, value: "Grade A", label: "Certifié Dealbox" },
-  { icon: Clock, value: "< 2 min", label: "Estimation" },
 ];
 
 const CARD_SLOTS = [
@@ -33,6 +28,7 @@ const CARD_SLOTS = [
 ];
 
 export const HeaderCarousel = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [front, setFront] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -42,6 +38,12 @@ export const HeaderCarousel = () => {
     const t = setInterval(() => setFront((f) => (f + 1) % 3), 4200);
     return () => clearInterval(t);
   }, [paused]);
+
+  const trust = [
+    { icon: Recycle, value: "SWAP", label: t("home.hero.trustSwap") },
+    { icon: ShieldCheck, value: "Grade A", label: t("home.hero.trustCertified") },
+    { icon: Clock, value: "< 2 min", label: t("home.hero.trustEstimate") },
+  ];
 
   return (
     <section className="relative min-h-dvh flex items-center overflow-hidden web-grain bg-[hsl(var(--tekh-navy))]">
@@ -61,36 +63,35 @@ export const HeaderCarousel = () => {
           <div className="lg:col-span-6 space-y-8 max-w-2xl">
             <p className="inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/70">
               <span className="h-px w-8 bg-[hsl(var(--tekh-green))]" />
-              Échange certifié · Afrique de l’Ouest
+              {t("home.hero.eyebrow")}
             </p>
 
             <h1 className="font-display text-[2.75rem] sm:text-6xl lg:text-[4.35rem] font-semibold text-white leading-[1.02] tracking-tight">
-              Change ton téléphone,
+              {t("home.hero.title")}
               <span className="block italic font-medium text-[hsl(142_55%_62%)]">
-                pas ton budget.
+                {t("home.hero.titleAccent")}
               </span>
             </h1>
 
             <p className="text-base md:text-lg text-white/75 leading-relaxed max-w-lg font-medium">
-              Apportez un smartphone — même cassé. TEKH+ calcule sa valeur, le reconditionne,
-              et vous le transforme en un appareil certifié. Compensation en FCFA, retrait en Dealbox.
+              {t("home.hero.description")}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3">
               <button
                 type="button"
                 onClick={() => navigate("/simulateur")}
-                className="group inline-flex items-center justify-center gap-2 bg-[hsl(var(--tekh-green))] text-white px-8 py-4 rounded-sm font-semibold text-sm tracking-wide transition-all hover:bg-[hsl(142_76%_30%)] active:scale-[0.98]"
+                className="group inline-flex items-center justify-center gap-2 bg-[hsl(var(--tekh-green))] text-white px-8 py-4 rounded-full font-semibold text-sm tracking-wide transition-all hover:bg-[hsl(142_76%_30%)] hover:-translate-y-0.5 active:scale-[0.98]"
               >
-                Estimer mon téléphone
+                {t("home.hero.estimate")}
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
               <button
                 type="button"
                 onClick={() => navigate("/deals")}
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-sm font-medium text-sm text-white border border-white/25 hover:bg-white/5 hover:border-white/50 transition-all"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-medium text-sm text-white border border-white/25 hover:bg-white/5 hover:border-white/50 hover:-translate-y-0.5 transition-all"
               >
-                Voir les appareils certifiés
+                {t("home.hero.certified")}
               </button>
             </div>
 
@@ -120,7 +121,7 @@ export const HeaderCarousel = () => {
                   type="button"
                   key={src}
                   onClick={() => setFront(i)}
-                  className="absolute rounded-sm overflow-hidden border border-white/15 cursor-pointer p-0"
+                  className="absolute rounded-[2rem] overflow-hidden border border-white/15 cursor-pointer p-0"
                   style={{
                     width: "58%",
                     aspectRatio: "3 / 4",
@@ -140,8 +141,8 @@ export const HeaderCarousel = () => {
             })}
 
             <div className="absolute bottom-[12%] left-[18%] z-10 pointer-events-none">
-              <span className="px-3 py-1.5 bg-white text-[hsl(var(--tekh-navy))] text-[10px] font-semibold uppercase tracking-[0.18em]">
-                Certifié Dealbox
+              <span className="px-3 py-1.5 rounded-full bg-white text-[hsl(var(--tekh-navy))] text-[10px] font-semibold uppercase tracking-[0.18em] shadow-lg">
+                {t("home.hero.badge")}
               </span>
             </div>
 
@@ -151,7 +152,7 @@ export const HeaderCarousel = () => {
                   key={i}
                   type="button"
                   onClick={() => setFront(i)}
-                  aria-label={`Visuel ${i + 1}`}
+                  aria-label={t("home.hero.visual", { number: i + 1 })}
                   className="p-0 border-none transition-all duration-500"
                   style={{
                     width: front === i ? 22 : 7,
