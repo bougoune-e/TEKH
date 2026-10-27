@@ -129,7 +129,7 @@ export default function DealsPage() {
   const maxAddition = matchRequest?.maxAddition;
 
   return (
-    <section className="pt-4 pb-28 md:pb-8 bg-background min-h-dvh">
+    <section className="pt-4 pb-8 bg-background min-h-dvh">
       <div className="container mx-auto px-3 sm:px-4">
         {/* Grille de deals uniquement — style CoinAfrique, rien au-dessus des cartes */}
         <div className="grid grid-cols-2 gap-2.5 sm:gap-3">

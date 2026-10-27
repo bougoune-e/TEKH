@@ -1,16 +1,9 @@
-import { useState, useEffect } from "react";
-import { Mail, Facebook, Instagram, Download, CheckCircle2, Smartphone } from "lucide-react";
+
+import { Mail, Facebook, Instagram } from "lucide-react";
 import { Link } from "react-router-dom";
 import logo from "@/assets/logos/robott.jpeg";
 import { buildWhatsAppUrl } from "@/core/utils/whatsapp";
-import {
-  triggerPWAInstall,
-  isPWAInstallAvailable,
-  isStandalonePWA,
-  isIOSDevice,
-  onPromptAvailable,
-} from "@/core/pwa/pwaInstall";
-
+import { useTranslation } from "react-i18next";
 const TikTokIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor" {...props}>
     <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" />
@@ -23,74 +16,9 @@ const WhatsAppIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-/** Smart "Installer l'app" button for the footer */
-const InstallAppButton = () => {
-  const [available, setAvailable] = useState(isPWAInstallAvailable());
-  const [installed, setInstalled] = useState(isStandalonePWA());
-  const [showIOS, setShowIOS] = useState(false);
-  const ios = isIOSDevice();
-
-  useEffect(() => {
-    // Re-render when the deferred prompt becomes available
-    const unsub = onPromptAvailable(() => setAvailable(true));
-    return unsub;
-  }, []);
-
-  if (installed) {
-    return (
-      <li className="flex items-center gap-1.5 text-primary font-bold text-sm">
-        <CheckCircle2 className="h-3.5 w-3.5 shrink-0" />
-        Application installée
-      </li>
-    );
-  }
-
-  if (ios) {
-    return (
-      <>
-        <li>
-          <button
-            onClick={() => setShowIOS((v) => !v)}
-            className="flex items-center gap-1.5 text-muted-foreground hover:text-primary transition-colors font-medium text-sm"
-          >
-            <Smartphone className="h-3.5 w-3.5 shrink-0" />
-            Installer sur iOS
-          </button>
-        </li>
-        {showIOS && (
-          <li className="text-xs text-muted-foreground leading-relaxed pl-1 border-l-2 border-primary/30">
-            Appuyez sur <strong>Partager</strong> puis <strong>"Sur l'écran d'accueil"</strong> dans Safari.
-          </li>
-        )}
-      </>
-    );
-  }
-
-  if (available) {
-    return (
-      <li>
-        <button
-          onClick={() => triggerPWAInstall().then((r) => { if (r === "accepted") setInstalled(true); })}
-          className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-primary transition-colors font-medium text-sm"
-        >
-          <Download className="h-3.5 w-3.5 shrink-0" />
-          Installer l'application
-        </button>
-      </li>
-    );
-  }
-
-  // Fallback: link to /apk page
-  return (
-    <li>
-      <Link to="/apk" className="text-muted-foreground hover:text-primary transition-smooth font-medium inline-block">
-        Télécharger l'APK
-      </Link>
-    </li>
-  );
-};
 
 const Footer = () => {
+  const { t } = useTranslation();
   const currentYear = new Date().getFullYear();
   const waHref =
     buildWhatsAppUrl("Bonjour TEKH+, je vous contacte depuis le site.") || "/contact";
@@ -108,64 +36,61 @@ const Footer = () => {
               <span className="text-xl font-black tracking-tighter text-black dark:text-white">TΞKΗ+</span>
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed font-medium">
-              TΞKΗ+ : L'échange intelligent d'appareils électroniques. Passez à la vitesse supérieure, en toute simplicité.
+              {t("footer.description")}
             </p>
           </div>
 
           <div>
-            <h3 className="text-[11px] font-black uppercase tracking-[0.15em] text-foreground/50 mb-5">Navigation rapide</h3>
+            <h3 className="text-[11px] font-black uppercase tracking-[0.15em] text-foreground/50 mb-5">{t("footer.quickNavigation")}</h3>
             <nav>
               <ul className="space-y-2.5 text-sm">
-                <li><Link to="/a-propos" className="text-muted-foreground hover:text-primary transition-smooth font-medium inline-block">À Propos de Nous</Link></li>
-                <li><Link to="/contact" className="text-muted-foreground hover:text-primary transition-smooth font-medium inline-block">Contact</Link></li>
-                <li><Link to="/blog" className="text-muted-foreground hover:text-primary transition-smooth font-medium inline-block">Blog/Actualités</Link></li>
-                <InstallAppButton />
+                <li><Link to="/a-propos" className="text-muted-foreground hover:text-primary transition-smooth font-medium inline-block">{t("footer.about")}</Link></li>
+                <li><Link to="/contact" className="text-muted-foreground hover:text-primary transition-smooth font-medium inline-block">{t("footer.contact")}</Link></li>
+                <li><Link to="/blog" className="text-muted-foreground hover:text-primary transition-smooth font-medium inline-block">{t("footer.news")}</Link></li>
               </ul>
             </nav>
           </div>
 
           <div>
-            <h3 className="text-[11px] font-black uppercase tracking-[0.15em] text-foreground/50 mb-5">Informations légales</h3>
+            <h3 className="text-[11px] font-black uppercase tracking-[0.15em] text-foreground/50 mb-5">{t("footer.legal")}</h3>
             <ul className="space-y-2.5 text-sm">
-              <li><Link to="/charte-qualite" className="text-muted-foreground hover:text-primary transition-smooth font-medium">Charte Qualité</Link></li>
-              <li><Link to="/charte-du-swap" className="text-muted-foreground hover:text-primary transition-smooth font-medium">Charte du SWAP</Link></li>
-              <li><Link to="/politique-echange-tekhpoints" className="text-muted-foreground hover:text-primary transition-smooth font-medium">Politique d&apos;échange &amp; TekhPoints</Link></li>
-              <li><Link to="/cgu" className="text-muted-foreground hover:text-primary transition-smooth font-medium">Conditions d'Utilisation (CGU)</Link></li>
-              <li><Link to="/cgv" className="text-muted-foreground hover:text-primary transition-smooth font-medium">Conditions de Vente (CGV)</Link></li>
-              <li><Link to="/politique-confidentialite" className="text-muted-foreground hover:text-primary transition-smooth font-medium">Confidentialité</Link></li>
-              <li><Link to="/aide-et-faq" className="text-muted-foreground hover:text-primary transition-smooth font-medium">FAQ & Aide</Link></li>
-              <li><Link to="/mentions-legales" className="text-muted-foreground hover:text-primary transition-smooth font-medium">Mentions Légales</Link></li>
+              <li><Link to="/charte-qualite" className="text-muted-foreground hover:text-primary transition-smooth font-medium">{t("footer.quality")}</Link></li>
+              <li><Link to="/charte-du-swap" className="text-muted-foreground hover:text-primary transition-smooth font-medium">{t("footer.swapCharter")}</Link></li>
+              <li><Link to="/cgu" className="text-muted-foreground hover:text-primary transition-smooth font-medium">{t("footer.terms")}</Link></li>
+              <li><Link to="/cgv" className="text-muted-foreground hover:text-primary transition-smooth font-medium">{t("footer.salesTerms")}</Link></li>
+              <li><Link to="/politique-confidentialite" className="text-muted-foreground hover:text-primary transition-smooth font-medium">{t("footer.privacy")}</Link></li>
+              <li><Link to="/aide-et-faq" className="text-muted-foreground hover:text-primary transition-smooth font-medium">{t("footer.help")}</Link></li>
+              <li><Link to="/mentions-legales" className="text-muted-foreground hover:text-primary transition-smooth font-medium">{t("footer.notices")}</Link></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-[11px] font-black uppercase tracking-[0.15em] text-foreground/50 mb-5">Réseaux sociaux &amp; Contact</h3>
+            <h3 className="text-[11px] font-black uppercase tracking-[0.15em] text-foreground/50 mb-5">{t("footer.social")}</h3>
             <div className="flex items-center gap-3 mb-5">
-              <a href="https://www.facebook.com/profile.php?id=61587680237623" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="h-10 w-10 inline-flex items-center justify-center rounded-xl border border-border hover:bg-accent hover:border-primary/20 transition-all">
+              <a href="https://www.facebook.com/profile.php?id=61587680237623" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="h-10 w-10 inline-flex items-center justify-center rounded-full border border-border hover:bg-accent hover:border-primary/20 transition-all">
                 <Facebook className="h-5 w-5 text-[#1877F2]" />
               </a>
-              <a href="https://www.tiktok.com/@tekh228?_r=1&_t=ZS-94xayuFa6LN" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="h-10 w-10 p-1.5 inline-flex items-center justify-center rounded-xl border border-border hover:bg-accent transition-all">
+              <a href="https://www.tiktok.com/@tekh228?_r=1&_t=ZS-94xayuFa6LN" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="h-10 w-10 p-1.5 inline-flex items-center justify-center rounded-full border border-border hover:bg-accent transition-all">
                 <TikTokIcon className="h-5 w-5 text-black dark:text-white" />
               </a>
-              <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="h-10 w-10 inline-flex items-center justify-center rounded-xl border border-border hover:bg-accent hover:border-primary/20 transition-all">
+              <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="h-10 w-10 inline-flex items-center justify-center rounded-full border border-border hover:bg-accent hover:border-primary/20 transition-all">
                 <Instagram className="h-5 w-5 text-[#E4405F]" />
               </a>
-              <a href={waHref} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="h-10 w-10 inline-flex items-center justify-center rounded-xl border border-border hover:bg-accent hover:border-primary/20 transition-all">
+              <a href={waHref} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="h-10 w-10 inline-flex items-center justify-center rounded-full border border-border hover:bg-accent hover:border-primary/20 transition-all">
                 <WhatsAppIcon className="h-5 w-5 text-[#25D366]" />
               </a>
             </div>
             <a href="mailto:tekhswap@gmail.com" className="text-sm inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-smooth">
               <Mail className="h-4 w-4" /> tekhswap@gmail.com
             </a>
+            <p className="mt-2 text-sm font-medium text-muted-foreground">{t("footer.location")}</p>
           </div>
         </div>
 
         <div className="border-t border-border/50 mt-8 pt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; {currentYear} TΞKΗ+. Tous droits réservés.</p>
+          <p>&copy; {currentYear} TΞKΗ+. {t("footer.rights")}</p>
           <p className="mt-2 text-xs text-muted-foreground/70 max-w-xl mx-auto leading-relaxed">
-            Le site tekhplus.com (TΞKΗ+) est une plateforme en cours de déploiement à Lomé, Togo.
-            Le service est actuellement édité à titre personnel par son fondateur dans le cadre d'un lancement de projet.
-            Pour toute question :{" "}
+            {t("footer.betaNotice")} {t("footer.betaContact")} {" "}
             <a href="mailto:tekhswap@gmail.com" className="hover:text-primary transition-colors underline underline-offset-2">
               tekhswap@gmail.com
             </a>.

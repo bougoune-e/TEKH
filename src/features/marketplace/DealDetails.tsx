@@ -105,7 +105,7 @@ export default function DealDetails() {
 
   return (
     <>
-      <section className="py-10 pb-28 md:pb-10">
+      <section className="py-10 pb-10">
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="mb-6 flex items-center justify-between">
             <Link to="/deals" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">

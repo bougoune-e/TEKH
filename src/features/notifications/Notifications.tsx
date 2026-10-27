@@ -283,7 +283,7 @@ export default function NotificationsPage() {
   }
 
   return (
-    <div className="min-h-dvh bg-background pb-28 pt-safe">
+    <div className="min-h-dvh bg-background pb-12 pt-safe">
       {/* Header sticky */}
       <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm border-b border-border/20">
         <div className="flex items-center gap-3 px-4 h-12">

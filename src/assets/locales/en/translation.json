@@ -166,5 +166,41 @@
         "guaranteesDesc": "Track devices being processed",
         "userFallback": "TEKH+ user",
         "uploadError": "Unable to update the profile photo."
+    },
+    "layout": {
+        "homeAria": "TEKH+ home",
+        "mainNavigation": "Main navigation",
+        "mobileNavigation": "Mobile navigation",
+        "catalogue": "Catalogue / Devices",
+        "howItWorks": "How it works",
+        "maintenance": "Repair & Maintenance",
+        "imei": "Check (IMEI)",
+        "account": "My account",
+        "login": "Sign in",
+        "estimate": "Estimate my phone",
+        "estimateShort": "Estimate",
+        "openMenu": "Open menu",
+        "closeMenu": "Close menu",
+        "changeLanguage": "Change language"
+    },
+    "footer": {
+        "description": "TΞKΗ+: the smart way to exchange electronic devices.",
+        "quickNavigation": "Quick navigation",
+        "about": "About us",
+        "contact": "Contact",
+        "news": "News",
+        "legal": "Legal information",
+        "quality": "Quality charter",
+        "swapCharter": "SWAP charter",
+        "terms": "Terms of use",
+        "salesTerms": "Terms of sale",
+        "privacy": "Privacy",
+        "help": "FAQ & help",
+        "notices": "Legal notice",
+        "social": "Social media & contact",
+        "location": "Lomé, Togo",
+        "rights": "All rights reserved.",
+        "betaNotice": "TEKH+ is currently being rolled out in Lomé, Togo.",
+        "betaContact": "For any question:"
     }
 }

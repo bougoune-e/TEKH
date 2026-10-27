@@ -166,5 +166,41 @@
         "guaranteesDesc": "Suivre les appareils en traitement",
         "userFallback": "Utilisateur TEKH+",
         "uploadError": "Impossible de mettre à jour la photo de profil."
+    },
+    "layout": {
+        "homeAria": "Accueil TEKH+",
+        "mainNavigation": "Navigation principale",
+        "mobileNavigation": "Navigation mobile",
+        "catalogue": "Catalogue / Appareils",
+        "howItWorks": "Comment ça marche",
+        "maintenance": "Réparation & Maintenance",
+        "imei": "Vérifier (IMEI)",
+        "account": "Mon compte",
+        "login": "Connexion",
+        "estimate": "Estimer mon téléphone",
+        "estimateShort": "Estimer",
+        "openMenu": "Ouvrir le menu",
+        "closeMenu": "Fermer le menu",
+        "changeLanguage": "Changer la langue"
+    },
+    "footer": {
+        "description": "TΞKΗ+ : l’échange intelligent d’appareils électroniques, simplement.",
+        "quickNavigation": "Navigation rapide",
+        "about": "À propos de nous",
+        "contact": "Contact",
+        "news": "Actualités",
+        "legal": "Informations légales",
+        "quality": "Charte qualité",
+        "swapCharter": "Charte du SWAP",
+        "terms": "Conditions d’utilisation (CGU)",
+        "salesTerms": "Conditions de vente (CGV)",
+        "privacy": "Confidentialité",
+        "help": "FAQ & aide",
+        "notices": "Mentions légales",
+        "social": "Réseaux sociaux & contact",
+        "location": "Lomé, Togo",
+        "rights": "Tous droits réservés.",
+        "betaNotice": "TEKH+ est une plateforme en cours de déploiement à Lomé, Togo.",
+        "betaContact": "Pour toute question :"
     }
 }
