@@ -21,6 +21,7 @@ const Layout = () => {
   const location = useLocation();
   const isPWA = usePWA();
   const isHomepage = location.pathname === "/";
+  const isAccountArea = location.pathname === "/profile" || location.pathname === "/settings";
   const [scrolled, setScrolled] = useState(false);
   const webHeroOverlay = isHomepage && !scrolled && !isPWA;
 
@@ -108,7 +109,7 @@ const Layout = () => {
           <Outlet />
         </main>
         {/* Web: footer on all pages. PWA: footer on home page only */}
-        {(!isPWA || isHomepage) && <Footer />}
+        {!isAccountArea && (!isPWA || isHomepage) && <Footer />}
       </div>
       <NewVersionBanner />
       <BottomNav />

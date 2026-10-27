@@ -54,7 +54,7 @@ const PublishPage = lazy(() => import("@/features/marketplace/PublishPage"));
 const SearchPage = lazy(() => import("@/features/marketplace/SearchPage"));
 const DealDetails = lazy(() => import("@/features/marketplace/DealDetails"));
 const MyPosts = lazy(() => import("@/features/marketplace/MyPosts"));
-const Profile = lazy(() => import("@/features/profile/Profile"));
+const Account = lazy(() => import("@/features/account/Account"));
 const EstimatorPage = lazy(() => import("@/features/simulator/EstimatorPage"));
 const APropos = lazy(() => import("@/features/legal/APropos"));
 const AideEtFaq = lazy(() => import("@/features/legal/AideEtFaq"));
@@ -65,7 +65,6 @@ const CGV = lazy(() => import("@/features/legal/CGV"));
 const CGU = lazy(() => import("@/features/legal/CGU"));
 const PolitiqueConfidentialite = lazy(() => import("@/features/legal/PolitiqueConfidentialite"));
 const Apk = lazy(() => import("@/features/apk/Apk"));
-const SettingsPage = lazy(() => import("@/features/settings/Settings"));
 const CharteDuSwap = lazy(() => import("@/features/legal/CharteDuSwap"));
 const PolitiqueEchangeTekhPoints = lazy(() => import("@/features/legal/PolitiqueEchangeTekhPoints"));
 
@@ -204,7 +203,7 @@ const NavigationWrapper = () => {
                         <Route path="/charte-du-swap" element={<PageTransition navType={navType}><CharteDuSwap /></PageTransition>} />
                         <Route path="/politique-echange-tekhpoints" element={<PageTransition navType={navType}><PolitiqueEchangeTekhPoints /></PageTransition>} />
                         <Route path="/charte-qualite" element={<PageTransition navType={navType}><CharteQualitePage /></PageTransition>} />
-                        <Route path="/profile" element={<ProtectedRoute><PageTransition navType={navType}><Profile /></PageTransition></ProtectedRoute>} />
+                        <Route path="/profile" element={<ProtectedRoute><PageTransition navType={navType}><Account /></PageTransition></ProtectedRoute>} />
                         <Route path="/search" element={<PageTransition navType={navType}><SearchPage /></PageTransition>} />
                         <Route path="/login" element={<PageTransition navType={navType}><Login /></PageTransition>} />
                         <Route path="/signup" element={<PageTransition navType={navType}><SignupPage /></PageTransition>} />
@@ -222,7 +221,7 @@ const NavigationWrapper = () => {
                         <Route path="/apk" element={<PageTransition navType={navType}><Apk /></PageTransition>} />
                         <Route path="/dealboxes" element={<PageTransition navType={navType}><DealboxCatalog /></PageTransition>} />
                         <Route path="/recherche" element={<PageTransition navType={navType}><SearchPage /></PageTransition>} />
-                        <Route path="/settings" element={<PageTransition navType={navType}><SettingsPage /></PageTransition>} />
+                        <Route path="/settings" element={<ProtectedRoute><PageTransition navType={navType}><Account view="settings" /></PageTransition></ProtectedRoute>} />
                         <Route path="/historique" element={<ProtectedRoute><PageTransition navType={navType}><HistoriquePage /></PageTransition></ProtectedRoute>} />
                         <Route path="/commandes" element={<ProtectedRoute><PageTransition navType={navType}><CommandesPage /></PageTransition></ProtectedRoute>} />
                         <Route path="/commandes/:id" element={<ProtectedRoute><PageTransition navType={navType}><CommandeDetailPage /></PageTransition></ProtectedRoute>} />

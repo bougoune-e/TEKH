@@ -628,18 +628,35 @@ export async function getCurrentUser() {
   } catch { return null; }
 }
 
-export async function uploadAvatar(file: File) {
+export type EditableProfile = {
+  full_name?: string | null;
+  username?: string | null;
+  avatar_url?: string | null;
+};
+
+export async function uploadAvatar(file: File, userId: string) {
   if (!realClient) throw new Error("Supabase non configuré");
-  const fileName = `avatar_${safeStorageKey(file)}`;
-  const { error } = await realClient.storage.from("avatars").upload(fileName, file, { upsert: true });
+  if (!userId) throw new Error("Utilisateur non authentifié");
+  const fileName = `${userId}/${safeStorageKey(file)}`;
+  const { error } = await realClient.storage.from("avatars").upload(fileName, file);
   if (error) throw error;
   const { data: pub } = realClient.storage.from("avatars").getPublicUrl(fileName);
   return pub.publicUrl as string;
 }
 
-export async function upsertProfile(profile: any) {
-  if (!realClient) return null;
-  const { data, error } = await realClient.from("profiles").upsert(profile).select().single();
+export async function updateProfile(id: string, changes: EditableProfile) {
+  if (!realClient) throw new Error("Supabase non configuré");
+  if (!id) throw new Error("Utilisateur non authentifié");
+  const payload: EditableProfile = {};
+  if ("full_name" in changes) payload.full_name = changes.full_name;
+  if ("username" in changes) payload.username = changes.username;
+  if ("avatar_url" in changes) payload.avatar_url = changes.avatar_url;
+  const { data, error } = await realClient
+    .from("profiles")
+    .update({ ...payload, updated_at: new Date().toISOString() })
+    .eq("id", id)
+    .select("id, full_name, avatar_url, updated_at")
+    .single();
   if (error) throw error;
   return data;
 }
@@ -651,15 +668,10 @@ export async function getProfileById(id: string) {
   return data;
 }
 
+/** Profiles are created by the auth.users trigger. The browser must never create one. */
 export async function ensureProfileForUser(user: any) {
   if (!realClient || !user?.id) return null;
-  const existing = await getProfileById(user.id);
-  if (existing) return existing;
-  const meta = user?.user_metadata || {};
-  const payload = { id: user.id, full_name: meta.full_name || meta.name || null, avatar_url: meta.avatar_url || null };
-  const { data, error } = await realClient.from("profiles").insert(payload).select().single();
-  if (error) throw error;
-  return data;
+  return getProfileById(user.id);
 }
 
 export async function countDealsByOwner(ownerId: string) {
