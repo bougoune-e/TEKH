@@ -8,7 +8,7 @@
  * 2) Pour chaque ligne : appel eBay ; si OK → enregistre médiane × 655,957 FCFA ; sinon → la ligne reste **sans prix** (null).
  *
  * Usage : npm run prt:resync-all-ebay
- * Requiert : EBAY_*, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
+ * Requiert : EBAY_*, SUPABASE_URL, SUPABASE_SECRET_KEY
  */
 import { createClient } from "@supabase/supabase-js";
 import { loadRepoEnv } from "./load-env.mjs";
@@ -17,7 +17,7 @@ import { fetchPrtForModel } from "../../tekh_backend/backend/lib/ebay.mjs";
 loadRepoEnv();
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
-const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const SERVICE_KEY = process.env.SUPABASE_SECRET_KEY;
 const DELAY_MS = Number(process.env.PRT_SYNC_DELAY_MS) || 500;
 const FACTEUR = 1;
 const CLEAR_CHUNK = 200;
@@ -68,7 +68,7 @@ async function clearPricesBatch(supabase, rows) {
 
 async function main() {
   if (!SUPABASE_URL || !SERVICE_KEY) {
-    console.error("Définissez SUPABASE_URL et SUPABASE_SERVICE_ROLE_KEY.");
+    console.error("Définissez SUPABASE_URL et SUPABASE_SECRET_KEY.");
     process.exit(1);
   }
 

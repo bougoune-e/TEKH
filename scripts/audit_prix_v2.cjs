@@ -12,7 +12,10 @@ const fs = require('fs');
 const path = require('path');
 
 const SUPABASE_URL = 'https://zkdmdohothspysricfmw.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InprZG1kb2hvdGhzcHlzcmljZm13Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjkwMjM0MzcsImV4cCI6MjA4NDU5OTQzN30.ACpMAVW7HnqfeYiDqvBAj9ssRev2GaT1s3PDurMu7Fs';
+const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
+if (!SUPABASE_ANON_KEY) {
+    throw new Error('SUPABASE_ANON_KEY is required to run this local audit.');
+}
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 

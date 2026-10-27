@@ -7,7 +7,10 @@ require('dotenv').config();
 const { createClient } = require('@supabase/supabase-js');
 
 const supabaseUrl = process.env.SUPABASE_URL || 'https://zkdmdohothspysricfmw.supabase.co';
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InprZG1kb2hvdGhzcHlzcmljZm13Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2OTAyMzQzNywiZXhwIjoyMDg0NTk5NDM3fQ.bSe7NlK0lyIWu71IXUZ18wK7OT59dGATGiN3Xy379D8';
+const supabaseKey = process.env.SUPABASE_SECRET_KEY;
+if (!supabaseKey) {
+    throw new Error('SUPABASE_SECRET_KEY is required to run this server-side import.');
+}
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 /**

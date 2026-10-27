@@ -10,7 +10,7 @@
  *   - Saves progress: can be re-run safely to continue where it left off
  *
  * Usage: node scripts/prt/ebay-batch-sync.mjs
- * Env:   EBAY_CLIENT_ID, EBAY_CLIENT_SECRET, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
+ * Env:   EBAY_CLIENT_ID, EBAY_CLIENT_SECRET, SUPABASE_URL, SUPABASE_SECRET_KEY
  * Optional: DELAY_MINUTES=15, BATCH_SIZE=150
  */
 import { createClient } from "@supabase/supabase-js";
@@ -20,7 +20,7 @@ import { fetchPrtForModel, EUR_TO_FCFA } from "../../tekh_backend/backend/lib/eb
 loadRepoEnv();
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
-const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const SERVICE_KEY = process.env.SUPABASE_SECRET_KEY;
 const DELAY_MINUTES = Number(process.env.DELAY_MINUTES) || 1;
 const DELAY_MS = DELAY_MINUTES * 60 * 1000;
 const BATCH_SIZE = Number(process.env.BATCH_SIZE) || 300;
@@ -69,7 +69,7 @@ async function fetchUnpricedSmartphones(supabase) {
 
 async function main() {
     if (!SUPABASE_URL || !SERVICE_KEY) {
-        console.error("❌ Définissez SUPABASE_URL et SUPABASE_SERVICE_ROLE_KEY.");
+        console.error("❌ Définissez SUPABASE_URL et SUPABASE_SECRET_KEY.");
         process.exit(1);
     }
 

@@ -7,7 +7,7 @@ const path = require('path');
 
 // Configuration Supabase
 const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_KEY;
+const supabaseKey = process.env.SUPABASE_SECRET_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const CSV_FILE = path.resolve(__dirname, '..', 'data', 'catalog', 'tab_cleaned.csv');

@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-const c = createClient(process.env.VITE_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
+const c = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SECRET_KEY);
 
 const entries = [
   { marque:"OnePlus",      modele:"OnePlus 15 5G",           variante:"512GB",      prt_fcfa:735000, classe_tekh:"A", specs:{ram:16}, annee_sortie:2026 },

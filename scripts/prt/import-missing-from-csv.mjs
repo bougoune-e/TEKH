@@ -13,10 +13,10 @@ import { readFileSync } from "fs";
 import { join } from "path";
 import { randomUUID } from "crypto";
 
-const url = process.env.VITE_SUPABASE_URL;
-const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY;
-if (!url || !key) { console.error("Missing VITE_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY"); process.exit(1); }
-console.log(`Using key type: ${process.env.SUPABASE_SERVICE_ROLE_KEY ? "service_role" : "anon"}`);
+const url = process.env.SUPABASE_URL;
+const key = process.env.SUPABASE_SECRET_KEY;
+if (!url || !key) { console.error("Missing SUPABASE_URL or SUPABASE_SECRET_KEY"); process.exit(1); }
+console.log(`Using key type: secret`);
 const supabase = createClient(url, key);
 
 const FACTEUR_AFRIQUE = 0.4;

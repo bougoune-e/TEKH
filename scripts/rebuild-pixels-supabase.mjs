@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-const c = createClient(process.env.VITE_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
+const c = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SECRET_KEY);
 
 // 1. Supprimer TOUT ce qui est Google Pixel dans Supabase
 const { error: delErr } = await c.from("smartphones").delete().eq("marque", "Google Pixel");

@@ -13,13 +13,13 @@ from supabase import create_client, Client
 # Configurations
 load_dotenv()
 SUPABASE_URL = os.getenv("SUPABASE_URL")
-SUPABASE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY") or os.getenv("SUPABASE_KEY")
+SUPABASE_SECRET_KEY = os.getenv("SUPABASE_SECRET_KEY")
 
-if not SUPABASE_URL or not SUPABASE_KEY:
-    print("Erreur: SUPABASE_URL ou SUPABASE_KEY manquant dans le .env")
+if not SUPABASE_URL or not SUPABASE_SECRET_KEY:
+    print("Erreur: SUPABASE_URL ou SUPABASE_SECRET_KEY manquant dans le .env")
     exit(1)
 
-supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_SECRET_KEY)
 
 CSV_FILE = os.path.join(os.path.dirname(__file__), "..", "data", "catalog", "tab_cleaned.csv")
 USER_AGENTS = [

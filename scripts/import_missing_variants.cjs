@@ -8,8 +8,8 @@ const { createClient } = require('@supabase/supabase-js');
 const fs = require('fs');
 const path = require('path');
 
-const SUPABASE_URL = process.env.VITE_SUPABASE_URL;
-const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SERVICE_KEY = process.env.SUPABASE_SECRET_KEY;
 const ANON_KEY = process.env.VITE_SUPABASE_ANON_KEY;
 
 const supabaseRead = createClient(SUPABASE_URL, ANON_KEY);

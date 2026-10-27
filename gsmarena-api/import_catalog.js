@@ -6,10 +6,10 @@ const path = require('path');
 
 // Configuration Supabase
 const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_KEY;
+const supabaseKey = process.env.SUPABASE_SECRET_KEY;
 
 if (!supabaseUrl || !supabaseKey) {
-    console.error("Erreur: SUPABASE_URL ou SUPABASE_KEY manquant dans le fichier .env");
+    console.error("Erreur: SUPABASE_URL ou SUPABASE_SECRET_KEY manquant dans le fichier .env");
     process.exit(1);
 }
 

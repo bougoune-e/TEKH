@@ -10,11 +10,11 @@ import { loadRepoEnv } from "./load-env.mjs";
 
 loadRepoEnv();
 
-const SUPABASE_URL = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const SUPABASE_URL = process.env.SUPABASE_URL || process.env.SUPABASE_URL;
+const SERVICE_KEY = process.env.SUPABASE_SECRET_KEY;
 
 if (!SUPABASE_URL || !SERVICE_KEY) {
-  console.error("SUPABASE_URL et SUPABASE_SERVICE_ROLE_KEY requis.");
+  console.error("SUPABASE_URL et SUPABASE_SECRET_KEY requis.");
   process.exit(1);
 }
 

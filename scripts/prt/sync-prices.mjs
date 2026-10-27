@@ -12,7 +12,7 @@ import { fetchPrtForModel } from "../../tekh_backend/backend/lib/ebay.mjs";
 loadRepoEnv();
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
-const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const SERVICE_KEY = process.env.SUPABASE_SECRET_KEY;
 const DELAY_MS = Number(process.env.PRT_SYNC_DELAY_MS) || 500;
 const MAX_AGE_DAYS = Number(process.env.PRT_MAX_AGE_DAYS) || 30;
 /** 0 = illimité (tout le catalogue). Défaut 2500 pour couvrir ~1520+ modèles sans variable d’env. */
@@ -67,7 +67,7 @@ async function fetchRowsOrderedByStale(supabase) {
 
 async function main() {
   if (!SUPABASE_URL || !SERVICE_KEY) {
-    console.error("Définissez SUPABASE_URL et SUPABASE_SERVICE_ROLE_KEY (clé service, scripts serveur).");
+    console.error("Définissez SUPABASE_URL et SUPABASE_SECRET_KEY (clé service, scripts serveur).");
     process.exit(1);
   }
 

@@ -13,7 +13,7 @@ import { loadRepoEnv, REPO_ROOT } from "./load-env.mjs";
 loadRepoEnv();
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
-const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const SERVICE_KEY = process.env.SUPABASE_SECRET_KEY;
 const CSV_PATH = process.env.TAB_CSV_PATH
   ? join(REPO_ROOT, process.env.TAB_CSV_PATH)
   : join(REPO_ROOT, "tekh_backend/backend/tab.csv.bak");
@@ -54,7 +54,7 @@ function key(m, mo, variante) {
 
 async function main() {
   if (!SUPABASE_URL || !SERVICE_KEY) {
-    console.error("SUPABASE_URL et SUPABASE_SERVICE_ROLE_KEY requis.");
+    console.error("SUPABASE_URL et SUPABASE_SECRET_KEY requis.");
     process.exit(1);
   }
   if (!existsSync(CSV_PATH)) {

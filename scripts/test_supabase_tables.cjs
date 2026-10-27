@@ -43,7 +43,7 @@ async function checkProject(url, key, name) {
 
 async function run() {
     const url1 = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
-    const key1 = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY;
+    const key1 = process.env.SUPABASE_SECRET_KEY;
 
     if (url1 && key1) {
         await checkProject(url1, key1, "Current (.env)");
