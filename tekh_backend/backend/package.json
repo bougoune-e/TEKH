@@ -5,7 +5,9 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
-    "test": "node test-supabase.mjs"
+    "test": "node test-supabase.mjs",
+    "test:pricing": "node --experimental-strip-types test-pricing-parity.mjs",
+    "import:csv": "node server.js --import-csv"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",

@@ -6,7 +6,8 @@ import path from "path";
 import { fileURLToPath } from "url";
 import webpush from "web-push";
 import Anthropic from "@anthropic-ai/sdk";
-import { supabase, TABLE_PRODUCTS } from "./supabase.js";
+import { supabase, supabasePublic, TABLE_PRODUCTS } from "./supabase.js";
+import { buildIndicativeEstimate, isUsableReferencePrice, validateEstimateInput } from "./pricing-engine.js";
 
 // ── Vérification JWT via client public (separate from the privileged server client)
 const SUPABASE_URL = process.env.SUPABASE_URL || "";
@@ -227,7 +228,14 @@ async function importCsvOnce() {
   }
 }
 
-importCsvOnce();
+// A catalogue import is a maintenance operation, never a production-startup side effect.
+// Use `npm run import:csv` only when an explicit initial import is intended.
+if (process.argv.includes("--import-csv")) {
+  console.warn("[MAINTENANCE] Explicit CSV catalogue import requested.");
+  importCsvOnce();
+} else {
+  console.log("[API] CSV catalogue import disabled at startup.");
+}
 
 // Route test
 app.get("/", (req, res) => {
@@ -273,6 +281,66 @@ app.get("/produits", async (req, res) => {
 app.get("/api/products", (_req, res) => {
   if (!csvLoaded) return res.status(503).json({ error: "Chargement des données en cours" });
   return res.json(produits);
+});
+
+// ──────────────────────────────────────────────────────────────
+// CANONICAL INDICATIVE ESTIMATE — public, read-only, no account
+// ──────────────────────────────────────────────────────────────
+app.post("/api/estimate", async (req, res) => {
+  const errors = validateEstimateInput(req.body);
+  if (errors.length > 0) {
+    return res.status(400).json({
+      error: "Entrée d’estimation invalide.",
+      code: "INVALID_ESTIMATE_INPUT",
+      details: errors,
+    });
+  }
+
+  if (!supabasePublic) {
+    return res.status(503).json({
+      error: "Le catalogue d’estimation est temporairement indisponible.",
+      code: "ESTIMATION_UNAVAILABLE",
+    });
+  }
+
+  try {
+    const { data: device, error } = await supabasePublic
+      .from("smartphones")
+      .select("id, marque, modele, variante, prt_fcfa, prt_updated_at")
+      .eq("id", req.body.deviceId.trim())
+      .maybeSingle();
+
+    if (error) {
+      console.error("[ESTIMATE] catalogue read failed:", error.code);
+      return res.status(503).json({
+        error: "Le catalogue d’estimation est temporairement indisponible.",
+        code: "CATALOGUE_UNAVAILABLE",
+      });
+    }
+
+    if (!device) {
+      return res.status(404).json({
+        error: "Appareil introuvable dans le catalogue TEKH+.",
+        code: "DEVICE_NOT_FOUND",
+      });
+    }
+
+    if (!isUsableReferencePrice(device.prt_fcfa)) {
+      return res.status(422).json({
+        error: "Aucun prix de référence exploitable n’est disponible pour cet appareil.",
+        code: "REFERENCE_PRICE_UNAVAILABLE",
+        deviceId: device.id,
+      });
+    }
+
+    return res.json(buildIndicativeEstimate(device, req.body));
+  } catch (error) {
+    console.error("[ESTIMATE] unexpected failure:", error instanceof Error ? error.message : "unknown");
+    return res.status(500).json({
+      error: "Impossible de calculer l’estimation pour le moment.",
+      code: "ESTIMATION_FAILED",
+    });
+  }
 });
 
 // ──────────────────────────────────────────────────────────────
